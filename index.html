@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Café Bénin — Saveurs d'Afrique de l'Ouest</title>
+  <meta name="description" content="Café Bénin — Découvrez les saveurs authentiques du Bénin. Café, restauration, ambiance chaleureuse." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#accueil" class="nav-logo">
+        <span class="logo-icon">☕</span>
+        <span class="logo-text">Café Bénin</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="accueil">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-subtitle">Bienvenue au</p>
+      <h1 class="hero-title">Café Bénin</h1>
+      <p class="hero-tagline">Saveurs authentiques d'Afrique de l'Ouest</p>
+      <div class="hero-buttons">
+        <a href="#menu" class="btn btn-primary">Voir le menu</a>
+        <a href="#contact" class="btn btn-outline">Nous trouver</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Découvrir</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section class="section apropos" id="apropos">
+    <div class="container">
+      <div class="apropos-grid">
+        <div class="apropos-text">
+          <span class="section-label">Notre histoire</span>
+          <h2 class="section-title">Un café au cœur<br/>de la culture béninoise</h2>
+          <p>Fondé avec passion, <strong>Café Bénin</strong> est bien plus qu'un simple café. C'est un lieu de rencontre où les traditions culinaires du Bénin se mêlent à une atmosphère moderne et accueillante.</p>
+          <p>Nous sélectionnons avec soin les meilleurs grains de café cultivés sur les terres fertiles d'Afrique de l'Ouest, pour vous offrir une expérience gustative unique et mémorable.</p>
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Produits locaux</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">+50</span>
+              <span class="stat-label">Recettes authentiques</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">7j/7</span>
+              <span class="stat-label">Ouvert pour vous</span>
+            </div>
+          </div>
+        </div>
+        <div class="apropos-image">
+          <div class="image-card">
+            <div class="image-placeholder">
+              <span class="img-icon">🌿</span>
+              <p>Ambiance chaleureuse<br/>et authentique</p>
+            </div>
+            <div class="image-badge">Depuis 2020</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="section menu-section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Notre carte</span>
+        <h2 class="section-title">Un menu inspiré du Bénin</h2>
+        <p class="section-desc">Des saveurs authentiques préparées avec amour et des ingrédients soigneusement sélectionnés.</p>
+      </div>
+
+      <div class="menu-tabs">
+        <button class="tab-btn active" data-tab="boissons">Boissons</button>
+        <button class="tab-btn" data-tab="snacks">Snacks</button>
+        <button class="tab-btn" data-tab="plats">Plats</button>
+        <button class="tab-btn" data-tab="desserts">Desserts</button>
+      </div>
+
+      <div class="menu-content active" id="boissons">
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-icon">☕</div>
+            <div class="menu-item-info">
+              <h3>Café Bénin Signature</h3>
+              <p>Notre café maison, torréfié sur place, aux notes de cacao et de caramel</p>
+              <span class="price">1 500 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍵</div>
+            <div class="menu-item-info">
+              <h3>Thé au Gingembre</h3>
+              <p>Infusion de gingembre frais, miel de pays et citron vert</p>
+              <span class="price">1 000 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🥤</div>
+            <div class="menu-item-info">
+              <h3>Jus de Bissap</h3>
+              <p>Fleurs d'hibiscus séchées, sucre de canne, menthe fraîche</p>
+              <span class="price">800 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍹</div>
+            <div class="menu-item-info">
+              <h3>Smoothie Tropical</h3>
+              <p>Mangue, ananas, papaye et lait de coco frais</p>
+              <span class="price">1 200 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🧃</div>
+            <div class="menu-item-info">
+              <h3>Jus de Tamarin</h3>
+              <p>Tamarin frais pressé, sucre et eau de source</p>
+              <span class="price">900 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍫</div>
+            <div class="menu-item-info">
+              <h3>Chocolat Chaud Africain</h3>
+              <p>Cacao pur du Bénin, lait chaud, épices douces</p>
+              <span class="price">1 300 FCFA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-content" id="snacks">
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-icon">🥜</div>
+            <div class="menu-item-info">
+              <h3>Arachides Grillées</h3>
+              <p>Cacahuètes grillées au sel et aux épices locales</p>
+              <span class="price">500 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍞</div>
+            <div class="menu-item-info">
+              <h3>Sandwich Bénin</h3>
+              <p>Pain artisanal, poulet grillé, sauce tomate et légumes frais</p>
+              <span class="price">2 000 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🫔</div>
+            <div class="menu-item-info">
+              <h3>Akara (Beignets de Niébé)</h3>
+              <p>Beignets de haricots frits, servis avec sauce pimentée</p>
+              <span class="price">700 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🥗</div>
+            <div class="menu-item-info">
+              <h3>Salade Fraîcheur</h3>
+              <p>Légumes de saison, avocat, vinaigrette au citron vert</p>
+              <span class="price">1 500 FCFA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-content" id="plats">
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-icon">🍛</div>
+            <div class="menu-item-info">
+              <h3>Riz au Gras</h3>
+              <p>Riz cuit dans une sauce tomate épicée avec poulet et légumes</p>
+              <span class="price">3 500 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍲</div>
+            <div class="menu-item-info">
+              <h3>Sauce Arachide</h3>
+              <p>Sauce crémeuse aux arachides, viande de bœuf, servi avec du riz</p>
+              <span class="price">4 000 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🐟</div>
+            <div class="menu-item-info">
+              <h3>Poisson Braisé</h3>
+              <p>Poisson entier grillé aux herbes, accompagné d'attiéké</p>
+              <span class="price">4 500 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍗</div>
+            <div class="menu-item-info">
+              <h3>Poulet Yassa</h3>
+              <p>Poulet mariné aux oignons et citron, servi avec du riz blanc</p>
+              <span class="price">3 800 FCFA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-content" id="desserts">
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-icon">🍌</div>
+            <div class="menu-item-info">
+              <h3>Bananes Flambées</h3>
+              <p>Bananes plantains caramélisées au sucre de canne et rhum</p>
+              <span class="price">1 500 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍮</div>
+            <div class="menu-item-info">
+              <h3>Flan au Coco</h3>
+              <p>Flan crémeux au lait de coco frais et vanille de Madagascar</p>
+              <span class="price">1 200 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🍰</div>
+            <div class="menu-item-info">
+              <h3>Gâteau au Cacao</h3>
+              <p>Fondant au chocolat noir du Bénin, coulis de mangue</p>
+              <span class="price">1 800 FCFA</span>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon">🥭</div>
+            <div class="menu-item-info">
+              <h3>Sorbet Mangue-Citron</h3>
+              <p>Sorbet artisanal à la mangue fraîche et zeste de citron vert</p>
+              <span class="price">1 000 FCFA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section class="section galerie-section" id="galerie">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Notre univers</span>
+        <h2 class="section-title">Une atmosphère unique</h2>
+        <p class="section-desc">Plongez dans l'ambiance chaleureuse et colorée du Café Bénin.</p>
+      </div>
+      <div class="galerie-grid">
+        <div class="galerie-item large">
+          <div class="galerie-placeholder g1">
+            <span>🏡</span>
+            <p>Notre espace principal</p>
+          </div>
+        </div>
+        <div class="galerie-item">
+          <div class="galerie-placeholder g2">
+            <span>☕</span>
+            <p>Nos cafés</p>
+          </div>
+        </div>
+        <div class="galerie-item">
+          <div class="galerie-placeholder g3">
+            <span>🍽️</span>
+            <p>Nos plats</p>
+          </div>
+        </div>
+        <div class="galerie-item">
+          <div class="galerie-placeholder g4">
+            <span>🌿</span>
+            <p>Terrasse extérieure</p>
+          </div>
+        </div>
+        <div class="galerie-item">
+          <div class="galerie-placeholder g5">
+            <span>🎵</span>
+            <p>Soirées musicales</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMOIGNAGES -->
+  <section class="section temoignages-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Avis clients</span>
+        <h2 class="section-title">Ce qu'ils disent de nous</h2>
+      </div>
+      <div class="temoignages-grid">
+        <div class="temoignage-card">
+          <div class="stars">★★★★★</div>
+          <p>"Un endroit magnifique avec une ambiance vraiment africaine. Le café signature est exceptionnel et les plats sont délicieux !"</p>
+          <div class="temoignage-author">
+            <div class="author-avatar">A</div>
+            <div>
+              <strong>Aminata K.</strong>
+              <span>Cotonou</span>
+            </div>
+          </div>
+        </div>
+        <div class="temoignage-card featured">
+          <div class="stars">★★★★★</div>
+          <p>"Je viens ici chaque semaine. La sauce arachide est la meilleure que j'aie jamais goûtée. Le personnel est toujours souriant et accueillant."</p>
+          <div class="temoignage-author">
+            <div class="author-avatar">J</div>
+            <div>
+              <strong>Jean-Pierre M.</strong>
+              <span>Porto-Novo</span>
+            </div>
+          </div>
+        </div>
+        <div class="temoignage-card">
+          <div class="stars">★★★★★</div>
+          <p>"Un vrai voyage culinaire au cœur du Bénin. Les jus frais sont incroyables et le cadre est parfait pour travailler ou se détendre."</p>
+          <div class="temoignage-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <strong>Sophie D.</strong>
+              <span>Parakou</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Nous rejoindre</span>
+        <h2 class="section-title">Venez nous rendre visite</h2>
+        <p class="section-desc">Nous sommes ouverts tous les jours pour vous accueillir dans la bonne humeur.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-card">
+            <div class="contact-icon">📍</div>
+            <h3>Adresse</h3>
+            <p>Quartier Haie Vive<br/>Cotonou, Bénin</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🕐</div>
+            <h3>Horaires</h3>
+            <p>Lundi – Vendredi : 7h – 22h<br/>Samedi – Dimanche : 8h – 23h</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📞</div>
+            <h3>Contact</h3>
+            <p>+229 XX XX XX XX<br/>cafebenin@email.com</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📱</div>
+            <h3>Réseaux sociaux</h3>
+            <div class="social-links">
+              <a href="#" class="social-btn">Facebook</a>
+              <a href="#" class="social-btn">Instagram</a>
+              <a href="#" class="social-btn">WhatsApp</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-wrapper">
+          <h3>Envoyer un message</h3>
+          <form class="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label for="name">Nom complet</label>
+              <input type="text" id="name" placeholder="Votre nom" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="votre@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" rows="5" placeholder="Votre message..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary full-width">Envoyer le message</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <span>✅</span>
+            <p>Merci ! Votre message a bien été envoyé. Nous vous répondrons très prochainement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#accueil" class="nav-logo">
+            <span class="logo-icon">☕</span>
+            <span class="logo-text">Café Bénin</span>
+          </a>
+          <p>Un lieu de vie, de partage et de saveurs authentiques au cœur du Bénin.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#apropos">À propos</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-hours">
+          <h4>Horaires d'ouverture</h4>
+          <table>
+            <tr><td>Lun – Ven</td><td>7h – 22h</td></tr>
+            <tr><td>Sam – Dim</td><td>8h – 23h</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Café Bénin. Tous droits réservés.</p>
+        <p>Fait avec ❤️ au Bénin</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
