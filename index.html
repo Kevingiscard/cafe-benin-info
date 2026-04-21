@@ -3,453 +3,311 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Café Bénin — Saveurs d'Afrique de l'Ouest</title>
-  <meta name="description" content="Café Bénin — Découvrez les saveurs authentiques du Bénin. Café, restauration, ambiance chaleureuse." />
+  <title>Café Bénin : Le Portail Mondial du Café</title>
+  <meta name="description" content="Découvrez le monde fascinant du café : du Bénin à l'Afrique et au-delà. Informations, santé, culture, astuces de préparation et communauté." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- NAVIGATION -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <a href="#accueil" class="nav-logo">
+  <!-- HEADER & NAVIGATION -->
+  <header class="header">
+    <div class="container header-content">
+      <a href="#" class="logo">
         <span class="logo-icon">☕</span>
         <span class="logo-text">Café Bénin</span>
       </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="#benin">Bénin</a></li>
+          <li><a href="#afrique-monde">Afrique & Monde</a></li>
+          <li><a href="#sante">Santé</a></li>
+          <li><a href="#preparation">Préparation</a></li>
+          <li><a href="#culture">Culture & Anecdotes</a></li>
+          <li><a href="#experiences">Expériences</a></li>
+          <li><a href="#communaute">Communauté</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#accueil">Accueil</a></li>
-        <li><a href="#apropos">À propos</a></li>
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
     </div>
-  </nav>
+  </header>
 
-  <!-- HERO -->
-  <section class="hero" id="accueil">
+  <!-- HERO SECTION -->
+  <section class="hero-portal">
     <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <p class="hero-subtitle">Bienvenue au</p>
-      <h1 class="hero-title">Café Bénin</h1>
-      <p class="hero-tagline">Saveurs authentiques d'Afrique de l'Ouest</p>
-      <div class="hero-buttons">
-        <a href="#menu" class="btn btn-primary">Voir le menu</a>
-        <a href="#contact" class="btn btn-outline">Nous trouver</a>
-      </div>
-    </div>
-    <div class="hero-scroll">
-      <span>Découvrir</span>
-      <div class="scroll-arrow"></div>
+    <div class="container hero-content">
+      <h1 class="hero-title">Café Bénin : Votre Portail Mondial du Café</h1>
+      <p class="hero-subtitle">Explorez les saveurs, les histoires et les bienfaits du café, du cœur de l'Afrique de l'Ouest aux plantations lointaines.</p>
+      <a href="#benin" class="btn btn-primary">Découvrir le Café Béninois</a>
     </div>
   </section>
 
-  <!-- À PROPOS -->
-  <section class="section apropos" id="apropos">
-    <div class="container">
-      <div class="apropos-grid">
-        <div class="apropos-text">
-          <span class="section-label">Notre histoire</span>
-          <h2 class="section-title">Un café au cœur<br/>de la culture béninoise</h2>
-          <p>Fondé avec passion, <strong>Café Bénin</strong> est bien plus qu'un simple café. C'est un lieu de rencontre où les traditions culinaires du Bénin se mêlent à une atmosphère moderne et accueillante.</p>
-          <p>Nous sélectionnons avec soin les meilleurs grains de café cultivés sur les terres fertiles d'Afrique de l'Ouest, pour vous offrir une expérience gustative unique et mémorable.</p>
-          <div class="stats-grid">
-            <div class="stat">
-              <span class="stat-number">100%</span>
-              <span class="stat-label">Produits locaux</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">+50</span>
-              <span class="stat-label">Recettes authentiques</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">7j/7</span>
-              <span class="stat-label">Ouvert pour vous</span>
-            </div>
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- LE CAFÉ AU BÉNIN -->
+    <section id="benin" class="section section-benin">
+      <div class="container">
+        <h2 class="section-heading">L'Or Noir du Bénin : Une Filière en Ébullition</h2>
+        <p class="section-intro">Le Bénin, bien que modeste producteur, cultive un café Robusta aux arômes intenses, reflet de son terroir unique. La filière caféière béninoise connaît une dynamique de relance, avec des initiatives gouvernementales et privées visant à valoriser cette richesse agricole.</p>
+        
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>Production et Variétés</h3>
+            <p>La production caféière béninoise est principalement axée sur le <strong>Robusta</strong>, une variété robuste et aromatique, parfaitement adaptée au climat tropical humide du sud et du centre du pays. Des efforts sont faits pour améliorer les techniques de culture et de transformation afin d'optimiser la qualité des grains. Bien que l'Arabica soit moins présent, des expérimentations sont menées dans les zones d'altitude pour diversifier l'offre.</p>
           </div>
-        </div>
-        <div class="apropos-image">
-          <div class="image-card">
-            <div class="image-placeholder">
-              <span class="img-icon">🌿</span>
-              <p>Ambiance chaleureuse<br/>et authentique</p>
-            </div>
-            <div class="image-badge">Depuis 2020</div>
+          <div class="content-card">
+            <h3>Zones de Culture et Saveurs Locales</h3>
+            <p>Les principales régions productrices se situent dans les départements du Zou, de l'Atlantique et de l'Ouémé. Le café béninois se distingue par ses notes terreuses, chocolatées et parfois épicées. Les producteurs locaux intègrent souvent des épices comme le <strong>gingembre</strong>, les <strong>clous de girofle</strong> ou le <strong>poivre long (Kili)</strong> pour créer des mélanges uniques, offrant une expérience gustative authentique et mémorable.</p>
+          </div>
+          <div class="content-card">
+            <h3>Actualités de la Filière (2025-2026)</h3>
+            <p>La campagne agricole 2025-2026 est marquée par une volonté forte du gouvernement de soutenir la diversification agricole. Des mesures incitatives et des investissements sont mis en place pour accompagner les producteurs de café, améliorer les rendements et renforcer la chaîne de valeur. L'objectif est de positionner le café béninois sur les marchés nationaux et internationaux, en misant sur sa qualité et son authenticité.</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MENU -->
-  <section class="section menu-section" id="menu">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Notre carte</span>
-        <h2 class="section-title">Un menu inspiré du Bénin</h2>
-        <p class="section-desc">Des saveurs authentiques préparées avec amour et des ingrédients soigneusement sélectionnés.</p>
+    <!-- LE CAFÉ EN AFRIQUE ET DANS LE MONDE -->
+    <section id="afrique-monde" class="section section-afrique-monde bg-light">
+      <div class="container">
+        <h2 class="section-heading">Voyage à travers les Continents : Le Café, une Histoire Globale</h2>
+        <p class="section-intro">Le café est une boisson universelle, mais chaque continent, chaque pays, chaque terroir lui confère une identité unique. Découvrez la diversité des cafés du monde.</p>
+        
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>L'Afrique, Berceau du Café</h3>
+            <p>L'Afrique est le continent originel du café, avec l'Éthiopie comme berceau de l'Arabica. Aujourd'hui, des pays comme l'<strong>Ouganda</strong> (devenu leader des exportations africaines en 2024-2025), l'Éthiopie, la Côte d'Ivoire et le Cameroun sont des acteurs majeurs. L'Arabica éthiopien est réputé pour ses notes florales et fruitées, tandis que le Robusta d'Ouganda ou de Côte d'Ivoire offre un corps puissant et une teneur élevée en caféine.</p>
+          </div>
+          <div class="content-card">
+            <h3>L'Amérique Latine, Géant de l'Arabica</h3>
+            <p>Le Brésil est le premier producteur mondial de café, suivi par la Colombie, réputée pour ses Arabicas doux et équilibrés. Le café d'Amérique Latine est souvent caractérisé par des notes de chocolat, de caramel et de noisette, avec une acidité vive et agréable. Des pays comme le Costa Rica et le Guatemala produisent également des cafés de spécialité très prisés.</p>
+          </div>
+          <div class="content-card">
+            <h3>L'Asie, Terre du Robusta et des Cafés Exotiques</h3>
+            <p>Le Vietnam est le deuxième producteur mondial et le premier pour le Robusta. L'Indonésie est célèbre pour ses cafés aux saveurs uniques, comme le Kopi Luwak, et ses cafés de Sumatra aux notes terreuses et épicées. L'Asie offre une palette de saveurs audacieuses, souvent avec un corps plein et une faible acidité.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="menu-tabs">
-        <button class="tab-btn active" data-tab="boissons">Boissons</button>
-        <button class="tab-btn" data-tab="snacks">Snacks</button>
-        <button class="tab-btn" data-tab="plats">Plats</button>
-        <button class="tab-btn" data-tab="desserts">Desserts</button>
+    <!-- CAFÉ ET SANTÉ -->
+    <section id="sante" class="section section-sante">
+      <div class="container">
+        <h2 class="section-heading">Café et Santé : Ce que la Science Révèle</h2>
+        <p class="section-intro">Longtemps débattu, le café est aujourd'hui reconnu pour ses nombreux bienfaits sur la santé, étayés par des recherches scientifiques récentes.</p>
+        
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>Protection Cérébrale</h3>
+            <p>Des études récentes (2025-2026) suggèrent que la consommation régulière de café peut contribuer à la protection du cerveau. La caféine et les antioxydants présents dans le café pourraient réduire les cytokines pro-inflammatoires et offrir une défense contre les maladies neurodégénératives telles qu'Alzheimer et Parkinson.</p>
+          </div>
+          <div class="content-card">
+            <h3>Bienfaits Cardiovasculaires</h3>
+            <p>Contrairement aux idées reçues, de nouvelles recherches (2026) confirment que le café n'a pas d'effet hypertenseur à long terme et pourrait même avoir des effets bénéfiques sur la santé cardiovasculaire. Une consommation modérée est associée à un risque réduit de maladies cardiaques et d'accidents vasculaires cérébraux.</p>
+          </div>
+          <div class="content-card">
+            <h3>Antioxydant et Anti-âge</h3>
+            <p>Le café est une source majeure d'antioxydants, qui combattent les radicaux libres responsables du vieillissement cellulaire. Une étude de fin 2025 a même mis en évidence un ralentissement du vieillissement prématuré chez certains individus, soulignant le rôle du café dans la longévité et le bien-être général.</p>
+          </div>
+          <div class="content-card">
+            <h3>Impact sur le Métabolisme</h3>
+            <p>La consommation de café est également liée à une amélioration du métabolisme, notamment en aidant à la régulation du glucose. Cela pourrait jouer un rôle dans la prévention du diabète de type 2. De plus, la caféine est un stimulant naturel qui peut améliorer les performances physiques et cognitives.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="menu-content active" id="boissons">
-        <div class="menu-grid">
-          <div class="menu-item">
-            <div class="menu-item-icon">☕</div>
-            <div class="menu-item-info">
-              <h3>Café Bénin Signature</h3>
-              <p>Notre café maison, torréfié sur place, aux notes de cacao et de caramel</p>
-              <span class="price">1 500 FCFA</span>
-            </div>
+    <!-- L'ART DE LA PRÉPARATION -->
+    <section id="preparation" class="section section-preparation bg-light">
+      <div class="container">
+        <h2 class="section-heading">L'Art de la Préparation : Secrets et Astuces du Barista</h2>
+        <p class="section-intro">De la torréfaction à la tasse, chaque étape compte pour révéler les arômes du café. Découvrez les méthodes traditionnelles et les astuces locales.</p>
+        
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>Torréfaction Artisanale</h3>
+            <p>La torréfaction est l'étape clé qui transforme le grain de café vert en grain aromatique. Une torréfaction artisanale permet de contrôler précisément le profil aromatique, en développant les notes fruitées, chocolatées ou épicées. Au Bénin, certains torréfacteurs locaux perpétuent ce savoir-faire pour offrir un café d'exception.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍵</div>
-            <div class="menu-item-info">
-              <h3>Thé au Gingembre</h3>
-              <p>Infusion de gingembre frais, miel de pays et citron vert</p>
-              <span class="price">1 000 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>Astuces Béninoises : Le Café Épicé</h3>
+            <p>Au Bénin, le café est souvent sublimé par l'ajout d'épices. Une pincée de <strong>gingembre frais</strong> râpé directement dans la cafetière, quelques <strong>clous de girofle</strong>, ou même une touche de <strong>poivre long (Kili)</strong> peuvent transformer votre tasse en une expérience gustative unique. Ces mélanges apportent chaleur et profondeur, et sont particulièrement appréciés pour leurs vertus stimulantes.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🥤</div>
-            <div class="menu-item-info">
-              <h3>Jus de Bissap</h3>
-              <p>Fleurs d'hibiscus séchées, sucre de canne, menthe fraîche</p>
-              <span class="price">800 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>Le Secret du Sel</h3>
+            <p>Une astuce surprenante mais efficace, transmise de génération en génération au Bénin, consiste à ajouter une infime pincée de sel au café moulu avant l'infusion. Le sel a la propriété de neutraliser l'amertume, révélant ainsi les saveurs plus douces et complexes du café. À essayer pour une découverte gustative inattendue !</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍹</div>
-            <div class="menu-item-info">
-              <h3>Smoothie Tropical</h3>
-              <p>Mangue, ananas, papaye et lait de coco frais</p>
-              <span class="price">1 200 FCFA</span>
-            </div>
-          </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🧃</div>
-            <div class="menu-item-info">
-              <h3>Jus de Tamarin</h3>
-              <p>Tamarin frais pressé, sucre et eau de source</p>
-              <span class="price">900 FCFA</span>
-            </div>
-          </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍫</div>
-            <div class="menu-item-info">
-              <h3>Chocolat Chaud Africain</h3>
-              <p>Cacao pur du Bénin, lait chaud, épices douces</p>
-              <span class="price">1 300 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>Le Café de Rue : Une Expérience Authentique</h3>
+            <p>Au Bénin, le café est aussi une affaire de rue. Les vendeurs ambulants proposent un café fort et sucré, souvent mélangé avec du lait concentré, servi chaud et accompagné de pain. C'est une expérience sociale et gustative incontournable, un moment de partage et de convivialité qui fait partie intégrante de la culture locale.</p>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="menu-content" id="snacks">
-        <div class="menu-grid">
-          <div class="menu-item">
-            <div class="menu-item-icon">🥜</div>
-            <div class="menu-item-info">
-              <h3>Arachides Grillées</h3>
-              <p>Cacahuètes grillées au sel et aux épices locales</p>
-              <span class="price">500 FCFA</span>
-            </div>
+    <!-- CULTURE & ANECDOTES -->
+    <section id="culture" class="section section-culture">
+      <div class="container">
+        <h2 class="section-heading">Culture et Anecdotes : Histoires de Café</h2>
+        <p class="section-intro">Derrière chaque tasse de café se cachent des légendes, des traditions et des histoires fascinantes qui ont façonné sa place dans nos sociétés.</p>
+        
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>La Légende de Kaldi</h3>
+            <p>L'histoire la plus célèbre sur l'origine du café est celle du berger éthiopien Kaldi. Il aurait remarqué que ses chèvres devenaient particulièrement énergiques après avoir brouté les baies d'un arbuste inconnu. En goûtant lui-même ces baies, il ressentit une vitalité nouvelle, marquant ainsi la découverte des propriétés stimulantes du café.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍞</div>
-            <div class="menu-item-info">
-              <h3>Sandwich Bénin</h3>
-              <p>Pain artisanal, poulet grillé, sauce tomate et légumes frais</p>
-              <span class="price">2 000 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>Le Café Touba : Un Symbole Sénégalais</h3>
+            <p>Le Café Touba, originaire du Sénégal, est un mélange unique de café et de poivre de Jar (aussi appelé poivre de Guinée ou Kili). Il est non seulement apprécié pour son goût épicé et puissant, mais il revêt également une forte dimension spirituelle et culturelle, étant associé à la confrérie mouride. Sa popularité s'est étendue à toute l'Afrique de l'Ouest.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🫔</div>
-            <div class="menu-item-info">
-              <h3>Akara (Beignets de Niébé)</h3>
-              <p>Beignets de haricots frits, servis avec sauce pimentée</p>
-              <span class="price">700 FCFA</span>
-            </div>
-          </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🥗</div>
-            <div class="menu-item-info">
-              <h3>Salade Fraîcheur</h3>
-              <p>Légumes de saison, avocat, vinaigrette au citron vert</p>
-              <span class="price">1 500 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>Cérémonies du Café Éthiopiennes</h3>
+            <p>En Éthiopie, la préparation et la dégustation du café sont un rituel social et culturel appelé 
+« Buna Tetu ». Cette cérémonie, qui peut durer plusieurs heures, est un moment de partage et de convivialité, où le café est torréfié, moulu et infusé devant les invités, symbolisant l'hospitalité et la tradition.</p>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="menu-content" id="plats">
-        <div class="menu-grid">
-          <div class="menu-item">
-            <div class="menu-item-icon">🍛</div>
-            <div class="menu-item-info">
-              <h3>Riz au Gras</h3>
-              <p>Riz cuit dans une sauce tomate épicée avec poulet et légumes</p>
-              <span class="price">3 500 FCFA</span>
+    <!-- GALERIE D'EXPÉRIENCES -->
+    <section id="experiences" class="section section-experiences">
+      <div class="container">
+        <h2 class="section-heading">Galerie d'Expériences : Vos Histoires de Café</h2>
+        <p class="section-intro">Découvrez les témoignages et expériences d'autres passionnés de café du monde entier. Inspirez-vous et partagez votre propre histoire.</p>
+        
+        <div class="experiences-grid">
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-avatar">AS</div>
+              <div class="experience-meta">
+                <strong>Amara Sow</strong>
+                <span>Dakar, Sénégal</span>
+              </div>
+            </div>
+            <p class="experience-content">"Le Café Touba est bien plus qu'une boisson pour moi. C'est un rituel du matin, un moment de connexion avec mes racines. Le mélange de poivre de Jar avec le café crée une harmonie unique que j'ai apprise de ma grand-mère."</p>
+            <div class="experience-tags">
+              <span class="tag">Café Touba</span>
+              <span class="tag">Tradition</span>
+              <span class="tag">Sénégal</span>
             </div>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍲</div>
-            <div class="menu-item-info">
-              <h3>Sauce Arachide</h3>
-              <p>Sauce crémeuse aux arachides, viande de bœuf, servi avec du riz</p>
-              <span class="price">4 000 FCFA</span>
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-avatar">JK</div>
+              <div class="experience-meta">
+                <strong>Jérôme Koffi</strong>
+                <span>Abidjan, Côte d'Ivoire</span>
+              </div>
+            </div>
+            <p class="experience-content">"J'ai découvert que le café béninois avec du gingembre frais est un excellent remède contre les migraines. Depuis, je le prépare chaque matin et je me sens tellement mieux. C'est devenu mon café signature."</p>
+            <div class="experience-tags">
+              <span class="tag">Gingembre</span>
+              <span class="tag">Santé</span>
+              <span class="tag">Recette</span>
             </div>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🐟</div>
-            <div class="menu-item-info">
-              <h3>Poisson Braisé</h3>
-              <p>Poisson entier grillé aux herbes, accompagné d'attiéké</p>
-              <span class="price">4 500 FCFA</span>
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-avatar">EM</div>
+              <div class="experience-meta">
+                <strong>Éva Mensah</strong>
+                <span>Accra, Ghana</span>
+              </div>
             </div>
-          </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍗</div>
-            <div class="menu-item-info">
-              <h3>Poulet Yassa</h3>
-              <p>Poulet mariné aux oignons et citron, servi avec du riz blanc</p>
-              <span class="price">3 800 FCFA</span>
+            <p class="experience-content">"Chaque voyage me fait découvrir un nouveau café. Du Robusta ougandais au Robusta camerounais, chacun a sa propre personnalité. C'est fascinant de voir comment le terroir influence le goût. L'Afrique produit les meilleures surprises !"</p>
+            <div class="experience-tags">
+              <span class="tag">Voyage</span>
+              <span class="tag">Terroir</span>
+              <span class="tag">Afrique</span>
             </div>
           </div>
         </div>
+        <div class="call-to-action">
+          <p>Vous aussi, partagez votre expérience café avec notre communauté mondiale !</p>
+          <a href="#" class="btn btn-primary">Partager Mon Histoire</a>
+        </div>
       </div>
+    </section>
 
-      <div class="menu-content" id="desserts">
-        <div class="menu-grid">
-          <div class="menu-item">
-            <div class="menu-item-icon">🍌</div>
-            <div class="menu-item-info">
-              <h3>Bananes Flambées</h3>
-              <p>Bananes plantains caramélisées au sucre de canne et rhum</p>
-              <span class="price">1 500 FCFA</span>
-            </div>
+    <!-- COMMUNAUTÉ -->
+    <section id="communaute" class="section section-communaute bg-light">
+      <div class="container">
+        <h2 class="section-heading">Le Cercle des Passionnés : Rejoignez-Nous</h2>
+        <p class="section-intro">Cet espace est dédié à tous les amoureux du café. Partagez vos anecdotes, vos astuces, vos recettes et rencontrez d'autres passionnés du monde entier.</p>
+        
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>📚 Forum de Discussion</h3>
+            <p>Un forum interactif où vous pourrez poser vos questions, partager vos découvertes sur les cafés du monde, discuter des dernières recherches sur la santé ou échanger des techniques de préparation. Créez des sujets, répondez aux discussions et connectez-vous avec la communauté.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍮</div>
-            <div class="menu-item-info">
-              <h3>Flan au Coco</h3>
-              <p>Flan crémeux au lait de coco frais et vanille de Madagascar</p>
-              <span class="price">1 200 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>🍳 Vos Recettes et Astuces</h3>
+            <p>Vous avez une recette de café unique ? Une astuce de grand-mère pour sublimer votre boisson ? Un mélange d'épices secret ? Partagez-les ici ! Inspirez et soyez inspiré par les créations des autres membres.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🍰</div>
-            <div class="menu-item-info">
-              <h3>Gâteau au Cacao</h3>
-              <p>Fondant au chocolat noir du Bénin, coulis de mangue</p>
-              <span class="price">1 800 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>🎉 Rencontres et Événements</h3>
+            <p>Restez informé des événements café près de chez vous : dégustations, ateliers de barista, conférences. Organisez vos propres rencontres avec d'autres membres pour partager un bon café et échanger en personne.</p>
           </div>
-          <div class="menu-item">
-            <div class="menu-item-icon">🥭</div>
-            <div class="menu-item-info">
-              <h3>Sorbet Mangue-Citron</h3>
-              <p>Sorbet artisanal à la mangue fraîche et zeste de citron vert</p>
-              <span class="price">1 000 FCFA</span>
-            </div>
+          <div class="content-card">
+            <h3>📸 Galerie Visuelle</h3>
+            <p>Partagez vos photos de café, de cafés visités, de torréfactions maison. Créez une galerie visuelle de la diversité des cafés et des moments de partage autour de cette boisson magique.</p>
           </div>
+          <div class="content-card">
+            <h3>🌍 Réseau Global</h3>
+            <p>Connectez-vous avec des passionnés de café de tous les continents. Trouvez des pen-pals café, organisez des échanges d'échantillons, et élargissez votre perspective sur le monde du café.</p>
+          </div>
+          <div class="content-card">
+            <h3>🎓 Ressources Éducatives</h3>
+            <p>Accédez à des tutoriels, des guides de dégustation, des articles scientifiques et des interviews d'experts. Apprenez continuellement et approfondissez votre connaissance du café.</p>
+          </div>
+        </div>
+        <div class="call-to-action">
+          <p>Rejoignez notre communauté mondiale et plongez encore plus profondément dans l'univers du café !</p>
+          <a href="#" class="btn btn-primary">Rejoindre le Cercle des Passionnés</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- GALERIE -->
-  <section class="section galerie-section" id="galerie">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Notre univers</span>
-        <h2 class="section-title">Une atmosphère unique</h2>
-        <p class="section-desc">Plongez dans l'ambiance chaleureuse et colorée du Café Bénin.</p>
-      </div>
-      <div class="galerie-grid">
-        <div class="galerie-item large">
-          <div class="galerie-placeholder g1">
-            <span>🏡</span>
-            <p>Notre espace principal</p>
-          </div>
-        </div>
-        <div class="galerie-item">
-          <div class="galerie-placeholder g2">
-            <span>☕</span>
-            <p>Nos cafés</p>
-          </div>
-        </div>
-        <div class="galerie-item">
-          <div class="galerie-placeholder g3">
-            <span>🍽️</span>
-            <p>Nos plats</p>
-          </div>
-        </div>
-        <div class="galerie-item">
-          <div class="galerie-placeholder g4">
-            <span>🌿</span>
-            <p>Terrasse extérieure</p>
-          </div>
-        </div>
-        <div class="galerie-item">
-          <div class="galerie-placeholder g5">
-            <span>🎵</span>
-            <p>Soirées musicales</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TEMOIGNAGES -->
-  <section class="section temoignages-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Avis clients</span>
-        <h2 class="section-title">Ce qu'ils disent de nous</h2>
-      </div>
-      <div class="temoignages-grid">
-        <div class="temoignage-card">
-          <div class="stars">★★★★★</div>
-          <p>"Un endroit magnifique avec une ambiance vraiment africaine. Le café signature est exceptionnel et les plats sont délicieux !"</p>
-          <div class="temoignage-author">
-            <div class="author-avatar">A</div>
-            <div>
-              <strong>Aminata K.</strong>
-              <span>Cotonou</span>
-            </div>
-          </div>
-        </div>
-        <div class="temoignage-card featured">
-          <div class="stars">★★★★★</div>
-          <p>"Je viens ici chaque semaine. La sauce arachide est la meilleure que j'aie jamais goûtée. Le personnel est toujours souriant et accueillant."</p>
-          <div class="temoignage-author">
-            <div class="author-avatar">J</div>
-            <div>
-              <strong>Jean-Pierre M.</strong>
-              <span>Porto-Novo</span>
-            </div>
-          </div>
-        </div>
-        <div class="temoignage-card">
-          <div class="stars">★★★★★</div>
-          <p>"Un vrai voyage culinaire au cœur du Bénin. Les jus frais sont incroyables et le cadre est parfait pour travailler ou se détendre."</p>
-          <div class="temoignage-author">
-            <div class="author-avatar">S</div>
-            <div>
-              <strong>Sophie D.</strong>
-              <span>Parakou</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section contact-section" id="contact">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">Nous rejoindre</span>
-        <h2 class="section-title">Venez nous rendre visite</h2>
-        <p class="section-desc">Nous sommes ouverts tous les jours pour vous accueillir dans la bonne humeur.</p>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="contact-card">
-            <div class="contact-icon">📍</div>
-            <h3>Adresse</h3>
-            <p>Quartier Haie Vive<br/>Cotonou, Bénin</p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">🕐</div>
-            <h3>Horaires</h3>
-            <p>Lundi – Vendredi : 7h – 22h<br/>Samedi – Dimanche : 8h – 23h</p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">📞</div>
-            <h3>Contact</h3>
-            <p>+229 XX XX XX XX<br/>cafebenin@email.com</p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon">📱</div>
-            <h3>Réseaux sociaux</h3>
-            <div class="social-links">
-              <a href="#" class="social-btn">Facebook</a>
-              <a href="#" class="social-btn">Instagram</a>
-              <a href="#" class="social-btn">WhatsApp</a>
-            </div>
-          </div>
-        </div>
-        <div class="contact-form-wrapper">
-          <h3>Envoyer un message</h3>
-          <form class="contact-form" onsubmit="handleSubmit(event)">
-            <div class="form-group">
-              <label for="name">Nom complet</label>
-              <input type="text" id="name" placeholder="Votre nom" required />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" placeholder="votre@email.com" required />
-            </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" rows="5" placeholder="Votre message..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary full-width">Envoyer le message</button>
-          </form>
-          <div class="form-success" id="formSuccess">
-            <span>✅</span>
-            <p>Merci ! Votre message a bien été envoyé. Nous vous répondrons très prochainement.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer-portal">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#accueil" class="nav-logo">
+        <div class="footer-about">
+          <a href="#" class="logo">
             <span class="logo-icon">☕</span>
             <span class="logo-text">Café Bénin</span>
           </a>
-          <p>Un lieu de vie, de partage et de saveurs authentiques au cœur du Bénin.</p>
+          <p>Votre portail de référence pour tout savoir sur le café, du Bénin au monde entier. Une initiative passionnée pour les amoureux du café.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png" alt="Facebook"></a>
+            <a href="#" aria-label="Instagram"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"></a>
+            <a href="#" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/24/ffffff/twitter.png" alt="Twitter"></a>
+          </div>
         </div>
         <div class="footer-links">
           <h4>Navigation</h4>
           <ul>
-            <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#apropos">À propos</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#galerie">Galerie</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#benin">Le Café au Bénin</a></li>
+            <li><a href="#afrique-monde">Afrique & Monde</a></li>
+            <li><a href="#sante">Café & Santé</a></li>
+            <li><a href="#preparation">Préparation</a></li>
+            <li><a href="#culture">Culture & Anecdotes</a></li>
+            <li><a href="#communaute">Communauté</a></li>
           </ul>
         </div>
-        <div class="footer-hours">
-          <h4>Horaires d'ouverture</h4>
-          <table>
-            <tr><td>Lun – Ven</td><td>7h – 22h</td></tr>
-            <tr><td>Sam – Dim</td><td>8h – 23h</td></tr>
-          </table>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p>Email: contact@cafebenin.info</p>
+          <p>Adresse: Cotonou, Bénin</p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Café Bénin. Tous droits réservés.</p>
-        <p>Fait avec ❤️ au Bénin</p>
+        <p>&copy; 2026 Café Bénin. Tous droits réservés.</p>
+        <p>Fait avec ❤️ pour les passionnés de café.</p>
       </div>
     </div>
   </footer>
