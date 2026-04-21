@@ -25,8 +25,8 @@
           <li><a href="#afrique-monde">Afrique & Monde</a></li>
           <li><a href="#sante">Santé</a></li>
           <li><a href="#preparation">Préparation</a></li>
-          <li><a href="#culture">Culture & Anecdotes</a></li>
-          <li><a href="#experiences">Expériences</a></li>
+          <li><a href="#coffee-shops">Coffee Shops</a></li>
+          <li><a href="#kevin-moments">L'Œil de Kevin</a></li>
           <li><a href="#communaute">Communauté</a></li>
         </ul>
       </nav>
@@ -42,7 +42,10 @@
     <div class="container hero-content">
       <h1 class="hero-title">Café Bénin : Votre Portail Mondial du Café</h1>
       <p class="hero-subtitle">Explorez les saveurs, les histoires et les bienfaits du café, du cœur de l'Afrique de l'Ouest aux plantations lointaines.</p>
-      <a href="#benin" class="btn btn-primary">Découvrir le Café Béninois</a>
+      <div class="hero-btns">
+        <a href="#benin" class="btn btn-primary">Découvrir le Café Béninois</a>
+        <a href="#coffee-shops" class="btn btn-secondary">Trouver un Coffee Shop</a>
+      </div>
     </div>
   </section>
 
@@ -56,6 +59,7 @@
         
         <div class="content-grid">
           <div class="content-card">
+            <img src="img/african_coffee_beans.png" alt="Grains de café africains" class="card-img">
             <h3>Production et Variétés</h3>
             <p>La production caféière béninoise est principalement axée sur le <strong>Robusta</strong>, une variété robuste et aromatique, parfaitement adaptée au climat tropical humide du sud et du centre du pays. Des efforts sont faits pour améliorer les techniques de culture et de transformation afin d'optimiser la qualité des grains. Bien que l'Arabica soit moins présent, des expérimentations sont menées dans les zones d'altitude pour diversifier l'offre.</p>
           </div>
@@ -71,202 +75,140 @@
       </div>
     </section>
 
-    <!-- LE CAFÉ EN AFRIQUE ET DANS LE MONDE -->
-    <section id="afrique-monde" class="section section-afrique-monde bg-light">
+    <!-- MEILLEURS COFFEE SHOPS -->
+    <section id="coffee-shops" class="section section-coffee-shops bg-light">
       <div class="container">
-        <h2 class="section-heading">Voyage à travers les Continents : Le Café, une Histoire Globale</h2>
-        <p class="section-intro">Le café est une boisson universelle, mais chaque continent, chaque pays, chaque terroir lui confère une identité unique. Découvrez la diversité des cafés du monde.</p>
+        <h2 class="section-heading">Meilleurs Coffee Shops : Notre Sélection 2026</h2>
+        <p class="section-intro">Découvrez les lieux incontournables pour déguster un café d'exception au Bénin et dans les grandes capitales africaines.</p>
         
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>L'Afrique, Berceau du Café</h3>
-            <p>L'Afrique est le continent originel du café, avec l'Éthiopie comme berceau de l'Arabica. Aujourd'hui, des pays comme l'<strong>Ouganda</strong> (devenu leader des exportations africaines en 2024-2025), l'Éthiopie, la Côte d'Ivoire et le Cameroun sont des acteurs majeurs. L'Arabica éthiopien est réputé pour ses notes florales et fruitées, tandis que le Robusta d'Ouganda ou de Côte d'Ivoire offre un corps puissant et une teneur élevée en caféine.</p>
+        <div class="coffee-shops-grid">
+          <!-- BÉNIN -->
+          <div class="city-group">
+            <h3>🇧🇯 Cotonou, Bénin</h3>
+            <div class="shop-list">
+              <div class="shop-card">
+                <h4>Koukas Cotonou</h4>
+                <p>Le nouveau lieu tendance. Café de spécialité et pâtisseries fines dans un cadre moderne.</p>
+                <span class="badge">Coup de ❤️</span>
+              </div>
+              <div class="shop-card">
+                <h4>Fondation Zinsou</h4>
+                <p>Alliez art et café. Un cadre paisible et culturel au cœur de Cotonou.</p>
+              </div>
+              <div class="shop-card">
+                <h4>Oudy K Sô x Fourmé</h4>
+                <p>Design épuré et café de qualité pour les amateurs de modernité.</p>
+              </div>
+            </div>
           </div>
-          <div class="content-card">
-            <h3>L'Amérique Latine, Géant de l'Arabica</h3>
-            <p>Le Brésil est le premier producteur mondial de café, suivi par la Colombie, réputée pour ses Arabicas doux et équilibrés. Le café d'Amérique Latine est souvent caractérisé par des notes de chocolat, de caramel et de noisette, avec une acidité vive et agréable. Des pays comme le Costa Rica et le Guatemala produisent également des cafés de spécialité très prisés.</p>
+          
+          <!-- NIGERIA -->
+          <div class="city-group">
+            <h3>🇳🇬 Lagos, Nigeria</h3>
+            <div class="shop-list">
+              <div class="shop-card">
+                <h4>Kaldi Coffee</h4>
+                <p>Le pionnier de la torréfaction de spécialité au Nigeria. Grains frais garantis.</p>
+              </div>
+              <div class="shop-card">
+                <h4>Art Cafe</h4>
+                <p>Une ambiance bohème et artistique pour savourer votre boisson préférée.</p>
+              </div>
+            </div>
           </div>
-          <div class="content-card">
-            <h3>L'Asie, Terre du Robusta et des Cafés Exotiques</h3>
-            <p>Le Vietnam est le deuxième producteur mondial et le premier pour le Robusta. L'Indonésie est célèbre pour ses cafés aux saveurs uniques, comme le Kopi Luwak, et ses cafés de Sumatra aux notes terreuses et épicées. L'Asie offre une palette de saveurs audacieuses, souvent avec un corps plein et une faible acidité.</p>
+
+          <!-- SÉNÉGAL -->
+          <div class="city-group">
+            <h3>🇸🇳 Dakar, Sénégal</h3>
+            <div class="shop-list">
+              <div class="shop-card">
+                <h4>Layu Café</h4>
+                <p>Inspiré par la culture locale, c'est le lieu idéal pour le télétravail et le bon café.</p>
+              </div>
+              <div class="shop-card">
+                <h4>Simone Cafe</h4>
+                <p>Chaleureux et gourmand, parfait pour un après-midi détente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- L'ŒIL DE KEVIN (INSTAGRAM) -->
+    <section id="kevin-moments" class="section section-kevin">
+      <div class="container">
+        <div class="kevin-header">
+          <h2 class="section-heading">L'Œil de Kevin : Moments & Inspirations</h2>
+          <div class="insta-badge">
+            <a href="https://instagram.com/kevin48life" target="_blank">@kevin48life</a>
+          </div>
+        </div>
+        <p class="section-intro">Suivez le parcours de Kevin à travers l'Afrique, entre spiritualité, fierté béninoise et passion pour les terroirs africains.</p>
+        
+        <div class="kevin-grid">
+          <div class="kevin-card">
+            <div class="kevin-quote">
+              "Célébrons la richesse incommensurable des terroirs africains. De l'Éthiopie et ses hauts plateaux majestueux, aux terres volcaniques fertiles du Kenya et des Grands Lacs."
+            </div>
+            <div class="kevin-meta">— Kevin H. (@kevin48life)</div>
+          </div>
+          <div class="kevin-card">
+            <div class="kevin-quote">
+              "229 au cœur ! 🇧🇯✨ On entre en 2026 avec la force, la paix et l'ambition. Que cette année soit celle de toutes vos réussites."
+            </div>
+            <div class="kevin-meta">— Nouvel An 2026</div>
+          </div>
+          <div class="kevin-card">
+            <img src="img/coffee_shop_cotonou.png" alt="Ambiance Coffee Shop" class="kevin-img">
+            <p class="kevin-caption">Inspiration : Un après-midi à Cotonou, entre tradition et modernité.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- CAFÉ ET SANTÉ -->
-    <section id="sante" class="section section-sante">
+    <section id="sante" class="section section-sante bg-light">
       <div class="container">
         <h2 class="section-heading">Café et Santé : Ce que la Science Révèle</h2>
-        <p class="section-intro">Longtemps débattu, le café est aujourd'hui reconnu pour ses nombreux bienfaits sur la santé, étayés par des recherches scientifiques récentes.</p>
-        
         <div class="content-grid">
           <div class="content-card">
-            <h3>Protection Cérébrale</h3>
-            <p>Des études récentes (2025-2026) suggèrent que la consommation régulière de café peut contribuer à la protection du cerveau. La caféine et les antioxydants présents dans le café pourraient réduire les cytokines pro-inflammatoires et offrir une défense contre les maladies neurodégénératives telles qu'Alzheimer et Parkinson.</p>
+            <h3>🧠 Protection Cérébrale</h3>
+            <p>Des études récentes (2025-2026) suggèrent que la consommation régulière de café peut contribuer à la protection du cerveau contre les maladies neurodégénératives.</p>
           </div>
           <div class="content-card">
-            <h3>Bienfaits Cardiovasculaires</h3>
-            <p>Contrairement aux idées reçues, de nouvelles recherches (2026) confirment que le café n'a pas d'effet hypertenseur à long terme et pourrait même avoir des effets bénéfiques sur la santé cardiovasculaire. Une consommation modérée est associée à un risque réduit de maladies cardiaques et d'accidents vasculaires cérébraux.</p>
+            <h3>❤️ Bienfaits Cardiovasculaires</h3>
+            <p>De nouvelles recherches confirment que le café n'a pas d'effet hypertenseur à long terme et pourrait même protéger le cœur.</p>
           </div>
           <div class="content-card">
-            <h3>Antioxydant et Anti-âge</h3>
-            <p>Le café est une source majeure d'antioxydants, qui combattent les radicaux libres responsables du vieillissement cellulaire. Une étude de fin 2025 a même mis en évidence un ralentissement du vieillissement prématuré chez certains individus, soulignant le rôle du café dans la longévité et le bien-être général.</p>
+            <h3>✨ Antioxydant et Anti-âge</h3>
+            <p>Le café est une source majeure d'antioxydants, combattant les radicaux libres responsables du vieillissement cellulaire.</p>
           </div>
-          <div class="content-card">
-            <h3>Impact sur le Métabolisme</h3>
-            <p>La consommation de café est également liée à une amélioration du métabolisme, notamment en aidant à la régulation du glucose. Cela pourrait jouer un rôle dans la prévention du diabète de type 2. De plus, la caféine est un stimulant naturel qui peut améliorer les performances physiques et cognitives.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- L'ART DE LA PRÉPARATION -->
-    <section id="preparation" class="section section-preparation bg-light">
-      <div class="container">
-        <h2 class="section-heading">L'Art de la Préparation : Secrets et Astuces du Barista</h2>
-        <p class="section-intro">De la torréfaction à la tasse, chaque étape compte pour révéler les arômes du café. Découvrez les méthodes traditionnelles et les astuces locales.</p>
-        
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>Torréfaction Artisanale</h3>
-            <p>La torréfaction est l'étape clé qui transforme le grain de café vert en grain aromatique. Une torréfaction artisanale permet de contrôler précisément le profil aromatique, en développant les notes fruitées, chocolatées ou épicées. Au Bénin, certains torréfacteurs locaux perpétuent ce savoir-faire pour offrir un café d'exception.</p>
-          </div>
-          <div class="content-card">
-            <h3>Astuces Béninoises : Le Café Épicé</h3>
-            <p>Au Bénin, le café est souvent sublimé par l'ajout d'épices. Une pincée de <strong>gingembre frais</strong> râpé directement dans la cafetière, quelques <strong>clous de girofle</strong>, ou même une touche de <strong>poivre long (Kili)</strong> peuvent transformer votre tasse en une expérience gustative unique. Ces mélanges apportent chaleur et profondeur, et sont particulièrement appréciés pour leurs vertus stimulantes.</p>
-          </div>
-          <div class="content-card">
-            <h3>Le Secret du Sel</h3>
-            <p>Une astuce surprenante mais efficace, transmise de génération en génération au Bénin, consiste à ajouter une infime pincée de sel au café moulu avant l'infusion. Le sel a la propriété de neutraliser l'amertume, révélant ainsi les saveurs plus douces et complexes du café. À essayer pour une découverte gustative inattendue !</p>
-          </div>
-          <div class="content-card">
-            <h3>Le Café de Rue : Une Expérience Authentique</h3>
-            <p>Au Bénin, le café est aussi une affaire de rue. Les vendeurs ambulants proposent un café fort et sucré, souvent mélangé avec du lait concentré, servi chaud et accompagné de pain. C'est une expérience sociale et gustative incontournable, un moment de partage et de convivialité qui fait partie intégrante de la culture locale.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CULTURE & ANECDOTES -->
-    <section id="culture" class="section section-culture">
-      <div class="container">
-        <h2 class="section-heading">Culture et Anecdotes : Histoires de Café</h2>
-        <p class="section-intro">Derrière chaque tasse de café se cachent des légendes, des traditions et des histoires fascinantes qui ont façonné sa place dans nos sociétés.</p>
-        
-        <div class="content-grid">
-          <div class="content-card">
-            <h3>La Légende de Kaldi</h3>
-            <p>L'histoire la plus célèbre sur l'origine du café est celle du berger éthiopien Kaldi. Il aurait remarqué que ses chèvres devenaient particulièrement énergiques après avoir brouté les baies d'un arbuste inconnu. En goûtant lui-même ces baies, il ressentit une vitalité nouvelle, marquant ainsi la découverte des propriétés stimulantes du café.</p>
-          </div>
-          <div class="content-card">
-            <h3>Le Café Touba : Un Symbole Sénégalais</h3>
-            <p>Le Café Touba, originaire du Sénégal, est un mélange unique de café et de poivre de Jar (aussi appelé poivre de Guinée ou Kili). Il est non seulement apprécié pour son goût épicé et puissant, mais il revêt également une forte dimension spirituelle et culturelle, étant associé à la confrérie mouride. Sa popularité s'est étendue à toute l'Afrique de l'Ouest.</p>
-          </div>
-          <div class="content-card">
-            <h3>Cérémonies du Café Éthiopiennes</h3>
-            <p>En Éthiopie, la préparation et la dégustation du café sont un rituel social et culturel appelé 
-« Buna Tetu ». Cette cérémonie, qui peut durer plusieurs heures, est un moment de partage et de convivialité, où le café est torréfié, moulu et infusé devant les invités, symbolisant l'hospitalité et la tradition.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALERIE D'EXPÉRIENCES -->
-    <section id="experiences" class="section section-experiences">
-      <div class="container">
-        <h2 class="section-heading">Galerie d'Expériences : Vos Histoires de Café</h2>
-        <p class="section-intro">Découvrez les témoignages et expériences d'autres passionnés de café du monde entier. Inspirez-vous et partagez votre propre histoire.</p>
-        
-        <div class="experiences-grid">
-          <div class="experience-card">
-            <div class="experience-header">
-              <div class="experience-avatar">AS</div>
-              <div class="experience-meta">
-                <strong>Amara Sow</strong>
-                <span>Dakar, Sénégal</span>
-              </div>
-            </div>
-            <p class="experience-content">"Le Café Touba est bien plus qu'une boisson pour moi. C'est un rituel du matin, un moment de connexion avec mes racines. Le mélange de poivre de Jar avec le café crée une harmonie unique que j'ai apprise de ma grand-mère."</p>
-            <div class="experience-tags">
-              <span class="tag">Café Touba</span>
-              <span class="tag">Tradition</span>
-              <span class="tag">Sénégal</span>
-            </div>
-          </div>
-          <div class="experience-card">
-            <div class="experience-header">
-              <div class="experience-avatar">JK</div>
-              <div class="experience-meta">
-                <strong>Jérôme Koffi</strong>
-                <span>Abidjan, Côte d'Ivoire</span>
-              </div>
-            </div>
-            <p class="experience-content">"J'ai découvert que le café béninois avec du gingembre frais est un excellent remède contre les migraines. Depuis, je le prépare chaque matin et je me sens tellement mieux. C'est devenu mon café signature."</p>
-            <div class="experience-tags">
-              <span class="tag">Gingembre</span>
-              <span class="tag">Santé</span>
-              <span class="tag">Recette</span>
-            </div>
-          </div>
-          <div class="experience-card">
-            <div class="experience-header">
-              <div class="experience-avatar">EM</div>
-              <div class="experience-meta">
-                <strong>Éva Mensah</strong>
-                <span>Accra, Ghana</span>
-              </div>
-            </div>
-            <p class="experience-content">"Chaque voyage me fait découvrir un nouveau café. Du Robusta ougandais au Robusta camerounais, chacun a sa propre personnalité. C'est fascinant de voir comment le terroir influence le goût. L'Afrique produit les meilleures surprises !"</p>
-            <div class="experience-tags">
-              <span class="tag">Voyage</span>
-              <span class="tag">Terroir</span>
-              <span class="tag">Afrique</span>
-            </div>
-          </div>
-        </div>
-        <div class="call-to-action">
-          <p>Vous aussi, partagez votre expérience café avec notre communauté mondiale !</p>
-          <a href="#" class="btn btn-primary">Partager Mon Histoire</a>
         </div>
       </div>
     </section>
 
     <!-- COMMUNAUTÉ -->
-    <section id="communaute" class="section section-communaute bg-light">
+    <section id="communaute" class="section section-communaute">
       <div class="container">
         <h2 class="section-heading">Le Cercle des Passionnés : Rejoignez-Nous</h2>
-        <p class="section-intro">Cet espace est dédié à tous les amoureux du café. Partagez vos anecdotes, vos astuces, vos recettes et rencontrez d'autres passionnés du monde entier.</p>
-        
         <div class="content-grid">
           <div class="content-card">
-            <h3>📚 Forum de Discussion</h3>
-            <p>Un forum interactif où vous pourrez poser vos questions, partager vos découvertes sur les cafés du monde, discuter des dernières recherches sur la santé ou échanger des techniques de préparation. Créez des sujets, répondez aux discussions et connectez-vous avec la communauté.</p>
+            <h3>📚 Forum & Partage</h3>
+            <p>Posez vos questions, partagez vos découvertes et connectez-vous avec d'autres amateurs de café du monde entier.</p>
           </div>
           <div class="content-card">
-            <h3>🍳 Vos Recettes et Astuces</h3>
-            <p>Vous avez une recette de café unique ? Une astuce de grand-mère pour sublimer votre boisson ? Un mélange d'épices secret ? Partagez-les ici ! Inspirez et soyez inspiré par les créations des autres membres.</p>
+            <h3>🍳 Recettes & Astuces</h3>
+            <p>Partagez vos mélanges secrets (gingembre, clous de girofle) et apprenez des autres membres de la communauté.</p>
           </div>
           <div class="content-card">
-            <h3>🎉 Rencontres et Événements</h3>
-            <p>Restez informé des événements café près de chez vous : dégustations, ateliers de barista, conférences. Organisez vos propres rencontres avec d'autres membres pour partager un bon café et échanger en personne.</p>
-          </div>
-          <div class="content-card">
-            <h3>📸 Galerie Visuelle</h3>
-            <p>Partagez vos photos de café, de cafés visités, de torréfactions maison. Créez une galerie visuelle de la diversité des cafés et des moments de partage autour de cette boisson magique.</p>
-          </div>
-          <div class="content-card">
-            <h3>🌍 Réseau Global</h3>
-            <p>Connectez-vous avec des passionnés de café de tous les continents. Trouvez des pen-pals café, organisez des échanges d'échantillons, et élargissez votre perspective sur le monde du café.</p>
-          </div>
-          <div class="content-card">
-            <h3>🎓 Ressources Éducatives</h3>
-            <p>Accédez à des tutoriels, des guides de dégustation, des articles scientifiques et des interviews d'experts. Apprenez continuellement et approfondissez votre connaissance du café.</p>
+            <h3>🎉 Événements Café</h3>
+            <p>Restez informé des dégustations, ateliers et rencontres près de chez vous ou en ligne.</p>
           </div>
         </div>
         <div class="call-to-action">
-          <p>Rejoignez notre communauté mondiale et plongez encore plus profondément dans l'univers du café !</p>
-          <a href="#" class="btn btn-primary">Rejoindre le Cercle des Passionnés</a>
+          <p>Rejoignez @kevin48life et la communauté mondiale du café !</p>
+          <a href="#" class="btn btn-primary">Rejoindre le Cercle</a>
         </div>
       </div>
     </section>
@@ -281,33 +223,24 @@
             <span class="logo-icon">☕</span>
             <span class="logo-text">Café Bénin</span>
           </a>
-          <p>Votre portail de référence pour tout savoir sur le café, du Bénin au monde entier. Une initiative passionnée pour les amoureux du café.</p>
-          <div class="social-links">
-            <a href="#" aria-label="Facebook"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png" alt="Facebook"></a>
-            <a href="#" aria-label="Instagram"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"></a>
-            <a href="#" aria-label="Twitter"><img src="https://img.icons8.com/ios-filled/24/ffffff/twitter.png" alt="Twitter"></a>
-          </div>
+          <p>Votre portail de référence pour tout savoir sur le café, du Bénin au monde entier. Une initiative portée par la passion et la culture.</p>
         </div>
         <div class="footer-links">
           <h4>Navigation</h4>
           <ul>
             <li><a href="#benin">Le Café au Bénin</a></li>
-            <li><a href="#afrique-monde">Afrique & Monde</a></li>
-            <li><a href="#sante">Café & Santé</a></li>
-            <li><a href="#preparation">Préparation</a></li>
-            <li><a href="#culture">Culture & Anecdotes</a></li>
-            <li><a href="#communaute">Communauté</a></li>
+            <li><a href="#coffee-shops">Coffee Shops</a></li>
+            <li><a href="#kevin-moments">L'Œil de Kevin</a></li>
+            <li><a href="#sante">Santé</a></li>
           </ul>
         </div>
         <div class="footer-contact">
-          <h4>Contact</h4>
-          <p>Email: contact@cafebenin.info</p>
-          <p>Adresse: Cotonou, Bénin</p>
+          <h4>Suivez Kevin</h4>
+          <a href="https://instagram.com/kevin48life" target="_blank" class="insta-link">Instagram: @kevin48life</a>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Café Bénin. Tous droits réservés.</p>
-        <p>Fait avec ❤️ pour les passionnés de café.</p>
       </div>
     </div>
   </footer>
