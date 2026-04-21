@@ -352,7 +352,7 @@
         
         <div class="contact-grid">
           <div class="contact-form-container">
-            <form id="contact-form" class="contact-form">
+            <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
               <div class="form-group">
                 <label for="name">Votre Nom</label>
                 <input type="text" id="name" name="name" required>
@@ -362,9 +362,15 @@
                 <input type="email" id="email" name="email" required>
               </div>
               <div class="form-group">
-                <label for="message">Votre Message ou Commentaire</label>
-                <textarea id="message" name="message" rows="6" required></textarea>
+                <label for="subject">Sujet</label>
+                <input type="text" id="subject" name="subject" placeholder="Ex: Commentaire, Question, Suggestion" required>
               </div>
+              <div class="form-group">
+                <label for="message">Votre Message ou Commentaire</label>
+                <textarea id="message" name="message" rows="6" placeholder="Partagez vos pensées, vos expériences ou vos questions sur le café..." required></textarea>
+              </div>
+              <input type="hidden" name="_next" value="https://kevingiscard.github.io/cafe-benin-info/#contact">
+              <input type="hidden" name="_captcha" value="false">
               <button type="submit" class="btn btn-primary">Envoyer le Message</button>
             </form>
             <div id="form-message" class="form-message"></div>
