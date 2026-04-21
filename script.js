@@ -1,76 +1,156 @@
-/* =============================================
-   CAFÉ BÉNIN PORTAIL — Script principal (Next-Gen)
-   ============================================= */
+/* =====================================================
+   CAFÉ BÉNIN — script.js  v4.0
+   ===================================================== */
 
-// ---- Mobile nav toggle ----
-const navToggle = document.querySelector(".nav-toggle");
-const mainNav = document.querySelector(".main-nav");
+(function () {
+  'use strict';
 
-navToggle.addEventListener("click", () => {
-  mainNav.classList.toggle("open");
-  navToggle.classList.toggle("open");
-});
+  /* ---- Sélecteurs ---- */
+  const header    = document.getElementById('header');
+  const navToggle = document.getElementById('nav-toggle');
+  const mainNav   = document.getElementById('main-nav');
+  const sections  = document.querySelectorAll('section[id]');
 
-// Close nav when a link is clicked
-mainNav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mainNav.classList.remove("open");
-    navToggle.classList.remove("open");
+
+  /* =====================================================
+     1. HEADER — ombre au scroll
+     ===================================================== */
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+
+  /* =====================================================
+     2. MENU BURGER MOBILE
+     ===================================================== */
+  navToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
-});
 
-// ---- Smooth scroll for anchor links ----
-document.querySelectorAll("a[href^=\"#\"]").forEach(anchor => {
-  anchor.addEventListener("click", function(e) {
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
+  /* Fermer en cliquant un lien */
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* Fermer avec Échap */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mainNav.classList.contains('open')) {
+      mainNav.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  });
+
+
+  /* =====================================================
+     3. SMOOTH SCROLL avec offset header
+     ===================================================== */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      const target = document.querySelector(targetId);
+      if (!target) return;
       e.preventDefault();
-      const offset = document.querySelector(".header").offsetHeight; // Hauteur du header fixe
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-  });
-});
-
-// ---- Active nav link on scroll ----
-const sections = document.querySelectorAll("section[id]");
-const headerHeight = document.querySelector(".header").offsetHeight;
-
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - headerHeight;
-    if (scrollY >= sectionTop) {
-      current = section.getAttribute("id");
-    }
+      const offset = header.offsetHeight + 8;
+      const top    = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
   });
 
-  mainNav.querySelectorAll("a").forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href").includes(current)) {
-      link.classList.add("active");
-    }
+
+  /* =====================================================
+     4. LIEN ACTIF au scroll (IntersectionObserver)
+     ===================================================== */
+  const navLinks = mainNav.querySelectorAll('a[href^="#"]');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.toggle(
+            'active',
+            link.getAttribute('href') === `#${id}`
+          );
+        });
+      }
+    });
+  }, {
+    rootMargin: `-${header.offsetHeight + 10}px 0px -55% 0px`,
+    threshold: 0
   });
-});
 
-// Initial check for active link on page load
-window.dispatchEvent(new Event("scroll"));
+  sections.forEach(s => observer.observe(s));
 
-// ---- Contact Form Submission (Formspree Integration) ----
-const contactForm = document.getElementById('contact-form');
-const formMessage = document.getElementById('form-message');
 
-if (contactForm) {
-  contactForm.addEventListener('submit', async (e) => {
-    // Formspree gère l'envoi automatiquement, mais nous pouvons ajouter une notification visuelle
-    formMessage.style.display = 'block';
-    formMessage.classList.remove('success', 'error');
-    formMessage.textContent = 'Envoi de votre message en cours...';
-    
-    // Formspree redirigera après l'envoi, donc ce code s'exécutera brièvement
-    setTimeout(() => {
-      formMessage.classList.add('success');
-      formMessage.textContent = 'Merci ! Votre message a été envoyé avec succès. Nous vous recontacterons bientôt.';
-    }, 500);
+  /* =====================================================
+     5. SCROLL REVEAL (Intersection Observer)
+     ===================================================== */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12
   });
-}
+
+  document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+
+
+  /* =====================================================
+     6. FORMULAIRE DE CONTACT (Formspree + feedback)
+     ===================================================== */
+  const form        = document.getElementById('contact-form');
+  const formMessage = document.getElementById('form-message');
+
+  if (form) {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      /* Feedback visuel immédiat */
+      formMessage.className = 'form-message loading';
+      formMessage.textContent = 'Envoi en cours…';
+
+      const data = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          formMessage.className = 'form-message success';
+          formMessage.textContent = '✓ Message envoyé ! Nous vous recontacterons bientôt.';
+          form.reset();
+        } else {
+          throw new Error('Serveur non disponible');
+        }
+      } catch {
+        formMessage.className = 'form-message error';
+        formMessage.textContent = '✗ Erreur lors de l\'envoi. Merci de réessayer ou d\'écrire à contact@cafebenin.com';
+      }
+
+      /* Masquer le message après 6s */
+      setTimeout(() => {
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+      }, 6000);
+    });
+  }
+
+})();
