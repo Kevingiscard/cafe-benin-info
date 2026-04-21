@@ -1,436 +1,532 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Café Bénin : Le Portail Mondial du Café - Next Gen</title>
-  <meta name="description" content="Explorez le monde fascinant du café : du Bénin à l'Afrique et au-delà. Un portail ultra-moderne, intuitif et visuellement époustouflant." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Bénin : L'Élégance du Café</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+    <style>
+        :root {
+            --primary: #BF360C;
+            --primary-dark: #8D2A09;
+            --secondary: #00695C;
+            --accent: #FFD700;
+            --bg-color: #FFF3E0;
+            --text-main: #2C1E16;
+            --text-muted: #5A4A42;
+            --card-bg: #FFFFFF;
+            --radius: 16px;
+            --shadow: 0 8px 30px rgba(0,0,0,0.1);
+            --shadow-lg: 0 15px 45px rgba(0,0,0,0.2);
+            --transition: all 0.4s ease-in-out;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(248, 245, 240, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(229, 213, 197, 0.5);
+        }
+        
+        header a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        header a:hover { color: var(--primary); }
+
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem;
+            background: linear-gradient(rgba(229, 213, 197, 0.8), rgba(229, 213, 197, 0.8)), url('img/hero-bg.jpg') center/cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin: 0 0 1rem 0;
+            letter-spacing: -1px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 5rem 2rem;
+        }
+        
+        .section-alt { background-color: var(--accent); opacity: 0.95; }
+        .section-alt .container h2 { color: var(--text-main); }
+        .section-alt .card { background: rgba(255,255,255,0.9); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-family: var(--font-heading);
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 3rem;
+            position: relative;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        section h3.subtitle {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            grid-column: 1 / -1;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        /* ===== GRID & CARDS ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: calc(var(--radius) - 6px);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(191, 54, 12, 0.4);
+        }
+
+        /* ===== CONTACT FORM ===== */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #D1C4B5;
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
+            background: #FAFAFA;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(191, 54, 12, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: #FFF;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(191, 54, 12, 0.4);
+        }
+
+        .form-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .form-message.success {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .form-message.error {
+            background-color: #FFEBEE;
+            color: #C62828;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--text-main);
+            color: #FFF;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            header a {
+                font-size: 0.85rem;
+            }
+
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- HEADER & NAVIGATION -->
-  <header class="header">
-    <div class="container header-content">
-      <a href="#hero" class="logo">
-        <span class="logo-icon">☕</span>
-        <span class="logo-text">Café Bénin</span>
-      </a>
-      <nav class="main-nav">
-        <ul class="nav-list">
-          <li><a href="#benin">Bénin</a></li>
-          <li><a href="#afrique-monde">Afrique & Monde</a></li>
-          <li><a href="#sante">Santé</a></li>
-          <li><a href="#preparation">Préparation</a></li>
-          <li><a href="#coffee-shops">Coffee Shops</a></li>
-          <li><a href="#kevin-moments">L'Œil de Kevin</a></li>
-          <li><a href="#communaute">Communauté</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <button class="nav-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+<header>
+    <a href="#benin">Bénin</a>
+    <a href="#monde">Afrique & Monde</a>
+    <a href="#shops">Coffee Shops</a>
+    <a href="#sante">Santé</a>
+    <a href="#preparation">Préparation</a>
+    <a href="#kevin">L'Œil de Kevin</a>
+    <a href="#communaute">Communauté</a>
+    <a href="#contact">Contact</a>
+</header>
+
+<div class="hero">
+    <h1>☕ Café Bénin</h1>
+    <p>L'Élégance du Café, l'Âme du Bénin. Votre portail exclusif pour explorer l'univers raffiné du café.</p>
+</div>
+
+<section id="benin" class="container">
+    <h2>Un Terroir d'Exception : Le Bénin</h2>
+    <div class="grid">
+        <div class="card">
+            <img src="img/robusta.jpg" alt="Robusta Béninois" loading="lazy">
+            <h3>Robusta Béninois</h3>
+            <p>Un corps puissant, une faible acidité et des notes aromatiques de chocolat noir et de noix. Cultivé dans le Zou, l'Atlantique et l'Ouémé.</p>
+        </div>
+        <div class="card">
+            <img src="img/vision.jpg" alt="Vision 2025-2026" loading="lazy">
+            <h3>Vision 2025-2026</h3>
+            <p>Plan stratégique pour moderniser les infrastructures, former les agriculteurs et doubler la production d'ici 2030 dans le respect de l'environnement.</p>
+        </div>
+        <div class="card">
+            <img src="img/epices.jpg" alt="Épices locales" loading="lazy">
+            <h3>Épices & Traditions</h3>
+            <p>Le mariage ancestral du café avec le gingembre, le clou de girofle et le poivre long (Kili), transformant chaque tasse en une expérience sensorielle.</p>
+        </div>
     </div>
-  </header>
+</section>
 
-  <!-- HERO SECTION -->
-  <section id="hero" class="hero-portal" style="background-image: url('img/cotonou_future_main.png');">
-    <div class="hero-overlay"></div>
-    <div class="container hero-content">
-      <h1 class="hero-title">Café Bénin : L'Élégance du Café, l'Âme du Bénin</h1>
-      <p class="hero-subtitle">Votre portail exclusif pour explorer l'univers raffiné du café. Des terroirs africains aux tendances mondiales, une expérience sensorielle et intellectuelle sans précédent.</p>
-      <div class="hero-btns">
-        <a href="#benin" class="btn btn-primary">Découvrir le Bénin</a>
-        <a href="#coffee-shops" class="btn btn-secondary">Nos Adresses Coup de Cœur</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAIN CONTENT -->
-  <main>
-    <!-- LE CAFÉ AU BÉNIN -->
-    <section id="benin" class="section section-benin">
-      <div class="container">
-        <h2 class="section-heading">Le Bénin : Un Terroir d'Exception en Pleine Éclosion</h2>
-        <p class="section-intro">Le Bénin, souvent méconnu pour sa production caféière, est en réalité une terre promise pour le Robusta. Avec des initiatives audacieuses et une volonté de fer, le pays se positionne comme un acteur clé de l'innovation et de la qualité en Afrique de l'Ouest. Plongez au cœur de cette renaissance et découvrez les saveurs uniques que le Bénin a à offrir.</p>
-        
-        <div class="content-grid">
-          <div class="card-item">
-            <img src="img/african_coffee_beans.png" alt="Grains de café Robusta du Bénin" class="card-img">
-            <h3>Robusta Béninois : Force et Caractère</h3>
-            <p>Le Robusta béninois est célébré pour son corps puissant, sa faible acidité et ses notes aromatiques distinctives de chocolat noir, de noix et parfois de fruits secs. Cultivé principalement dans les régions du Zou, de l'Atlantique et de l'Ouémé, il bénéficie d'un climat idéal pour développer toute sa complexité. La filière, en pleine structuration, met l'accent sur des pratiques agricoles durables et une traçabilité irréprochable, garantissant un produit d'une qualité supérieure.</p>
-          </div>
-          <div class="card-item">
-            <img src="img/premium_coffee_pour.png" alt="Préparation de café premium" class="card-img">
-            <h3>La Renaissance de la Filière : Vision 2025-2026</h3>
-            <p>Le gouvernement béninois, en collaboration avec des partenaires internationaux, a lancé un plan stratégique ambitieux pour la période 2025-2026. Ce plan vise à moderniser les infrastructures de production et de transformation, à former les agriculteurs aux meilleures pratiques et à promouvoir le café béninois sur les marchés mondiaux. L'objectif est de doubler la production d'ici 2030, tout en assurant une juste rémunération aux producteurs et en préservant l'environnement. C'est une véritable révolution verte qui s'opère, avec le café comme fer de lance.</p>
-          </div>
-          <div class="card-item">
-            <img src="img/coffee_preparation_modern.png" alt="Café avec épices béninoises" class="card-img">
-            <h3>Les Secrets des Saveurs Locales : Épices et Traditions</h3>
-            <p>Ce qui rend le café béninois véritablement unique, c'est son mariage ancestral avec les épices locales. Le gingembre frais apporte une chaleur piquante, les clous de girofle une profondeur boisée, et le poivre long (Kili) des notes complexes de muscade. Ces mélanges, souvent transmis de génération en génération, transforment chaque tasse en une expérience sensorielle inoubliable. Découvrez également l'astuce surprenante du sel, utilisée pour sublimer les arômes et réduire l'amertume, une preuve de l'ingéniosité culinaire béninoise.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LE CAFÉ EN AFRIQUE ET DANS LE MONDE -->
-    <section id="afrique-monde" class="section section-afrique-monde bg-dark">
-      <div class="container">
-        <h2 class="section-heading">L'Épopée du Café : De l'Afrique aux Continents du Monde</h2>
-        <p class="section-intro">Le café est une histoire universelle, un voyage qui a commencé sur les hauts plateaux éthiopiens et qui a conquis le monde. Chaque continent, chaque région, a apporté sa touche unique à cette boisson millénaire, créant une mosaïque de saveurs et de cultures. Embarquez pour un tour du monde des cafés et explorez la richesse de leurs terroirs.</p>
-        
-        <div class="content-grid">
-          <div class="card-item">
-            <img src="img/africa_coffee_map_style.png" alt="Carte stylisée de l'Afrique et du café" class="card-img">
-            <h3>L'Afrique : Berceau et Futur du Café</h3>
-            <p>L'Afrique est le continent originel du café, avec l'Éthiopie comme berceau de l'Arabica et ses cérémonies sacrées du 
-« Buna Tetu ». Aujourd'hui, l'Afrique est un acteur majeur, avec l'Ouganda en tête des exportations africaines (2024-2025) et des pays comme le Kenya et la Tanzanie produisant des Arabicas d'exception. Le continent est un réservoir de biodiversité caféière, offrant des profils aromatiques allant des notes florales et fruitées aux saveurs plus corsées et épicées. C'est une source inépuisable d'innovation et de tradition, où chaque tasse raconte une histoire millénaire.</p>
-          </div>
-          <div class="card-item">
-            <img src="img/coffee_beans_macro.png" alt="Grains de café en macro" class="card-img">
-            <h3>Amérique Latine : L'Empire de l'Arabica</h3>
-            <p>L'Amérique Latine est le plus grand producteur mondial de café, dominée par le Brésil et la Colombie. Cette région est le royaume incontesté de l'Arabica, offrant une diversité de saveurs allant du doux et équilibré au fruité et acidulé. Les cafés d'Amérique Latine sont souvent caractérisés par des notes de chocolat, de caramel, de noisette et d'agrumes, avec une acidité vive et agréable. Des pays comme le Costa Rica, le Guatemala et le Pérou sont également réputés pour leurs cafés de spécialité, cultivés avec soin dans des conditions idéales d'altitude et de climat, et souvent certifiés biologiques ou équitables. C'est une région où la passion pour le café se transmet de génération en génération, avec un savoir-faire inégalé.</p>
-          </div>
-          <div class="card-item">
-            <img src="img/premium_coffee_pour.png" alt="Café versé dans une tasse" class="card-img">
-            <h3>Asie : La Puissance du Robusta et l'Exotisme des Saveurs</h3>
-            <p>L'Asie a émergé comme une puissance majeure dans la production de café, notamment grâce au Vietnam, qui est le deuxième producteur mondial et le premier pour le Robusta. Le Robusta asiatique est connu pour son corps puissant, son amertume prononcée et sa teneur élevée en caféine, très prisé pour les mélanges d'espresso. L'Indonésie, avec ses îles volcaniques, offre des cafés aux saveurs uniques et complexes, comme le célèbre Kopi Luwak, ou les cafés de Sumatra aux notes terreuses, épicées et boisées. L'Inde et la Thaïlande contribuent également à cette diversité, proposant des cafés aux profils aromatiques audacieux et exotiques, souvent cultivés sous ombrage. L'Asie est un continent de contrastes, où la tradition rencontre l'innovation dans le monde du café.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEILLEURS COFFEE SHOPS -->
-    <section id="coffee-shops" class="section section-coffee-shops">
-      <div class="container">
-        <h2 class="section-heading">Coffee Shops d'Exception : Vos Adresses Incontournables</h2>
-        <p class="section-intro">Découvrez notre sélection exclusive des coffee shops les plus modernes et élégants, où l'art du café rencontre une ambiance unique. Que vous soyez à Cotonou, Lagos, Dakar ou ailleurs, trouvez votre prochaine destination caféinée et laissez-vous transporter par des saveurs exquises et des designs inspirants.</p>
-        
-        <div class="coffee-shops-grid">
-          <!-- BÉNIN -->
-          <div class="city-group">
-            <h3>🇧🇯 Cotonou, Bénin : L'Élégance Urbaine</h3>
-            <div class="shop-list">
-              <div class="shop-card">
-                <h4>Koukas Cotonou <span class="badge">Coup de ❤️</span></h4>
-                <p>Le nouveau joyau de Cotonou. Un design épuré, des pâtisseries exquises et un café de spécialité qui ravit les palais les plus exigeants. Idéal pour un moment de détente ou un rendez-vous professionnel dans un cadre ultra-moderne.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Café de la Fondation Zinsou</h4>
-                <p>Alliez culture et café dans ce lieu emblématique. Profitez d'un excellent café dans un cadre artistique et paisible, parfait pour la réflexion et la créativité, au cœur de l'effervescence culturelle de Cotonou.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Oudy K Sô x Fourmé</h4>
-                <p>Un espace moderne et stylé, offrant une expérience café contemporaine. Le lieu parfait pour les amateurs de design et de saveurs innovantes, où chaque détail est pensé pour le plaisir des sens.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Le Mak (Haie Vive)</h4>
-                <p>Un lieu convivial et internationalement reconnu, offrant une atmosphère chaleureuse et une sélection de cafés pour tous les goûts. Un incontournable pour les habitants et les visiteurs en quête d'authenticité et de qualité.</p>
-              </div>
-            </div>
-          </div>
-          
-          <!-- NIGERIA -->
-          <div class="city-group">
-            <h3>🇳🇬 Lagos, Nigeria : La Dynamique Caféinée</h3>
-            <div class="shop-list">
-              <div class="shop-card">
-                <h4>Kaldi Coffee</h4>
-                <p>Le pionnier de la torréfaction de spécialité au Nigeria. Découvrez des grains frais, locaux et internationaux, torréfiés avec passion. Un lieu où l'art de la torréfaction est élevé au rang de science, pour des saveurs inégalées.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Art Cafe</h4>
-                <p>Un havre de paix artistique où chaque tasse est une œuvre. Ambiance bohème et créative, idéale pour s'évader et stimuler l'imagination, au cœur de la vibrante scène artistique de Lagos.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Café Neo</h4>
-                <p>Une chaîne africaine en pleine expansion, mettant en avant les grains du continent. Un incontournable pour un café de qualité constante et une ambiance moderne, parfaite pour le travail ou la détente.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- SÉNÉGAL -->
-          <div class="city-group">
-            <h3>🇸🇳 Dakar, Sénégal : L'Élégance Africaine</h3>
-            <div class="shop-list">
-              <div class="shop-card">
-                <h4>Layu Café</h4>
-                <p>Un design moderne inspiré de la culture sénégalaise, offrant un cadre idéal pour le télétravail et la dégustation de cafés raffinés. Un lieu où l'esthétique et le goût se rencontrent pour une expérience unique.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Simone Cafe</h4>
-                <p>Un lieu chaleureux et gourmand, réputé pour ses desserts et son ambiance accueillante, parfait pour une pause détente entre amis ou en famille, au cœur de la capitale sénégalaise.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- KENYA -->
-          <div class="city-group">
-            <h3>🇰🇪 Nairobi, Kenya : Le Cœur de l'Arabica</h3>
-            <div class="shop-list">
-              <div class="shop-card">
-                <h4>Connect Coffee Roasters</h4>
-                <p>Engagés dans une démarche "Seed to Cup", ils proposent des cafés d'exception avec une traçabilité irréprochable et des saveurs uniques. Une immersion totale dans le monde du café de spécialité, de la graine à la tasse.</p>
-              </div>
-              <div class="shop-card">
-                <h4>Java House</h4>
-                <p>L'institution est-africaine du café. Un lieu incontournable pour un café de qualité constante et une ambiance animée, parfaite pour découvrir la culture caféinée de Nairobi.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- L'ŒIL DE KEVIN (INSTAGRAM) -->
-    <section id="kevin-moments" class="section section-kevin bg-dark">
-      <div class="container">
-        <div class="kevin-header">
-          <h2 class="section-heading">L'Œil de Kevin : Moments & Inspirations Caféinées</h2>
-          <div class="insta-badge">
-            <a href="https://instagram.com/kevin48life" target="_blank">@kevin48life</a>
-          </div>
-        </div>
-        <p class="section-intro">Suivez le parcours de Kevin à travers l'Afrique et le monde, entre spiritualité, fierté béninoise et une passion inébranlable pour les terroirs africains. Découvrez ses coups de cœur, ses réflexions et ses moments café inspirants, capturés à travers l'objectif de son appareil.</p>
-        
-        <div class="kevin-grid">
-          <div class="kevin-card">
-            <div class="kevin-quote">
-              "Célébrons la richesse incommensurable des terroirs africains. De l'Éthiopie et ses hauts plateaux majestueux, aux terres volcaniques fertiles du Kenya et des Grands Lacs. Chaque grain raconte une histoire, chaque tasse est une célébration de notre héritage."<br><br>#AfricaCoffee #TerroirAfricain #PassionCafe
-            </div>
-            <div class="kevin-meta">— Kevin H. (@kevin48life)</div>
-          </div>
-          <div class="kevin-card">
-            <div class="kevin-quote">
-              "229 au cœur ! 🇧🇯✨ On entre en 2026 avec la force, la paix et l'ambition. Que cette année soit celle de toutes vos réussites. Le café béninois, c'est l'énergie de nos racines pour conquérir le monde !"<br><br>#Benin #FierementBeninois #Cotonou #NouvelAn2026
-            </div>
-            <div class="kevin-meta">— Nouvel An 2026</div>
-          </div>
-          <div class="kevin-card">
-            <img src="img/luxury_coffee_shop.png" alt="Ambiance Coffee Shop Moderne" class="kevin-img">
-            <p class="kevin-caption">Inspiration : L'élégance d'un coffee shop moderne à Cotonou, où chaque détail est pensé pour une expérience café parfaite.</p>
-          </div>
-          <div class="kevin-card">
-            <img src="img/coffee_preparation_modern.png" alt="Préparation Café Moderne" class="kevin-img">
-            <p class="kevin-caption">L'art de la préparation : La précision du barista pour révéler toutes les nuances aromatiques du café. Un geste, une passion.</p>
-          </div>
-          <div class="kevin-card">
-            <img src="img/modern_social_space.png" alt="Espace social moderne" class="kevin-img">
-            <p class="kevin-caption">Communauté : Un espace vibrant où les passionnés de café se rencontrent, échangent et partagent leurs expériences.</p>
-          </div>
-          <div class="kevin-card">
-            <img src="img/premium_coffee_pour.png" alt="Café versé dans une tasse" class="kevin-img">
-            <p class="kevin-caption">Le rituel : La beauté intemporelle d'un café fraîchement préparé, promesse d'un moment de pur plaisir.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CAFÉ ET SANTÉ -->
-    <section id="sante" class="section section-sante bg-light">
-      <div class="container">
-        <h2 class="section-heading">Café et Santé : Les Dernières Révélations Scientifiques</h2>
-        <p class="section-intro">Le café, bien plus qu'une simple boisson stimulante, est un véritable élixir de bien-être. Les recherches scientifiques les plus récentes (2025-2026) continuent de dévoiler ses multiples vertus, transformant notre perception de cette boisson ancestrale. Découvrez comment le café peut devenir un allié précieux pour votre santé au quotidien.</p>
-        
-        <div class="content-grid">
-          <div class="card-item">
-            <h3>🧠 Neuroprotection Avancée et Cognition</h3>
-            <p>La consommation régulière de café est fortement corrélée à une amélioration significative des fonctions cognitives. La caféine, en synergie avec les antioxydants, agit comme un bouclier neuroprotecteur. Des études récentes (2025) ont démontré une réduction des marqueurs inflammatoires cérébraux et un ralentissement de la progression de maladies neurodégénératives telles qu'Alzheimer et Parkinson. Le café stimule la vigilance, la concentration et la mémoire à long terme, faisant de chaque tasse un coup de pouce pour votre cerveau.</p>
-          </div>
-          <div class="card-item">
-            <h3>❤️ Santé Cardiovasculaire et Longévité Accrue</h3>
-            <p>Les craintes passées concernant l'impact du café sur le cœur sont aujourd'hui largement réfutées. De nouvelles méta-analyses (2026) confirment que le café, consommé avec modération (3 à 5 tasses par jour), est associé à une réduction du risque de maladies cardiovasculaires, d'accidents vasculaires cérébraux et d'insuffisance cardiaque. Ses composés bioactifs améliorent la fonction endothéliale, réduisent l'inflammation systémique et contribuent à une meilleure régulation de la pression artérielle, favorisant ainsi une longévité en pleine santé.</p>
-          </div>
-          <div class="card-item">
-            <h3>✨ Puissant Antioxydant et Anti-âge Cellulaire</h3>
-            <p>Le café est une source exceptionnelle d'antioxydants, surpassant souvent les fruits et légumes dans l'alimentation occidentale. Les polyphénols et les acides chlorogéniques qu'il contient combattent activement les radicaux libres, responsables du stress oxydatif et du vieillissement prématuré des cellules. Une étude innovante (fin 2025) a même mis en évidence un effet anti-âge au niveau cellulaire, suggérant que le café pourrait contribuer à préserver l'intégrité de notre ADN et à prolonger la jeunesse de nos tissus.</p>
-          </div>
-          <div class="card-item">
-            <h3>📊 Régulation Métabolique et Prévention du Diabète</h3>
-            <p>L'impact du café sur le métabolisme est également très positif. Il améliore la sensibilité à l'insuline et la régulation du glucose, des facteurs clés dans la prévention du diabète de type 2. De nombreuses études épidémiologiques ont montré une corrélation inverse entre la consommation de café et le risque de développer cette maladie chronique. De plus, la caféine stimule le métabolisme basal et favorise la thermogenèse, contribuant ainsi à la gestion du poids et à la combustion des graisses, un atout non négligeable pour une vie saine.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- L'ART DE LA PRÉPARATION -->
-    <section id="preparation" class="section section-preparation">
-      <div class="container">
-        <h2 class="section-heading">L'Art Subtil de la Préparation : Secrets, Rituels et Innovations</h2>
-        <p class="section-intro">De la sélection minutieuse des grains à la dégustation finale, chaque étape de la préparation du café est une cérémonie. Découvrez les méthodes ancestrales, les innovations technologiques et les astuces transmises de génération en génération, avec un éclairage particulier sur les pratiques béninoises qui subliment chaque tasse.</p>
-        
-        <div class="content-grid">
-          <div class="card-item">
-            <h3>La Torréfaction : Révéler l'Âme du Grain</h3>
-            <p>La torréfaction est l'alchimie qui transforme le grain de café vert, inodore et insipide, en un joyau aromatique. C'est un processus délicat, où la maîtrise de la température et du temps est essentielle. Une torréfaction artisanale permet de développer des profils aromatiques complexes : des notes fruitées et florales pour les torréfactions claires, aux saveurs chocolatées, caramélisées et épicées pour les torréfactions plus foncées. Au Bénin, des maîtres torréfacteurs perpétuent ce savoir-faire, sublimant le Robusta local pour en extraire toute la richesse.</p>
-          </div>
-          <div class="card-item">
-            <h3>Astuces Béninoises : Le Café Sublimé par les Épices</h3>
-            <p>Le Bénin, terre d'épices, offre des traditions uniques pour enrichir le café. Le <strong>gingembre frais</strong>, avec sa chaleur vivifiante, les <strong>clous de girofle</strong> pour leur parfum boisé, et le <strong>poivre long (Kili)</strong> aux arômes complexes, sont autant d'ingrédients qui transforment le café en une boisson sensorielle. Ces mélanges ne sont pas de simples ajouts ; ils sont le reflet d'une culture culinaire riche, où le café est une invitation au voyage des sens, un héritage gustatif transmis avec fierté.</p>
-          </div>
-          <div class="card-item">
-            <h3>Le Secret du Sel : Une Tradition pour Réduire l'Amertume</h3>
-            <p>Une pratique ancestrale béninoise, surprenante pour beaucoup, consiste à ajouter une infime pincée de sel au café moulu avant l'infusion. Loin d'altérer le goût, le sel, en très petite quantité, a la capacité de neutraliser l'amertume naturelle du café, permettant ainsi aux saveurs plus douces et complexes de s'exprimer pleinement. Cette technique révèle une nouvelle dimension gustative, rendant le café plus rond et agréable en bouche, et témoigne de l'ingéniosité des traditions locales pour parfaire l'expérience café.</p>
-          </div>
-          <div class="card-item">
-            <h3>Le Café de Rue Béninois : Une Expérience Authentique</h3>
-            <p>Au Bénin, le café est aussi une affaire de rue, un rituel quotidien et une expérience sociale incontournable. Dès l'aube, les vendeurs ambulants proposent un café fort et sucré, souvent préparé avec du lait concentré, servi chaud dans de petites tasses. C'est un moment de partage et de convivialité qui anime les villes. Cette immersion authentique dans la culture locale offre un café simple mais réconfortant, une occasion unique d'observer le dynamisme et la chaleur humaine des villes béninoises, où chaque gorgée est un lien social.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CULTURE & ANECDOTES -->
-    <section id="culture" class="section section-culture bg-light">
-      <div class="container">
-        <h2 class="section-heading">Culture et Anecdotes : Les Histoires Fascinantes du Café</h2>
-        <p class="section-intro">Au-delà de sa saveur, le café est imprégné d'histoires, de légendes et de traditions qui ont façonné son parcours à travers les siècles et les continents. Plongez dans l'univers mystérieux et captivant des anecdotes caféinées, où chaque légende enrichit la magie de cette boisson.</p>
-        
-        <div class="content-grid">
-          <div class="card-item">
-            <h3>La Légende de Kaldi : L'Origine Éthiopienne du Café</h3>
-            <p>L'histoire la plus célèbre et la plus poétique sur l'origine du café nous vient d'Éthiopie, berceau de l'Arabica. La légende raconte qu'un berger nommé Kaldi, intrigué par l'énergie débordante de ses chèvres après qu'elles aient brouté les baies rouges d'un arbuste inconnu, décida d'en goûter lui-même. Il ressentit alors une vitalité nouvelle et une clarté d'esprit. Partageant sa découverte avec les moines locaux, ces derniers, d'abord sceptiques, finirent par adopter la boisson pour rester éveillés durant leurs longues prières nocturnes. Ainsi naquit la boisson qui allait conquérir le monde, une histoire de hasard et de découverte.</p>
-          </div>
-          <div class="card-item">
-            <h3>Le Café Touba : Un Symbole de Spiritualité au Sénégal</h3>
-            <p>Le Café Touba, originaire du Sénégal, est bien plus qu'une simple boisson ; c'est un symbole culturel et spirituel fort, profondément lié à la confrérie mouride. Ce mélange unique de café et de poivre de Jar (Xylopia aethiopica), également appelé poivre de Guinée ou Kili, offre un goût épicé et puissant. Sa popularité s'est étendue à toute l'Afrique de l'Ouest, où il est apprécié non seulement pour ses qualités gustatives, mais aussi pour son rôle dans les rassemblements sociaux et religieux, incarnant la convivialité et la tradition. Chaque tasse est une connexion avec l'héritage spirituel.</p>
-          </div>
-          <div class="card-item">
-            <h3>Les Cérémonies du Café Éthiopiennes : Un Rituel Sacré</h3>
-            <p>En Éthiopie, la préparation et la dégustation du café sont élevées au rang d'art et de rituel social, connu sous le nom de « Buna Tetu ». Cette cérémonie, qui peut durer plusieurs heures, est un moment de partage et de convivialité. Elle commence par la torréfaction des grains verts sur un brasero, suivie de leur mouture et de l'infusion dans une jebena (cafetière traditionnelle). Le café est ensuite servi en trois tours, chacun ayant une signification particulière, symbolisant l'hospitalité, le respect et la tradition ancestrale du pays. C'est une expérience immersive, un voyage dans le temps.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMMUNAUTÉ -->
-    <section id="communaute" class="section section-communaute bg-dark">
-      <div class="container">
-        <h2 class="section-heading">Le Cercle des Passionnés : Rejoignez Notre Communauté Mondiale</h2>
-        <p class="section-intro">Cet espace est dédié à tous les amoureux du café, des novices aux experts. Partagez vos connaissances, vos découvertes, vos recettes et rencontrez d'autres passionnés du monde entier. Ensemble, explorons et célébrons la richesse infinie du café, dans un esprit d'ouverture et de partage.</p>
-        
-        <div class="content-grid">
-          <div class="card-item">
-            <h3>📚 Forum de Discussion et Échanges</h3>
-            <p>Un forum interactif où vous pourrez poser vos questions, partager vos découvertes sur les cafés du monde, discuter des dernières recherches sur la santé ou échanger des techniques de préparation. Créez des sujets, répondez aux discussions et connectez-vous avec la communauté pour enrichir vos connaissances et votre passion.</p>
-          </div>
-          <div class="card-item">
-            <h3>🍳 Vos Recettes et Astuces Secrètes</h3>
-            <p>Vous avez une recette de café unique ? Une astuce de grand-mère pour sublimer votre boisson ? Un mélange d'épices secret (gingembre, clous de girofle, etc.) ? Partagez-les ici ! Inspirez et soyez inspiré par les créations des autres membres, et découvrez de nouvelles façons de savourer votre café, en explorant des saveurs inattendues.</p>
-          </div>
-          <div class="card-item">
-            <h3>🎉 Rencontres et Événements Caféinés</h3>
-            <p>Restez informé des événements café près de chez vous ou en ligne : dégustations, ateliers de barista, conférences, festivals du café. Organisez vos propres rencontres avec d'autres membres pour partager un bon café, échanger en personne et tisser des liens autour de cette passion commune, créant ainsi un réseau mondial de passionnés.</p>
-          </div>
-          <div class="card-item">
-            <h3>📸 Galerie Visuelle des Amateurs</h3>
-            <p>Partagez vos plus belles photos de café, de cafés visités, de torréfactions maison, ou de vos moments café préférés. Créez une galerie visuelle de la diversité des cafés et des instants de partage autour de cette boisson magique. Laissez votre créativité s'exprimer et inspirez d'autres passionnés par vos clichés.</p>
-          </div>
-          <div class="card-item">
-            <h3>🌍 Réseau Global des Passionnés</h3>
-            <p>Connectez-vous avec des passionnés de café de tous les continents. Trouvez des correspondants café, organisez des échanges d'échantillons de grains rares, et élargissez votre perspective sur le monde du café en découvrant des cultures et des pratiques différentes. Un réseau sans frontières pour une passion sans limites.</p>
-          </div>
-          <div class="card-item">
-            <h3>🎓 Ressources Éducatives et Guides</h3>
-            <p>Accédez à une bibliothèque de ressources : tutoriels détaillés, guides de dégustation, articles scientifiques, interviews d'experts et glossaires. Apprenez continuellement et approfondissez votre connaissance du café, de la graine à la tasse, avec des informations fiables et accessibles, pour devenir un véritable expert.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="section section-contact bg-light">
-      <div class="container">
-        <h2 class="section-heading">Contactez-nous & Partagez Votre Expérience</h2>
-        <p class="section-intro">Nous sommes impatients de lire vos commentaires, vos questions ou vos histoires de café. Utilisez le formulaire ci-dessous pour nous envoyer un message. Votre avis compte !</p>
-        
-        <div class="contact-grid">
-          <div class="contact-form-container">
-            <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-              <div class="form-group">
-                <label for="name">Votre Nom</label>
-                <input type="text" id="name" name="name" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Votre Email</label>
-                <input type="email" id="email" name="email" required>
-              </div>
-              <div class="form-group">
-                <label for="subject">Sujet</label>
-                <input type="text" id="subject" name="subject" placeholder="Ex: Commentaire, Question, Suggestion" required>
-              </div>
-              <div class="form-group">
-                <label for="message">Votre Message ou Commentaire</label>
-                <textarea id="message" name="message" rows="6" placeholder="Partagez vos pensées, vos expériences ou vos questions sur le café..." required></textarea>
-              </div>
-              <input type="hidden" name="_next" value="https://kevingiscard.github.io/cafe-benin-info/#contact">
-              <input type="hidden" name="_captcha" value="false">
-              <button type="submit" class="btn btn-primary">Envoyer le Message</button>
-            </form>
-            <div id="form-message" class="form-message"></div>
-          </div>
-          <div class="contact-info">
-            <h3>Informations de Contact</h3>
-            <p><i class="fas fa-envelope"></i> Email: contact@cafebenin.com</p>
-            <p><i class="fas fa-phone"></i> Téléphone: +229 97 00 00 00</p>
-            <p><i class="fas fa-map-marker-alt"></i> Adresse: 123 Rue du Café, Cotonou, Bénin</p>
-            
-            <h3>Suivez Kevin sur Instagram</h3>
-            <p>Pour des inspirations quotidiennes et des moments café exclusifs, suivez Kevin sur Instagram :</p>
-            <a href="https://instagram.com/kevin48life" target="_blank" class="btn btn-secondary insta-btn"><i class="fab fa-instagram"></i> @kevin48life</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer-portal">
+<section id="monde" class="section-alt">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <a href="#hero" class="logo">
-            <span class="logo-icon">☕</span>
-            <span class="logo-text">Café Bénin</span>
-          </a>
-          <p>Votre portail de référence pour tout savoir sur le café, du Bénin au monde entier. Une initiative portée par la passion et la culture.</p>
+        <h2>De l'Afrique aux Continents</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🌍 L'Afrique : Le Berceau</h3>
+                <p>De l'Éthiopie (Arabica) à l'Ouganda (leader export 2024-2025), le continent offre une biodiversité caféière aux notes florales et corsées.</p>
+            </div>
+            <div class="card">
+                <h3>🌎 Amérique Latine : L'Empire de l'Arabica</h3>
+                <p>Dominée par le Brésil et la Colombie. Un royaume de l'Arabica caractérisé par des notes de chocolat, de caramel et une acidité vive.</p>
+            </div>
+            <div class="card">
+                <h3>🌏 Asie : Puissance et Exotisme</h3>
+                <p>Le Vietnam mène la production mondiale de Robusta. L'Indonésie (Kopi Luwak) et l'Inde proposent des profils audacieux, terreux et épicés.</p>
+            </div>
         </div>
-        <div class="footer-links">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="#benin">Le Café au Bénin</a></li>
-            <li><a href="#afrique-monde">Afrique & Monde</a></li>
-            <li><a href="#sante">Café & Santé</a></li>
-            <li><a href="#preparation">Préparation</a></li>
-            <li><a href="#coffee-shops">Coffee Shops</a></li>
-            <li><a href="#kevin-moments">L'Œil de Kevin</a></li>
-            <li><a href="#communaute">Communauté</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-contact">
-          <h4>Suivez Kevin</h4>
-          <a href="https://instagram.com/kevin48life" target="_blank" class="insta-link">Instagram: @kevin48life</a>
-          <div class="social-links">
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://instagram.com/kevin48life" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Café Bénin. Tous droits réservés.</p>
-        <p>Fait avec ❤️ pour les passionnés de café.</p>
-      </div>
     </div>
-  </footer>
+</section>
 
-  <script src="script.js"></script>
+<section id="shops" class="container">
+    <h2>Coffee Shops d'Exception</h2>
+    <div class="grid">
+        <h3 class="subtitle">🇧🇯 Cotonou, Bénin</h3>
+        <div class="card"><h3>Koukas Cotonou</h3><p>Le nouveau joyau ultra-moderne, pâtisseries exquises et café de spécialité.</p></div>
+        <div class="card"><h3>Café Fondation Zinsou</h3><p>Alliez culture et café dans un cadre artistique et paisible.</p></div>
+        <div class="card"><h3>Oudy K Sô x Fourmé</h3><p>Espace moderne et stylé pour les amateurs de design et d'innovation.</p></div>
+        <div class="card"><h3>Le Mak (Haie Vive)</h3><p>Atmosphère chaleureuse et sélection internationale pour tous les goûts.</p></div>
+
+        <h3 class="subtitle">🇳🇬 Lagos, Nigeria</h3>
+        <div class="card"><h3>Kaldi Coffee</h3><p>Le pionnier de la torréfaction de spécialité au Nigeria.</p></div>
+        <div class="card"><h3>Art Cafe</h3><p>Havre de paix bohème au cœur de la vibrante scène artistique.</p></div>
+        <div class="card"><h3>Café Neo</h3><p>Chaîne africaine en expansion mettant en avant les grains du continent.</p></div>
+
+        <h3 class="subtitle">🇸🇳 Dakar, Sénégal & 🇰🇪 Nairobi, Kenya</h3>
+        <div class="card"><h3>Layu Café (Dakar)</h3><p>Design inspiré de la culture sénégalaise, idéal pour le télétravail.</p></div>
+        <div class="card"><h3>Simone Cafe (Dakar)</h3><p>Lieu gourmand réputé pour ses desserts en plein Dakar.</p></div>
+        <div class="card"><h3>Connect Coffee (Nairobi)</h3><p>Démarche "Seed to Cup" avec une traçabilité irréprochable.</p></div>
+        <div class="card"><h3>Java House (Nairobi)</h3><p>L'institution est-africaine à l'ambiance animée.</p></div>
+    </div>
+</section>
+
+<section id="sante" class="section-alt">
+    <div class="container">
+        <h2>Café et Santé (2025-2026)</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🧠 Neuroprotection</h3>
+                <p>Amélioration cognitive et réduction des marqueurs inflammatoires (ralentissement potentiel d'Alzheimer/Parkinson).</p>
+            </div>
+            <div class="card">
+                <h3>❤️ Santé Cardiovasculaire</h3>
+                <p>Consommé avec modération (3-5 tasses), il réduit le risque d'insuffisance cardiaque et améliore la fonction endothéliale.</p>
+            </div>
+            <div class="card">
+                <h3>✨ Anti-âge Cellulaire</h3>
+                <p>Riche en polyphénols et acides chlorogéniques, il combat le stress oxydatif et préserve l'intégrité de l'ADN.</p>
+            </div>
+            <div class="card">
+                <h3>📊 Régulation Métabolique</h3>
+                <p>Améliore la sensibilité à l'insuline, régule le glucose et stimule la thermogenèse pour la gestion du poids.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="preparation" class="container">
+    <h2>L'Art de la Préparation</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>🔥 La Torréfaction</h3>
+            <p>L'alchimie maîtrisant température et temps pour révéler l'âme du grain, sublimant le Robusta local.</p>
+        </div>
+        <div class="card">
+            <h3>🌿 Les Épices Béninoises</h3>
+            <p>Gingembre, clous de girofle et poivre long transforment l'infusion en un héritage gustatif complexe.</p>
+        </div>
+        <div class="card">
+            <h3>🧂 Le Secret du Sel</h3>
+            <p>Une pincée de sel pour neutraliser l'amertume naturelle et laisser s'exprimer la douceur du grain.</p>
+        </div>
+        <div class="card">
+            <h3>☕ Le Café de Rue</h3>
+            <p>Un rituel quotidien à l'aube : fort, sucré, au lait concentré. Un véritable lien social urbain.</p>
+        </div>
+    </div>
+</section>
+
+<section id="kevin" class="section-alt">
+    <div class="container">
+        <h2>L'Œil de Kevin</h2>
+        <div class="grid" style="text-align: center;">
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>@kevin48life</h3>
+                <p style="font-style: italic; max-width: 800px; margin: 1rem auto;">"Célébrons la richesse incommensurable des terroirs africains. Chaque grain raconte une histoire, chaque tasse est une célébration de notre héritage. 229 au cœur ! 🇧🇯✨ On entre en 2026 avec la force, la paix et l'ambition."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="communaute" class="container">
+    <h2>Rejoignez la Communauté</h2>
+    <div class="grid">
+        <div class="card"><h3>📚 Forum de Discussion</h3><p>Échangez sur les cafés du monde, la santé et les techniques.</p></div>
+        <div class="card"><h3>🍳 Recettes Secrètes</h3><p>Partagez vos astuces, épices et méthodes de grand-mère.</p></div>
+        <div class="card"><h3>🎉 Événements</h3><p>Dégustations, ateliers de barista et festivals mondiaux.</p></div>
+        <div class="card"><h3>📸 Galerie Visuelle</h3><p>Exposez vos plus belles photos de torréfaction et d'extraction.</p></div>
+        <div class="card"><h3>🌍 Réseau Global</h3><p>Échanges d'échantillons de grains rares entre passionnés.</p></div>
+        <div class="card"><h3>🎓 Ressources</h3><p>Guides de dégustation, articles scientifiques et tutoriels.</p></div>
+    </div>
+</section>
+
+<section id="contact" class="section-alt">
+    <div class="container">
+        <h2>Contactez-nous</h2>
+        <div class="contact-form">
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="name">Votre Nom</label>
+                    <input type="text" id="name" name="name" placeholder="Votre Nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Votre Email</label>
+                    <input type="email" id="email" name="email" placeholder="Votre Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Sujet</label>
+                    <input type="text" id="subject" name="subject" placeholder="Sujet" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Votre Message</label>
+                    <textarea id="message" name="message" placeholder="Votre Message ou Commentaire" required></textarea>
+                </div>
+                <input type="hidden" name="_next" value="https://cafe-benin-info.vercel.app/#contact">
+                <input type="hidden" name="_captcha" value="false">
+                <button type="submit">Envoyer le Message</button>
+            </form>
+            <div class="contact-info">
+                <p><strong>📧 Email:</strong> contact@cafebenin.com</p>
+                <p><strong>📞 Téléphone:</strong> +229 97 00 00 00</p>
+                <p><strong>📍 Adresse:</strong> 123 Rue du Café, Cotonou, Bénin</p>
+                <p style="margin-top: 1.5rem;"><strong>Suivez Kevin:</strong> <a href="https://instagram.com/kevin48life" target="_blank" style="color: var(--primary); text-decoration: none;">@kevin48life</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Café Bénin. Tous droits réservés.</p>
+    <p>Fait avec ❤️ pour les passionnés de café. | <a href="https://instagram.com/kevin48life" target="_blank" style="color: var(--accent); text-decoration: none;">@kevin48life</a></p>
+</footer>
+
 </body>
 </html>
