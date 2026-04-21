@@ -142,7 +142,7 @@
         }
       } catch {
         formMessage.className = 'form-message error';
-        formMessage.textContent = '✗ Erreur lors de l\'envoi. Merci de réessayer ou d\'écrire à contact@cafebenin.com';
+        formMessage.textContent = '✗ Erreur lors de l\'envoi. Merci de réessayer ou d\'écrire à kevingiscard93@outlook.com';
       }
 
       /* Masquer le message après 6s */
