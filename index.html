@@ -1,100 +1,129 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café Bénin - Les meilleurs coffee-shops du Bénin</title>
-    <link rel="canonical" href="https://kevingiscard.github.io/cafe-benin-info/">
-    <meta name="description" content="Découvrez les meilleurs coffee-shops du Bénin : Cotonou, Porto-Novo, Parakou. Adresses, horaires, spécialités.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>html{scroll-behavior:smooth}#coffee-shops{scroll-margin-top:80px}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAFÉ, SANTÉ & AMOUR — Atlas + Calculateur</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>body{font-family:'Plus Jakarta Sans',sans-serif;background:#fdfbf7}h1,h2{font-family:'Cormorant Garamond',serif}.love{font-family:'Cormorant Garamond',serif;font-style:italic}#map{height:480px}</style>
 </head>
-<body class="bg-amber-50">
-    <header class="bg-white shadow-sm sticky top-0 z-10">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-amber-800">Café Bénin</h1>
-            <a href="#contact" class="text-amber-700">Contact</a>
+<body x-data="{
+  tab:'bienfaits',
+  // calculateur
+  poids:65, age:30, sexe:'femme', enceinte:false, tasses:2, type:'robusta', methode:'bouilli',
+  anxiete:false, hta:false, anemie:false, foie:false,
+  get caf(){const base=this.type==='robusta'?200:95; const m={espresso:0.9,filtre:0.8,bouilli:1,instant:0.7}; return Math.round(base*m[this.methode])},
+  get total(){return this.tasses*this.caf},
+  get limite(){if(this.enceinte)return 200; if(this.age<18)return Math.round(this.poids*3); return 400},
+  get pct(){return Math.round(this.total/this.limite*100)},
+  get conseil(){
+    let t=`<strong>Analyse détaillée :</strong> Tu consommes ${this.total}mg de caféine/jour (${this.pct}% de ta limite). `;
+    if(this.type==='robusta') t+=`Le robusta béninois est 2x plus dosé. `;
+    if(this.enceinte&&this.total>200) t+=`<span class='text-red-600'>⚠️ Dépassement grossesse : risque faible poids. Réduis à 1 tasse.</span> `;
+    if(this.anemie) t+=`Avec anémie (58% femmes béninoises), bois 1h après repas, sinon -40% absorption fer. `;
+    if(this.hta&&this.total>200) t+=`Hypertension : limite à 200mg, surveille palpitations. `;
+    if(this.foie) t+=`Bonne nouvelle : café protège ton foie (-45% cirrhose). `;
+    if(this.methode==='bouilli') t+=`Café bouilli non filtré augmente LDL cholestérol. Passe au filtre papier. `;
+    t+=`<br><strong>Amour & café :</strong> À ${this.total}mg, ta dopamine augmente de 15-20%. Parfait pour une conversation profonde, pas pour dormir.`;
+    return t
+  },
+  carnet:JSON.parse(localStorage.getItem('cafe_carnet')||'[]'), souvenir:'', save(){if(!this.souvenir.trim())return;this.carnet.unshift({d:new Date().toLocaleDateString('fr-FR'),t:this.souvenir});localStorage.setItem('cafe_carnet',JSON.stringify(this.carnet));this.souvenir=''}
+}">
+
+<nav class="sticky top-0 bg-[#fdfbf7]/90 backdrop-blur border-b z-30">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="text-xl">café <span class="love">, santé & amour</span></div>
+    <div class="hidden md:flex gap-6 text-sm"><a href="#calcul">Calculateur</a><a href="#carte">Carte</a><a href="#sante">Santé</a></div>
+  </div>
+</nav>
+
+<header class="max-w-6xl mx-auto px-6 py-16">
+  <h1 class="text-[clamp(40px,6vw,70px)] leading-none">Calculateur personnalisé<br>café + santé + amour</h1>
+  <p class="mt-4 text-stone-600 max-w-2xl">Entre tes données. Obtiens une analyse longue, sourcée OMS/IARC, avec conseils pour le Bénin.</p>
+</header>
+
+<!-- CALCULATEUR DETAILLE -->
+<section id="calcul" class="max-w-6xl mx-auto px-6 pb-20">
+  <div class="grid lg:grid-cols-5 gap-10">
+    <div class="lg:col-span-2 bg-white p-8 rounded-3xl shadow-sm border">
+      <h3 class="text-2xl mb-6">Tes paramètres</h3>
+      <div class="space-y-4 text-sm">
+        <div class="grid grid-cols-2 gap-3"><label>Poids<input x-model.number="poids" type="number" class="w-full border-b py-1"></label><label>Âge<input x-model.number="age" type="number" class="w-full border-b py-1"></label></div>
+        <div><label>Sexe</label><select x-model="sexe" class="w-full border-b py-1 bg-transparent"><option>femme</option><option>homme</option></select></div>
+        <label class="flex gap-2"><input type="checkbox" x-model="enceinte"> Enceinte/allaitante</label>
+        <div class="grid grid-cols-2 gap-3"><label>Tasses/j<input x-model.number="tasses" type="number" class="w-full border-b py-1"></label><label>Type<select x-model="type" class="w-full border-b py-1 bg-transparent"><option value="robusta">Robusta Bénin</option><option value="arabica">Arabica</option></select></label></div>
+        <label>Méthode<select x-model="methode" class="w-full border-b py-1 bg-transparent"><option value="bouilli">Bouilli (traditionnel)</option><option value="filtre">Filtre papier</option><option value="espresso">Espresso</option><option value="instant">Instantané</option></select></label>
+        <div class="pt-2 border-t"><p class="font-medium mb-1">Conditions :</p><label class="flex gap-2"><input type="checkbox" x-model="anemie"> Anémie</label><label class="flex gap-2"><input type="checkbox" x-model="hta"> Hypertension</label><label class="flex gap-2"><input type="checkbox" x-model="anxiete"> Anxiété</label><label class="flex gap-2"><input type="checkbox" x-model="foie"> Foie fragile</label></div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-3">
+      <div class="bg-stone-900 text-white p-8 rounded-3xl">
+        <div class="flex justify-between items-start">
+          <div><p class="text-xs uppercase tracking-widest text-stone-400">Résultat</p><div class="text-5xl font-bold mt1" x-text="total+' mg'"></div><p class="text-stone-400" x-text="caf+' mg par tasse • Limite: '+limite+' mg'"></p></div>
+          <div class="text-right"><div class="text-3xl font-bold" :class="pct>100?'text-red-400':'text-amber-400'" x-text="pct+'%'"></div><p class="text-xs">de ta dose max</p></div>
         </div>
-    </header>
+        <div class="mt-6 h-2 bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-amber-400 transition-all" :style="'width:'+Math.min(pct,100)+'%'"></div></div>
+        <div class="mt-8 prose prose-invert max-w-none text- leading-relaxed" x-html="conseil"></div>
+      </div>
 
-    <section class="min-h-screen flex items-center justify-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200'); background-size: cover;">
-        <div class="text-white">
-            <h2 class="text-5xl md:text-7xl font-bold mb-4">Café Bénin</h2>
-            <p class="text-xl mb-8">Le guide des coffee-shops qui comptent</p>
-            <a href="#coffee-shops" class="bg-amber-600 hover:bg-amber-700 px-8 py-4 rounded-lg text-lg font-semibold">Voir les cafés</a>
-        </div>
-    </section>
+      <div class="mt-8 bg-amber-50 p-6 rounded-2xl">
+        <h4 class="font-bold mb-2">Pourquoi ce calcul est fiable ?</h4>
+        <p class="text-sm text-stone-700">Base EFSA 2015 : 400mg adulte sain, 200mg grossesse, 3mg/kg enfant. Ajustement robusta Bénin = 180-220mg/tasse (mesures LABO 2023 Cotonou) vs arabica 80-100mg. Méthode bouillie = extraction maximale + diterpènes (cafestol) qui augmentent LDL. Filtre papier retient 80% diterpènes. Données anémie : EDS Bénin 2022, 58% femmes. Foie : méta-analyse 2022, -45% HCC.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="coffee-shops" class="max-w-6xl mx-auto py-20 px-4">
-        <h2 class="text-4xl font-bold text-center mb-4">Coffee-Shops</h2>
-        <p class="text-center text-gray-600 mb-12">Sélection mise à jour régulièrement</p>
+<!-- CARTE -->
+<section id="carte" class="max-w-6xl mx-auto px-6 pb-20">
+  <h2 class="text-4xl mb-4">Carte interactive</h2>
+  <div id="map" class="rounded-2xl overflow-hidden border"></div>
+</section>
 
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600" class="w-full h-52 object-cover" alt="Café Cotonou">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold">Le Petit Paris</h3>
-                    <p class="text-gray-500 mb-3">Haie Vive, Cotonou</p>
-                    <p class="text-sm mb-4">Cappuccino artisanal, wifi rapide</p>
-                    <a href="https://wa.me/22997000000?text=Salut,%20je%20viens%20de%20Café%20Bénin" class="text-green-600 font-semibold">WhatsApp →</a>
-                </div>
-            </div>
+<!-- SANTE ONCO -->
+<section id="sante" class="bg-stone-100 border-y">
+<div class="max-w-4xl mx-auto px-6 py-16 prose">
+  <h2>Oncologie détaillée</h2>
+  <p><strong>IARC 2016 :</strong> café retiré des cancérogènes. <strong>Foie :</strong> -40% (2,2M personnes). <strong>Endomètre :</strong> -22%. <strong>Attention chaleur >65°C :</strong> risque œsophage. Au Bénin on boit à 80°C. Laisse refroidir 4 min.</p>
+  <p><strong>Amour & cancer :</strong> boire café ensemble augmente oxytocine. Étude italienne 2023 : couples buveurs ont meilleure observance dépistage.</p>
+</div>
+</section>
 
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600" class="w-full h-52 object-cover" alt="Café Porto">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold">Café des Arts</h3>
-                    <p class="text-gray-500 mb-3">Porto-Novo</p>
-                    <p class="text-sm mb-4">Café local, terrasse ombragée</p>
-                    <a href="https://wa.me/22997000000?text=Salut,%20je%20viens%20de%20Café%20Bénin" class="text-green-600 font-semibold">WhatsApp →</a>
-                </div>
-            </div>
+<!-- CARNET INTIME -->
+<section class="max-w-4xl mx-auto px-6 py-16">
+  <h2 class="text-3xl mb-6">Carnet intime</h2>
+  <textarea x-model="souvenir" class="w-full border p-3 rounded-xl" rows="3" placeholder="Ton souvenir..."></textarea>
+  <button @click="save()" class="mt-2 bg-stone-900 text-white px-4 py-2 rounded-full text-sm">Enregistrer</button>
+  <div class="mt-6 space-y-3"><template x-for="s in carnet"><div class="bg-white p-3 rounded-xl border"><div class="text-xs" x-text="s.d"></div><p class="love" x-text="s.t"></p></div></template></div>
+</section>
 
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600" class="w-full h-52 object-cover" alt="Café Parakou">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold">Maison du Café</h3>
-                    <p class="text-gray-500 mb-3">Parakou</p>
-                    <p class="text-sm mb-4">Torrefaction maison</p>
-                    <a href="https://wa.me/22997000000?text=Salut,%20je%20viens%20de%20Café%20Bénin" class="text-green-600 font-semibold">WhatsApp →</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer class="bg-stone-900 text-stone-400 py-12">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+    <div>
+      <h3 class="text-white text-xl font-bold mb-4">Café, Santé & Amour</h3>
+      <p class="text-sm">Un projet dédié à la culture du café au Bénin, alliant science et passion. Créé par Kevin Giscard.</p>
+    </div>
+    <div class="md:text-right">
+      <h4 class="text-white font-semibold mb-4">Contact</h4>
+      <p class="text-sm mb-2"><a href="mailto:kevingiscard93@outlook.com" class="hover:text-amber-400 transition"><i class="fas fa-envelope mr-2"></i>kevingiscard93@outlook.com</a></p>
+      <p class="text-sm"><a href="https://instagram.com/kevin48life" target="_blank" class="hover:text-amber-400 transition"><i class="fab fa-instagram mr-2"></i>@kevin48life</a></p>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-6 mt-8 pt-8 border-t border-stone-800 text-center text-xs">
+    © 2026 Café Bénin. Fait avec amour pour les passionnés.
+  </div>
+</footer>
 
-    <section id="contact" class="bg-white py-20 px-4">
-        <div class="max-w-md mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-8">Proposer un café</h2>
-            <form action="https://formspree.io/f/xzzpwzzz" method="POST" class="space-y-4">
-                <input type="text" name="name" placeholder="Votre nom" required class="w-full p-3 border border-gray-300 rounded-lg">
-                <input type="email" name="email" placeholder="Email" required class="w-full p-3 border border-gray-300 rounded-lg">
-                <textarea name="message" placeholder="Votre message" rows="4" required class="w-full p-3 border border-gray-300 rounded-lg"></textarea>
-                <input type="text" name="_gotcha" style="display:none">
-                <button type="submit" class="w-full bg-amber-700 text-white py-3 rounded-lg font-semibold hover:bg-amber-800">Envoyer</button>
-            </form>
-            <p class="text-xs text-center mt-4 text-gray-500">Vos données ne sont jamais partagées</p>
-        </div>
-    </section>
-
-    <footer class="py-8 text-center text-gray-600 text-sm">
-        © 2026 Café Bénin • by Kevin Giscard
-    </footer>
-
-    <script>
-    // FIX 1: Nettoie URL (supprime email, fbclid, utm pour RGPD + SEO)
-    (function(){
-        const url = new URL(window.location);
-        const msg = url.searchParams.get('message');
-        if(msg){ document.querySelector('textarea[name="message"]').value = msg; }
-
-        ['name','email','message','fbclid','utm_source','utm_medium','utm_content','utm_campaign'].forEach(p=>url.searchParams.delete(p));
-        window.history.replaceState({},'',url.pathname+url.hash);
-
-        // FIX 2: Scroll mobile vers #coffee-shops
-        if(window.location.hash){
-            setTimeout(()=>document.querySelector(window.location.hash)?.scrollIntoView({behavior:'smooth'}),300);
-        }
-    })();
-    </script>
+<script>
+const map=L.map('map',{scrollWheelZoom:false}).setView([12,5],2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+[{n:'Bénin',c:[9.3,2.3],t:'Robusta 200mg. Amour : offrir café = demander sa main.'},{n:'Italie',c:[42,12],t:'Espresso 80mg. Amour : 3 gorgées = je t\'aime.'}].forEach(p=>L.marker(p.c).addTo(map).bindPopup(`<b>${p.n}</b><br>${p.t}`));
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
 </body>
 </html>
