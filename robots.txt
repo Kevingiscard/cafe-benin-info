@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /*?*
+Allow: /$
+Sitemap: https://kevingiscard.github.io/cafe-benin-info/sitemap.xml

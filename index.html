@@ -1,530 +1,100 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Café Bénin — L'Élégance du Café, l'Âme du Bénin</title>
-  <meta name="description" content="Votre portail exclusif pour explorer l'univers raffiné du café béninois et africain." />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>" />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Bénin - Les meilleurs coffee-shops du Bénin</title>
+    <link rel="canonical" href="https://kevingiscard.github.io/cafe-benin-info/">
+    <meta name="description" content="Découvrez les meilleurs coffee-shops du Bénin : Cotonou, Porto-Novo, Parakou. Adresses, horaires, spécialités.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>html{scroll-behavior:smooth}#coffee-shops{scroll-margin-top:80px}</style>
 </head>
-<body>
-
-<!-- ===== HEADER ===== -->
-<header class="header" id="header">
-  <div class="container header-content">
-    <a href="#home" class="logo">
-      <span class="logo-icon">☕</span>
-      <span class="logo-text">Café Bénin</span>
-    </a>
-
-    <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
-      <ul class="nav-list">
-        <li><a href="#benin">Bénin</a></li>
-        <li><a href="#monde">Monde</a></li>
-        <li><a href="#shops">Coffee Shops</a></li>
-        <li><a href="#sante">Santé</a></li>
-        <li><a href="#preparation">Préparation</a></li>
-        <li><a href="#kevin">Kevin</a></li>
-        <li><a href="#communaute">Communauté</a></li>
-        <li><a href="#contact" class="nav-cta">Contact</a></li>
-      </ul>
-    </nav>
-
-    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-</header>
-
-
-<!-- ===== HERO ===== -->
-<section class="hero-portal" id="home">
-  <div class="hero-overlay"></div>
-  <div class="hero-content reveal-up">
-    <span class="hero-tag">🇧🇯 Bénin · Afrique · Monde</span>
-    <h1 class="hero-title">L'Élégance du Café,<br><em>l'Âme du Bénin</em></h1>
-    <p class="hero-subtitle">Explorez l'univers raffiné du café béninois — de la graine à la tasse, du terroir à votre table.</p>
-    <div class="hero-btns">
-      <a href="#benin" class="btn btn-primary">Découvrir le Terroir</a>
-      <a href="#shops" class="btn btn-ghost">Coffee Shops</a>
-    </div>
-  </div>
-  <div class="hero-scroll-hint">
-    <span></span>
-  </div>
-</section>
-
-
-<!-- ===== BÉNIN ===== -->
-<section class="section" id="benin">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Le Terroir</span>
-      <h2 class="section-heading">Un Café d'Exception :<br>le Bénin</h2>
-      <p class="section-intro">Cultivé dans le Zou, l'Atlantique et l'Ouémé, le Robusta béninois s'impose comme l'un des plus caractériels d'Afrique de l'Ouest.</p>
-    </div>
-
-    <div class="content-grid three-cols">
-
-      <div class="card-item reveal-up" style="--delay: 0.1s">
-        <div class="card-img-wrap">
-          <img src="img/robusta.jpg" alt="Robusta Béninois" loading="lazy" />
-          <span class="card-badge">Robusta</span>
+<body class="bg-amber-50">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-amber-800">Café Bénin</h1>
+            <a href="#contact" class="text-amber-700">Contact</a>
         </div>
-        <div class="card-body">
-          <h3>Robusta Béninois</h3>
-          <p>Corps puissant, faible acidité, notes de chocolat noir et de noix. Le grain le plus authentique d'Afrique de l'Ouest.</p>
+    </header>
+
+    <section class="min-h-screen flex items-center justify-center text-center px-4" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200'); background-size: cover;">
+        <div class="text-white">
+            <h2 class="text-5xl md:text-7xl font-bold mb-4">Café Bénin</h2>
+            <p class="text-xl mb-8">Le guide des coffee-shops qui comptent</p>
+            <a href="#coffee-shops" class="bg-amber-600 hover:bg-amber-700 px-8 py-4 rounded-lg text-lg font-semibold">Voir les cafés</a>
         </div>
-      </div>
+    </section>
 
-      <div class="card-item reveal-up" style="--delay: 0.2s">
-        <div class="card-img-wrap">
-          <img src="img/vision.jpg" alt="Vision 2025-2026" loading="lazy" />
-          <span class="card-badge">Vision 2026</span>
+    <section id="coffee-shops" class="max-w-6xl mx-auto py-20 px-4">
+        <h2 class="text-4xl font-bold text-center mb-4">Coffee-Shops</h2>
+        <p class="text-center text-gray-600 mb-12">Sélection mise à jour régulièrement</p>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600" class="w-full h-52 object-cover" alt="Café Cotonou">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Le Petit Paris</h3>
+                    <p class="text-gray-500 mb-3">Haie Vive, Cotonou</p>
+                    <p class="text-sm mb-4">Cappuccino artisanal, wifi rapide</p>
+                    <a href="https://wa.me/22997000000?text=Salut,%20je%20viens%20de%20Café%20Bénin" class="text-green-600 font-semibold">WhatsApp →</a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600" class="w-full h-52 object-cover" alt="Café Porto">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Café des Arts</h3>
+                    <p class="text-gray-500 mb-3">Porto-Novo</p>
+                    <p class="text-sm mb-4">Café local, terrasse ombragée</p>
+                    <a href="https://wa.me/22997000000?text=Salut,%20je%20viens%20de%20Café%20Bénin" class="text-green-600 font-semibold">WhatsApp →</a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600" class="w-full h-52 object-cover" alt="Café Parakou">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Maison du Café</h3>
+                    <p class="text-gray-500 mb-3">Parakou</p>
+                    <p class="text-sm mb-4">Torrefaction maison</p>
+                    <a href="https://wa.me/22997000000?text=Salut,%20je%20viens%20de%20Café%20Bénin" class="text-green-600 font-semibold">WhatsApp →</a>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <h3>Vision Nationale 2030</h3>
-          <p>Investissements gouvernementaux massifs pour moderniser les infrastructures et doubler la production dans le respect de l'environnement.</p>
+    </section>
+
+    <section id="contact" class="bg-white py-20 px-4">
+        <div class="max-w-md mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">Proposer un café</h2>
+            <form action="https://formspree.io/f/xzzpwzzz" method="POST" class="space-y-4">
+                <input type="text" name="name" placeholder="Votre nom" required class="w-full p-3 border border-gray-300 rounded-lg">
+                <input type="email" name="email" placeholder="Email" required class="w-full p-3 border border-gray-300 rounded-lg">
+                <textarea name="message" placeholder="Votre message" rows="4" required class="w-full p-3 border border-gray-300 rounded-lg"></textarea>
+                <input type="text" name="_gotcha" style="display:none">
+                <button type="submit" class="w-full bg-amber-700 text-white py-3 rounded-lg font-semibold hover:bg-amber-800">Envoyer</button>
+            </form>
+            <p class="text-xs text-center mt-4 text-gray-500">Vos données ne sont jamais partagées</p>
         </div>
-      </div>
+    </section>
 
-      <div class="card-item reveal-up" style="--delay: 0.3s">
-        <div class="card-img-wrap">
-          <img src="img/epices.jpg" alt="Épices béninoises" loading="lazy" />
-          <span class="card-badge">Tradition</span>
-        </div>
-        <div class="card-body">
-          <h3>Épices &amp; Traditions</h3>
-          <p>Gingembre, clou de girofle, poivre long (Kili) — une signature gustative ancestrale transmise de génération en génération.</p>
-        </div>
-      </div>
+    <footer class="py-8 text-center text-gray-600 text-sm">
+        © 2026 Café Bénin • by Kevin Giscard
+    </footer>
 
-    </div>
-  </div>
-</section>
+    <script>
+    // FIX 1: Nettoie URL (supprime email, fbclid, utm pour RGPD + SEO)
+    (function(){
+        const url = new URL(window.location);
+        const msg = url.searchParams.get('message');
+        if(msg){ document.querySelector('textarea[name="message"]').value = msg; }
 
+        ['name','email','message','fbclid','utm_source','utm_medium','utm_content','utm_campaign'].forEach(p=>url.searchParams.delete(p));
+        window.history.replaceState({},'',url.pathname+url.hash);
 
-<!-- ===== MONDE ===== -->
-<section class="section bg-dark" id="monde">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Panorama</span>
-      <h2 class="section-heading">De l'Afrique<br>aux Continents</h2>
-      <p class="section-intro">Le café est un langage universel. Chaque région du globe lui prête sa voix, son caractère, son histoire.</p>
-    </div>
-
-    <div class="content-grid three-cols">
-
-      <div class="card-item reveal-up" style="--delay: 0.1s">
-        <div class="world-icon">🌍</div>
-        <div class="card-body">
-          <h3>Afrique — Le Berceau</h3>
-          <p>De l'Éthiopie (Arabica, cérémonies Buna Tetu) à l'Ouganda, leader africain à l'export en 2024-2025. Une biodiversité caféière incomparable.</p>
-        </div>
-      </div>
-
-      <div class="card-item featured reveal-up" style="--delay: 0.2s">
-        <div class="world-icon">🌎</div>
-        <div class="card-body">
-          <h3>Amérique Latine — L'Empire Arabica</h3>
-          <p>Brésil et Colombie dominent. Notes de chocolat, caramel et agrumes. Un équilibre parfait entre douceur et complexité.</p>
-        </div>
-      </div>
-
-      <div class="card-item reveal-up" style="--delay: 0.3s">
-        <div class="world-icon">🌏</div>
-        <div class="card-body">
-          <h3>Asie — Puissance et Exotisme</h3>
-          <p>Vietnam, leader mondial du Robusta. Indonésie (Kopi Luwak), Inde épicée. Des profils audacieux, terreux et profonds.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== COFFEE SHOPS ===== -->
-<section class="section" id="shops">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Adresses</span>
-      <h2 class="section-heading">Coffee Shops<br>d'Exception</h2>
-      <p class="section-intro">Des lieux de vie autant que des sanctuaires du café. De Cotonou à Nairobi, voici les adresses qui comptent.</p>
-    </div>
-
-    <div class="shops-grid">
-
-      <div class="city-block reveal-up" style="--delay: 0.1s">
-        <h3 class="city-title"><span>🇧🇯</span> Cotonou, Bénin</h3>
-        <div class="shop-list">
-          <div class="shop-card">
-            <span class="shop-badge">Nouveau</span>
-            <h4>Koukas Cotonou</h4>
-            <p>Le joyau ultra-moderne de Cotonou. Pâtisseries exquises, café de spécialité, design futuriste.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Café Fondation Zinsou</h4>
-            <p>Culture et café dans un cadre artistique unique. L'adresse intellectuelle de la ville.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Oudy K Sô × Fourmé</h4>
-            <p>Espace moderne et stylé pour amateurs de design et d'innovation culinaire.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Le Mak — Haie Vive</h4>
-            <p>Atmosphère chaleureuse, sélection internationale. L'adresse pour tous les goûts.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="city-block reveal-up" style="--delay: 0.2s">
-        <h3 class="city-title"><span>🇳🇬</span> Lagos, Nigeria</h3>
-        <div class="shop-list">
-          <div class="shop-card">
-            <span class="shop-badge">Pionnier</span>
-            <h4>Kaldi Coffee</h4>
-            <p>Le précurseur de la torréfaction de spécialité au Nigeria. Référence absolue.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Art Cafe</h4>
-            <p>Havre bohème au cœur de la scène artistique vibrante de Lagos.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Café Neo</h4>
-            <p>Chaîne africaine en expansion, mettant en avant les grains du continent.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="city-block reveal-up" style="--delay: 0.3s">
-        <h3 class="city-title"><span>🇸🇳</span> Dakar &amp; <span>🇰🇪</span> Nairobi</h3>
-        <div class="shop-list">
-          <div class="shop-card">
-            <h4>Layu Café — Dakar</h4>
-            <p>Design inspiré de la culture sénégalaise. Idéal pour le télétravail créatif.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Simone Cafe — Dakar</h4>
-            <p>Réputation bien établie pour ses desserts et sa sélection de cafés fins.</p>
-          </div>
-          <div class="shop-card">
-            <span class="shop-badge">Top</span>
-            <h4>Connect Coffee — Nairobi</h4>
-            <p>Approche Seed to Cup avec une traçabilité irréprochable, des producteurs à la tasse.</p>
-          </div>
-          <div class="shop-card">
-            <h4>Java House — Nairobi</h4>
-            <p>L'institution est-africaine. Ambiance animée, qualité constante.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== SANTÉ ===== -->
-<section class="section bg-warm" id="sante">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Science 2025–2026</span>
-      <h2 class="section-heading">Café &amp; Santé :<br>Ce que dit la Recherche</h2>
-      <p class="section-intro">Les études récentes confirment ce que les amateurs de café savent depuis toujours — bien bu, le café est un allié précieux pour le corps et l'esprit.</p>
-    </div>
-
-    <div class="content-grid four-cols">
-
-      <div class="health-card reveal-up" style="--delay: 0.05s">
-        <div class="health-icon">🧠</div>
-        <h3>Neuroprotection</h3>
-        <p>Réduction des marqueurs inflammatoires, ralentissement potentiel des maladies d'Alzheimer et de Parkinson. Amélioration des fonctions cognitives.</p>
-      </div>
-
-      <div class="health-card reveal-up" style="--delay: 0.1s">
-        <div class="health-icon">❤️</div>
-        <h3>Santé Cardiovasculaire</h3>
-        <p>Consommé avec modération (3–5 tasses), il réduit le risque d'insuffisance cardiaque et améliore la fonction endothéliale.</p>
-      </div>
-
-      <div class="health-card reveal-up" style="--delay: 0.15s">
-        <div class="health-icon">✨</div>
-        <h3>Anti-âge Cellulaire</h3>
-        <p>Riche en polyphénols et acides chlorogéniques, il combat le stress oxydatif et préserve l'intégrité de l'ADN.</p>
-      </div>
-
-      <div class="health-card reveal-up" style="--delay: 0.2s">
-        <div class="health-icon">📊</div>
-        <h3>Régulation Métabolique</h3>
-        <p>Améliore la sensibilité à l'insuline, régule le glucose et stimule la thermogenèse. Utile dans la prévention du diabète de type 2.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== PRÉPARATION ===== -->
-<section class="section" id="preparation">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Savoir-faire</span>
-      <h2 class="section-heading">L'Art de<br>la Préparation</h2>
-      <p class="section-intro">Du grain vert à la tasse parfaite — chaque étape est une discipline à part entière.</p>
-    </div>
-
-    <div class="prep-grid">
-
-      <div class="prep-card reveal-up" style="--delay: 0.05s">
-        <div class="prep-number">01</div>
-        <div class="prep-icon">🔥</div>
-        <h3>La Torréfaction</h3>
-        <p>L'alchimie maîtrisée entre température et temps. C'est ici que naît l'âme du grain, révélant la complexité aromatique du Robusta local.</p>
-      </div>
-
-      <div class="prep-card reveal-up" style="--delay: 0.1s">
-        <div class="prep-number">02</div>
-        <div class="prep-icon">🌿</div>
-        <h3>Les Épices Béninoises</h3>
-        <p>Gingembre frais, clous de girofle et poivre long Kili. Un assemblage ancestral qui transforme l'infusion en héritage gustatif vivant.</p>
-      </div>
-
-      <div class="prep-card reveal-up" style="--delay: 0.15s">
-        <div class="prep-number">03</div>
-        <div class="prep-icon">🧂</div>
-        <h3>Le Secret du Sel</h3>
-        <p>Une pincée de sel — technique ancestrale béninoise — pour neutraliser l'amertume et laisser s'exprimer toute la douceur naturelle du grain.</p>
-      </div>
-
-      <div class="prep-card reveal-up" style="--delay: 0.2s">
-        <div class="prep-number">04</div>
-        <div class="prep-icon">☕</div>
-        <h3>Le Café de Rue</h3>
-        <p>Un rituel quotidien à l'aube. Fort, sucré, au lait concentré. Un lien social urbain incontournable dans toutes les villes du Bénin.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== KEVIN ===== -->
-<section class="section-kevin" id="kevin">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag section-tag--light">Chronique Personnelle</span>
-      <h2 class="section-heading">L'Œil de Kevin</h2>
-      <div class="insta-badge">
-        <a href="https://instagram.com/kevin48life" target="_blank" rel="noopener">
-          <i class="fab fa-instagram"></i> @kevin48life
-        </a>
-      </div>
-    </div>
-
-    <div class="kevin-grid">
-
-      <div class="kevin-card reveal-up" style="--delay: 0.05s">
-        <div class="kevin-quote-mark">"</div>
-        <p class="kevin-quote">Célébrons la richesse incommensurable des terroirs africains. Chaque grain raconte une histoire, chaque tasse est une célébration de notre héritage.</p>
-        <div class="kevin-meta">229 au cœur 🇧🇯✨ — Janvier 2026</div>
-      </div>
-
-      <div class="kevin-card reveal-up" style="--delay: 0.1s">
-        <img class="kevin-img" src="img/luxury_coffee_shop.png" alt="Coffee shop moderne" loading="lazy" />
-        <p class="kevin-caption">Cotonou 2026 : la nouvelle génération de coffee shops qui redéfinit l'expérience urbaine.</p>
-      </div>
-
-      <div class="kevin-card reveal-up" style="--delay: 0.15s">
-        <img class="kevin-img" src="img/coffee_beans_macro.png" alt="Grains de Robusta" loading="lazy" />
-        <p class="kevin-caption">On entre en 2026 avec la force, la paix et l'ambition. ☕🌍</p>
-      </div>
-
-      <div class="kevin-card kevin-card--quote reveal-up" style="--delay: 0.2s">
-        <div class="kevin-quote-mark">"</div>
-        <p class="kevin-quote">Le Robusta béninois, c'est le café de la résistance. Puissant, honnête, profond — comme son peuple.</p>
-        <div class="kevin-meta">@kevin48life — Cotonou</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== COMMUNAUTÉ ===== -->
-<section class="section section-communaute" id="communaute">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Ensemble</span>
-      <h2 class="section-heading">Rejoignez<br>la Communauté</h2>
-      <p class="section-intro">Un espace vivant où passionnés de café du Bénin, d'Afrique et du monde entier se retrouvent, partagent, et créent.</p>
-    </div>
-
-    <div class="content-grid three-cols">
-      <div class="comm-card reveal-up" style="--delay: 0.05s">
-        <div class="comm-icon">📚</div>
-        <h3>Forum de Discussion</h3>
-        <p>Échangez sur les cafés du monde, la santé, les techniques de préparation et les actualités du secteur.</p>
-      </div>
-      <div class="comm-card reveal-up" style="--delay: 0.1s">
-        <div class="comm-icon">🍳</div>
-        <h3>Recettes Secrètes</h3>
-        <p>Partagez vos astuces, épices, méthodes de grand-mère et créations baristiques les plus originales.</p>
-      </div>
-      <div class="comm-card reveal-up" style="--delay: 0.15s">
-        <div class="comm-icon">🎉</div>
-        <h3>Événements</h3>
-        <p>Dégustations, ateliers barista, festivals et compétitions mondiales. Ne ratez aucun rendez-vous.</p>
-      </div>
-      <div class="comm-card reveal-up" style="--delay: 0.2s">
-        <div class="comm-icon">📸</div>
-        <h3>Galerie Visuelle</h3>
-        <p>Exposez vos plus belles photos : torréfaction, extraction, latte art, terroir — tout est bienvenu.</p>
-      </div>
-      <div class="comm-card reveal-up" style="--delay: 0.25s">
-        <div class="comm-icon">🌍</div>
-        <h3>Réseau Global</h3>
-        <p>Échanges de grains rares, collaborations entre producteurs et amateurs, partage de terroirs uniques.</p>
-      </div>
-      <div class="comm-card reveal-up" style="--delay: 0.3s">
-        <div class="comm-icon">🎓</div>
-        <h3>Ressources</h3>
-        <p>Guides de dégustation, articles scientifiques, tutoriels vidéo et fiches techniques accessibles à tous.</p>
-      </div>
-    </div>
-
-    <div class="cta-banner reveal-up">
-      <p>Prêt à faire partie de l'aventure ?</p>
-      <a href="#contact" class="btn btn-primary">Nous Rejoindre</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== CONTACT ===== -->
-<section class="section bg-light" id="contact">
-  <div class="container">
-    <div class="section-header reveal-up">
-      <span class="section-tag">Échangeons</span>
-      <h2 class="section-heading">Contactez-nous</h2>
-      <p class="section-intro">Une question, un partenariat, une idée ? Nous lisons chaque message avec attention.</p>
-    </div>
-
-    <div class="contact-grid reveal-up">
-
-      <div class="contact-form-container">
-        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
-          <div class="form-group">
-            <label for="name">Votre Nom</label>
-            <input type="text" id="name" name="name" placeholder="Jean Dupont" required />
-          </div>
-          <div class="form-group">
-            <label for="email">Votre Email</label>
-            <input type="email" id="email" name="email" placeholder="vous@exemple.com" required />
-          </div>
-          <div class="form-group">
-            <label for="subject">Sujet</label>
-            <input type="text" id="subject" name="subject" placeholder="Partenariat, dégustation…" required />
-          </div>
-          <div class="form-group">
-            <label for="message">Votre Message</label>
-            <textarea id="message" name="message" placeholder="Dites-nous tout…" required></textarea>
-          </div>
-          <input type="hidden" name="_next" value="https://cafe-benin-info.vercel.app/#contact" />
-          <input type="hidden" name="_captcha" value="false" />
-          <button type="submit" class="btn btn-primary btn-full">
-            <i class="fas fa-paper-plane"></i> Envoyer le Message
-          </button>
-          <div class="form-message" id="form-message"></div>
-        </form>
-      </div>
-
-      <div class="contact-info">
-        <h3>Restons en contact</h3>
-        <div class="info-list">
-          <div class="info-item">
-            <i class="fas fa-envelope"></i>
-            <span><a href="mailto:kevingiscard93@outlook.com">kevingiscard93@outlook.com</a></span>
-          </div>
-          <div class="info-item">
-            <i class="fab fa-instagram"></i>
-            <span><a href="https://instagram.com/kevin48life" target="_blank" rel="noopener">@kevin48life</a></span>
-          </div>
-        </div>
-        <div class="social-row">
-          <a href="https://instagram.com/kevin48life" target="_blank" rel="noopener" class="social-link">
-            <i class="fab fa-instagram"></i> Suivez l'aventure
-          </a>
-        </div>
-        <div class="contact-img">
-          <img src="img/cotonou_future_main.png" alt="Cotonou moderne" loading="lazy" />
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer-portal">
-  <div class="container footer-grid">
-
-    <div class="footer-about">
-      <a href="#home" class="logo">
-        <span class="logo-icon">☕</span>
-        <span class="logo-text">Café Bénin</span>
-      </a>
-      <p>Votre portail exclusif pour explorer l'univers raffiné du café béninois et africain. De la graine à la tasse, du terroir à votre table.</p>
-      <div class="social-links">
-        <a href="https://instagram.com/kevin48life" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-links">
-      <h4>Explorer</h4>
-      <ul>
-        <li><a href="#benin">Le Terroir Béninois</a></li>
-        <li><a href="#monde">Café dans le Monde</a></li>
-        <li><a href="#shops">Coffee Shops</a></li>
-        <li><a href="#sante">Café &amp; Santé</a></li>
-        <li><a href="#preparation">Art de la Préparation</a></li>
-        <li><a href="#communaute">La Communauté</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-contact">
-      <h4>Contact</h4>
-      <p><i class="fas fa-envelope"></i> <a href="mailto:kevingiscard93@outlook.com">kevingiscard93@outlook.com</a></p>
-      <p><i class="fab fa-instagram"></i> <a href="https://instagram.com/kevin48life" target="_blank">@kevin48life</a></p>
-    </div>
-
-  </div>
-
-  <div class="container footer-bottom">
-    <p>© 2026 Café Bénin. Tous droits réservés.</p>
-    <p>Fait avec ❤️ pour les passionnés de café · <a href="https://instagram.com/kevin48life" target="_blank">@kevin48life</a></p>
-  </div>
-</footer>
-
-<script src="script.js"></script>
+        // FIX 2: Scroll mobile vers #coffee-shops
+        if(window.location.hash){
+            setTimeout(()=>document.querySelector(window.location.hash)?.scrollIntoView({behavior:'smooth'}),300);
+        }
+    })();
+    </script>
 </body>
 </html>
