@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>L'Encyclopédie du Café : Bénin, Afrique & Monde — Édition 2026</title>
+  <meta name="description" content="La référence ultime sur le café : géopolitique, atlas mondial interactif, science IARC/OMS, méthodes d'extraction, lexique, annuaire des coffee-shops et Espace IA Gemini.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --cream: #FAF7F2;
+      --espresso: #1A0F0A;
+      --roast: #3D1F0F;
+      --amber: #C17025;
+      --gold: #E8A838;
+      --text: #2C1810;
+      --muted: #7A6355;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    .serif { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--gold));
+      z-index: 1000; transition: width 0.1s linear;
+    }
+
+    /* ── Nav ── */
+    .nav-glass {
+      background: rgba(250,247,242,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(193,112,37,0.15);
+    }
+
+    /* ── Map ── */
+    #map { height: 580px; z-index: 10; }
+
+    /* ── Cards hover ── */
+    .card-lift { transition: transform 0.35s cubic-bezier(.25,.8,.25,1), box-shadow 0.35s; }
+    .card-lift:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(26,15,10,0.15); }
+
+    /* ── Image zoom ── */
+    .img-zoom { overflow: hidden; }
+    .img-zoom img { transition: transform 0.6s cubic-bezier(.25,.8,.25,1); }
+    .img-zoom:hover img { transform: scale(1.06); }
+
+    /* ── Gradient headings ── */
+    .grad-text {
+      background: linear-gradient(135deg, var(--amber), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Stat counter ── */
+    @keyframes countUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .stat-enter { animation: countUp 0.7s ease both; }
+
+    /* ── Timeline ── */
+    .timeline-item::before {
+      content: ''; position: absolute; left: -1px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--amber), transparent);
+    }
+
+    /* ── Wheel segments ── */
+    .wheel-seg { transition: opacity 0.2s, transform 0.2s; cursor: default; }
+    .wheel-seg:hover { opacity: 0.85; transform: scale(1.03); }
+
+    /* ── Tab underline ── */
+    .tab-active { border-bottom: 3px solid var(--amber); color: var(--amber); }
+
+    /* ── Mobile menu ── */
+    #mobile-menu { transition: max-height 0.4s ease, opacity 0.4s ease; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+
+    /* ── Leaflet popup custom ── */
+    .leaflet-popup-content-wrapper { border-radius: 12px !important; font-family: 'DM Sans', sans-serif; }
+    .leaflet-popup-tip { background: white !important; }
+
+    /* ── Section fade in ── */
+    .fade-section { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Brewing card ── */
+    .brew-card { border-left: 4px solid var(--amber); }
+
+    /* ── Noise texture overlay ── */
+    .noise::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.06;
+    }
+  </style>
+</head>
+
+<body x-data="appData()" class="antialiased">
+
+  <!-- PROGRESS BAR -->
+  <div id="progress-bar" style="width:0%"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       API KEY MANAGER
+  ═══════════════════════════════════════════════ -->
+  <div x-data="{ open: false, key: localStorage.getItem('gemini_key') || '', save(){ localStorage.setItem('gemini_key', this.key); this.open=false; } }"
+       class="fixed bottom-6 right-6 z-50">
+    <button @click="open = !open"
+            class="w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+            style="background:var(--roast)">
+      <i class="fa-solid fa-wand-magic-sparkles text-xl" style="color:var(--gold)"></i>
+    </button>
+    <div x-show="open" @click.away="open=false"
+         class="absolute bottom-16 right-0 w-80 bg-white p-6 rounded-2xl shadow-2xl"
+         style="border:1px solid rgba(193,112,37,0.2); display:none;">
+      <h4 class="font-bold mb-1 flex items-center gap-2 serif text-lg" style="color:var(--roast)">
+        <i class="fa-brands fa-google"></i> Clé API Gemini
+      </h4>
+      <p class="text-xs mb-4" style="color:var(--muted)">Requise pour l'Espace IA. Obtenez-la gratuitement sur Google AI Studio.</p>
+      <input type="password" x-model="key" @change="save()" placeholder="Collez votre clé ici"
+             class="w-full border-b-2 bg-transparent p-2 mb-4 focus:outline-none text-sm"
+             style="border-color:var(--amber)">
+      <button @click="save()" class="w-full text-white py-2 rounded-xl text-sm font-bold"
+              style="background:var(--roast)">Sauvegarder localement</button>
+      <p class="text-xs mt-3 text-center" style="color:var(--muted)">La clé reste sur votre appareil — jamais transmise.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════ -->
+  <nav class="fixed top-0 w-full z-40 nav-glass" x-data="{ mobileOpen: false }">
+    <div id="progress-bar" style="width:0%"></div>
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="#" class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs"
+              style="background:var(--roast)">
+          <i class="fa-solid fa-mug-hot"></i>
+        </span>
+        <span class="serif text-xl font-bold" style="color:var(--espresso)">
+          L'Encyclopédie <em class="font-light" style="color:var(--amber)">Café</em>
+        </span>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden lg:flex items-center gap-7 text-xs font-bold tracking-widest uppercase" style="color:var(--muted)">
+        <a href="#geopolitique" class="hover:text-amber-700 transition py-1 border-b-2 border-transparent hover:border-amber-600">Géopolitique</a>
+        <a href="#chronologie" class="hover:text-amber-700 transition py-1 border-b-2 border-transparent hover:border-amber-600">Chronologie</a>
+        <a href="#atlas" class="hover:text-amber-700 transition py-1 border-b-2 border-transparent hover:border-amber-600">Atlas</a>
+        <a href="#extraction" class="hover:text-amber-700 transition py-1 border-b-2 border-transparent hover:border-amber-600">Extraction</a>
+        <a href="#sante" class="hover:text-amber-700 transition py-1 border-b-2 border-transparent hover:border-amber-600">Science & OMS</a>
+        <a href="#annuaire" class="hover:text-amber-700 transition py-1 border-b-2 border-transparent hover:border-amber-600">Coffee-Shops</a>
+        <a href="#ia-hub" class="flex items-center gap-2 text-white px-4 py-2 rounded-full text-xs font-bold transition hover:opacity-90"
+           style="background:var(--amber)">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Espace IA
+        </a>
+      </div>
+
+      <!-- Hamburger -->
+      <button @click="mobileOpen = !mobileOpen" class="lg:hidden p-2 rounded-lg" style="color:var(--roast)">
+        <i :class="mobileOpen ? 'fa-solid fa-xmark text-xl' : 'fa-solid fa-bars text-xl'"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" x-show="mobileOpen" @click.away="mobileOpen=false"
+         class="lg:hidden overflow-hidden px-6 pb-6 bg-white/95 border-t"
+         style="border-color:rgba(193,112,37,0.15); display:none;">
+      <div class="flex flex-col gap-1 pt-3 text-sm font-semibold" style="color:var(--muted)">
+        <a href="#geopolitique" @click="mobileOpen=false" class="py-2 px-3 rounded-lg hover:bg-amber-50">Géopolitique</a>
+        <a href="#chronologie" @click="mobileOpen=false" class="py-2 px-3 rounded-lg hover:bg-amber-50">Chronologie</a>
+        <a href="#atlas" @click="mobileOpen=false" class="py-2 px-3 rounded-lg hover:bg-amber-50">Atlas Mondial</a>
+        <a href="#extraction" @click="mobileOpen=false" class="py-2 px-3 rounded-lg hover:bg-amber-50">Méthodes d'Extraction</a>
+        <a href="#sante" @click="mobileOpen=false" class="py-2 px-3 rounded-lg hover:bg-amber-50">Science & OMS</a>
+        <a href="#annuaire" @click="mobileOpen=false" class="py-2 px-3 rounded-lg hover:bg-amber-50">Coffee-Shops</a>
+        <a href="#ia-hub" @click="mobileOpen=false" class="py-2 px-3 rounded-lg text-amber-700 bg-amber-50 font-bold">✨ Espace IA Gemini</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════ -->
+  <header class="relative pt-28 pb-20 md:pt-44 md:pb-32 overflow-hidden noise" style="background:var(--espresso)">
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=2000"
+           alt="Café" class="w-full h-full object-cover opacity-20">
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#1A0F0A]"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Tag -->
+      <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-8"
+           style="background:rgba(193,112,37,0.2); color:var(--gold); border:1px solid rgba(232,168,56,0.3)">
+        <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--gold)"></span>
+        Édition Encyclopédique · 2026
+      </div>
+
+      <div class="grid md:grid-cols-12 gap-12 items-center">
+        <div class="md:col-span-7">
+          <h1 class="serif font-light leading-[0.92] mb-6 text-white"
+              style="font-size: clamp(3.5rem, 8vw, 7.5rem);">
+            L'Or Noir<br>
+            <em class="italic font-light grad-text">révélé au monde.</em>
+          </h1>
+          <p class="text-lg leading-relaxed mb-10 max-w-xl" style="color:rgba(250,247,242,0.65)">
+            Une encyclopédie vivante croisant <strong class="text-white">agronomie</strong>, <strong class="text-white">géopolitique</strong>, <strong class="text-white">oncologie IARC/OMS</strong> et <strong class="text-white">intelligence artificielle</strong>. Du Robusta béninois aux titans mondiaux — chaque grain raconte une civilisation.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#geopolitique"
+               class="px-8 py-4 rounded-full font-bold text-sm tracking-wide transition-all duration-300 hover:scale-105"
+               style="background:var(--amber); color:white">
+              Lire le dossier complet
+            </a>
+            <a href="#ia-hub"
+               class="px-8 py-4 rounded-full font-bold text-sm tracking-wide transition-all duration-300 border hover:bg-white/10"
+               style="border-color:rgba(255,255,255,0.3); color:white">
+              Tester l'IA Gemini ✨
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="md:col-span-5 grid grid-cols-2 gap-4">
+          <div class="p-6 rounded-2xl stat-enter" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); animation-delay:0.1s">
+            <div class="text-4xl font-black serif mb-1" style="color:var(--gold)">175 M</div>
+            <div class="text-xs uppercase tracking-widest" style="color:var(--muted)">Sacs de 60kg / an</div>
+            <div class="text-xs mt-2" style="color:rgba(250,247,242,0.5)">Production mondiale 2024-25</div>
+          </div>
+          <div class="p-6 rounded-2xl stat-enter" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); animation-delay:0.2s">
+            <div class="text-4xl font-black serif mb-1" style="color:var(--gold)">2,5 Mrd</div>
+            <div class="text-xs uppercase tracking-widest" style="color:var(--muted)">Tasses par jour</div>
+            <div class="text-xs mt-2" style="color:rgba(250,247,242,0.5)">Consommation mondiale</div>
+          </div>
+          <div class="p-6 rounded-2xl stat-enter" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); animation-delay:0.3s">
+            <div class="text-4xl font-black serif mb-1" style="color:var(--gold)">80+</div>
+            <div class="text-xs uppercase tracking-widest" style="color:var(--muted)">Pays producteurs</div>
+            <div class="text-xs mt-2" style="color:rgba(250,247,242,0.5)">Ceinture caféière tropicale</div>
+          </div>
+          <div class="p-6 rounded-2xl stat-enter" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); animation-delay:0.4s">
+            <div class="text-4xl font-black serif mb-1" style="color:var(--gold)">200 B$</div>
+            <div class="text-xs uppercase tracking-widest" style="color:var(--muted)">Marché mondial</div>
+            <div class="text-xs mt-2" style="color:rgba(250,247,242,0.5)">2e matière première mondiale</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" style="color:rgba(255,255,255,0.3)">
+      <span class="text-xs uppercase tracking-widest">Défiler</span>
+      <div class="w-px h-10 animate-bounce" style="background:rgba(255,255,255,0.2)"></div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════
+       QUICK NAV PILLS (section anchors)
+  ═══════════════════════════════════════════════ -->
+  <div class="sticky top-[65px] z-30 border-b overflow-x-auto" style="background:var(--cream); border-color:rgba(193,112,37,0.15)">
+    <div class="flex gap-0 px-6 whitespace-nowrap text-xs font-bold uppercase tracking-widest min-w-max">
+      <a href="#geopolitique" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Géopolitique</a>
+      <a href="#chronologie" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Chronologie</a>
+      <a href="#atlas" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Atlas</a>
+      <a href="#extraction" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Extraction</a>
+      <a href="#lexique" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Lexique</a>
+      <a href="#sante" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Science & OMS</a>
+      <a href="#annuaire" class="px-5 py-4 transition border-b-2 border-transparent hover:border-amber-600 hover:text-amber-700" style="color:var(--muted)">Coffee-Shops</a>
+      <a href="#ia-hub" class="px-5 py-4 transition border-b-2 border-amber-600 text-amber-700 font-black">✨ Espace IA</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : GÉOPOLITIQUE
+  ═══════════════════════════════════════════════ -->
+  <section id="geopolitique" class="py-24 max-w-7xl mx-auto px-6 fade-section">
+    <div class="text-center mb-20">
+      <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--amber)">Volume I</p>
+      <h2 class="serif font-light leading-tight mb-4" style="font-size:clamp(2.5rem,5vw,4rem); color:var(--espresso)">
+        Le Dossier Géopolitique
+      </h2>
+      <p class="max-w-2xl mx-auto text-base" style="color:var(--muted)">
+        Des racines du Bénin aux marchés mondiaux — comment le café structure les économies, les identités culturelles et les équilibres de pouvoir.
+      </p>
+    </div>
+
+    <!-- BÉNIN -->
+    <div class="grid md:grid-cols-2 gap-16 items-start mb-28">
+      <div class="img-zoom rounded-2xl overflow-hidden shadow-2xl relative">
+        <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1000&q=80"
+             alt="Terroir Africain" class="w-full h-[620px] object-cover">
+        <div class="absolute bottom-0 inset-x-0 p-8 text-white" style="background:linear-gradient(to top, rgba(26,15,10,0.9), transparent)">
+          <p class="serif text-2xl italic">"La force silencieuse du Robusta béninois."</p>
+        </div>
+      </div>
+
+      <div class="space-y-8">
+        <div>
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
+                style="background:rgba(193,112,37,0.1); color:var(--amber); border:1px solid rgba(193,112,37,0.2)">
+            🇧🇯 Focus Bénin
+          </span>
+          <h3 class="serif font-light mb-4" style="font-size:clamp(1.8rem,3vw,2.8rem); color:var(--espresso)">
+            Le Renouveau Béninois
+          </h3>
+          <p class="text-base leading-relaxed" style="color:var(--muted)">
+            Bien qu'éclipsé par la Côte d'Ivoire et le Nigeria, le Bénin vit une <strong style="color:var(--text)">renaissance caféière silencieuse mais stratégique</strong>, portée par le Programme de Croissance pour le Développement Durable (PC2D) et une jeunesse urbaine ambitieuse (73% des gérants de coffee-shops ont moins de 35 ans en 2026).
+          </p>
+        </div>
+
+        <div class="grid gap-4">
+          <div class="p-6 rounded-2xl card-lift" style="background:white; border:1px solid rgba(193,112,37,0.15)">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(193,112,37,0.1)">
+                <i class="fa-solid fa-map-location-dot" style="color:var(--amber)"></i>
+              </div>
+              <h4 class="font-bold" style="color:var(--roast)">Terroirs (Zou, Atlantique, Ouémé)</h4>
+            </div>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">
+              Production quasi-exclusivement concentrée sur le <em>Coffea canephora</em> (Robusta), parfaitement adapté au climat tropical humide. Altitude : 50–200 m. Pluviométrie : 1 200–1 600 mm/an. Quelques micro-essais d'Arabica en Atacora (700 m) restent anecdotiques mais prometteurs.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl card-lift" style="background:white; border:1px solid rgba(193,112,37,0.15)">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(193,112,37,0.1)">
+                <i class="fa-solid fa-flask-vial" style="color:var(--amber)"></i>
+              </div>
+              <h4 class="font-bold" style="color:var(--roast)">Pharmacopée Béninoise</h4>
+            </div>
+            <p class="text-sm leading-relaxed mb-3" style="color:var(--muted)">
+              Le Robusta béninois (~200 mg caféine/tasse) est traditionnellement amendé pour domestiquer son amertume brute :
+            </p>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex items-start gap-2 p-3 rounded-xl text-xs" style="background:rgba(193,112,37,0.05)">
+                <span>🧂</span>
+                <div><strong>Sel (1,5 g/L)</strong> — Neutralise les récepteurs d'amertume.</div>
+              </div>
+              <div class="flex items-start gap-2 p-3 rounded-xl text-xs" style="background:rgba(193,112,37,0.05)">
+                <span>🫚</span>
+                <div><strong>Gingembre & Clou</strong> — Effet vasodilatateur et carminatif.</div>
+              </div>
+              <div class="flex items-start gap-2 p-3 rounded-xl text-xs col-span-2" style="background:rgba(193,112,37,0.05)">
+                <span>🌿</span>
+                <div><strong>Xylopia aethiopica (Kili)</strong> — Poivre de Guinée. Vertus respiratoires et antibactériennes. Signature olfactive typiquement béninoise.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl card-lift" style="background:white; border:1px solid rgba(193,112,37,0.15)">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(193,112,37,0.1)">
+                <i class="fa-solid fa-chart-line" style="color:var(--amber)"></i>
+              </div>
+              <h4 class="font-bold" style="color:var(--roast)">Données Économiques 2025</h4>
+            </div>
+            <div class="grid grid-cols-3 gap-3 text-center">
+              <div><div class="text-2xl font-black serif" style="color:var(--amber)">~5 000</div><div class="text-xs" style="color:var(--muted)">Tonnes/an (estimé)</div></div>
+              <div><div class="text-2xl font-black serif" style="color:var(--amber)">+18%</div><div class="text-xs" style="color:var(--muted)">Croissance 2020–25</div></div>
+              <div><div class="text-2xl font-black serif" style="color:var(--amber)">73%</div><div class="text-xs" style="color:var(--muted)">Gérants &lt;35 ans</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFRIQUE -->
+    <div class="grid md:grid-cols-2 gap-16 items-start mb-28">
+      <div class="order-2 md:order-1 space-y-8">
+        <div>
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
+                style="background:rgba(193,112,37,0.1); color:var(--amber); border:1px solid rgba(193,112,37,0.2)">
+            🌍 Focus Afrique
+          </span>
+          <h3 class="serif font-light mb-4" style="font-size:clamp(1.8rem,3vw,2.8rem); color:var(--espresso)">
+            L'Échiquier Africain
+          </h3>
+          <p class="text-base leading-relaxed" style="color:var(--muted)">
+            Le berceau de l'humanité est aussi celui du café. La carte géopolitique a été <strong style="color:var(--text)">violemment redessinée entre 2024 et 2026</strong> — certains ascendants, d'autres fragilisés par les crises climatiques.
+          </p>
+        </div>
+
+        <div class="grid gap-4">
+          <div class="p-5 rounded-2xl" style="background:var(--espresso); color:white">
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest" style="color:var(--gold)">Rang #1 Export Africain</span>
+                <h4 class="text-xl font-bold serif mt-1">🇺🇬 Ouganda</h4>
+              </div>
+              <span class="text-4xl font-black serif" style="color:var(--gold)">N°1</span>
+            </div>
+            <p class="text-sm leading-relaxed" style="color:rgba(250,247,242,0.7)">A dépassé l'Éthiopie en 2024–2025 comme premier exportateur africain. Leader mondial du Robusta sauvage du bassin du Lac Victoria. Espèce native <em>Coffea canephora</em> présente depuis 700 000 ans.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl card-lift" style="background:white; border:1px solid rgba(193,112,37,0.15)">
+            <h4 class="font-bold mb-2 flex items-center gap-2" style="color:var(--roast)">
+              🇪🇹 Éthiopie — Berceau Historique
+            </h4>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Forêts de Kaffa : origine légendaire (chèvres de Kaldi, IXe siècle). Conserve le monopole culturel mondial. La <em>Cérémonie du café</em> (Buna dabo naw — "Le café, c'est notre pain") est inscrite au patrimoine UNESCO. 3 torréfactions : Abol, Tona, Baraka.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl card-lift" style="background:white; border:1px solid rgba(193,112,37,0.15)">
+            <h4 class="font-bold mb-2 flex items-center gap-2" style="color:var(--roast)">
+              🇸🇳 Sénégal — L'Exception Touba
+            </h4>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Non-producteur mais prescripteur mondial. Le <em>Café Touba</em> mêle grains robusta + <em>djar</em> (Poivre de Guinée) + parfois <em>clou de girofle</em>. Lié à la confrérie mouride (Cheikh Ahmadou Bamba). Consommé en rituel d'hospitalité : servir sans demander → refuser serait une offense.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl card-lift" style="background:white; border:1px solid rgba(193,112,37,0.15)">
+            <h4 class="font-bold mb-2 flex items-center gap-2" style="color:var(--roast)">
+              🇰🇪 Kenya — L'Acidité Brillante
+            </h4>
+            <p class="text-sm leading-relaxed" style="color:var(--muted)">Variétés SL28, SL34, Ruiru 11. Processus lavé (wet process). Notes de cassis, pamplemousse rose et tomate. Cultivé sur les pentes du Mont Kenya (1 500–2 100 m). Système d'enchères à Nairobi (Nairobi Coffee Exchange) garantissant la traçabilité.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-1 md:order-2 img-zoom rounded-2xl overflow-hidden shadow-2xl relative">
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1000&q=80"
+             alt="Récolte café Afrique" class="w-full h-[780px] object-cover">
+        <div class="absolute bottom-0 inset-x-0 p-8 text-white" style="background:linear-gradient(to top, rgba(26,15,10,0.9), transparent)">
+          <p class="serif text-2xl italic">"L'Ouganda bouscule la hiérarchie continentale."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TITANS MONDIAUX -->
+    <div class="rounded-3xl overflow-hidden shadow-2xl noise relative" style="background:var(--espresso)">
+      <div class="absolute top-0 right-0 opacity-5">
+        <i class="fa-solid fa-earth-africa" style="font-size:400px; color:white"></i>
+      </div>
+      <div class="p-10 md:p-16 relative z-10">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--gold)">Volume III — Les Titans Mondiaux</p>
+        <h3 class="serif font-light text-white mb-12" style="font-size:clamp(1.8rem,3vw,2.8rem)">
+          Le Top 5 des Puissances Mondiales 🌐
+        </h3>
+        <div class="grid md:grid-cols-5 gap-6">
+          <div class="p-5 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+            <div class="text-3xl font-black serif mb-2" style="color:var(--gold)">🇧🇷 #1</div>
+            <h4 class="font-bold text-white mb-2">Brésil</h4>
+            <p class="text-xs leading-relaxed" style="color:rgba(250,247,242,0.6)">~40% production mondiale. Minas Gerais, São Paulo, Espírito Santo. Arabica wash & nature + Conilon (Robusta). Dicte les cours NY & Londres.</p>
+            <div class="mt-3 text-xs font-bold" style="color:var(--gold)">~45 M sacs/an</div>
+          </div>
+          <div class="p-5 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+            <div class="text-3xl font-black serif mb-2" style="color:var(--gold)">🇻🇳 #2</div>
+            <h4 class="font-bold text-white mb-2">Vietnam</h4>
+            <p class="text-xs leading-relaxed" style="color:rgba(250,247,242,0.6)">Maître absolu du Robusta (95% export). Introduit par les Français en 1857. Épine dorsale de Nescafé et espresso intense. Cà Phê Trứng (café à l'oeuf) — signature culinaire nationale.</p>
+            <div class="mt-3 text-xs font-bold" style="color:var(--gold)">~29 M sacs/an</div>
+          </div>
+          <div class="p-5 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+            <div class="text-3xl font-black serif mb-2" style="color:var(--gold)">🇨🇴 #3</div>
+            <h4 class="font-bold text-white mb-2">Colombie</h4>
+            <p class="text-xs leading-relaxed" style="color:rgba(250,247,242,0.6)">Prime à la qualité. Arabica lavé haute altitude (Axe des Cultivateurs, UNESCO). Profil doux, acidité citriquée. Juan Valdez : icône marketing élevée au rang d'ambassadeur national.</p>
+            <div class="mt-3 text-xs font-bold" style="color:var(--gold)">~13 M sacs/an</div>
+          </div>
+          <div class="p-5 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+            <div class="text-3xl font-black serif mb-2" style="color:var(--gold)">🇮🇩 #4</div>
+            <h4 class="font-bold text-white mb-2">Indonésie</h4>
+            <p class="text-xs leading-relaxed" style="color:rgba(250,247,242,0.6)">Kopi Luwak, Sumatra Mandheling. Processus Giling Basah (décorticage humide). Profil terreux, faible acidité. Java, Sulawesi, Flores comme appellations phares.</p>
+            <div class="mt-3 text-xs font-bold" style="color:var(--gold)">~11 M sacs/an</div>
+          </div>
+          <div class="p-5 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+            <div class="text-3xl font-black serif mb-2" style="color:var(--gold)">🇪🇹 #5</div>
+            <h4 class="font-bold text-white mb-2">Éthiopie</h4>
+            <p class="text-xs leading-relaxed" style="color:rgba(250,247,242,0.6)">Yirgacheffe, Harrar, Sidamo. 100% Arabica natif. Biodiversité génétique unique (1 000+ variétés). Exportations en hausse malgré les tensions politiques internes.</p>
+            <div class="mt-3 text-xs font-bold" style="color:var(--gold)">~7,5 M sacs/an</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : CHRONOLOGIE
+  ═══════════════════════════════════════════════ -->
+  <section id="chronologie" class="py-24 border-y fade-section" style="background:white; border-color:rgba(193,112,37,0.15)">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--amber)">Volume II</p>
+        <h2 class="serif font-light mb-4" style="font-size:clamp(2rem,4vw,3.5rem); color:var(--espresso)">
+          Chronologie de l'Or Noir
+        </h2>
+        <p class="max-w-xl mx-auto text-sm" style="color:var(--muted)">
+          De la chèvre de Kaldi aux capsules Nespresso — 12 siècles qui ont changé le monde.
+        </p>
+      </div>
+
+      <div class="relative pl-8 border-l-2" style="border-color:rgba(193,112,37,0.2)">
+        <div class="space-y-10">
+          <!-- Items -->
+          <template x-for="event in timeline" :key="event.year">
+            <div class="relative fade-section visible">
+              <div class="absolute -left-[2.35rem] w-5 h-5 rounded-full border-4 flex items-center justify-center"
+                   style="background:var(--cream); border-color:var(--amber)">
+                <div class="w-2 h-2 rounded-full" style="background:var(--amber)"></div>
+              </div>
+              <div class="grid sm:grid-cols-12 gap-4 items-start">
+                <div class="sm:col-span-2">
+                  <span class="text-2xl font-black serif" style="color:var(--amber)" x-text="event.year"></span>
+                </div>
+                <div class="sm:col-span-10 p-5 rounded-2xl card-lift" style="background:var(--cream); border:1px solid rgba(193,112,37,0.1)">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span x-text="event.icon" class="text-lg"></span>
+                    <h4 class="font-bold" style="color:var(--roast)" x-text="event.title"></h4>
+                  </div>
+                  <p class="text-sm leading-relaxed" style="color:var(--muted)" x-text="event.desc"></p>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : ATLAS INTERACTIF
+  ═══════════════════════════════════════════════ -->
+  <section id="atlas" class="py-24 fade-section" style="background:var(--cream)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--amber)">Cartographie Mondiale</p>
+        <h2 class="serif font-light mb-4" style="font-size:clamp(2rem,4vw,3.5rem); color:var(--espresso)">
+          Atlas Interactif des Terroirs
+        </h2>
+        <p class="max-w-2xl mx-auto text-sm" style="color:var(--muted)">
+          15 points cardinaux de la production et de la culture caféière mondiale. <strong>Cliquez</strong> sur les marqueurs pour révéler les fiches agronomiques et historiques complètes.
+        </p>
+      </div>
+
+      <!-- Legend -->
+      <div class="flex flex-wrap justify-center gap-4 mb-6 text-xs font-bold">
+        <span class="flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(193,112,37,0.1); color:var(--amber)">
+          <i class="fa-solid fa-mug-hot text-xs"></i> Marqueur = Terroir clé
+        </span>
+        <span class="flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(193,112,37,0.1); color:var(--amber)">
+          <i class="fa-solid fa-hand-pointer text-xs"></i> Clic = Fiche détaillée
+        </span>
+        <span class="flex items-center gap-2 px-3 py-1.5 rounded-full" style="background:rgba(193,112,37,0.1); color:var(--amber)">
+          <i class="fa-solid fa-expand text-xs"></i> Zoom avec les ±
+        </span>
+      </div>
+
+      <div id="map" class="rounded-3xl shadow-2xl overflow-hidden relative z-0"
+           style="border:3px solid rgba(193,112,37,0.2)"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : MÉTHODES D'EXTRACTION
+  ═══════════════════════════════════════════════ -->
+  <section id="extraction" class="py-24 border-y fade-section" style="background:white; border-color:rgba(193,112,37,0.15)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--amber)">Techniques & Savoir-Faire</p>
+        <h2 class="serif font-light mb-4" style="font-size:clamp(2rem,4vw,3.5rem); color:var(--espresso)">
+          Les Grandes Méthodes d'Extraction
+        </h2>
+        <p class="max-w-2xl mx-auto text-sm" style="color:var(--muted)">
+          Chaque méthode est une philosophie. Du ratio eau/café à la température — tout change le profil final dans la tasse.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <template x-for="method in brewMethods" :key="method.name">
+          <div class="p-6 rounded-2xl card-lift brew-card" style="background:var(--cream)">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl" x-text="method.icon"></span>
+              <span class="text-xs font-bold px-3 py-1 rounded-full" :style="'background:rgba(193,112,37,0.1); color:var(--amber)'" x-text="method.difficulty"></span>
+            </div>
+            <h3 class="font-bold text-lg mb-1 serif" style="color:var(--roast)" x-text="method.name"></h3>
+            <p class="text-xs font-bold mb-3" style="color:var(--amber)" x-text="method.origin"></p>
+            <p class="text-sm leading-relaxed mb-4" style="color:var(--muted)" x-text="method.desc"></p>
+
+            <!-- Specs -->
+            <div class="grid grid-cols-3 gap-2 text-center border-t pt-4" style="border-color:rgba(193,112,37,0.1)">
+              <div>
+                <div class="text-xs font-black" style="color:var(--roast)" x-text="method.temp"></div>
+                <div class="text-[10px] uppercase tracking-wide mt-0.5" style="color:var(--muted)">Température</div>
+              </div>
+              <div>
+                <div class="text-xs font-black" style="color:var(--roast)" x-text="method.ratio"></div>
+                <div class="text-[10px] uppercase tracking-wide mt-0.5" style="color:var(--muted)">Ratio E/C</div>
+              </div>
+              <div>
+                <div class="text-xs font-black" style="color:var(--roast)" x-text="method.time"></div>
+                <div class="text-[10px] uppercase tracking-wide mt-0.5" style="color:var(--muted)">Durée</div>
+              </div>
+            </div>
+
+            <!-- Tasting profile -->
+            <div class="mt-4">
+              <p class="text-[10px] font-bold uppercase tracking-widest mb-2" style="color:var(--muted)">Profil tasse</p>
+              <div class="flex flex-wrap gap-1">
+                <template x-for="note in method.notes" :key="note">
+                  <span class="text-[10px] px-2 py-0.5 rounded-full" style="background:rgba(193,112,37,0.08); color:var(--amber)" x-text="note"></span>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Torréfaction guide -->
+      <div class="mt-16 p-8 md:p-12 rounded-3xl" style="background:var(--cream); border:1px solid rgba(193,112,37,0.15)">
+        <h3 class="serif font-light mb-8 text-center" style="font-size:clamp(1.5rem,3vw,2.2rem); color:var(--espresso)">
+          Guide de Torréfaction — Du Vert au Noir Brûlé
+        </h3>
+        <div class="flex flex-col md:flex-row items-stretch gap-2">
+          <template x-for="roast in roastLevels" :key="roast.name">
+            <div class="flex-1 p-4 rounded-2xl text-center" :style="'background:' + roast.bg + '; color:' + roast.color">
+              <div class="text-2xl mb-2" x-text="roast.emoji"></div>
+              <div class="font-bold text-sm" x-text="roast.name"></div>
+              <div class="text-xs mt-1 opacity-80" x-text="roast.temp"></div>
+              <div class="text-xs mt-2 opacity-70 leading-relaxed" x-text="roast.desc"></div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : LEXIQUE
+  ═══════════════════════════════════════════════ -->
+  <section id="lexique" class="py-24 fade-section" style="background:var(--espresso)">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--gold)">Glossaire Expert</p>
+        <h2 class="serif font-light text-white mb-4" style="font-size:clamp(2rem,4vw,3.5rem)">
+          Le Lexique du Barista
+        </h2>
+        <p class="max-w-xl mx-auto text-sm" style="color:rgba(250,247,242,0.5)">
+          18 termes fondamentaux pour parler café comme un professionnel.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" x-data="{ active: null }">
+        <template x-for="term in lexique" :key="term.word">
+          <div class="p-5 rounded-2xl cursor-pointer transition-all duration-300"
+               :style="active === term.word ? 'background:rgba(193,112,37,0.2); border:1px solid rgba(193,112,37,0.4)' : 'background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08)'"
+               @click="active = active === term.word ? null : term.word">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold" style="color:var(--gold)" x-text="term.word"></h4>
+              <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300"
+                 :class="active === term.word ? 'rotate-180' : ''"
+                 style="color:rgba(250,247,242,0.3)"></i>
+            </div>
+            <p class="text-xs mt-1" style="color:rgba(250,247,242,0.4)" x-text="term.cat"></p>
+            <div x-show="active === term.word" class="mt-3 text-sm leading-relaxed" style="color:rgba(250,247,242,0.7); display:none;" x-text="term.def"></div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : SCIENCE & SANTÉ
+  ═══════════════════════════════════════════════ -->
+  <section id="sante" class="py-24 fade-section" style="background:var(--roast)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--gold)">Rapport IARC/OMS 2026</p>
+        <h2 class="serif font-light text-white mb-4" style="font-size:clamp(2rem,4vw,3.5rem)">
+          La Réhabilitation Scientifique
+        </h2>
+        <p class="max-w-2xl mx-auto text-sm" style="color:rgba(250,247,242,0.5)">
+          Longtemps diabolisé, le café a été officiellement reclassé. Les preuves de ses propriétés protectrices s'accumulent.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-10">
+
+        <!-- CALCULATEUR -->
+        <div class="lg:col-span-5 bg-white rounded-3xl p-8 shadow-2xl" style="color:var(--text)">
+          <h3 class="serif font-light mb-2" style="font-size:1.7rem; color:var(--roast)">
+            <i class="fa-solid fa-microscope text-base mr-2" style="color:var(--amber)"></i>
+            Biométrie de Tolérance
+          </h3>
+          <p class="text-xs mb-7" style="color:var(--muted)">Calculateur EFSA 2023 · Personnalisez votre profil</p>
+
+          <div class="space-y-5">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase mb-2" style="color:var(--muted)">Poids (kg)</label>
+                <input type="number" x-model.number="poids" class="w-full rounded-xl p-3 text-lg font-bold focus:outline-none focus:ring-2 border" style="border-color:rgba(193,112,37,0.2); background:rgba(193,112,37,0.05); color:var(--roast)">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase mb-2" style="color:var(--muted)">Tasses/jour</label>
+                <input type="number" x-model.number="tasses" step="0.5" class="w-full rounded-xl p-3 text-lg font-bold focus:outline-none focus:ring-2 border" style="border-color:rgba(193,112,37,0.2); background:rgba(193,112,37,0.05); color:var(--roast)">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase mb-2" style="color:var(--muted)">Type de café</label>
+              <select x-model.number="type" class="w-full rounded-xl p-3 focus:outline-none focus:ring-2 border text-sm" style="border-color:rgba(193,112,37,0.2); background:rgba(193,112,37,0.05); color:var(--roast)">
+                <option value="200">Robusta Béninois / Vietnamien (~200mg)</option>
+                <option value="150">Robusta standard (~150mg)</option>
+                <option value="95">Arabica Éthiopien / Colombien (~95mg)</option>
+                <option value="60">Café soluble (~60mg)</option>
+                <option value="75">Espresso simple (~75mg)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex items-center gap-3 p-3 rounded-xl border" style="border-color:rgba(239,68,68,0.2); background:rgba(239,68,68,0.05)">
+                <input type="checkbox" x-model="enceinte" id="enc" class="w-4 h-4 accent-red-600">
+                <label for="enc" class="text-xs font-bold" style="color:#9f1239">Grossesse (max 200mg)</label>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl border" style="border-color:rgba(193,112,37,0.2); background:rgba(193,112,37,0.05)">
+                <input type="checkbox" x-model="sportif" id="sport" class="w-4 h-4" style="accent-color:var(--amber)">
+                <label for="sport" class="text-xs font-bold" style="color:var(--roast)">Sportif (+20% tolérance)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 rounded-2xl p-6 relative overflow-hidden" style="background:var(--espresso)">
+            <div class="absolute -right-4 -bottom-4 opacity-10">
+              <i class="fa-solid fa-heart-pulse text-7xl text-white"></i>
+            </div>
+            <div class="relative z-10">
+              <p class="text-xs uppercase tracking-widest mb-1" style="color:rgba(250,247,242,0.5)">Charge Quotidienne</p>
+              <div class="flex items-end gap-2 mb-3">
+                <span class="text-5xl font-black serif" style="color:white" x-text="chargeTotale"></span>
+                <span class="text-xl mb-1 text-white opacity-70">mg</span>
+                <span class="text-sm mb-1" style="color:rgba(250,247,242,0.4)" x-text="'/ ' + limiteMax + 'mg max'"></span>
+              </div>
+
+              <!-- Progress bar -->
+              <div class="w-full rounded-full h-2 mb-1 overflow-hidden" style="background:rgba(255,255,255,0.1)">
+                <div class="h-full rounded-full transition-all duration-700"
+                     :class="pourcentage > 100 ? 'bg-red-500' : pourcentage > 75 ? 'bg-amber-400' : 'bg-emerald-400'"
+                     :style="'width: ' + Math.min(pourcentage, 100) + '%'"></div>
+              </div>
+              <div class="flex justify-between text-xs mb-4" style="color:rgba(250,247,242,0.4)">
+                <span>0</span><span>50%</span><span>100%</span>
+              </div>
+
+              <div class="flex items-start gap-3 p-3 rounded-xl"
+                   :class="pourcentage > 100 ? 'bg-red-900/30 border border-red-500/30' : 'bg-emerald-900/30 border border-emerald-500/30'">
+                <i :class="pourcentage > 100 ? 'fa-solid fa-triangle-exclamation text-red-400' : 'fa-solid fa-circle-check text-emerald-400'" class="mt-0.5"></i>
+                <p class="text-xs font-bold leading-relaxed"
+                   :class="pourcentage > 100 ? 'text-red-400' : 'text-emerald-400'"
+                   x-text="verdict"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tip -->
+          <div class="mt-4 p-4 rounded-xl flex items-start gap-3" style="background:rgba(193,112,37,0.08); border:1px solid rgba(193,112,37,0.15)">
+            <i class="fa-solid fa-circle-info mt-0.5" style="color:var(--amber)"></i>
+            <p class="text-xs leading-relaxed" style="color:var(--muted)">La caféine a une demi-vie de ~5–6h. Une tasse à 15h = 50% encore actif à 21h. Pour un sommeil optimal, stoppez la caféine 8h avant le coucher.</p>
+          </div>
+        </div>
+
+        <!-- DOSSIER IARC -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div class="p-6 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+              <div class="text-4xl font-black serif mb-2" style="color:var(--gold)">−40%</div>
+              <h4 class="font-bold text-white mb-2 serif text-lg">🫀 Carcinome Hépatique</h4>
+              <p class="text-sm leading-relaxed" style="color:rgba(250,247,242,0.65)">Réduction du risque de carcinome hépatocellulaire. Donnée critique pour l'Afrique de l'Ouest (prévalence Hépatite B ~8%). Mécanisme : l'acide chlorogénique réduit le stress oxydatif hépatique.</p>
+            </div>
+            <div class="p-6 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+              <div class="text-4xl font-black serif mb-2" style="color:var(--gold)">−32%</div>
+              <h4 class="font-bold text-white mb-2 serif text-lg">🧠 Maladie de Parkinson</h4>
+              <p class="text-sm leading-relaxed" style="color:rgba(250,247,242,0.65)">3–4 tasses/jour réduisent significativement le risque. L'acide chlorogénique freine l'inflammation cérébrale. La caféine protège les neurones dopaminergiques.</p>
+            </div>
+            <div class="p-6 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+              <div class="text-4xl font-black serif mb-2" style="color:var(--gold)">−25%</div>
+              <h4 class="font-bold text-white mb-2 serif text-lg">🩸 Diabète Type 2</h4>
+              <p class="text-sm leading-relaxed" style="color:rgba(250,247,242,0.65)">Amélioration de la sensibilité à l'insuline. Rôle de l'acide chlorogénique dans la régulation glycémique. Effet observé même avec le café décaféiné.</p>
+            </div>
+            <div class="p-6 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+              <div class="text-4xl font-black serif mb-2" style="color:var(--gold)">Groupe 3</div>
+              <h4 class="font-bold text-white mb-2 serif text-lg">🔬 Reclassement IARC 2026</h4>
+              <p class="text-sm leading-relaxed" style="color:rgba(250,247,242,0.65)">Retiré du Groupe 2B (cancérogène possible) → Groupe 3 (non classifiable). En pratique : aucune association causale avec le cancer n'a pu être établie.</p>
+            </div>
+          </div>
+
+          <!-- Alerte thermique -->
+          <div class="p-6 rounded-2xl flex items-start gap-5" style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25)">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(239,68,68,0.2)">
+              <i class="fa-solid fa-temperature-high text-red-400 text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-red-300 mb-2">⚠️ L'Alerte Thermique — Groupe 2A (OMS)</h4>
+              <p class="text-sm leading-relaxed" style="color:rgba(250,247,242,0.7)">
+                L'OMS ne met pas en garde contre le café, mais contre sa <strong class="text-white">température</strong>. Consommer des boissons à <strong class="text-white">&gt;65°C</strong> est classé <em>Probablement Cancérogène</em> pour l'œsophage (Groupe 2A). Solution simple : attendez <strong class="text-white">4 minutes</strong> après extraction avant de boire.
+              </p>
+            </div>
+          </div>
+
+          <!-- Contre-indications -->
+          <div class="p-6 rounded-2xl" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1)">
+            <h4 class="font-bold text-white mb-4 serif text-lg">Contre-indications à surveiller</h4>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div class="flex items-start gap-2 text-xs" style="color:rgba(250,247,242,0.65)">
+                <i class="fa-solid fa-circle-xmark text-red-400 mt-0.5 flex-shrink-0"></i>
+                <span><strong class="text-white">Anxiété / Troubles du sommeil</strong> — Aggravation. Préférer le décaféiné après 14h.</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs" style="color:rgba(250,247,242,0.65)">
+                <i class="fa-solid fa-circle-xmark text-red-400 mt-0.5 flex-shrink-0"></i>
+                <span><strong class="text-white">Grossesse</strong> — Maximum 200mg/jour absolu (EFSA 2015).</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs" style="color:rgba(250,247,242,0.65)">
+                <i class="fa-solid fa-circle-xmark text-red-400 mt-0.5 flex-shrink-0"></i>
+                <span><strong class="text-white">Reflux / GERD</strong> — Stimule la sécrétion gastrique acide.</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs" style="color:rgba(250,247,242,0.65)">
+                <i class="fa-solid fa-circle-xmark text-red-400 mt-0.5 flex-shrink-0"></i>
+                <span><strong class="text-white">Hypertension non contrôlée</strong> — Élévation tensionnelle aiguë transitoire.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : ANNUAIRE COFFEE-SHOPS
+  ═══════════════════════════════════════════════ -->
+  <section id="annuaire" class="py-24 fade-section" style="background:var(--cream)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--amber)">Annuaire 2026</p>
+          <h2 class="serif font-light mb-2" style="font-size:clamp(2rem,4vw,3.5rem); color:var(--espresso)">Le Guide Suprême</h2>
+          <p class="text-sm" style="color:var(--muted)">Les 18 établissements majeurs d'Afrique de l'Ouest et de l'Est.</p>
+        </div>
+        <div class="relative w-full md:w-96">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-sm" style="color:var(--muted)"></i>
+          <input type="text" x-model="searchShop" placeholder="Filtrer par pays, ville, nom..."
+                 class="w-full pl-12 pr-4 py-4 rounded-2xl shadow-sm text-sm font-medium focus:outline-none focus:ring-2 border"
+                 style="border-color:rgba(193,112,37,0.2); background:white; focus:ring-color:var(--amber)">
+        </div>
+      </div>
+
+      <!-- Filter pills -->
+      <div class="flex flex-wrap gap-3 mb-10" x-data="{ activeFilter: 'Tous' }">
+        <template x-for="country in ['Tous','🇧🇯 Bénin','🇳🇬 Nigéria','🇸🇳 Sénégal','🇰🇪 Kenya','🇷🇼 Rwanda','🇿🇦 Afr. du Sud']" :key="country">
+          <button @click="activeFilter = country; searchShop = country === 'Tous' ? '' : country"
+                  class="px-4 py-2 rounded-full text-xs font-bold transition-all"
+                  :style="activeFilter === country ? 'background:var(--amber); color:white' : 'background:white; color:var(--muted); border:1px solid rgba(193,112,37,0.2)'"
+                  x-text="country"></button>
+        </template>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <template x-for="shop in filteredShops" :key="shop.name">
+          <div class="bg-white rounded-3xl overflow-hidden shadow-md card-lift group cursor-pointer"
+               style="border:1px solid rgba(193,112,37,0.1)">
+            <div class="relative h-52 img-zoom">
+              <img :src="shop.img" class="w-full h-full object-cover" :alt="shop.name">
+              <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(26,15,10,0.5), transparent)"></div>
+              <div class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold shadow-lg"
+                   style="background:rgba(250,247,242,0.95); color:var(--roast)" x-text="shop.pays"></div>
+              <div x-show="shop.award" class="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold shadow-lg"
+                   style="background:var(--amber); color:white">
+                <i class="fa-solid fa-star mr-1"></i><span x-text="shop.award"></span>
+              </div>
+            </div>
+            <div class="p-5">
+              <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color:var(--amber)" x-text="shop.ville"></p>
+              <h3 class="font-bold serif text-lg mb-2 group-hover:text-amber-700 transition" style="color:var(--espresso)" x-text="shop.name"></h3>
+              <p class="text-xs leading-relaxed mb-3" style="color:var(--muted)" x-text="shop.desc"></p>
+              <div class="flex flex-wrap gap-1">
+                <template x-for="tag in shop.tags" :key="tag">
+                  <span class="text-[10px] px-2 py-0.5 rounded-full" style="background:rgba(193,112,37,0.08); color:var(--amber)" x-text="tag"></span>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION : ESPACE IA GEMINI
+  ═══════════════════════════════════════════════ -->
+  <section id="ia-hub" class="py-24 relative overflow-hidden noise" style="background:var(--espresso)"
+           x-data="{ activeTab: 'alchimiste' }">
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=2000"
+           class="w-full h-full object-cover opacity-10">
+    </div>
+
+    <div class="max-w-3xl mx-auto px-6 relative z-10 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-bold tracking-widest uppercase"
+           style="background:rgba(232,168,56,0.15); color:var(--gold); border:1px solid rgba(232,168,56,0.25)">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Propulsé par Google Gemini
+      </div>
+      <h2 class="serif font-light text-white mb-4" style="font-size:clamp(2rem,4vw,3.5rem)">Espace IA ✨</h2>
+      <p class="mb-10 text-base" style="color:rgba(250,247,242,0.55)">
+        Quatre assistants spécialisés pour sublimer votre expérience caféinée. Clé API requise (bouton baguette en bas à droite).
+      </p>
+
+      <!-- TABS -->
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <button @click="activeTab = 'alchimiste'"
+                :class="activeTab === 'alchimiste' ? 'text-white' : 'text-white/50 hover:text-white/80'"
+                :style="activeTab === 'alchimiste' ? 'background:var(--amber)' : 'background:rgba(255,255,255,0.08)'"
+                class="px-5 py-2.5 rounded-full font-bold text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-flask"></i> L'Alchimiste
+        </button>
+        <button @click="activeTab = 'sommelier'"
+                :class="activeTab === 'sommelier' ? 'text-white' : 'text-white/50 hover:text-white/80'"
+                :style="activeTab === 'sommelier' ? 'background:var(--amber)' : 'background:rgba(255,255,255,0.08)'"
+                class="px-5 py-2.5 rounded-full font-bold text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-utensils"></i> Le Sommelier
+        </button>
+        <button @click="activeTab = 'oracle'"
+                :class="activeTab === 'oracle' ? 'text-white' : 'text-white/50 hover:text-white/80'"
+                :style="activeTab === 'oracle' ? 'background:var(--amber)' : 'background:rgba(255,255,255,0.08)'"
+                class="px-5 py-2.5 rounded-full font-bold text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-eye"></i> L'Oracle
+        </button>
+        <button @click="activeTab = 'nutritionniste'"
+                :class="activeTab === 'nutritionniste' ? 'text-white' : 'text-white/50 hover:text-white/80'"
+                :style="activeTab === 'nutritionniste' ? 'background:var(--amber)' : 'background:rgba(255,255,255,0.08)'"
+                class="px-5 py-2.5 rounded-full font-bold text-sm transition flex items-center gap-2">
+          <i class="fa-solid fa-stethoscope"></i> Le Clinicien
+        </button>
+      </div>
+
+      <div class="rounded-3xl p-8 shadow-2xl min-h-[380px] text-left"
+           style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(20px)">
+
+        <!-- TAB 1 : ALCHIMISTE -->
+        <div x-show="activeTab === 'alchimiste'" x-data="alchemistLogic()">
+          <h3 class="serif text-xl text-white mb-1">Créez votre recette unique</h3>
+          <p class="text-xs mb-5" style="color:rgba(250,247,242,0.5)">Listez les ingrédients disponibles — le barista IA composera une recette sur-mesure.</p>
+          <textarea x-model="ingredients" rows="2" class="w-full rounded-2xl p-4 text-white placeholder-white/30 focus:outline-none text-sm resize-none mb-4" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15)" placeholder="Ex: lait de coco, miel, cannelle, poivre noir, gingembre frais..."></textarea>
+          <button @click="generateRecipe()" :disabled="loading || !ingredients.trim()" class="w-full text-white font-bold py-3 rounded-2xl transition disabled:opacity-40 flex justify-center items-center gap-3 text-sm" style="background:var(--amber)">
+            <span x-show="!loading"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Générer la recette</span>
+            <span x-show="loading" class="flex items-center gap-2"><i class="fa-solid fa-spinner fa-spin"></i> Création en cours...</span>
+          </button>
+          <div x-show="error" class="mt-4 text-red-400 text-sm bg-red-900/30 p-4 rounded-xl border border-red-500/20" x-text="error" style="display:none;"></div>
+          <div x-show="recipe" class="mt-6 rounded-2xl p-6" style="background:rgba(0,0,0,0.3); border:1px solid rgba(193,112,37,0.3); display:none;">
+            <p class="text-sm text-amber-50 whitespace-pre-line leading-relaxed" x-text="recipe"></p>
+          </div>
+        </div>
+
+        <!-- TAB 2 : SOMMELIER -->
+        <div x-show="activeTab === 'sommelier'" x-data="sommelierLogic()" style="display:none;">
+          <h3 class="serif text-xl text-white mb-1">L'Accord Mets & Café</h3>
+          <p class="text-xs mb-5" style="color:rgba(250,247,242,0.5)">Quel café sublimera votre plat ou dessert du moment ?</p>
+          <textarea x-model="food" rows="2" class="w-full rounded-2xl p-4 text-white placeholder-white/30 focus:outline-none text-sm resize-none mb-4" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15)" placeholder="Ex: tarte au chocolat noir, fondant, fruits tropicaux, croissant beurre..."></textarea>
+          <button @click="pairCoffee()" :disabled="loading || !food.trim()" class="w-full text-white font-bold py-3 rounded-2xl transition disabled:opacity-40 flex justify-center items-center gap-3 text-sm" style="background:var(--amber)">
+            <span x-show="!loading"><i class="fa-solid fa-utensils mr-2"></i>Trouver l'accord parfait</span>
+            <span x-show="loading" class="flex items-center gap-2"><i class="fa-solid fa-spinner fa-spin"></i> Dégustation en cours...</span>
+          </button>
+          <div x-show="error" class="mt-4 text-red-400 text-sm bg-red-900/30 p-4 rounded-xl border border-red-500/20" x-text="error" style="display:none;"></div>
+          <div x-show="pairing" class="mt-6 rounded-2xl p-6" style="background:rgba(0,0,0,0.3); border:1px solid rgba(193,112,37,0.3); display:none;">
+            <p class="text-sm text-amber-50 whitespace-pre-line leading-relaxed" x-text="pairing"></p>
+          </div>
+        </div>
+
+        <!-- TAB 3 : ORACLE -->
+        <div x-show="activeTab === 'oracle'" x-data="oracleLogic()" style="display:none;">
+          <h3 class="serif text-xl text-white mb-1">L'Oracle des Âmes</h3>
+          <p class="text-xs mb-5" style="color:rgba(250,247,242,0.5)">Confiez votre état d'âme — l'Oracle prescrira le café, le bienfait et la phrase poétique adéquats.</p>
+          <textarea x-model="prompt" rows="2" class="w-full rounded-2xl p-4 text-white placeholder-white/30 focus:outline-none text-sm resize-none mb-4" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15)" placeholder="Ex: je suis épuisé mais j'ai une présentation dans 1h..."></textarea>
+          <button @click="askGemini()" :disabled="loading || !prompt.trim()" class="w-full text-white font-bold py-3 rounded-2xl transition disabled:opacity-40 flex justify-center items-center gap-3 text-sm" style="background:var(--amber)">
+            <span x-show="!loading"><i class="fa-solid fa-eye mr-2"></i>Invoquer l'Oracle</span>
+            <span x-show="loading" class="flex items-center gap-2"><i class="fa-solid fa-spinner fa-spin"></i> Analyse synaptique...</span>
+          </button>
+          <div x-show="error" class="mt-4 text-red-400 text-sm bg-red-900/30 p-4 rounded-xl border border-red-500/20" x-text="error" style="display:none;"></div>
+          <div x-show="response" class="mt-6 rounded-2xl p-6 relative" style="background:rgba(0,0,0,0.3); border:1px solid rgba(193,112,37,0.3); display:none;">
+            <i class="fa-solid fa-quote-left absolute top-5 left-5 text-4xl opacity-10 text-white"></i>
+            <p class="text-sm serif italic text-amber-100 whitespace-pre-line leading-relaxed pl-6 pt-2" x-text="response"></p>
+          </div>
+        </div>
+
+        <!-- TAB 4 : CLINICIEN -->
+        <div x-show="activeTab === 'nutritionniste'" x-data="clinicienLogic()" style="display:none;">
+          <h3 class="serif text-xl text-white mb-1">Le Clinicien Café</h3>
+          <p class="text-xs mb-5" style="color:rgba(250,247,242,0.5)">Décrivez votre profil de santé — le clinicien adapte ses recommandations caféinées.</p>
+          <textarea x-model="healthProfile" rows="2" class="w-full rounded-2xl p-4 text-white placeholder-white/30 focus:outline-none text-sm resize-none mb-4" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15)" placeholder="Ex: hypertension légère, 45 ans, je bois 4 tasses par jour, je dors mal..."></textarea>
+          <button @click="analyzeHealth()" :disabled="loading || !healthProfile.trim()" class="w-full text-white font-bold py-3 rounded-2xl transition disabled:opacity-40 flex justify-center items-center gap-3 text-sm" style="background:var(--amber)">
+            <span x-show="!loading"><i class="fa-solid fa-stethoscope mr-2"></i>Obtenir mon bilan café</span>
+            <span x-show="loading" class="flex items-center gap-2"><i class="fa-solid fa-spinner fa-spin"></i> Analyse en cours...</span>
+          </button>
+          <div x-show="error" class="mt-4 text-red-400 text-sm bg-red-900/30 p-4 rounded-xl border border-red-500/20" x-text="error" style="display:none;"></div>
+          <div x-show="advice" class="mt-6 rounded-2xl p-6" style="background:rgba(0,0,0,0.3); border:1px solid rgba(193,112,37,0.3); display:none;">
+            <p class="text-xs text-amber-400/70 mb-3 italic">⚠️ Cet avis est informatif — consultez un médecin pour tout problème de santé.</p>
+            <p class="text-sm text-amber-50 whitespace-pre-line leading-relaxed" x-text="advice"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer style="background:black; color:white; border-top:6px solid var(--amber)">
+    <div class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-10">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background:var(--amber)">
+            <i class="fa-solid fa-mug-hot text-white"></i>
+          </span>
+          <span class="serif text-2xl font-light">L'Encyclopédie <em class="italic" style="color:var(--gold)">Café</em></span>
+        </div>
+        <p class="text-sm leading-relaxed mb-4" style="color:rgba(250,247,242,0.4)">
+          Une encyclopédie architecturée en 2026, croisant agronomie, oncologie clinique et intelligence artificielle pour sublimer la compréhension de l'Or Noir africain.
+        </p>
+        <p class="font-bold text-sm" style="color:var(--amber)">@kevin48life</p>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-5">Sources Certifiées</h4>
+        <ul class="space-y-2 text-sm" style="color:rgba(250,247,242,0.4)">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> IARC Monographie Vol. 116</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> EFSA — Safety of Caffeine 2023</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> ICO — International Coffee Organization</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> OMS / WHO Bulletins 2025</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Specialty Coffee Association (SCA)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-5">Architecture Technique</h4>
+        <div class="space-y-2 text-sm" style="color:rgba(250,247,242,0.4)">
+          <p class="flex items-center gap-2"><i class="fa-brands fa-github" style="color:var(--gold)"></i> GitHub Pages (Zero-build)</p>
+          <p class="flex items-center gap-2"><i class="fa-solid fa-bolt" style="color:var(--gold)"></i> Alpine.js + Tailwind CSS</p>
+          <p class="flex items-center gap-2"><i class="fa-solid fa-map" style="color:var(--gold)"></i> Leaflet.js (Atlas)</p>
+          <p class="flex items-center gap-2"><i class="fa-brands fa-google" style="color:var(--gold)"></i> Google Gemini API</p>
+          <p class="flex items-center gap-2"><i class="fa-solid fa-font" style="color:var(--gold)"></i> Cormorant Garamond + DM Sans</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs" style="border-color:rgba(255,255,255,0.08); color:rgba(250,247,242,0.25)">
+      <span>© 2026 L'Encyclopédie Café · Tous droits réservés</span>
+      <span>Édition Encyclopédique · Conçu & déployé sur GitHub Pages</span>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════ -->
+  <script>
+    // ── Progress bar ──────────────────────────────
+    window.addEventListener('scroll', () => {
+      const scrollPct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('progress-bar').style.width = scrollPct + '%';
+    });
+
+    // ── Fade on scroll ────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
+
+    // ── GLOBAL ALPINE STATE ────────────────────────
+    function appData() {
+      return {
+        // Calculateur
+        poids: 70, tasses: 2, type: 200, enceinte: false, sportif: false,
+        get chargeTotale() { return Math.round(this.tasses * this.type); },
+        get limiteMax() {
+          if(this.enceinte) return 200;
+          const base = Math.round(this.poids * 5.7);
+          return this.sportif ? Math.round(base * 1.2) : base;
+        },
+        get pourcentage() { return Math.round((this.chargeTotale / this.limiteMax) * 100); },
+        get verdict() {
+          if(this.enceinte && this.chargeTotale >= 200) return "⚠️ Seuil grossesse atteint (200mg EFSA). Stoppez ici.";
+          if(this.pourcentage > 120) return "🚨 Surdosage sévère. Risques : tachycardie, anxiété, insomnie.";
+          if(this.pourcentage > 100) return "⚠️ Limite OMS dépassée. Réduisez d'une tasse.";
+          if(this.pourcentage > 75) return "⚡ Dose élevée. Bénéfices max, surveillez votre sommeil.";
+          return "✅ Dosage optimal. Bénéfices neurologiques et hépatoprotecteurs actifs.";
+        },
+
+        // Annuaire
+        searchShop: '',
+        shops: [
+          {name:"Fondation Zinsou Café",ville:"Cotonou",pays:"🇧🇯 Bénin",desc:"Le mariage parfait entre art contemporain africain et espresso de qualité. Cadre culturel unique.",img:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80",tags:["Art","Espresso","Culturel"]},
+          {name:"Koukas Coffee",ville:"Cotonou",pays:"🇧🇯 Bénin",desc:"Design moderne, viennoiseries premium et torréfaction maîtrisée. Terrasse panoramique.",img:"https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=80",tags:["Design","Torréfaction","Terrasse"]},
+          {name:"Oudy K Sô",ville:"Cotonou",pays:"🇧🇯 Bénin",desc:"L'avant-garde architecturale au service de l'extraction. Baristas formés SCA.",img:"https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=800&q=80",tags:["Architecture","SCA","Spécialité"]},
+          {name:"Sucré-Salé",ville:"Cotonou",pays:"🇧🇯 Bénin",desc:"L'institution historique béninoise. Rendez-vous d'affaires et de société depuis 2004.",img:"https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=80",tags:["Historique","Business","Pâtisseries"]},
+          {name:"Le Mak",ville:"Cotonou",pays:"🇧🇯 Bénin",desc:"Ambiance internationale décontractée au cœur de la Haie Vive. Cocktails & café.",img:"https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=80",tags:["Lounge","Cocktails","Haie Vive"]},
+          {name:"Kaldi Coffee",ville:"Lagos",pays:"🇳🇬 Nigéria",desc:"Premier torréfacteur de spécialité du Nigéria. Pure origine, tracé de la ferme à la tasse.",img:"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80",tags:["Spécialité","Farm-to-Cup","Lagos"]},
+          {name:"Art Cafe Lagos",ville:"Lagos",pays:"🇳🇬 Nigéria",desc:"Repaire bohème pour créatifs. Sélection de grains éthiopiens et kényans.",img:"https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",tags:["Art","Éthiopie","Kenya"]},
+          {name:"Café Neo",ville:"Lagos",pays:"🇳🇬 Nigéria",desc:"La chaîne panafricaine célébrant les terroirs du continent. 15 pays représentés.",img:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",tags:["Panafricain","Chaîne","15 pays"]},
+          {name:"Layu Café",ville:"Dakar",pays:"🇸🇳 Sénégal",desc:"Design inspiré des codes locaux. Spécialiste du Café Touba et des créations au djar.",img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80",tags:["Touba","Djar","Local"]},
+          {name:"Simone Cafe",ville:"Dakar",pays:"🇸🇳 Sénégal",desc:"Douceur de vivre, pâtisseries fines et café de spécialité face à l'océan Atlantique.",img:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80",tags:["Vue mer","Pâtisseries","Spécialité"]},
+          {name:"Café de Rome",ville:"Dakar",pays:"🇸🇳 Sénégal",desc:"Le luxe institutionnel sénégalais. Lieu de rendez-vous politique et économique historique.",img:"https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=800&q=80",tags:["Luxe","Institution","Politique"]},
+          {name:"Connect Coffee",ville:"Nairobi",pays:"🇰🇪 Kenya",desc:"Traçabilité totale 'Seed to Cup' au cœur du hub tech africain. Variétés SL28 & SL34.",img:"https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=800&q=80",tags:["Traceable","SL28","Tech Hub"]},
+          {name:"Java House",ville:"Nairobi",pays:"🇰🇪 Kenya",desc:"L'empire est-africain du café. Solide, constant et omniprésent — 65 succursales en 3 pays.",img:"https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80",tags:["Chaîne","Est-Afrique","65 succursales"]},
+          {name:"Dorman's",ville:"Nairobi",pays:"🇰🇪 Kenya",desc:"Torréfacteur historique depuis 1950. Arabica kényan de référence, exporté dans 20 pays.",img:"https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=800&q=80",tags:["Historique","Export","1950"]},
+          {name:"Kivu Coffee",ville:"Kigali",pays:"🇷🇼 Rwanda",desc:"La résilience par le café. Grains exceptionnels des collines rwandaises, notes de pêche et cassis.",img:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80",tags:["Résilience","Collines","Spécialité"]},
+          {name:"Question Coffee",ville:"Kigali",pays:"🇷🇼 Rwanda",desc:"Coopérative de femmes productrices. Café feminin, équitable et remarquable. Certifié Fairtrade.",img:"https://images.unsplash.com/photo-1511081692775-05d0f180a065?w=800&q=80",tags:["Femmes","Fairtrade","Coopérative"]},
+          {name:"Truth Coffee",ville:"Le Cap",pays:"🇿🇦 Afr. du Sud",desc:"Élu meilleur coffee-shop au monde. Décoration Steampunk iconique. Torréfaction maison.",img:"https://images.unsplash.com/photo-1570968912491-6984f2e2f8c5?w=800&q=80",award:"#1 Mondial",tags:["Steampunk","#1 Monde","Torréfaction"]},
+          {name:"Rosetta Roastery",ville:"Le Cap",pays:"🇿🇦 Afr. du Sud",desc:"Référence mondial de la 3e vague. Latte art d'excellence, extraction scientifique.",img:"https://images.unsplash.com/photo-1442975631134-60a3b8756b22?w=800&q=80",tags:["3e Vague","Latte Art","Science"]},
+        ],
+        get filteredShops() {
+          const q = this.searchShop.toLowerCase();
+          if(!q) return this.shops;
+          return this.shops.filter(s => (s.name + s.ville + s.pays + (s.tags||[]).join(' ')).toLowerCase().includes(q));
+        },
+
+        // Timeline
+        timeline: [
+          {year:"~850", icon:"🐐", title:"La Légende de Kaldi", desc:"Un berger éthiopien nommé Kaldi observe ses chèvres particulièrement agitées après avoir brouté des baies rouges sur les pentes de Kaffa. Il les goûte et reste éveillé toute la nuit. Premier contact documenté avec le Coffea arabica."},
+          {year:"1000", icon:"🔥", title:"Première Infusion Chaude", desc:"Les tribus éthiopiennes commencent à broyer les grains avec de la graisse animale en boules énergétiques. Puis vient la première décoction aqueuse. Le café entre dans l'histoire de l'alimentation humaine."},
+          {year:"1450", icon:"🕌", title:"Les Qahveh Khanehs de Yémen", desc:"Les soufis yéménites utilisent le café pour rester éveillés pendant leurs longues nuits de prière. Les 'maisons de café' (Qahveh Khaneh) naissent à Aden puis se répandent en Arabie. Le port de Mokha devient l'épicentre mondial."},
+          {year:"1554", icon:"🌙", title:"Premier Café d'Istanbul", desc:"Kiva Han ouvre à Constantinople. Rapidement, ces établissements deviennent des lieux de débat politique — surnommés 'écoles des sages'. Le sultan Mourad IV tentera en vain de les interdire."},
+          {year:"1600", icon:"⛵", title:"Les Hollandais Brisent le Monopole", desc:"La VOC (Compagnie néerlandaise des Indes orientales) parvient à extraire clandestinement des plants d'Éthiopie. Première plantation à Java (Indonésie) en 1600, puis à Ceylan et Suriname. Fin du monopole yéménite."},
+          {year:"1714", icon:"🌱", title:"Le Plant de Louis XIV", desc:"L'Amiral de Clieu reçoit un plant du Jardin des Plantes à Paris pour le transplanter en Martinique. Durant la traversée, il partage sa propre ration d'eau avec le plant. Ce seul plant donnera naissance à l'intégralité du café des Amériques."},
+          {year:"1773", icon:"🎉", title:"Boston Tea Party & l'Essor US", desc:"Le rejet du thé britannique après les taxes coloniales propulse le café au rang de boisson patriotique américaine. Les États-Unis deviennent le premier marché mondial, statut conservé jusqu'à nos jours."},
+          {year:"1901", icon:"⚡", title:"L'Invention de l'Espresso", desc:"Luigi Bezzera de Milan brevète la machine à espresso. La pression haute (9 bars) révolutionne l'extraction en 25 secondes. L'Italie s'empare du café pour en faire une religion nationale."},
+          {year:"1938", icon:"🧪", title:"Nescafé — La Révolution Soluble", desc:"Nestlé invente le café soluble à la demande du Brésil qui subit une surproduction. Nescafé révolutionne l'accès au café dans le monde entier, au prix d'une simplification radicale du goût."},
+          {year:"1971", icon:"🐻", title:"Starbucks Fondé à Seattle", desc:"Trois amis ouvrent la première boutique Starbucks au Pike Place Market. En 50 ans, la chaîne atteindra 38 000 établissements dans 86 pays et redéfinira la culture café mondiale."},
+          {year:"2002", icon:"🌿", title:"La Troisième Vague", desc:"Émergence du mouvement 'Specialty Coffee' : traçabilité totale, profils d'extraction scientifiques, valorisation du terroir. Contre-réaction à l'uniformisation industrielle. Naissance du barista comme artisan."},
+          {year:"2026", icon:"🤖", title:"L'IA Entre dans la Tasse", desc:"Les assistants IA (comme Gemini) commencent à personnaliser les recettes, accords mets-café et diagnostics santé. L'Afrique de l'Ouest, notamment le Bénin, s'impose comme acteur émergent de la scène specialty."},
+        ],
+
+        // Méthodes d'extraction
+        brewMethods: [
+          {name:"Espresso", origin:"Milan, Italie — 1901", icon:"☕", difficulty:"Expert", desc:"Extraction sous haute pression (9 bars). 25–30 ml en 25–30 secondes. Crema épaisse, corps intense, saveurs concentrées. Base de tous les drinks milk-based (cappuccino, latte, flat white).", temp:"88–94°C", ratio:"1:2", time:"25–30 sec", notes:["Corps épais","Crema","Chocolat","Noisette","Intensité"]},
+          {name:"French Press",origin:"France — 1929",icon:"🫖",difficulty:"Débutant",desc:"Immersion complète — les grains reposent dans l'eau chaude puis un piston filtre les dépôts. Résultat : corps plein, huiles préservées, profil rustique et expressif. Idéal pour les Robusta.", temp:"92–96°C", ratio:"1:15", time:"4 min", notes:["Corps plein","Huiles","Terreux","Rustique"]},
+          {name:"V60 / Pour Over", origin:"Japon — 2005", icon:"🌀", difficulty:"Intermédiaire", desc:"Versage lent et précis sur un filtre papier. Élimine les huiles = tasse claire, acidité fine, arômes élégants. Technique de choix pour les Arabica de spécialité à profil floral ou fruité.", temp:"90–93°C", ratio:"1:16", time:"3–4 min", notes:["Clarté","Floral","Fruité","Acidité fine","Délicat"]},
+          {name:"AeroPress", origin:"États-Unis — 2005", icon:"🔧", difficulty:"Intermédiaire", desc:"Pression manuelle + immersion courte = polyvalence totale. Peut mimer l'espresso, le café filtré ou le cold brew. Résistant, compact, favori des baristas itinérants.", temp:"70–95°C", ratio:"1:8–1:16", time:"1–2 min", notes:["Polyvalent","Corps moyen","Personnalisable","Doux"]},
+          {name:"Moka Pot", origin:"Italie — 1933", icon:"⚗️", difficulty:"Débutant", desc:"La cafetière italienne de Bialetti. Vapeur sous pression traverse le café — résultat proche de l'espresso mais avec moins de crema. Indémodable, robuste, économique.", temp:"100°C (vapeur)", ratio:"1:5", time:"5–7 min", notes:["Intense","Fumé","Corps épais","Amer noble"]},
+          {name:"Cold Brew", origin:"Nouvelle-Orléans, ~1840", icon:"🧊", difficulty:"Débutant", desc:"Immersion à froid pendant 12–24h. Extraction lente sans chaleur = taux d'acidité réduit de 67%, arômes sucrés, naturellement onctueux. Idéal pour l'été.", temp:"Froid / 4°C", ratio:"1:8", time:"12–24h", notes:["Doux","Chocolaté","Faible acidité","Sucré naturel"]},
+        ],
+
+        roastLevels: [
+          {name:"Vert", temp:"Non torréfié", emoji:"🌱", desc:"Grain brut. Notes herbacées. Non consommable tel quel.", bg:"#e8f5e9", color:"#1b5e20"},
+          {name:"Clair", temp:"196–205°C", emoji:"🟡", desc:"Acidité haute, fruité. First crack juste atteint.", bg:"#fff8e1", color:"#e65100"},
+          {name:"Médium", temp:"210–220°C", emoji:"🟠", desc:"Équilibre parfait. Arômes complexes, corps moyen.", bg:"#ffe0b2", color:"#bf360c"},
+          {name:"Médium-Dark", temp:"225–230°C", emoji:"🟤", desc:"Corps plein, huiles en surface, légère amertume.", bg:"#d7ccc8", color:"#4e342e"},
+          {name:"Foncé", temp:"235–245°C", emoji:"⬛", desc:"Fumé, chocolat noir, forte amertume. Robusta idéal.", bg:"#4e342e", color:"#d7ccc8"},
+          {name:"Très Foncé", temp:">250°C", emoji:"🔥", desc:"Carbonisé, amer intense. Risque: perte des arômes.", bg:"#212121", color:"#757575"},
+        ],
+
+        // Lexique
+        lexique: [
+          {word:"Terroir", cat:"Agronomie", def:"Ensemble des caractéristiques géographiques, climatiques et géologiques d'une zone de production qui confèrent au café ses particularités organoleptiques uniques."},
+          {word:"Crema", cat:"Extraction", def:"Mousse émulsionnée dorée/rousse à la surface d'un espresso correctement extrait. Formée par la CO₂ emprisonnée lors de la torréfaction et libérée sous pression. Indicateur de fraîcheur."},
+          {word:"Bloom / Préinfusion", cat:"Extraction", def:"Versage initial d'eau chaude (2x le poids du café) pour dégazer le CO₂ avant l'extraction principale. Dure 30–45 secondes. Améliore l'uniformité d'extraction."},
+          {word:"Single Origin", cat:"Traçabilité", def:"Café provenant d'un seul pays, région, ferme ou même parcelle. Opposé au blend. Permet d'exprimer le terroir spécifique sans masquage par d'autres origines."},
+          {word:"Direct Trade", cat:"Commerce", def:"Relation directe entre torréfacteur et producteur, court-circuitant les intermédiaires. Prix supérieur au Fairtrade (>2x). Garantit traçabilité totale et revenus justes."},
+          {word:"Acide Chlorogénique", cat:"Biochimie", def:"Principal polyphénol du café vert (~6–12%). Puissant antioxydant, précurseur des arômes lors de la torréfaction. Responsable en partie des effets hépatoprotecteurs identifiés par l'IARC."},
+          {word:"Caféol", cat:"Chimie", def:"Mélange d'huiles essentielles volatiles libérées lors de la torréfaction. Constitue la majorité des 1 000 composés aromatiques identifiés dans le café torréfié."},
+          {word:"Ratio Eau/Café (TDS)", cat:"Extraction", def:"Total Dissolved Solids. Mesure la concentration de la boisson. La SCA recommande 1,15–1,45% TDS pour l'espresso. Mesuré avec un réfractomètre."},
+          {word:"Channeling", cat:"Défaut", def:"Défaut d'extraction : l'eau emprunte un chemin de moindre résistance dans le puck de café au lieu de le traverser uniformément. Résultat : sous-extraction partielle + sur-extraction simultanée."},
+          {word:"Flat White", cat:"Boisson", def:"Originaire d'Australie/Nouvelle-Zélande. Double ristretto + lait micromoussé versé par-dessus. Ratio café/lait plus élevé que latte. Volume : 150–180 ml."},
+          {word:"Cupping", cat:"Dégustation", def:"Protocole standardisé SCA d'évaluation organoleptique. Grains broyés directement dans une tasse, infusion 4 min, brisure de la croûte au nez, dégustation à la cuillère. Score sur 100."},
+          {word:"Arabica vs Robusta", cat:"Espèces", def:"Arabica (C. arabica): 60% production mondiale, 2n=44 chromosomes, altitude 600–2000m, ~80–120mg caféine/tasse. Robusta (C. canephora): 40%, résistant, caféine ~200mg/tasse, altitude 0–800m."},
+          {word:"First Crack / Second Crack", cat:"Torréfaction", def:"Sounds entendus durant la torréfaction. First crack (~196°C): expansion des grains, dégagement CO₂ — début de consommabilité. Second crack (~225°C): rupture cellulaire, début des torréfactions foncées."},
+          {word:"Wet vs Dry Process", cat:"Post-récolte", def:"Wet (lavé): pulpe retirée immédiatement, grain fermenté dans l'eau. Résultat: acidité propre, notes florales. Dry (nature): cerise entière séchée au soleil 2–6 semaines. Notes fruitées, fermentées, plus complexes."},
+          {word:"Specialty Coffee", cat:"Qualité", def:"Score SCA ≥ 80/100 au cupping. Représente ~10–15% de la production mondiale. Nécessite traçabilité, variété identifiée, absence de défauts primaires. Prix significativement supérieur au marché."},
+          {word:"Latte Art", cat:"Barista", def:"Motifs créés en versant le lait micromoussé sur l'espresso. Cœur, rosette, tulipe sont les bases. Nécessite mousse homogène à ~65°C et double ristretto dense. Compétition mondiale annuelle (WLAC)."},
+          {word:"Green Coffee", cat:"Négoce", def:"Café non torréfié. Se négocie en bourses à terme — Arabica sur l'ICE (New York), Robusta sur l'ICE (Londres). Volatilité extrême (±50% en quelques mois selon météo au Brésil)."},
+          {word:"Extraction Rate", cat:"Science", def:"Pourcentage de matière soluble extraite du grain. La SCA définit l'extraction idéale entre 18–22%. En dessous: sous-extraction (acide, aqueux). Au-dessus: sur-extraction (amer, astringent)."},
+        ]
+      }
+    }
+
+    // ── FETCH GEMINI ───────────────────────────────
+    async function fetchGeminiData(promptText, systemInstruction) {
+      const key = localStorage.getItem('gemini_key');
+      if(!key) throw new Error("Clé API absente. Cliquez sur l'icône ✨ en bas à droite pour la saisir.");
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          contents: [{parts: [{text: promptText}]}],
+          systemInstruction: {parts: [{text: systemInstruction}]}
+        })
+      });
+      if(!res.ok) {
+        const err = await res.json();
+        throw new Error("Erreur Gemini API : " + (err.error?.message || "Clé invalide ou quota dépassé."));
+      }
+      const data = await res.json();
+      return data.candidates[0].content.parts[0].text;
+    }
+
+    // ── IA TABS ────────────────────────────────────
+    function alchemistLogic() {
+      return { ingredients:'', recipe:'', loading:false, error:'',
+        async generateRecipe() {
+          this.loading=true; this.error=''; this.recipe='';
+          try {
+            this.recipe = await fetchGeminiData(
+              `Ingrédients disponibles : "${this.ingredients}". Crée une recette de café originale.`,
+              "Tu es un Master Barista africain innovant. Réponds avec : 1. Un nom créatif pour la recette 2. Les ingrédients exacts avec quantités 3. Les étapes de préparation numérotées (5 max) 4. Une note de dégustation courte. Sois précis et inspirant. Réponds en français."
+            );
+          } catch(e){ this.error=e.message; } finally { this.loading=false; }
+        }
+      }
+    }
+
+    function sommelierLogic() {
+      return { food:'', pairing:'', loading:false, error:'',
+        async pairCoffee() {
+          this.loading=true; this.error=''; this.pairing='';
+          try {
+            this.pairing = await fetchGeminiData(
+              `Plat ou dessert : "${this.food}". Quel café s'accorde idéalement ?`,
+              "Tu es un Sommelier expert en accords mets & café. Recommande : 1. L'origine précise du café (pays + région) 2. La variété (Arabica ou Robusta) 3. La méthode de préparation 4. La raison sensorielle de cet accord. Sois concis et poétique. Maximum 120 mots. Réponds en français."
+            );
+          } catch(e){ this.error=e.message; } finally { this.loading=false; }
+        }
+      }
+    }
+
+    function oracleLogic() {
+      return { prompt:'', response:'', loading:false, error:'',
+        async askGemini() {
+          this.loading=true; this.error=''; this.response='';
+          try {
+            this.response = await fetchGeminiData(
+              `État d'âme : "${this.prompt}"`,
+              "Tu es un Oracle poétique expert en café et bien-être. En 3 phrases maximum : 1. Prescris un café précis (pays, méthode) adapté à l'humeur 2. Cite un bienfait IARC/OMS lié 3. Termine par une phrase poétique courte. Sois mystérieux et inspirant. Réponds en français."
+            );
+          } catch(e){ this.error=e.message; } finally { this.loading=false; }
+        }
+      }
+    }
+
+    function clinicienLogic() {
+      return { healthProfile:'', advice:'', loading:false, error:'',
+        async analyzeHealth() {
+          this.loading=true; this.error=''; this.advice='';
+          try {
+            this.advice = await fetchGeminiData(
+              `Profil de santé : "${this.healthProfile}"`,
+              "Tu es un clinicien nutritionniste spécialisé en caféine (références EFSA/OMS). Analyse le profil et fournis : 1. La dose quotidienne recommandée en mg 2. Le meilleur type de café (Arabica/Robusta, décaféiné?) 3. La meilleure heure de consommation 4. Un avertissement personnalisé si nécessaire. Sois factuel et précis. Rappelle que cela ne remplace pas un médecin. Max 150 mots. Réponds en français."
+            );
+          } catch(e){ this.error=e.message; } finally { this.loading=false; }
+        }
+      }
+    }
+
+    // ── LEAFLET ATLAS ───────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = L.map('map', {scrollWheelZoom: false}).setView([15, 10], 2);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB'
+      }).addTo(map);
+
+      const coffeeIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background:#C17025; color:white; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.3); border:2px solid white; font-size:11px;"><i class='fa-solid fa-mug-hot'></i></div>`,
+        iconSize: [28, 28], iconAnchor: [14, 14]
+      });
+
+      const markers = [
+        {c:[9.3,2.3], n:'Bénin 🇧🇯', type:'Robusta', altitude:'0–200 m', caféine:'~200mg/t', d:"Renaissance caféière silencieuse. Robusta profond enrichi de Kili (Xylopia aethiopica). Zones Zou, Atlantique, Ouémé. Impulsion gouvernementale PC2D.", link:"#geopolitique"},
+        {c:[1.3,32.2], n:'Ouganda 🇺🇬', type:'Robusta natif', altitude:'900–1500 m', caféine:'~200mg/t', d:"N°1 export africain depuis 2024. Robusta sauvage du bassin du Lac Victoria. Coffea canephora présent depuis 700 000 ans. 6,5M sacs/an."},
+        {c:[9.1,40.4], n:'Éthiopie 🇪🇹', type:'Arabica natif', altitude:'1500–2200 m', caféine:'~80–120mg/t', d:"Berceau mondial du café. Forêts de Kaffa. Cérémonie Buna (UNESCO). 1000+ variétés génétiques. Yirgacheffe, Harrar, Sidamo. 7,5M sacs/an."},
+        {c:[8.5,-5.5], n:"Côte d'Ivoire 🇨🇮", type:'Robusta', altitude:'100–500 m', caféine:'~180mg/t', d:"Historiquement géant du Robusta d'exportation de masse. Difficultés climatiques récentes. Résurgence avec des programmes de replantation."},
+        {c:[14.7,-17.4], n:'Sénégal 🇸🇳', type:'Importateur', altitude:'N/A', caféine:'Variable', d:"Capitale culturelle du Café Touba. Non-producteur mais prescripteur mondial via la confrérie mouride. Le Djar (Poivre de Guinée) : signature olfactive unique."},
+        {c:[-1.2,36.8], n:'Kenya 🇰🇪', type:'Arabica lavé', altitude:'1500–2100 m', caféine:'~95mg/t', d:"Variétés SL28, SL34. Acidité brillante, notes de cassis et pamplemousse. Système d'enchères NCE. Certifié parmi les 10 meilleurs terroirs mondiaux."},
+        {c:[-14.2,-51.9], n:'Brésil 🇧🇷', type:'Arabica + Conilon', altitude:'600–1200 m', caféine:'~95mg/t', d:"Le Léviathan. ~40% production mondiale. Minas Gerais, São Paulo. Dicte les cours de la bourse NY et Londres. Un gel = crise mondiale."},
+        {c:[4.5,-74.2], n:'Colombie 🇨🇴', type:'Arabica lavé', altitude:'1200–2000 m', caféine:'~90mg/t', d:"Prime à la qualité. Arabica d'exception (Axe des Cultivateurs, UNESCO). Profil doux, acidité citriquée. Juan Valdez = icône nationale. 13M sacs/an."},
+        {c:[-9.1,-75.0], n:'Pérou 🇵🇪', type:'Arabica Bio', altitude:'900–1800 m', caféine:'~85mg/t', d:"Leader mondial des certifications Bio et Fairtrade. Caféiculteurs indigènes. Arômes floraux, corps léger. Bénéfice direct aux communautés amazoniennes."},
+        {c:[10.0,-84.0], n:'Costa Rica 🇨🇷', type:'Arabica 100%', altitude:'1000–1700 m', caféine:'~85mg/t', d:"Loi interdisant le Robusta depuis 1989. Terroirs Tarrazú, Valle Central. Processus honey et nature innovants. Café de très haute qualité certifié."},
+        {c:[23.6,-102.5], n:'Mexique 🇲🇽', type:'Arabica Bio', altitude:'700–1700 m', caféine:'~85mg/t', d:"Café de Olla (cannelle + piloncillo). Pionnier du commerce équitable au Chiapas (INMECAFE). Certifications bio omniprésentes. Notes chocolatées douces."},
+        {c:[14.0,108.2], n:'Vietnam 🇻🇳', type:'Robusta', altitude:'500–1500 m', caféine:'~200mg/t', d:"N°2 mondial. 95% Robusta. Introduit par les Français (1857). Base de Nescafé et espresso intense. Cà Phê Trứng = café à l'oeuf, signature culinaire."},
+        {c:[-0.7,113.9], n:'Indonésie 🇮🇩', type:'Robusta + Arabica', altitude:'700–1700 m', caféine:'~150mg/t', d:"Kopi Luwak, Mandheling, Toraja. Giling Basah = décorticage humide unique. Profil terreux, faible acidité, corps velours. 11M sacs/an."},
+        {c:[20.5,78.9], n:'Inde 🇮🇳', type:'Arabica + Robusta', altitude:'600–1600 m', caféine:'~120mg/t', d:"Monsooned Malabar : exposé aux vents marins de mousson → acidité réduite, corps lourd et terreux. Karnataka, Kerala, Tamil Nadu. Plantation sous ombre."},
+        {c:[15.1,47.8], n:'Yémen 🇾🇪', type:'Arabica natif', altitude:'1500–2500 m', caféine:'~100mg/t', d:"Premier épicentre commercial historique. Port de Mokha = origine du terme 'moka'. Méthodes ancestrales préservées. Conflit bloque la production depuis 2015."},
+      ];
+
+      markers.forEach(m => {
+        const html = `
+          <div style="padding:4px; font-family:'DM Sans',sans-serif; min-width:220px;">
+            <h4 style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:#3D1F0F; margin-bottom:8px; font-weight:700">${m.n}</h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:8px;">
+              <div style="background:#faf7f2; padding:4px 8px; border-radius:6px; font-size:10px;">
+                <div style="color:#7A6355; text-transform:uppercase; letter-spacing:0.05em; font-size:9px;">Type</div>
+                <div style="color:#1A0F0A; font-weight:700;">${m.type}</div>
+              </div>
+              <div style="background:#faf7f2; padding:4px 8px; border-radius:6px; font-size:10px;">
+                <div style="color:#7A6355; text-transform:uppercase; letter-spacing:0.05em; font-size:9px;">Altitude</div>
+                <div style="color:#1A0F0A; font-weight:700;">${m.altitude}</div>
+              </div>
+            </div>
+            <p style="font-size:12px; color:#7A6355; line-height:1.5; margin:0;">${m.d}</p>
+            <div style="margin-top:8px; padding-top:6px; border-top:1px solid rgba(193,112,37,0.15); font-size:10px; color:#C17025; font-weight:700;">
+              ☕ Caféine : ${m.caféine}
+            </div>
+          </div>`;
+        L.marker(m.c, {icon: coffeeIcon}).addTo(map).bindPopup(html, {maxWidth: 280, className: 'custom-popup'});
+      });
+    });
+  </script>
+</body>
+</html>
