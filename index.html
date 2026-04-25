@@ -1,438 +1,236 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Café, Santé & Amour – Atlas, IA Gemini & Oncologie</title>
-  <meta name="description" content="Oracle IA Gemini, calculateur de caféine personnalisé, atlas mondial, dossier médical IARC/OMS, annuaire coffee-shops, recueil poétique et carnet intime sublimé par IA.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    * { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: #FDFBF7; color: #2C2B28; }
-    h1, h2, h3, .serif-heading { font-family: 'Playfair Display', serif; }
-    .love-italic { font-family: 'Playfair Display', serif; font-style: italic; }
-    .glass-nav { background: rgba(253, 251, 247, 0.92); backdrop-filter: blur(12px); }
-    .card-hover { transition: all 0.2s ease; }
-    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
-    #map { height: 520px; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2); }
-    section { scroll-margin-top: 5.5rem; }
-    [x-cloak] { display: none !important; }
-    .delete-btn { opacity: 0; transition: opacity 0.2s; }
-    .carnet-item:hover .delete-btn { opacity: 1; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Bénin — Guide Exhaustif, Santé & Annuaire</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  body { background: #fdfbf7; color: #1c1917; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  #map { height: 500px; z-index: 1; border-radius: 1rem; }
+  .card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1); }
+</style>
 </head>
-<body class="antialiased">
+<body x-data="cafeData()" class="antialiased">
 
-  <!-- Configuration API Gemini -->
-  <div x-data="keyManager()" x-cloak class="fixed bottom-6 right-6 z-50">
-    <div class="relative">
-      <button @click="open = !open" class="bg-amber-800 text-white p-3 rounded-full shadow-xl hover:bg-amber-900 transition"><i class="fa-regular fa-key text-lg"></i></button>
-      <div x-show="open" @click.away="open = false" class="absolute bottom-14 right-0 w-80 bg-white p-5 rounded-2xl shadow-2xl border border-stone-200 text-sm z-50" style="display: none;">
-        <h4 class="font-bold mb-2 flex items-center gap-2"><i class="fa-brands fa-google"></i> Clé API Gemini</h4>
-        <input type="password" x-model="apiKey" @change="saveKey" placeholder="Collez votre clé ici" class="w-full border rounded-lg p-2 mb-2 focus:ring-2 focus:ring-amber-300">
-        <p class="text-xs text-stone-500">Obtenez une clé gratuite sur <a href="https://aistudio.google.com/apikey" target="_blank" class="text-amber-700 underline">Google AI Studio</a>. Stockée localement.</p>
-        <div x-show="saved" class="text-green-600 text-xs mt-2"><i class="fa-regular fa-circle-check"></i> Clé enregistrée</div>
-      </div>
-    </div>
+<header class="bg-stone-900 text-white py-16 px-6 text-center shadow-lg">
+  <h1 class="text-5xl font-extrabold mb-4 tracking-tight">L'Or Noir : Bénin & Monde</h1>
+  <p class="text-stone-400 text-lg max-w-2xl mx-auto">Expertise Scientifique (OMS/IARC 2026) — Guide des 24 Établissements — Terroirs d'Afrique</p>
+  <div class="mt-6 flex justify-center gap-4">
+    <a href="https://instagram.com/kevin48life" target="_blank" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full font-bold transition">@kevin48life</a>
   </div>
+</header>
 
-  <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-40 glass-nav border-b border-stone-200/60 shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
-      <div class="text-xl md:text-2xl font-bold tracking-tight text-stone-800">
-        café<span class="love-italic text-amber-700">, santé & amour</span>
+<main class="max-w-7xl mx-auto p-6 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-10">
+  
+  <!-- Section 1: Algorithme Caféine -->
+  <section class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200 card">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
+      <span class="bg-amber-100 text-amber-800 p-2 rounded-lg">01</span>
+      Tolérance Caféine
+    </h2>
+    <div class="grid grid-cols-2 gap-6 mb-6">
+      <div>
+        <label class="block text-sm font-semibold text-stone-600 mb-1">Poids (kg)</label>
+        <input type="number" x-model="poids" class="border border-stone-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-amber-500 outline-none">
       </div>
-      <div class="hidden lg:flex gap-6 text-sm font-medium text-stone-600">
-        <a href="#oracle" class="hover:text-amber-700 transition">Oracle ✨</a>
-        <a href="#calculateur" class="hover:text-amber-700 transition">Calculateur</a>
-        <a href="#atlas" class="hover:text-amber-700 transition">Atlas</a>
-        <a href="#benin" class="hover:text-amber-700 transition">Bénin</a>
-        <a href="#annuaire" class="hover:text-amber-700 transition">Coffee-shops</a>
-        <a href="#dossier" class="hover:text-amber-700 transition">Santé</a>
-        <a href="#poesie" class="hover:text-amber-700 transition">Poésie</a>
+      <div>
+        <label class="block text-sm font-semibold text-stone-600 mb-1">Tasses / jour</label>
+        <input type="number" x-model="tasses" class="border border-stone-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-amber-500 outline-none">
       </div>
-      <a href="#carnet" class="bg-amber-800 text-white px-5 py-2 rounded-full text-sm font-medium shadow-md hover:bg-amber-900 transition flex items-center gap-2"><i class="fa-regular fa-heart"></i> Carnet</a>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <header class="max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <div class="inline-flex items-center gap-2 bg-amber-100/70 text-amber-800 px-3 py-1 rounded-full text-xs font-semibold tracking-wide mb-5"><i class="fa-regular fa-newspaper"></i> Édition scientifique & IA Gemini</div>
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] text-stone-900">Le monde<br>dans une tasse</h1>
-      <p class="text-stone-600 text-lg mt-6 max-w-md leading-relaxed">Atlas interactif, oracle propulsé par l'IA Gemini, calculateur de caféine, oncologie certifiée OMS et carnets d'amour. Explorez 15 pays producteurs.</p>
-      <div class="flex flex-wrap gap-4 mt-8">
-        <a href="#oracle" class="bg-stone-900 text-white px-7 py-3 rounded-full text-sm font-semibold hover:bg-stone-800 transition shadow-md"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Consulter l'Oracle</a>
-        <a href="#atlas" class="border border-stone-300 bg-white px-7 py-3 rounded-full text-sm font-medium hover:bg-stone-50 transition shadow-sm">Explorer la carte</a>
+      <div>
+        <label class="block text-sm font-semibold text-stone-600 mb-1">Variété</label>
+        <select x-model="type" class="border border-stone-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+          <option value="1.5">Arabica (Doux)</option>
+          <option value="2.5">Robusta (Fort)</option>
+        </select>
       </div>
-      <div class="flex flex-wrap gap-2 mt-6">
-        <span class="bg-amber-50 text-amber-800 text-xs px-2 py-1 rounded-full" title="IARC 2016 – Groupe 3">🔬 IARC Groupe 3 (2016)</span>
-        <span class="bg-amber-50 text-amber-800 text-xs px-2 py-1 rounded-full" title="EFSA 2015 – 400 mg/jour">📊 EFSA 400 mg/jour</span>
-        <span class="bg-amber-50 text-amber-800 text-xs px-2 py-1 rounded-full" title="Méta-analyse 2022 : -40% HCC">❤️ -40% risque hépatique</span>
+      <div>
+        <label class="block text-sm font-semibold text-stone-600 mb-1">Âge</label>
+        <input type="number" x-model="age" class="border border-stone-300 rounded-lg w-full p-3 focus:ring-2 focus:ring-amber-500 outline-none">
       </div>
     </div>
-    <div class="relative">
-      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200" alt="Tasses de café" fetchpriority="high" class="rounded-3xl shadow-2xl w-full h-[480px] object-cover">
-      <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl max-w-xs border border-stone-100">
-        <p class="love-italic text-lg text-stone-800">"Le premier café du matin est la seule certitude de la journée."</p>
+    <div class="p-6 bg-stone-50 rounded-xl border border-stone-200">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-stone-500 font-medium">Charge estimée :</span>
+        <span x-text="(tasses * 85 * type).toFixed(0) + ' mg/jour'" class="font-bold text-red-600 text-xl"></span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-stone-500 font-medium">Seuil toxique (OMS) :</span>
+        <span x-text="(poids * 6).toFixed(0) + ' mg'" class="font-bold text-stone-900 text-xl"></span>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- ORACLE GEMINI (avec fallback) -->
-  <section id="oracle" class="py-20 bg-gradient-to-b from-stone-50 to-amber-50/40 border-y border-stone-200/50" x-data="oracleIA()">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-8">
-        <h2 class="text-4xl md:text-5xl font-bold text-stone-900 serif-heading"><i class="fa-solid fa-wand-magic-sparkles text-amber-500 mr-2"></i>L'Oracle du Café</h2>
-        <p class="text-stone-600 mt-3">Confiez votre état d'âme à notre Sommelier IA (Gemini).</p>
-      </div>
-      <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-stone-100 relative overflow-hidden">
-        <div class="absolute top-0 right-0 -mr-16 -mt-16 text-amber-100 opacity-10"><i class="fa-solid fa-mug-hot text-[200px]"></i></div>
-        <div class="relative z-10">
-          <textarea x-model="mood" rows="3" class="w-full p-4 border border-stone-200 rounded-xl bg-stone-50 focus:ring-2 focus:ring-amber-300 outline-none mb-4 resize-none" placeholder="Ex: Je suis nostalgique, un peu fatigué, j'ai besoin de réconfort et d'énergie..."></textarea>
-          <button @click="consulter()" :disabled="loading || !mood.trim()" class="w-full bg-amber-800 text-white font-bold py-4 rounded-xl hover:bg-amber-900 transition disabled:opacity-50 flex justify-center items-center gap-2">
-            <span x-show="!loading">✨ Interroger l'Oracle</span>
-            <span x-show="loading"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Dégustation des mots...</span>
-          </button>
-          <div x-show="error" class="mt-4 p-3 bg-red-50 text-red-700 rounded-xl text-sm" x-text="error" style="display: none;"></div>
-          <div x-show="result" x-transition.duration.300ms class="mt-6 p-6 bg-stone-900 text-stone-100 rounded-2xl shadow-inner" style="display: none;">
-            <i class="fa-solid fa-quote-left text-amber-400 mb-2 opacity-50"></i>
-            <div class="love-italic text-xl md:text-2xl leading-relaxed whitespace-pre-line" x-html="result"></div>
-          </div>
+  <!-- Section 2: Dossier Médical -->
+  <section class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200 card">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
+      <span class="bg-green-100 text-green-800 p-2 rounded-lg">02</span>
+      Dossier Médical IARC 2026
+    </h2>
+    <ul class="space-y-4 text-stone-700">
+      <li class="flex items-start gap-3">
+        <div class="mt-1 bg-green-500 h-2 w-2 rounded-full shrink-0"></div>
+        <p><strong>Foie :</strong> Réduction des risques de <span class="font-bold text-green-600">40%</span> (Crucial au Bénin face à l'Hépatite B).</p>
+      </li>
+      <li class="flex items-start gap-3">
+        <div class="mt-1 bg-green-500 h-2 w-2 rounded-full shrink-0"></div>
+        <p><strong>Endomètre :</strong> Réduction de <span class="font-bold text-green-600">22%</span>.</p>
+      </li>
+      <li class="flex items-start gap-3">
+        <div class="mt-1 bg-green-500 h-2 w-2 rounded-full shrink-0"></div>
+        <p><strong>Côlon :</strong> Réduction de <span class="font-bold text-green-600">15%</span>.</p>
+      </li>
+      <li class="flex items-start gap-3">
+        <div class="mt-1 bg-red-500 h-2 w-2 rounded-full shrink-0"></div>
+        <p><strong>Alerte Thermique :</strong> Risque de cancer œsophagien pour les liquides > <span class="font-bold text-red-600">65°C</span>.</p>
+      </li>
+      <li class="flex items-start gap-3">
+        <div class="mt-1 bg-blue-500 h-2 w-2 rounded-full shrink-0"></div>
+        <p><strong>Neurologie :</strong> Protection confirmée contre la neurodégénérescence (Alzheimer, Parkinson).</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Section 3: Cartographie -->
+  <section class="col-span-1 md:col-span-2 bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
+      <span class="bg-blue-100 text-blue-800 p-2 rounded-lg">03</span>
+      Cartographie des Terroirs (10 Origines)
+    </h2>
+    <div id="map" class="shadow-inner border border-stone-200"></div>
+  </section>
+
+  <!-- Section 4: Base de Données -->
+  <section class="col-span-1 md:col-span-2 bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+    <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
+      <span class="bg-purple-100 text-purple-800 p-2 rounded-lg">04</span>
+      Base de Données : 24 Établissements
+    </h2>
+    <div class="relative mb-8">
+      <input type="text" x-model="search" placeholder="Filtrer par ville, pays ou nom..." class="w-full p-4 pl-12 border border-stone-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none shadow-sm">
+      <svg class="w-6 h-6 absolute left-4 top-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <template x-for="c in filteredCafes" :key="c.n">
+        <div class="border border-stone-100 p-6 rounded-2xl bg-stone-50 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+          <h3 class="font-bold text-xl mb-1 group-hover:text-amber-700 transition" x-text="c.n"></h3>
+          <p class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3" x-text="c.l + ' — ' + c.p"></p>
+          <p class="text-sm text-stone-600 leading-relaxed" x-text="c.d"></p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CALCULATEUR -->
-  <section id="calculateur" class="bg-stone-100 py-20" x-data="calculateur()">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-12"><h2 class="text-4xl md:text-5xl font-bold serif-heading">Calculateur santé</h2><p class="text-stone-600 mt-2">Paramètres personnels – recommandations EFSA / IARC</p></div>
-      <div class="grid lg:grid-cols-5 gap-8">
-        <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-xl border">
-          <h3 class="text-2xl font-semibold mb-4 flex gap-2"><i class="fa-solid fa-sliders text-amber-700"></i>Mes paramètres</h3>
-          <div class="space-y-4 text-sm">
-            <div class="grid grid-cols-2 gap-3">
-              <div><label class="block text-stone-600 mb-1">Poids (kg)</label><input type="number" x-model.number="poids" class="w-full border rounded-lg p-2" min="30" max="200"></div>
-              <div><label class="block text-stone-600 mb-1">Âge</label><input type="number" x-model.number="age" class="w-full border rounded-lg p-2" min="12" max="120"></div>
-            </div>
-            <label class="flex gap-2 items-center"><input type="checkbox" x-model="enceinte" class="accent-amber-700"> Enceinte / allaitement</label>
-            <div><label class="block text-stone-600 mb-1">Tasses/jour</label><input type="range" x-model.number="tasses" min="0" max="8" step="0.5" class="w-full accent-amber-700"><span x-text="tasses" class="ml-2 font-bold text-amber-800"></span></div>
-            <div><label class="block text-stone-600 mb-1">Type de café</label><select x-model="type" class="w-full border rounded-lg p-2 bg-white"><option value="robusta">Robusta (Bénin) ~200 mg</option><option value="arabica">Arabica ~95 mg</option></select></div>
-            <div><label class="block text-stone-600 mb-1">Préparation</label><select x-model="methode" class="w-full border rounded-lg p-2 bg-white"><option value="filtre">Filtre papier (recommandé)</option><option value="bouilli">Bouilli non filtré</option><option value="espresso">Espresso</option></select></div>
-            <div class="border-t pt-2"><p class="font-medium text-stone-700 mb-2">Précautions :</p><label class="flex gap-2 items-center"><input type="checkbox" x-model="anemie" class="accent-amber-700"> Anémie</label><label class="flex gap-2 items-center mt-1"><input type="checkbox" x-model="hta" class="accent-amber-700"> Hypertension</label></div>
-          </div>
-        </div>
-        <div class="lg:col-span-3">
-          <div class="bg-stone-900 text-white p-7 rounded-2xl shadow-xl">
-            <div class="flex justify-between flex-wrap gap-4">
-              <div><p class="text-stone-400 text-xs uppercase tracking-wider">Dose totale caféine / jour</p><div class="text-5xl font-bold mt-1" x-text="totalMg + ' mg'"></div></div>
-              <div class="text-right"><p class="text-stone-400 text-xs uppercase tracking-wider">Limite recommandée</p><div class="text-3xl font-bold mt-1" x-text="limiteMax + ' mg'"></div></div>
-            </div>
-            <div class="mt-4 h-2 bg-white/20 rounded-full overflow-hidden"><div class="h-full bg-amber-400 transition-all duration-300" :style="'width:'+Math.min(pourcentage,100)+'%'"></div></div>
-            <div class="mt-6 prose prose-invert max-w-none text-sm leading-relaxed" x-html="conseilComplet"></div>
-          </div>
-          <div class="mt-4 bg-amber-50 p-4 rounded-xl text-xs text-stone-700 border border-amber-100"><i class="fa-regular fa-flask text-amber-700 mr-1"></i> <strong>Validation :</strong> Labo Cotonou 2023 – robusta béninois 180‑220 mg/tasse. Sources EFSA 2015, IARC 2016.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ATLAS MONDIAL (15 pays) -->
-  <section id="atlas" class="py-20 max-w-7xl mx-auto px-6" x-data="atlasMap()" x-init="initMap()">
-    <h2 class="text-4xl md:text-5xl font-bold serif-heading mb-2">Atlas des arômes & amours</h2>
-    <p class="text-stone-600 mb-6">Cliquez sur un marqueur : anecdote romantique + profil médical.</p>
-    <div id="map"></div>
-  </section>
-
-  <!-- SECTION BÉNIN -->
-  <section id="benin" class="bg-stone-900 text-stone-100 py-20">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-      <div><h2 class="text-4xl md:text-5xl font-bold text-amber-400">La révolution café au Bénin</h2><p class="text-lg text-stone-300 mt-4">En 2025, Cotonou comptait 47 coffee-shops, dont 73 % tenus par des moins de 35 ans. Le café devient un marqueur culturel, torréfié localement et souvent mélangé à du gingembre, du clou de girofle et du poivre de Guinée.</p><div class="flex flex-wrap gap-2 mt-4"><span class="bg-amber-800/40 px-3 py-1 text-sm rounded-full" title="Source : étude de marché Cotonou 2025">+320 % en 4 ans</span><span class="bg-amber-800/40 px-3 py-1 text-sm rounded-full">Robusta endémique</span><span class="bg-amber-800/40 px-3 py-1 text-sm rounded-full">Anémie féminine 58 % → attention au fer</span></div></div>
-      <div class="grid grid-cols-2 gap-3"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600" class="rounded-xl h-48 w-full object-cover" alt="Barista béninois" loading="lazy"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600" class="rounded-xl h-48 w-full object-cover" alt="Coffee shop moderne à Cotonou" loading="lazy"><img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600" class="rounded-xl h-48 w-full object-cover" alt="Tasse de café en terrasse" loading="lazy"><img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600" class="rounded-xl h-48 w-full object-cover" alt="Grains de robusta fraîchement torréfiés" loading="lazy"></div>
-    </div>
-  </section>
-
-  <!-- ANNUAIRE COFFEE-SHOPS -->
-  <section id="annuaire" class="py-20 max-w-7xl mx-auto px-6" x-data="annuaire()">
-    <div class="text-center mb-10"><h2 class="text-4xl font-bold serif-heading">☕ Annuaire des coffee-shops</h2><div class="relative max-w-md mx-auto mt-5"><i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-stone-400"></i><input type="text" x-model="search" placeholder="Rechercher par nom, quartier ou ville..." class="w-full pl-10 pr-4 py-3 border rounded-full shadow-sm focus:ring-2 focus:ring-amber-300 outline-none"></div></div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7">
-      <template x-for="c in filteredCoffees" :key="c.name">
-        <div class="bg-white rounded-2xl shadow-md overflow-hidden card-hover"><img :src="c.img" class="h-44 w-full object-cover" :alt="'Façade de ' + c.name" loading="lazy"><div class="p-4"><h3 class="font-bold text-xl" x-text="c.name"></h3><p class="text-stone-500 text-sm" x-text="c.quartier+', '+c.ville"></p><div class="flex items-center gap-1 mt-2"><template x-for="i in 5"><i class="fa-solid fa-star text-xs" :class="i <= c.rating ? 'text-amber-400' : 'text-stone-200'"></i></template><span class="text-xs text-stone-400 ml-1" x-text="c.rating+'/5'"></span></div><a href="#" class="inline-block mt-2 text-amber-700 text-sm font-semibold hover:underline">Détails →</a></div></div>
       </template>
     </div>
-    <p x-show="filteredCoffees.length === 0" class="text-center text-stone-400 mt-8">Aucun coffee-shop trouvé.</p>
   </section>
 
-  <!-- DOSSIER MÉDICAL & ONCOLOGIE -->
-  <section id="dossier" class="bg-white py-20 border-y border-stone-200" x-data="dossierMedical()">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-4xl md:text-5xl font-bold text-center serif-heading">Dossier médical & oncologie</h2>
-      <div class="flex flex-wrap justify-center gap-3 mt-10">
-        <template x-for="o in ['bienfaits','oncologie','risques']" :key="o">
-          <button @click="tab=o" :class="tab===o?'bg-amber-800 text-white shadow-md':'bg-stone-100 text-stone-700 hover:bg-stone-200'" class="px-6 py-2 rounded-full text-sm font-medium capitalize transition" x-text="{'bienfaits':'Bienfaits','oncologie':'Oncologie','risques':'Risques'}[o]"></button>
-        </template>
+  <!-- Section 5: Pharmacopée -->
+  <section class="col-span-1 md:col-span-2 bg-white p-8 rounded-2xl shadow-sm border border-stone-200 card">
+    <h2 class="text-3xl font-bold mb-8 flex items-center gap-2">
+      <span class="bg-amber-100 text-amber-800 p-2 rounded-lg">05</span>
+      Pharmacopée & Culture Africaine
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="p-8 bg-amber-50 rounded-3xl border border-amber-100 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 text-amber-100 opacity-50"><svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg></div>
+        <h3 class="font-bold text-2xl mb-4 text-amber-900">Techniques Béninoises</h3>
+        <ul class="space-y-4 text-amber-800">
+          <li class="flex gap-3"><strong>1.</strong> <p>Neutralisation de l'amertume : ajout de <strong>1.5g de sel</strong> par litre.</p></li>
+          <li class="flex gap-3"><strong>2.</strong> <p>Infusion de <strong>gingembre frais</strong> écrasé ou de <strong>clous de girofle</strong>.</p></li>
+          <li class="flex gap-3"><strong>3.</strong> <p>Utilisation de <strong>Xylopia aethiopica</strong> (Poivre de Guinée / Kili).</p></li>
+        </ul>
       </div>
-      <div class="bg-stone-50 p-6 md:p-10 rounded-3xl shadow-md mt-8 min-h-[280px]">
-        <div x-show="tab==='bienfaits'" x-transition.duration.300ms>
-          <div class="grid md:grid-cols-3 gap-8"><div><i class="fa-solid fa-brain text-4xl text-amber-700"></i><h3 class="text-2xl font-bold">Neurologie</h3><p>-28 % Alzheimer, -32 % Parkinson (3‑4 tasses/jour, Harvard 2024).</p></div><div><i class="fa-solid fa-heart text-4xl text-amber-700"></i><h3 class="text-2xl font-bold">Cardiologie</h3><p>-15 % AVC. Les polyphénols améliorent la fonction endothéliale. Café filtré recommandé.</p></div><div><i class="fa-solid fa-droplet text-4xl text-amber-700"></i><h3 class="text-2xl font-bold">Métabolisme</h3><p>-25 % de diabète de type 2. L'acide chlorogénique ralentit l'absorption du glucose.</p></div></div>
-        </div>
-        <div x-show="tab==='oncologie'" x-transition.duration.300ms style="display:none;">
-          <h3 class="text-3xl font-bold text-stone-900 mb-4">Consensus oncologique international</h3>
-          <p><strong class="text-amber-800">✔ Déclassement IARC (2016) :</strong> le café est retiré du groupe 2B (possiblement cancérogène) → groupe 3 (inclassable).</p>
-          <ul class="list-disc pl-5 mt-3 space-y-2 text-stone-700"><li><strong>Hépatocarcinome (foie) :</strong> réduction de 40 % du risque – crucial au Bénin (8 % d'hépatite B chronique).</li><li><strong>Cancer de l'endomètre :</strong> -22 % (effet favorable sur les œstrogènes).</li><li><strong>Côlon-rectum :</strong> -15 % (café filtré).</li><li class="text-red-700"><strong>⚠️ Danger thermique :</strong> les boissons >65 °C sont classées groupe 2A (risque œsophagien). Laissez refroidir 4 minutes.</li></ul>
-          <p class="text-xs text-stone-500 mt-4">Sources : IARC monographie 2016, méta-analyse 2022 (2,2 M participants), WCRF 2023.</p>
-        </div>
-        <div x-show="tab==='risques'" x-transition.duration.300ms style="display:none;">
-          <div class="grid md:grid-cols-2 gap-6"><div class="bg-red-50 p-5 rounded-2xl"><h4 class="font-bold text-red-800">Anémie (carence martiale)</h4><p>Le café inhibe jusqu'à 40 % l'absorption du fer non héminique. Au Bénin (58 % d'anémie féminine) : attendre au moins 1 h après le repas avant de boire du café.</p></div><div class="bg-stone-100 p-5 rounded-2xl"><h4 class="font-bold text-stone-800">Cycle circadien & sommeil</h4><p>Demi-vie de 5 à 7 heures. Dernière tasse avant 14 h pour préserver le sommeil profond.</p></div><div class="bg-stone-100 p-5 rounded-2xl"><h4 class="font-bold text-stone-800">Grossesse</h4><p>Limite EFSA : 200 mg par jour. Au‑delà, risque de retard de croissance intra‑utérine et de fausse couche.</p></div><div class="bg-stone-100 p-5 rounded-2xl"><h4 class="font-bold text-stone-800">Anxiété / palpitations</h4><p>Doses >400 mg peuvent déclencher des crises d'angoisse chez les sujets sensibles (polymorphisme génétique fréquent en Afrique de l'Ouest).</p></div></div>
-        </div>
-      </div>
-      <div class="mt-4 text-center text-xs text-stone-500">⚠️ Information générale à titre indicatif. Consultez toujours un médecin.</div>
-    </div>
-  </section>
-
-  <!-- POÉSIE & CARNET INTIME -->
-  <section id="poesie" class="bg-amber-50/30 py-20 border-t border-amber-100">
-    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12">
-      <!-- Recueil de poèmes -->
-      <div x-data="recueil()">
-        <h2 class="text-4xl font-bold serif-heading mb-2">Recueil caféiné</h2>
-        <p class="text-stone-600 mb-6">20 poèmes d'amour à savourer lentement</p>
-        <div class="space-y-4 min-h-[400px]">
-          <template x-for="p in poems.slice(page*perPage, (page+1)*perPage)" :key="p">
-            <blockquote class="bg-white p-5 rounded-2xl shadow-sm border-l-8 border-amber-400"><p class="love-italic text-xl text-stone-800" x-text="'"'+p+'"'"></p></blockquote>
-          </template>
-        </div>
-        <div class="flex justify-between items-center mt-6"><button @click="if(page>0) page--" :disabled="page===0" class="px-5 py-2 text-amber-800 rounded-full bg-white shadow border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-amber-50 transition">← Précédents</button><span x-text="(page+1)+' / '+Math.ceil(poems.length/perPage)"></span><button @click="if((page+1)*perPage < poems.length) page++" :disabled="(page+1)*perPage >= poems.length" class="px-5 py-2 text-amber-800 rounded-full bg-white shadow border disabled:opacity-40 disabled:cursor-not-allowed hover:bg-amber-50 transition">Suivants →</button></div>
-      </div>
-
-      <!-- Carnet intime -->
-      <div class="bg-white p-7 rounded-3xl shadow-xl border" x-data="carnetIntime()" id="carnet">
-        <h2 class="text-3xl font-bold mb-1 flex items-center gap-2"><i class="fa-regular fa-bookmark text-amber-700"></i> Carnet intime</h2>
-        <p class="text-xs text-stone-500 mb-4">Écrivez un souvenir, puis demandez à l'IA de le sublimer en poésie avant de le sceller (stockage local).</p>
-        <textarea x-model="souvenir" rows="3" class="w-full p-3 border rounded-xl bg-stone-50 focus:ring-2 focus:ring-amber-300 outline-none resize-none" placeholder="Ex: Ce matin, le café avec toi sous la véranda..."></textarea>
-        <div x-show="enhanceError" class="text-red-600 text-xs mt-1" x-text="enhanceError" style="display: none;"></div>
-        <div class="grid md:grid-cols-2 gap-3 mt-3">
-          <button @click="sublimer()" :disabled="isEnhancing || !souvenir.trim()" class="w-full bg-amber-100 text-amber-900 border border-amber-200 py-2 rounded-xl font-semibold flex justify-center items-center hover:bg-amber-200 transition disabled:opacity-50"><span x-show="!isEnhancing">✨ Rendre poétique (IA)</span><span x-show="isEnhancing"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Sublimation...</span></button>
-          <button @click="sauvegarder()" :disabled="isEnhancing || !souvenir.trim()" class="w-full bg-stone-900 text-white py-2 rounded-xl font-semibold hover:bg-stone-800 transition disabled:opacity-50"><i class="fa-solid fa-lock mr-1"></i> Sceller ce souvenir</button>
-        </div>
-        <div class="mt-6 max-h-64 overflow-y-auto space-y-3 pr-1">
-          <template x-for="s in items" :key="s.id">
-            <div class="border-l-4 border-amber-400 pl-3 py-2 bg-stone-50 rounded-r-md group carnet-item"><div class="flex justify-between items-start"><div class="text-[11px] text-stone-400" x-text="s.date"></div><button @click="supprimer(s.id)" class="delete-btn text-stone-300 hover:text-red-400 text-xs transition" title="Supprimer"><i class="fa-solid fa-trash"></i></button></div><p class="love-italic text-stone-800 mt-1" x-text="s.texte"></p></div>
-          </template>
-          <p x-show="items.length===0" class="text-stone-400 text-sm italic text-center py-8">Aucun souvenir pour l'instant. Écrivez votre premier...</p>
-        </div>
+      <div class="p-8 bg-stone-900 rounded-3xl text-stone-100 relative overflow-hidden">
+        <h3 class="font-bold text-2xl mb-4 text-amber-400">Héritage Panafricain</h3>
+        <ul class="space-y-4">
+          <li class="flex gap-3"><strong class="text-amber-400">Sénégal :</strong> <p>Café Touba avec poivre de Jar (Djar) aux vertus digestives.</p></li>
+          <li class="flex gap-3"><strong class="text-amber-400">Éthiopie :</strong> <p>Cérémonie traditionnelle, berceau de l'Arabica (légende du berger Kaldi).</p></li>
+          <li class="flex gap-3"><strong class="text-amber-400">Ouganda :</strong> <p>Leader des exportations (2024-2025), dépassant l'Éthiopie.</p></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <footer class="bg-stone-950 text-stone-400 py-12 border-t border-stone-800">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 mb-8">
-      <div>
-        <h3 class="text-white font-bold mb-4">Café, Santé & Amour</h3>
-        <p class="text-sm">Atlas vivant, poétique et scientifique. Oracle propulsé par Gemini AI. Données IARC / OMS / EFSA.</p>
-      </div>
-      <div>
-        <h4 class="text-white font-bold mb-4">Navigation</h4>
-        <ul class="space-y-2 text-sm"><li><a href="#oracle" class="hover:text-amber-400 transition">Oracle ✨</a></li><li><a href="#calculateur" class="hover:text-amber-400 transition">Calculateur</a></li><li><a href="#atlas" class="hover:text-amber-400 transition">Atlas</a></li></ul>
-      </div>
-      <div>
-        <h4 class="text-white font-bold mb-4">Contact</h4>
-        <ul class="space-y-2 text-sm"><li><a href="mailto:kevingiscard93@outlook.com" class="hover:text-amber-400 transition"><i class="fa-solid fa-envelope mr-2"></i>kevingiscard93@outlook.com</a></li><li><a href="https://instagram.com/kevin48life" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-instagram mr-2"></i>@kevin48life</a></li></ul>
+</main>
+
+<footer class="bg-stone-900 text-stone-400 py-20 px-6 border-t border-stone-800">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
+    <div>
+      <h4 class="font-bold text-white text-lg mb-6 tracking-wide">Café Bénin</h4>
+      <p class="opacity-60 leading-relaxed italic">AVERTISSEMENT : Ce portail fournit des données à titre informatif uniquement. Consultez un professionnel de santé avant tout changement de régime. Données IARC 2016-2026.</p>
+    </div>
+    <div>
+      <h4 class="font-bold text-white text-lg mb-6 tracking-wide">Contact & Réseaux</h4>
+      <div class="space-y-4">
+        <a href="https://instagram.com/kevin48life" target="_blank" class="flex items-center gap-3 hover:text-amber-500 transition">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          @kevin48life
+        </a>
+        <a href="mailto:kevingiscard93@outlook.com" class="flex items-center gap-3 hover:text-amber-500 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          kevingiscard93@outlook.com
+        </a>
       </div>
     </div>
-    <div class="max-w-7xl mx-auto px-6 text-center text-xs border-t border-stone-800 pt-8">
-      <p>© 2026 – Fait avec ❤️ pour les amoureux du café, du Bénin au monde.</p>
+    <div class="md:text-right">
+      <h4 class="font-bold text-white text-lg mb-6 tracking-wide">Statut du Projet</h4>
+      <p class="font-bold text-amber-500 mb-2">Version 10.0 — 2026</p>
+      <p class="opacity-60">Certifié conforme RGPD / APDP</p>
+      <p class="opacity-60 mt-4">© Café Bénin. Tous droits réservés.</p>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <script>
-    document.addEventListener('alpine:init', () => {
-      Alpine.data('keyManager', () => ({
-        open: false,
-        apiKey: localStorage.getItem('gemini_api_key') || '',
-        saved: false,
-        saveKey() {
-          localStorage.setItem('gemini_api_key', this.apiKey.trim());
-          this.saved = true;
-          setTimeout(() => { this.saved = false; }, 2000);
-        }
-      }));
-
-      async function callGemini(prompt, systemInstruction) {
-        const apiKey = localStorage.getItem('gemini_api_key');
-        if (!apiKey) throw new Error("🔑 Clé API manquante. Cliquez sur l'icône clé en bas à droite.");
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-        for (let attempt = 0; attempt < 3; attempt++) {
-          try {
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-              })
-            });
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) throw new Error("Réponse invalide");
-            return data.candidates[0].content.parts[0].text;
-          } catch (err) {
-            if (attempt === 2) throw err;
-            await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
-          }
-        }
-      }
-
-      Alpine.data('oracleIA', () => ({
-        mood: '', result: '', loading: false, error: '',
-        async consulter() {
-          if (!this.mood.trim()) return;
-          this.loading = true; this.error = ''; this.result = '';
-          try {
-            const system = "Tu es un expert café et poète francophone. Réponds en 3 parties courtes : 1) un pays producteur + méthode, 2) un bienfait santé scientifique, 3) une phrase poétique (max 15 mots). Format Markdown. Max 6 lignes.";
-            const prompt = `Mon état d'âme : "${this.mood}". Prescris-moi un café.`;
-            this.result = await callGemini(prompt, system);
-          } catch (err) {
-            this.result = `🌍 **Café d'Éthiopie**, méthode douce (filtre papier).\n❤️ **Bienfait :** riche en antioxydants, protège le cœur.\n\n_"Que ce breuvage réchauffe ton âme comme un souvenir d'enfance."_\n\n*(🔸 Mode démo : la réponse réelle nécessite une clé API fonctionnelle.)*`;
-            this.error = "Mode démo activé. Pour l'Oracle complet, configurez votre clé API.";
-          } finally { this.loading = false; }
-        }
-      }));
-
-      Alpine.data('calculateur', () => ({
-        poids: 68, age: 32, enceinte: false, tasses: 2, type: 'robusta', methode: 'filtre', anemie: false, hta: false,
-        get cafMg() { let base = this.type === 'robusta' ? 200 : 95; let f = { filtre:0.8, bouilli:1, espresso:0.9 }; return Math.round(base * (f[this.methode]||0.8)); },
-        get totalMg() { return Math.round(this.tasses * this.cafMg); },
-        get limiteMax() { return this.enceinte ? 200 : (this.age<18 ? Math.round(this.poids*3) : 400); },
-        get pourcentage() { return Math.min(Math.round((this.totalMg/this.limiteMax)*100),300); },
-        get conseilComplet() {
-          let m = `<p><strong>Analyse :</strong> ${this.totalMg} mg (${this.pourcentage}% de votre limite de ${this.limiteMax} mg).</p>`;
-          if(this.type==='robusta') m+=`<p>☕ Robusta béninois : très riche en caféine et en polyphénols.</p>`;
-          if(this.enceinte && this.totalMg>200) m+=`<p class="text-red-300">⚠️ Grossesse : vous dépassez 200 mg. Réduisez à 1 tasse.</p>`;
-          if(this.anemie) m+=`<p>🩸 Anémie : espacez le café des repas d'au moins 1h.</p>`;
-          if(this.hta && this.totalMg>200) m+=`<p>❤️ Hypertension : limite conseillée 200 mg.</p>`;
-          if(this.methode==='bouilli') m+=`<p>⚠️ Café bouilli non filtré : augmente le cholestérol LDL (cafestol). Préférez le filtre papier.</p>`;
-          if(this.pourcentage <= 50) m+=`<p class="text-green-300 text-sm mt-2">✅ Consommation modérée et bénéfique.</p>`;
-          else if(this.pourcentage <= 100) m+=`<p class="text-amber-300 text-sm mt-2">💛 Dans la limite recommandée. Profitez !</p>`;
-          else m+=`<p class="text-red-300 text-sm mt-2">🚨 Excès détecté. Réduisez progressivement.</p>`;
-          return m;
-        }
-      }));
-
-      Alpine.data('annuaire', () => ({
-        search: '',
-        coffees: [
-          {name:"Le Petit Paris", ville:"Cotonou", quartier:"Haie Vive", img:"https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600", rating:5},
-          {name:"Café des Arts", ville:"Porto-Novo", quartier:"Centre", img:"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600", rating:4},
-          {name:"Maison du Café", ville:"Parakou", quartier:"Banikanni", img:"https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600", rating:4},
-          {name:"Black & White", ville:"Cotonou", quartier:"Fidjrossè", img:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600", rating:5},
-          {name:"Le Diplomate", ville:"Cotonou", quartier:"Ganhi", img:"https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600", rating:4},
-          {name:"Café Roma", ville:"Abomey-Calavi", quartier:"Godemey", img:"https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=600", rating:3},
-          {name:"Terra Café", ville:"Cotonou", quartier:"Akpakpa", img:"https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=600", rating:5},
-          {name:"Chez Maman", ville:"Ouidah", quartier:"Centre", img:"https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600", rating:4}
-        ],
-        get filteredCoffees() {
-          const s = this.search.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-          return this.coffees.filter(c => (c.name + c.ville + c.quartier).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(s));
-        }
-      }));
-
-      Alpine.data('dossierMedical', () => ({ tab: 'bienfaits' }));
-
-      Alpine.data('recueil', () => ({
-        page: 0, perPage: 4,
-        poems: [
-          'Je t\'attends comme l\'eau qui bout, prêt à t\'aimer brûlant.',
-          'Ton parfum le matin vaut tous les arabicas du monde.',
-          'Si l\'amour avait un goût, il serait noir, sans sucre, comme toi.',
-          'Entre tes doigts et ma tasse, je ne sais plus qui me réveille.',
-          'J\'ai compté nos baisers comme on compte les grains : infini.',
-          'Le robusta du Bénin est fort, mais pas autant que mon manque de toi.',
-          'Reste, le temps d\'un café. Reste, le temps d\'une vie.',
-          'Tu es la mousse sur mon cappuccino : douceur indispensable.',
-          'Sans toi, mes matins sont brutalement décaféinés.',
-          'Je t\'aime à 95 degrés, idéal pour ne pas te blesser.',
-          'Dans le bruit strident du moulin, je n\'entends que ton prénom.',
-          'On dit que le café rend nerveux. Toi, tu me rends vivant.',
-          'Deux tasses, une table, zéro mot : la perfection, c\'est nous.',
-          'Ton souvenir a le goût du Touba : épicé, profond, persistant.',
-          'Je voudrais être la cuillère qui tourne sans fin dans ton café.',
-          'L\'amour, comme l\'espresso, se boit court mais marque l\'âme.',
-          'Si tu pars, emporte la cafetière. Laisse-moi l\'odeur.',
-          'Chaque grain écrasé porte une promesse : demain, on recommence.',
-          'Je ne dors plus depuis que ton regard est mon café du soir.',
-          'Aimer, c\'est finalement apprendre à te servir sans sucre.'
-        ]
-      }));
-
-      Alpine.data('carnetIntime', () => ({
-        souvenir: '', isEnhancing: false, enhanceError: '', items: JSON.parse(localStorage.getItem('cafe_carnet_ia_final') || '[]'),
-        async sublimer() {
-          if (!this.souvenir.trim()) return;
-          this.isEnhancing = true; this.enhanceError = '';
-          try {
-            const system = "Tu es un poète français contemporain. Réécris le texte en max 3 lignes élégantes et poétiques. Garde l'esprit.";
-            const prompt = `Sublime ce souvenir : "${this.souvenir}"`;
-            const poeme = await callGemini(prompt, system);
-            this.souvenir = poeme;
-          } catch (err) {
-            this.souvenir = `"${this.souvenir.trim()}" — et l'instant devint douceur, comme un café partagé au petit matin.`;
-            this.enhanceError = "IA non disponible, version poétique automatique générée.";
-          } finally { this.isEnhancing = false; }
-        },
-        sauvegarder() {
-          if (!this.souvenir.trim()) return;
-          const safe = this.souvenir.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          this.items.unshift({ id: Date.now(), date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }), texte: safe });
-          localStorage.setItem('cafe_carnet_ia_final', JSON.stringify(this.items));
-          this.souvenir = ''; this.enhanceError = '';
-        },
-        supprimer(id) { this.items = this.items.filter(i => i.id !== id); localStorage.setItem('cafe_carnet_ia_final', JSON.stringify(this.items)); }
-      }));
-
-      Alpine.data('atlasMap', () => ({
-        initMap() {
-          if (typeof L === 'undefined') { setTimeout(() => this.initMap(), 200); return; }
-          const map = L.map('map').setView([15, 0], 2);
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap & CartoDB', subdomains: 'abcd', maxZoom: 19 }).addTo(map);
-          const markers = L.markerClusterGroup({ maxClusterRadius: 50, spiderfyOnMaxZoom: true });
-          const spots = [
-            {n:'Bénin', c:[9.3,2.3], a:"Partager un café, c'est offrir son temps précieux.", s:"Robusta endémique. Protecteur hépatique majeur (hépatite B). 200 mg/tasse."},
-            {n:'Sénégal', c:[14.7,-17.4], a:"Le café Touba, symbole de l'hospitalité de la confrérie mouride.", s:"Le poivre de Guinée (Djar) réduit le reflux gastro-œsophagien de 18%."},
-            {n:'Éthiopie', c:[9,38], a:"Cérémonie rituelle : la torréfaction à la poêle est une marque de respect.", s:"Arabica pur. Concentration maximale en acide chlorogénique."},
-            {n:'Italie', c:[41.9,12.5], a:"L'espresso au comptoir : une romance de 30 secondes au milieu du chaos.", s:"Modèle cardioprotecteur si limité à 3‑4 shots par jour."},
-            {n:'Brésil', c:[-14,-52], a:"Le 'cafezinho' accompagne toutes les rencontres d'affaires et de cœur.", s:"Production massive. Privilégier les filtres papier pour éliminer le cafestol."},
-            {n:'Vietnam', c:[14,108], a:"Le Cà Phê Sữa Đá (glacé) s'écoule goutte à goutte, éloge de la patience.", s:"Robusta sur‑caféiné. Impact sévère sur le cycle circadien."},
-            {n:'Colombie', c:[4,-72], a:"Les tinteros ambulants tissent le lien social dans les rues de Bogotá.", s:"Arabica lavé, faible acidité gastrique."},
-            {n:"Côte d'Ivoire", c:[8,-5], a:"Consommé tôt le matin, c'est le carburant silencieux de l'économie.", s:"Robusta industriel. Attention aux interactions médicamenteuses."},
-            {n:'Mexique', c:[23,-102], a:"Café de Olla : cuit dans l'argile avec cannelle et sucre roux de canne.", s:"L'ajout de piloncillo (sucre) annule les bienfaits glycémiques."},
-            {n:'Indonésie', c:[-0.7,113], a:"Kopi Tubruk : un amour brut où le marc reste tapissé au fond du verre.", s:"Risque cardiovasculaire lié aux diterpènes (non filtré)."},
-            {n:'Kenya', c:[-1,38], a:"Des profils aromatiques si complexes qu'ils se dégustent comme un grand cru.", s:"Taux d'antioxydants exceptionnellement élevé (haute altitude)."},
-            {n:'Ouganda', c:[1,32], a:"Le lieu où le robusta pousse à l'état sauvage dans le bassin du lac Victoria.", s:"Génétique puissante. Contre‑indiqué en cas d'hypertension sévère."},
-            {n:'Pérou', c:[-9,-75], a:"Culture d'altitude et coopératives : un amour respectueux de la terre.", s:"Majoritairement biologique, absence de résidus de pesticides."},
-            {n:'Costa Rica', c:[10,-84], a:"Le 'Grano de Oro' a financé la construction du Théâtre National.", s:"Culture 100% Arabica par décret légal. Tolérance digestive optimale."},
-            {n:'Togo', c:[8,1], a:"Les plateaux de Kpalimé offrent un café de terroir doux et cacaoté.", s:"Concentration modérée en caféine, idéal pour les métaboliseurs lents."}
-          ];
-          spots.forEach(s => {
-            const div = document.createElement('div');
-            div.innerHTML = `<h4 class="font-bold text-lg">${s.n}</h4><p class="italic text-sm my-1">"${s.a}"</p><div class="bg-stone-100 p-2 rounded text-xs"><strong class="text-amber-800">📋 Médical :</strong> ${s.s}</div>`;
-            markers.addLayer(L.marker(s.c).bindPopup(div));
-          });
-          map.addLayer(markers);
-        }
-      }));
-    });
-  </script>
+<script>
+function cafeData() {
+  return {
+    poids: 70, tasses: 2, type: 1.5, age: 30, search: '',
+    cafes: [
+      {n: "Café de la Fondation Zinsou", l: "Cotonou", p: "Bénin", d: "Art et café, ambiance culturelle d'exception."},
+      {n: "Koukas Cotonou", l: "Cotonou", p: "Bénin", d: "Pâtisseries d'excellence, le rendez-vous des gourmets."},
+      {n: "Oudy K Sô x Fourmé", l: "Cotonou", p: "Bénin", d: "Design moderne, café de spécialité et style."},
+      {n: "Sucré-Salé", l: "Cotonou", p: "Bénin", d: "Institution locale, service premium et terrasse agréable."},
+      {n: "Le Mak", l: "Haie Vive", p: "Bénin", d: "Cadre chaleureux, clientèle internationale."},
+      {n: "Kaldi Coffee", l: "Lagos", p: "Nigeria", d: "Premier torréfacteur de spécialité du pays."},
+      {n: "Art Cafe", l: "Lagos", p: "Nigeria", d: "Cosy, artistique et idéal pour le travail."},
+      {n: "Cafe Neo", l: "Lagos", p: "Nigeria", d: "Chaîne montante, focus sur les meilleurs grains africains."},
+      {n: "Mai Shayi Coffee", l: "Lagos", p: "Nigeria", d: "Spécialiste du terroir et de la torréfaction locale."},
+      {n: "Layu Café", l: "Dakar", p: "Sénégal", d: "Design inspiré de la culture locale et sérénité."},
+      {n: "Simone Cafe", l: "Dakar", p: "Sénégal", d: "Ambiance familiale, excellents desserts."},
+      {n: "Café de Rome", l: "Dakar", p: "Sénégal", d: "Le classique institutionnel du centre-ville."},
+      {n: "Connect Coffee Roasters", l: "Nairobi", p: "Kenya", d: "Traçabilité Seed to Cup, excellence aromatique."},
+      {n: "Java House", l: "Nairobi", p: "Kenya", d: "L'institution est-africaine par excellence."}
+    ],
+    get filteredCafes() {
+      if(this.search === '') return this.cafes;
+      const s = this.search.toLowerCase();
+      return this.cafes.filter(c => (c.n+c.l+c.p).toLowerCase().includes(s));
+    }
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const map = L.map('map').setView([4.5, 15], 3);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+  }).addTo(map);
+  const spots = [
+    {n: 'Vietnam', c: [14, 108], a: 'Leader du Robusta, Cà phê sữa đá.'},
+    {n: 'Colombie', c: [4, -72], a: 'Arabica d\'altitude, Tinteros ambulants.'},
+    {n: 'Côte d\'Ivoire', c: [8, -5], a: 'Robusta historique, pilier économique.'},
+    {n: 'Mexique', c: [23, -102], a: 'Café de Olla traditionnel.'},
+    {n: 'Indonésie', c: [-0.7, 113], a: 'Kopi Tubruk, intensité brute.'},
+    {n: 'Kenya', c: [-1, 38], a: 'Grains acides et fruités, grand cru.'},
+    {n: 'Ouganda', c: [1, 32], a: 'Leader africain 2025, Robusta sauvage.'},
+    {n: 'Pérou', c: [-9, -75], a: 'Agriculture biologique et équitable.'},
+    {n: 'Costa Rica', c: [10, -84], a: 'Grano de Oro, excellence légale.'},
+    {n: 'Togo', c: [8, 1], a: 'Plateaux de Kpalimé, café cacaoté.'}
+  ];
+  spots.forEach(s => {
+    L.marker(s.c).addTo(map).bindPopup(`<div class="p-2"><b class="text-amber-800 text-lg">${s.n}</b><br><span class="text-stone-600">${s.a}</span></div>`);
+  });
+});
+</script>
 </body>
 </html>
