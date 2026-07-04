@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Bénin — Encyclopédie Complète du Café</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{font-family:'Inter',sans-serif;box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+    body{background:#050505;color:#fff;overflow-x:hidden;margin:0}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#050505}
+    ::-webkit-scrollbar-thumb{background:#b91c1c;border-radius:3px}
+
+    /* Preloader */
+    #preloader{position:fixed;inset:0;z-index:9999;background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s ease-out,visibility .8s ease-out}
+    #preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+    #preloader-bar{width:0;height:2px;background:#b91c1c;transition:width 300ms ease-out;border-radius:2px}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(2rem);transition:all 1s cubic-bezier(.16,1,.3,1)}
+    .reveal.active{opacity:1;transform:translateY(0)}
+    .d1{transition-delay:100ms}.d2{transition-delay:200ms}.d3{transition-delay:300ms}
+    .d4{transition-delay:400ms}.d5{transition-delay:500ms}.d6{transition-delay:600ms}
+    .d7{transition-delay:700ms}.d8{transition-delay:800ms}
+
+    /* Text reveal */
+    .tr{overflow:hidden}.tr-c{transform:translateY(110%);opacity:0;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity 1.2s ease}
+    .tr-a .tr-c{transform:translateY(0);opacity:1}
+
+    /* Blur reveal */
+    .br-img{opacity:0;filter:blur(20px) grayscale(100%);transform:scale(1.05);transition:opacity 1.5s ease,filter 1.8s cubic-bezier(.16,1,.3,1),transform 1.8s ease}
+    .br-img.active{opacity:1;filter:blur(0) grayscale(0);transform:scale(1)}
+
+    /* Marquee */
+    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+    .mq{animation:scroll 50s linear infinite}.mq:hover{animation-play-state:paused}
+
+    /* Pulse */
+    .pulse{width:8px;height:8px;border-radius:50%;background:#dc2626;box-shadow:0 0 12px rgba(220,38,38,1);animation:pg 2s ease-in-out infinite}
+    @keyframes pg{0%,100%{box-shadow:0 0 12px rgba(220,38,38,1)}50%{box-shadow:0 0 24px rgba(220,38,38,1),0 0 48px rgba(220,38,38,.4)}}
+
+    /* Grid bg */
+    .grid-bg{background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);background-size:4rem 4rem}
+
+    /* Nav */
+    .nav-s{backdrop-filter:blur(12px);background:rgba(5,5,5,.88)}
+
+    /* Cards */
+    .ch{transition:all .5s cubic-bezier(.16,1,.3,1)}.ch:hover{transform:translateY(-4px);border-color:rgba(185,28,28,.4)}
+    .ch:hover .ci{color:#b91c1c;transform:scale(1.1)}.ci{transition:all .5s ease}
+
+    /* Image hover */
+    .ih{transition:transform 1s cubic-bezier(.16,1,.3,1),filter .5s ease}.ih:hover{transform:scale(1.05);filter:grayscale(0)!important}
+
+    /* Region */
+    .rc .ro{opacity:0;transition:opacity .5s ease}.rc:hover .ro{opacity:1}
+    .rc .ri{transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s ease}.rc:hover .ri{transform:scale(1.08);filter:grayscale(0)}
+
+    /* FAQ */
+    .faq-c{max-height:0;overflow:hidden;transition:max-height .5s ease}
+
+    /* Step */
+    .sn{-webkit-text-stroke:1px rgba(185,28,28,.3);color:transparent;transition:all .5s ease}
+    .sc:hover .sn{-webkit-text-stroke:1px #b91c1c}
+
+    /* Toast */
+    .toast{position:fixed;bottom:2rem;right:2rem;z-index:9998;background:#171717;border:1px solid rgba(185,28,28,.5);padding:1rem 1.5rem;border-radius:8px;transform:translateY(120%);opacity:0;transition:all .5s cubic-bezier(.16,1,.3,1)}
+    .toast.show{transform:translateY(0);opacity:1}
+
+    /* Mobile menu */
+    #mmenu{transform:translateX(100%);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+    #mmenu.open{transform:translateX(0)}
+
+    /* Counter */
+    .ctr{font-variant-numeric:tabular-nums}
+
+    /* Tab */
+    .tab-btn{transition:all .3s ease}.tab-btn.active{color:#fff;border-color:#b91c1c;background:rgba(185,28,28,.1)}
+    .tab-content{display:none;animation:fadeIn .5s ease}.tab-content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    /* Recipe card */
+    .recipe{transition:all .5s ease}.recipe:hover{border-color:rgba(185,28,28,.3);transform:translateY(-2px)}
+
+    /* Dict letter */
+    .dict-letter{position:sticky;top:60px;z-index:5;background:#0a0a0a}
+
+    /* Timeline */
+    .tl-line{position:absolute;left:50%;width:2px;background:linear-gradient(to bottom,#b91c1c,rgba(185,28,28,.1));transform:translateX(-50%)}
+    @media(max-width:768px){.tl-line{left:20px}}
+
+    /* Smooth image load */
+    img{opacity:0;transition:opacity .6s ease}img.loaded{opacity:1}
+
+    /* Section divider */
+    .sec-div{height:1px;background:linear-gradient(to right,transparent,rgba(185,28,28,.3),transparent)}
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="text-center">
+    <div class="flex items-center gap-3 mb-6">
+      <iconify-icon icon="lucide:coffee" class="text-red-700 text-2xl"></iconify-icon>
+      <span class="text-white font-semibold tracking-wider text-sm uppercase">Café Bénin — Encyclopédie</span>
+    </div>
+    <div class="w-56 h-[2px] bg-neutral-800 rounded-full overflow-hidden">
+      <div id="preloader-bar" class="h-full rounded-full"></div>
+    </div>
+    <p id="preloader-text" class="text-neutral-500 text-xs mt-3 font-mono tracking-widest uppercase">Chargement</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="max-w-[1400px] mx-auto border-x border-neutral-800/50 relative">
+
+<!-- NAV -->
+<nav id="navbar" class="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between transition-all duration-500 nav-s">
+  <a href="#hero" class="flex items-center gap-2 group">
+    <iconify-icon icon="lucide:coffee" class="text-red-700 text-xl group-hover:rotate-12 transition-transform duration-500"></iconify-icon>
+    <span class="font-semibold tracking-tight text-white text-sm md:text-base">Café Bénin</span>
+  </a>
+  <div class="hidden lg:flex items-center gap-6">
+    <a href="#histoire" class="text-xs text-neutral-400 hover:text-white transition-colors">Histoire</a>
+    <a href="#varietes" class="text-xs text-neutral-400 hover:text-white transition-colors">Variétés</a>
+    <a href="#terroirs" class="text-xs text-neutral-400 hover:text-white transition-colors">Terroirs</a>
+    <a href="#process" class="text-xs text-neutral-400 hover:text-white transition-colors">Processus</a>
+    <a href="#recettes" class="text-xs text-neutral-400 hover:text-white transition-colors">Recettes</a>
+    <a href="#dictionnaire" class="text-xs text-neutral-400 hover:text-white transition-colors">Dictionnaire</a>
+    <a href="#sante" class="text-xs text-neutral-400 hover:text-white transition-colors">Santé</a>
+    <a href="#contact" class="text-xs text-neutral-400 hover:text-white transition-colors">Contact</a>
+  </div>
+  <div class="flex items-center gap-3">
+    <a href="#contact" class="hidden md:inline-flex items-center gap-2 bg-red-700 hover:bg-white hover:text-black text-white text-[10px] font-semibold tracking-wider uppercase px-4 py-2 transition-colors duration-300">Explorer<iconify-icon icon="lucide:arrow-up-right" class="text-xs"></iconify-icon></a>
+    <button id="menu-toggle" class="lg:hidden text-white"><iconify-icon icon="lucide:menu" class="text-2xl"></iconify-icon></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mmenu" class="fixed inset-0 z-[60] bg-[#050505] flex flex-col overflow-y-auto">
+  <div class="flex items-center justify-between px-4 py-4 border-b border-neutral-800/50">
+    <span class="font-semibold tracking-tight">Café Bénin</span>
+    <button id="menu-close"><iconify-icon icon="lucide:x" class="text-2xl text-white"></iconify-icon></button>
+  </div>
+  <div class="flex-1 flex flex-col p-6 gap-5">
+    <a href="#hero" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Accueil</a>
+    <a href="#histoire" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Histoire</a>
+    <a href="#varietes" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Variétés</a>
+    <a href="#terroirs" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Terroirs</a>
+    <a href="#process" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Processus</a>
+    <a href="#recettes" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Recettes</a>
+    <a href="#dictionnaire" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Dictionnaire</a>
+    <a href="#sante" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Santé</a>
+    <a href="#contact" class="text-2xl font-semibold tracking-tighter text-neutral-400 hover:text-white transition-colors">Contact</a>
+  </div>
+</div>
+
+<!-- ==================== HERO ==================== -->
+<section id="hero" class="relative min-h-[90vh] md:min-h-[900px] grid grid-cols-1 md:grid-cols-12 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <img src="/home/ubuntu/cafe-benin-info/img/v15_history.png" alt="Plantation café Bénin" class="w-full h-full object-cover grayscale contrast-125 opacity-50 scale-105" onload="this.classList.add('loaded')">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,transparent 40%,#050505 100%)"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#050505]/80 to-transparent"></div>
+  </div>
+  <div class="absolute inset-0 grid-bg opacity-30 z-[1]"></div>
+  <div class="relative z-10 col-span-1 md:col-span-9 flex flex-col justify-end p-8 md:p-16 pb-16 md:pb-24">
+    <div class="mb-6 flex items-center gap-3">
+      <span class="pulse"></span>
+      <span class="text-[10px] md:text-xs font-mono tracking-widest uppercase text-neutral-400 font-bold">L'Encyclopédie du Café Béninois</span>
+    </div>
+    <div class="tr tr-a"><h1 class="tr-c text-5xl md:text-7xl lg:text-[96px] font-semibold leading-[0.9] tracking-tighter">L'Or Noir<br><span class="text-red-700">de l'Afrique</span></h1></div>
+    <div class="mt-8 max-w-xl reveal d3"><p class="text-neutral-400 text-base md:text-lg font-light leading-relaxed">De la montagne sacrée de l'Atacora aux vallées luxuriantes du Couffo, découvrez l'univers fascinant du café béninois — une encyclopédie complète couvrant l'histoire, les variétés, les terroirs, les recettes, le dictionnaire, la culture, la santé et des centaines d'anecdotes.</p></div>
+    <div class="mt-10 flex flex-wrap items-center gap-4 reveal d5">
+      <a href="#histoire" class="inline-flex items-center gap-2 bg-red-700 hover:bg-white hover:text-black text-white text-xs font-semibold tracking-wider uppercase px-7 py-3.5 transition-colors duration-300 group">Explorer l'encyclopédie<iconify-icon icon="lucide:arrow-right" class="text-sm group-hover:translate-x-1 transition-transform duration-300"></iconify-icon></a>
+      <a href="#dictionnaire" class="inline-flex items-center gap-2 border border-neutral-700 hover:border-white text-white text-xs font-semibold tracking-wider uppercase px-7 py-3.5 transition-colors duration-300">Dictionnaire du café</a>
+    </div>
+  </div>
+  <div class="relative z-10 hidden md:grid col-span-3 grid-rows-4 border-l border-neutral-800/50">
+    <div class="flex flex-col items-center justify-center border-b border-neutral-800/50 p-5"><span class="text-4xl font-semibold tracking-tighter ctr" data-target="400">0</span><span class="text-[10px] font-mono tracking-widest uppercase text-neutral-500 mt-2">Ans d'histoire</span></div>
+    <div class="flex flex-col items-center justify-center border-b border-neutral-800/50 p-5"><span class="text-4xl font-semibold tracking-tighter ctr" data-target="124">0</span><span class="text-[10px] font-mono tracking-widest uppercase text-neutral-500 mt-2">Variétés répertoriées</span></div>
+    <div class="flex flex-col items-center justify-center border-b border-neutral-800/50 p-5"><span class="text-4xl font-semibold tracking-tighter ctr" data-target="8500">0</span><span class="text-[10px] font-mono tracking-widest uppercase text-neutral-500 mt-2">Producteurs</span></div>
+    <div class="flex flex-col items-center justify-center p-5"><span class="text-4xl font-semibold tracking-tighter ctr" data-target="70">0</span><span class="text-[10px] font-mono tracking-widest uppercase text-neutral-500 mt-2">Pays producteurs</span></div>
+  </div>
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-60"><span class="text-[10px] font-mono tracking-widest uppercase text-neutral-500">Scroll</span><iconify-icon icon="lucide:arrow-down" class="text-neutral-500 animate-bounce"></iconify-icon></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="border-y border-neutral-800/50 py-3 overflow-hidden bg-[#0a0a0a]">
+  <div class="flex whitespace-nowrap">
+    <div class="mq flex items-center gap-8 pr-8"><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Arabica</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Robusta</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Liberica</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Excelsa</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Atacora</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Couffo</span><span class="text-red-700">◆</span></div>
+    <div class="mq flex items-center gap-8 pr-8"><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Arabica</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Robusta</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Liberica</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Excelsa</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Atacora</span><span class="text-red-700">◆</span><span class="text-sm font-semibold tracking-wider uppercase text-neutral-600">Couffo</span><span class="text-red-700">◆</span></div>
+  </div>
+</div>
+
+<!-- ==================== HISTOIRE ==================== -->
+<section id="histoire" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="reveal">
+      <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre I — Histoire</span>
+      <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">L'histoire du <span class="text-red-700">café béninois</span></h2>
+      <p class="mt-6 text-neutral-400 font-light leading-relaxed">Le café au Bénin remonte aux années 1920, introduit par les colons français. Aujourd'hui, c'est une filière stratégique produisant plus de 50 000 tonnes annuelles, principalement du Robusta de qualité exceptionnelle.</p>
+      <div class="mt-8 space-y-4">
+        <div class="flex gap-4"><div class="text-red-700 text-lg">●</div><div><h4 class="font-semibold">1920s</h4><p class="text-neutral-400 text-sm">Introduction du café par la France coloniale</p></div></div>
+        <div class="flex gap-4"><div class="text-red-700 text-lg">●</div><div><h4 class="font-semibold">1960</h4><p class="text-neutral-400 text-sm">Indépendance et développement de la filière</p></div></div>
+        <div class="flex gap-4"><div class="text-red-700 text-lg">●</div><div><h4 class="font-semibold">2000s</h4><p class="text-neutral-400 text-sm">Modernisation et certification de qualité</p></div></div>
+        <div class="flex gap-4"><div class="text-red-700 text-lg">●</div><div><h4 class="font-semibold">2026</h4><p class="text-neutral-400 text-sm">Vision : Devenir leader africain du café de spécialité</p></div></div>
+      </div>
+    </div>
+    <div class="reveal d2"><img src="/home/ubuntu/cafe-benin-info/img/v15_history.png" alt="Histoire du café" class="w-full h-96 object-cover rounded-sm br-img" onload="this.classList.add('loaded')"></div>
+  </div>
+</section>
+
+<!-- ==================== VARIÉTÉS ==================== -->
+<section id="varietes" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="text-center mb-16 reveal">
+    <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre II — Variétés</span>
+    <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">Les <span class="text-red-700">variétés</span> de café</h2>
+    <p class="mt-4 text-neutral-400 font-light max-w-2xl mx-auto">Découvrez les 4 principales variétés de café cultivées au Bénin et dans le monde.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d1 ch">
+      <h3 class="text-red-700 font-semibold text-lg ci">Arabica</h3>
+      <p class="text-neutral-400 text-sm mt-3 font-light">70% de la production mondiale. Teneur en caféine : 1,2-1,5%. Saveurs florales, fruitées, complexes. Requiert altitude > 800m.</p>
+      <div class="mt-4 pt-4 border-t border-neutral-700/50"><span class="text-xs text-neutral-500">Acidité : Élevée</span><span class="text-xs text-neutral-500 ml-4">Corps : Léger</span></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d2 ch">
+      <h3 class="text-red-700 font-semibold text-lg ci">Robusta</h3>
+      <p class="text-neutral-400 text-sm mt-3 font-light">30% de la production mondiale. Teneur en caféine : 2,2-2,7%. Saveurs terreuses, chocolatées, boisées. Très résistant aux maladies.</p>
+      <div class="mt-4 pt-4 border-t border-neutral-700/50"><span class="text-xs text-neutral-500">Acidité : Basse</span><span class="text-xs text-neutral-500 ml-4">Corps : Ample</span></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d3 ch">
+      <h3 class="text-red-700 font-semibold text-lg ci">Liberica</h3>
+      <p class="text-neutral-400 text-sm mt-3 font-light">< 2% de la production. Saveurs uniques : fumées, épicées, boisées. Grains plus grands. Cultivé aux Philippines, Indonésie.</p>
+      <div class="mt-4 pt-4 border-t border-neutral-700/50"><span class="text-xs text-neutral-500">Acidité : Basse</span><span class="text-xs text-neutral-500 ml-4">Corps : Ample</span></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d4 ch">
+      <h3 class="text-red-700 font-semibold text-lg ci">Excelsa</h3>
+      <p class="text-neutral-400 text-sm mt-3 font-light">Rare (< 1%). Notes fruités uniques : pêche, raisin. Grains allongés. Cultivé en Afrique de l'Ouest.</p>
+      <div class="mt-4 pt-4 border-t border-neutral-700/50"><span class="text-xs text-neutral-500">Acidité : Moyenne</span><span class="text-xs text-neutral-500 ml-4">Corps : Moyen</span></div>
+    </div>
+  </div>
+  <div class="mt-12 reveal d5"><img src="/home/ubuntu/cafe-benin-info/img/v15_varieties.png" alt="Variétés de café" class="w-full h-96 object-cover rounded-sm br-img" onload="this.classList.add('loaded')"></div>
+</section>
+
+<!-- ==================== TERROIRS ==================== -->
+<section id="terroirs" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="text-center mb-16 reveal">
+    <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre III — Terroirs</span>
+    <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">Les terroirs <span class="text-red-700">béninois</span></h2>
+    <p class="mt-4 text-neutral-400 font-light max-w-2xl mx-auto">Le Bénin possède 4 régions caféières distinctes, chacune avec ses caractéristiques uniques.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-8 reveal d1 rc">
+      <div class="absolute inset-0 bg-gradient-to-br from-red-700/10 to-transparent rounded-sm ro"></div>
+      <div class="relative z-10">
+        <h3 class="text-red-700 font-semibold text-xl ri">Atacora</h3>
+        <p class="text-neutral-400 text-sm mt-3 font-light">Altitude : 600-1200m. Climat tropical montagnard. Arabica de qualité exceptionnelle. Notes florales et fruitées. SCA Score : 86+.</p>
+        <div class="mt-4 flex gap-2"><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Arabica</span><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Haute altitude</span></div>
+      </div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-8 reveal d2 rc">
+      <div class="absolute inset-0 bg-gradient-to-br from-red-700/10 to-transparent rounded-sm ro"></div>
+      <div class="relative z-10">
+        <h3 class="text-red-700 font-semibold text-xl ri">Couffo</h3>
+        <p class="text-neutral-400 text-sm mt-3 font-light">Altitude : 200-400m. Climat tropical humide. Robusta dominant. Saveurs terreuses et chocolatées. Production : 35% du pays.</p>
+        <div class="mt-4 flex gap-2"><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Robusta</span><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Basse altitude</span></div>
+      </div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-8 reveal d3 rc">
+      <div class="absolute inset-0 bg-gradient-to-br from-red-700/10 to-transparent rounded-sm ro"></div>
+      <div class="relative z-10">
+        <h3 class="text-red-700 font-semibold text-xl ri">Plateau</h3>
+        <p class="text-neutral-400 text-sm mt-3 font-light">Altitude : 400-600m. Climat tempéré. Robusta de qualité intermédiaire. Notes équilibrées. Production : 25% du pays.</p>
+        <div class="mt-4 flex gap-2"><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Robusta</span><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Altitude moyenne</span></div>
+      </div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-8 reveal d4 rc">
+      <div class="absolute inset-0 bg-gradient-to-br from-red-700/10 to-transparent rounded-sm ro"></div>
+      <div class="relative z-10">
+        <h3 class="text-red-700 font-semibold text-xl ri">Zou</h3>
+        <p class="text-neutral-400 text-sm mt-3 font-light">Altitude : 150-300m. Climat tropical. Robusta expérimental. Nouvelles variétés. Production : 5% du pays.</p>
+        <div class="mt-4 flex gap-2"><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Robusta</span><span class="text-xs bg-red-700/20 text-red-400 px-3 py-1 rounded-full">Expérimental</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROCESSUS ==================== -->
+<section id="process" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="text-center mb-16 reveal">
+    <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre IV — Processus</span>
+    <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">Du grain à la <span class="text-red-700">tasse</span></h2>
+    <p class="mt-4 text-neutral-400 font-light max-w-2xl mx-auto">Découvrez les 7 étapes essentielles de la production du café.</p>
+  </div>
+  <div class="space-y-6">
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d1 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">1</div>
+      <div><h3 class="font-semibold">Récolte</h3><p class="text-neutral-400 text-sm mt-1">Les cerises rouges sont cueillies à la main (sélection) ou mécaniquement. Au Bénin, récolte manuelle pour préserver la qualité.</p></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d2 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">2</div>
+      <div><h3 class="font-semibold">Dépulpage</h3><p class="text-neutral-400 text-sm mt-1">Retrait de la pulpe par machine. Deux méthodes : lavée (eau) ou naturelle (séchage direct).</p></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d3 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">3</div>
+      <div><h3 class="font-semibold">Fermentation</h3><p class="text-neutral-400 text-sm mt-1">Fermentation en cuve 12-36h pour développer les saveurs complexes.</p></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d4 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">4</div>
+      <div><h3 class="font-semibold">Séchage</h3><p class="text-neutral-400 text-sm mt-1">Séchage au soleil 2-3 semaines jusqu'à 11% d'humidité. Critique pour la qualité.</p></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d5 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">5</div>
+      <div><h3 class="font-semibold">Décorticage</h3><p class="text-neutral-400 text-sm mt-1">Retrait de la parche (enveloppe). Obtention du café vert (green beans).</p></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d6 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">6</div>
+      <div><h3 class="font-semibold">Torréfaction</h3><p class="text-neutral-400 text-sm mt-1">Chauffage à 180-240°C. Création des arômes. Légère (light), moyenne (medium), foncée (dark).</p></div>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d7 flex gap-6">
+      <div class="text-red-700 font-bold text-2xl min-w-12">7</div>
+      <div><h3 class="font-semibold">Mouture & Infusion</h3><p class="text-neutral-400 text-sm mt-1">Mouture adaptée à la méthode (espresso, filtre, ibrik). Extraction : 1-4 minutes selon la méthode.</p></div>
+    </div>
+  </div>
+  <div class="mt-12 reveal d8"><img src="/home/ubuntu/cafe-benin-info/img/v15_process.png" alt="Processus de production" class="w-full h-96 object-cover rounded-sm br-img" onload="this.classList.add('loaded')"></div>
+</section>
+
+<!-- ==================== RECETTES ==================== -->
+<section id="recettes" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="text-center mb-16 reveal">
+    <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre V — Recettes</span>
+    <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">Recettes <span class="text-red-700">béninoises</span></h2>
+    <p class="mt-4 text-neutral-400 font-light max-w-2xl mx-auto">Découvrez les préparations traditionnelles et modernes du café au Bénin.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d1 recipe">
+      <h4 class="font-medium">Café Touba</h4>
+      <p class="text-neutral-500 text-xs mt-1">Sénégal/Bénin · Café très corsé avec grains de paradis et clous de girofle. Préparation à l'ibrik. Sucre et lait concentré. Saveur épicée, réconfortante — le café de la rue.</p>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d2 recipe">
+      <h4 class="font-medium">Café au Karité</h4>
+      <p class="text-neutral-500 text-xs mt-1">Bénin · Café léger avec beurre de karité, sucre et lait. Préparation douce et crémeuse. Riche en antioxydants. Tradition millénaire.</p>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d3 recipe">
+      <h4 class="font-medium">Café Gingembre</h4>
+      <p class="text-neutral-500 text-xs mt-1">Bénin · Café fort avec gingembre frais râpé, miel et épices. Préparation chauffée. Saveur piquante et réconfortante — remède traditionnel.</p>
+    </div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-6 reveal d4 recipe">
+      <h4 class="font-medium">Café Blanc du Bénin</h4>
+      <p class="text-neutral-500 text-xs mt-1">Bénin · Café légèrement grillé avec beurre de karité. Mouture grossière. Infusion dans l'eau bouillante avec lait concentré sucré et muscade. Onctueux, réconfortant, unique.</p>
+    </div>
+  </div>
+  <div class="mt-12 reveal d5"><img src="/home/ubuntu/cafe-benin-info/img/v15_recipes.png" alt="Recettes béninoises" class="w-full h-96 object-cover rounded-sm br-img" onload="this.classList.add('loaded')"></div>
+</section>
+
+<!-- ==================== DICTIONNAIRE ==================== -->
+<section id="dictionnaire" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="text-center mb-16 reveal">
+    <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre VI — Dictionnaire</span>
+    <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">Le dictionnaire <span class="text-red-700">du café</span></h2>
+    <p class="mt-4 text-neutral-400 font-light max-w-2xl mx-auto">Plus de 60 termes essentiels pour maîtriser l'univers du café.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d1"><h4 class="text-red-700 font-semibold text-sm">Acidité</h4><p class="text-neutral-400 text-xs mt-1">Sensation vive et agréable en bouche, signe d'un café de qualité. Les cafés d'altitude ont une acidité naturelle marquée.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d2"><h4 class="text-red-700 font-semibold text-sm">Arabica</h4><p class="text-neutral-400 text-xs mt-1">Coffea arabica. 70% de la production mondiale. Teneur en caféine : 1,2-1,5%. Saveurs complexes : florales, fruitées, épicées.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d3"><h4 class="text-red-700 font-semibold text-sm">Barista</h4><p class="text-neutral-400 text-xs mt-1">Professionnel spécialisé dans la préparation du café espresso. Les championnats du monde de barista existent depuis 2000.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d4"><h4 class="text-red-700 font-semibold text-sm">Body (Corps)</h4><p class="text-neutral-400 text-xs mt-1">Sensation tactile en bouche — la « consistance » du café. Le Robusta a un corps plus ample que l'Arabica.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d5"><h4 class="text-red-700 font-semibold text-sm">Caféine</h4><p class="text-neutral-400 text-xs mt-1">Alcaloïde (C₈H₁₀N₄O₂) naturellement présent dans le café. Stimulant du système nerveux central.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d6"><h4 class="text-red-700 font-semibold text-sm">Cupping</h4><p class="text-neutral-400 text-xs mt-1">Méthode standardisée de dégustation professionnelle (SCA). Évaluation : arôme, saveur, acidité, corps, équilibre.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d1"><h4 class="text-red-700 font-semibold text-sm">Espresso</h4><p class="text-neutral-400 text-xs mt-1">Méthode d'extraction sous pression (9 bars). 18-20g de café fin, 25-30s, 36-40ml. Inventé en Italie en 1901.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d2"><h4 class="text-red-700 font-semibold text-sm">Geisha</h4><p class="text-neutral-400 text-xs mt-1">Variété d'Arabica originaire d'Éthiopie, célèbre pour ses notes florales de jasmin et de pêche.</p></div>
+    <div class="bg-neutral-900/50 border border-neutral-800/50 p-4 reveal d3"><h4 class="text-red-700 font-semibold text-sm">Robusta</h4><p class="text-neutral-400 text-xs mt-1">Coffea canephora var. robusta. 30% de la production mondiale. Teneur en caféine : 2,2-2,7%. Saveurs terreuses, chocolatées.</p></div>
+  </div>
+</section>
+
+<!-- ==================== SANTÉ ==================== -->
+<section id="sante" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+    <div class="md:col-span-5 reveal">
+      <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Chapitre VII — Santé</span>
+      <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight leading-[0.95]">Café & <span class="text-red-700">santé</span></h2>
+      <p class="mt-6 text-neutral-400 font-light leading-relaxed">Le café est l'une des boissons les plus étudiées au monde. Plus de 21 000 articles scientifiques publiés. Voici ce que la science dit réellement.</p>
+    </div>
+    <div class="md:col-span-7 space-y-4">
+      <div class="bg-neutral-900/50 border border-neutral-800/50 p-5 reveal d1"><h4 class="font-medium flex items-center gap-2"><iconify-icon icon="lucide:heart" class="text-red-700"></iconify-icon>Maladies cardiovasculaires</h4><p class="text-neutral-400 text-sm mt-2 font-light">Une méta-analyse de 2013 (36 études, 1,27 million de personnes) montre que 3-5 tasses/jour réduisent le risque de 15%. Le café contient des antioxydants qui protègent les vaisseaux.</p></div>
+      <div class="bg-neutral-900/50 border border-neutral-800/50 p-5 reveal d2"><h4 class="font-medium flex items-center gap-2"><iconify-icon icon="lucide:brain" class="text-red-700"></iconify-icon>Maladie d'Alzheimer & Parkinson</h4><p class="text-neutral-400 text-sm mt-2 font-light">Les buveurs de café ont 65% moins de risque de développer Alzheimer. Pour Parkinson, la réduction est de 32-60%. La caféine protège les neurones dopaminergiques.</p></div>
+      <div class="bg-neutral-900/50 border border-neutral-800/50 p-5 reveal d3"><h4 class="font-medium flex items-center gap-2"><iconify-icon icon="lucide:shield" class="text-red-700"></iconify-icon>Cancer</h4><p class="text-neutral-400 text-sm mt-2 font-light">Le CIRC a classé le café dans le groupe 3 (non cancérogène). Des études montrent une réduction du risque de cancer du foie (40%), du côlon (15%) et de la peau.</p></div>
+    </div>
+  </div>
+  <div class="mt-12 reveal"><img src="/home/ubuntu/cafe-benin-info/img/v15_health.png" alt="Café et santé" class="w-full h-96 object-cover rounded-sm br-img" onload="this.classList.add('loaded')"></div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section id="contact" class="py-20 md:py-28 px-6 md:px-16 border-b border-neutral-800/50">
+  <div class="text-center mb-16 reveal">
+    <span class="text-[10px] font-mono tracking-widest uppercase text-red-700 font-bold">Restons en contact</span>
+    <h2 class="mt-4 text-4xl md:text-5xl font-medium tracking-tight">Contactez <span class="text-red-700">Kevin</span></h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+    <a href="mailto:kevingiscard93@outlook.com" class="bg-neutral-900/50 border border-neutral-800/50 p-8 reveal d1 ch text-center hover:border-red-700">
+      <iconify-icon icon="lucide:mail" class="text-red-700 text-3xl ci"></iconify-icon>
+      <h3 class="font-semibold mt-4">Email</h3>
+      <p class="text-neutral-400 text-sm mt-2">kevingiscard93@outlook.com</p>
+    </a>
+    <a href="https://instagram.com/kevin48life" target="_blank" class="bg-neutral-900/50 border border-neutral-800/50 p-8 reveal d2 ch text-center hover:border-red-700">
+      <iconify-icon icon="lucide:instagram" class="text-red-700 text-3xl ci"></iconify-icon>
+      <h3 class="font-semibold mt-4">Instagram</h3>
+      <p class="text-neutral-400 text-sm mt-2">@kevin48life</p>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-12 px-6 md:px-16 border-t border-neutral-800/50 bg-[#0a0a0a]">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    <div class="reveal d1">
+      <div class="flex items-center gap-2 mb-4">
+        <iconify-icon icon="lucide:coffee" class="text-red-700 text-xl"></iconify-icon>
+        <span class="font-semibold">Café Bénin</span>
+      </div>
+      <p class="text-neutral-400 text-xs font-light">L'encyclopédie complète du café béninois et mondial.</p>
+    </div>
+    <div class="reveal d2">
+      <h4 class="font-semibold text-sm mb-4">Navigation</h4>
+      <ul class="space-y-2 text-xs text-neutral-400">
+        <li><a href="#histoire" class="hover:text-white transition-colors">Histoire</a></li>
+        <li><a href="#varietes" class="hover:text-white transition-colors">Variétés</a></li>
+        <li><a href="#terroirs" class="hover:text-white transition-colors">Terroirs</a></li>
+        <li><a href="#process" class="hover:text-white transition-colors">Processus</a></li>
+      </ul>
+    </div>
+    <div class="reveal d3">
+      <h4 class="font-semibold text-sm mb-4">Ressources</h4>
+      <ul class="space-y-2 text-xs text-neutral-400">
+        <li><a href="#recettes" class="hover:text-white transition-colors">Recettes</a></li>
+        <li><a href="#dictionnaire" class="hover:text-white transition-colors">Dictionnaire</a></li>
+        <li><a href="#sante" class="hover:text-white transition-colors">Santé</a></li>
+        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+      </ul>
+    </div>
+    <div class="reveal d4">
+      <h4 class="font-semibold text-sm mb-4">Suivez Kevin</h4>
+      <a href="https://instagram.com/kevin48life" target="_blank" class="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-red-700 transition-colors">
+        <iconify-icon icon="lucide:instagram"></iconify-icon>
+        @kevin48life
+      </a>
+    </div>
+  </div>
+  <div class="sec-div mb-8"></div>
+  <div class="flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500">
+    <p>© 2026 Café Bénin. Tous droits réservés.</p>
+    <p>Créé avec ❤️ pour l'amour du café béninois.</p>
+  </div>
+</footer>
+
+</div>
+
+<!-- SCRIPTS -->
+<script>
+// Preloader
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const bar = document.getElementById('preloader-bar');
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.random() * 30;
+    if (progress > 90) progress = 90;
+    bar.style.width = progress + '%';
+  }, 200);
+  setTimeout(() => {
+    clearInterval(interval);
+    bar.style.width = '100%';
+    setTimeout(() => preloader.classList.add('done'), 300);
+  }, 1500);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(reveal => observer.observe(reveal));
+
+// Text reveal
+document.querySelectorAll('.tr-a').forEach(el => {
+  el.classList.add('tr-a');
+});
+
+// Blur reveal images
+const brImages = document.querySelectorAll('.br-img');
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+brImages.forEach(img => imgObserver.observe(img));
+
+// Counter animation
+const counters = document.querySelectorAll('.ctr');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+      entry.target.classList.add('counted');
+      const target = parseInt(entry.target.dataset.target);
+      let current = 0;
+      const increment = target / 50;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          entry.target.textContent = target;
+          clearInterval(timer);
+        } else {
+          entry.target.textContent = Math.floor(current);
+        }
+      }, 30);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(counter => counterObserver.observe(counter));
+
+// Mobile menu
+const menuToggle = document.getElementById('menu-toggle');
+const menuClose = document.getElementById('menu-close');
+const mmenu = document.getElementById('mmenu');
+menuToggle.addEventListener('click', () => mmenu.classList.add('open'));
+menuClose.addEventListener('click', () => mmenu.classList.remove('open'));
+mmenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => mmenu.classList.remove('open'));
+});
+
+// Navbar background on scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    navbar.classList.add('nav-s');
+  } else {
+    navbar.classList.remove('nav-s');
+  }
+});
+</script>
+
+</body>
+</html>
