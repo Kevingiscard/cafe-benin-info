@@ -1,0 +1,20 @@
+{
+  "name": "cafe-benin-info",
+  "version": "2.0.0",
+  "description": "Encyclopédie Mondiale du Café Bénin - Backend API",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "@google/generative-ai": "^0.2.1",
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
