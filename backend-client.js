@@ -1,10 +1,10 @@
 /**
- * Café Bénin — Backend Client v2.0
+ * Café Bénin — Backend Client v3.0
  * Connecte le frontend aux Vercel Serverless Functions
+ * Supporte Ollama local + Gemini fallback
  */
 
 const cafeBenin = (() => {
-  // En production: URL Vercel. En local: localhost:3000
   const BASE_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:3000'
     : 'https://cafe-benin-info.vercel.app';
@@ -50,13 +50,44 @@ const cafeBenin = (() => {
       return data.comments;
     },
 
-    /** Obtient une recommandation IA Gemini */
+    /**
+     * Recommandation café par humeur
+     * Utilise Ollama en priorité, Gemini en fallback
+     * @param {string} mood - Ex: "fatigué", "joyeux", "concentré"
+     * @param {string[]} preferences - Ex: ["fort", "épicé"]
+     * @param {string[]} excludes - Ex: ["sucré"]
+     */
     async getAIRecommendation(mood, preferences = [], excludes = []) {
       const data = await fetchAPI('ai', {
         method: 'POST',
         body: JSON.stringify({ mood, preferences, excludes })
       });
       return data.recommendation;
+    },
+
+    /**
+     * Chat conversationnel avec CaféBot (Ollama/Gemini)
+     * @param {Array<{role: string, content: string}>} messages - Historique
+     * @returns {Promise<{reply: string, source: string, model: string}>}
+     */
+    async chat(messages) {
+      return fetchAPI('chat', {
+        method: 'POST',
+        body: JSON.stringify({ messages })
+      });
+    },
+
+    /**
+     * Appel direct Ollama (prompt simple)
+     * @param {string} prompt
+     * @param {string} [model] - Modèle Ollama optionnel
+     */
+    async askOllama(prompt, model = null) {
+      const body = model ? { prompt, model } : { prompt };
+      return fetchAPI('ollama', {
+        method: 'POST',
+        body: JSON.stringify(body)
+      });
     }
   };
 })();
