@@ -1,72 +1,79 @@
-/**
- * api/chat.js — Chatbot conversationnel Café Bénin
- * Stratégie: Ollama d'abord → fallback Gemini si dispo
- */
+/** Café Bénin — production chatbot endpoint. */
+const { GoogleGenAI } = require('@google/genai');
+const { setCors } = require('../lib/cors');
+
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_CHARS = 4000;
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+
+const systemPrompt = `Tu es CaféBot, l'assistant expert du portail Café Bénin.
+Tu peux expliquer le café, sa botanique, sa transformation, ses méthodes de préparation,
+son histoire et les informations documentées sur la filière béninoise.
+Ne présente jamais une information non vérifiée comme un fait local. Pour les prix, données
+récentes, santé ou informations réglementaires, indique clairement les limites et recommande
+une source officielle ou scientifique. Réponds en français, de façon claire et concise.`;
+
+function normalizeMessages(messages, question) {
+  const raw = Array.isArray(messages) ? messages : [{ role: 'user', content: question }];
+  if (!raw.length || raw.length > MAX_MESSAGES) throw new Error('Historique de conversation invalide.');
+
+  return raw.map(message => {
+    const role = message?.role === 'assistant' ? 'assistant' : 'user';
+    const content = String(message?.content || '').trim();
+    if (!content || content.length > MAX_MESSAGE_CHARS) throw new Error('Message invalide ou trop long.');
+    return { role, content };
+  });
+}
+
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  setCors(req, res, 'POST,OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { messages, question } = req.body;
-  if (!messages && !question) return res.status(400).json({ error: 'messages ou question requis' });
-
-  const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
-  const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'llama3.2';
-  const GEMINI_KEY = process.env.GEMINI_API_KEY;
-
-  const systemPrompt = `Tu es CaféBot ☕, l'assistant expert du portail Café Bénin. 
-Tu maîtrises : la filière Robusta béninoise (régions Atakora, Collines, Donga), 
-les prix du marché 2025-2026, les recettes traditionnelles (café gingembre, café épicé), 
-les cérémonies du café en Afrique, les bienfaits santé, et l'histoire du café. 
-Style: chaleureux, expert, concis. Toujours en français.`;
-
-  const chatMessages = messages || [{ role: 'user', content: question }];
-
-  // 1. Essai Ollama
   try {
-    const ollamaRes = await fetch(`${OLLAMA_URL}/api/chat`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: OLLAMA_MODEL,
-        messages: [{ role: 'system', content: systemPrompt }, ...chatMessages],
-        stream: false
-      }),
-      signal: AbortSignal.timeout(25000)
+    const messages = normalizeMessages(req.body?.messages, req.body?.question);
+    const ollamaUrl = process.env.OLLAMA_URL;
+    const ollamaModel = process.env.OLLAMA_MODEL || 'llama3.2';
+
+    // Optional Ollama path. On Vercel, do not default to localhost: it only adds latency.
+    if (ollamaUrl) {
+      try {
+        const response = await fetch(`${ollamaUrl.replace(/\/$/, '')}/api/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: ollamaModel,
+            messages: [{ role: 'system', content: systemPrompt }, ...messages],
+            stream: false
+          }),
+          signal: AbortSignal.timeout(8000)
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.message?.content) {
+            return res.status(200).json({ reply: data.message.content, source: 'ollama', model: ollamaModel });
+          }
+        }
+      } catch (_) {}
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(503).json({ error: 'Aucun moteur IA n’est configuré.', reply: 'CaféBot est temporairement indisponible.' });
+    }
+
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const transcript = messages.map(m => `${m.role === 'assistant' ? 'CaféBot' : 'Utilisateur'}: ${m.content}`).join('\n');
+    const response = await ai.models.generateContent({
+      model: MODEL,
+      contents: `${systemPrompt}\n\nConversation:\n${transcript}\n\nRéponds au dernier message de l'utilisateur.`
     });
-    if (ollamaRes.ok) {
-      const data = await ollamaRes.json();
-      return res.status(200).json({
-        reply: data.message?.content || '',
-        source: 'ollama',
-        model: OLLAMA_MODEL
-      });
-    }
-  } catch (_) { /* Ollama non dispo, on tente Gemini */ }
 
-  // 2. Fallback Gemini
-  if (GEMINI_KEY) {
-    try {
-      const { GoogleGenerativeAI } = require('@google/generative-ai');
-      const genAI = new GoogleGenerativeAI(GEMINI_KEY);
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-      const lastMessage = chatMessages[chatMessages.length - 1]?.content || '';
-      const result = await model.generateContent(`${systemPrompt}\n\n${lastMessage}`);
-      return res.status(200).json({
-        reply: result.response.text(),
-        source: 'gemini',
-        model: 'gemini-1.5-flash'
-      });
-    } catch (err) {
-      return res.status(500).json({ error: 'Gemini erreur: ' + err.message });
-    }
+    return res.status(200).json({
+      reply: response.text || 'Je n’ai pas pu générer de réponse.',
+      source: 'gemini',
+      model: MODEL
+    });
+  } catch (error) {
+    return res.status(400).json({ error: error.message || 'Requête invalide.' });
   }
-
-  // 3. Aucune IA dispo
-  return res.status(503).json({
-    error: 'Aucun moteur IA disponible. Configurez OLLAMA_URL ou GEMINI_API_KEY.',
-    reply: 'Je suis temporairement indisponible. Veuillez réessayer dans quelques instants ☕'
-  });
 }
