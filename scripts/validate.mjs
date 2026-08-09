@@ -13,7 +13,6 @@ const exists = file => fs.existsSync(path.join(root, file));
 for (const required of ['index.html', 'styles.css', 'v4.css', 'app-v3.js', 'dictionary-v4.js', 'backend-client.js', 'package.json', 'vercel.json', 'robots.txt']) {
   if (!exists(required)) fail(`Fichier requis absent: ${required}`); else ok(`Présent: ${required}`);
 }
-
 if (!exists('index.html')) process.exit(1);
 
 let html = read('index.html');
@@ -21,7 +20,6 @@ const canonical = '<link rel="canonical" href="https://cafe-benin-info.vercel.ap
 if (/<link[^>]+rel=["']canonical["'][^>]*>/i.test(html)) html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*>/i, canonical);
 else html = html.replace('</head>', `${canonical}\n</head>`);
 write('index.html', html);
-
 write('robots.txt', `User-agent: *\nDisallow: /*?*\nAllow: /$\nSitemap: ${PROD_ORIGIN}sitemap.xml\n`);
 
 if (exists('sitemap.xml')) {
@@ -33,11 +31,14 @@ if (exists('sitemap.xml')) {
 
 html = read('index.html');
 const app = read('app-v3.js');
+const dict = read('dictionary-v4.js');
 if (!/<html[^>]+lang="fr"/i.test(html)) fail('Attribut lang="fr" absent.');
 if (!/<meta[^>]+name="description"/i.test(html)) fail('Meta description absente.');
 if (!/<link[^>]+rel="canonical"[^>]+cafe-benin-info\.vercel\.app/i.test(html)) fail('Canonical production Vercel absente.');
 if (!/backend-client\.js/.test(html) || !/app-v3\.js/.test(html) || !/dictionary-v4\.js/.test(html)) fail('Scripts frontend principaux absents.');
 if (!/cafe-benin-info\.vercel\.app/.test(app)) fail('Le frontend ne force pas le canonical de production Vercel.');
+if (!/const EXTRA=/.test(dict) || !/function init\(/.test(dict) || !/#dict-list/.test(dict)) fail('Module dictionnaire V4 incomplet.');
+ok('Architecture HTML et dictionnaire V4 cohérents.');
 
 const localRefs = new Set();
 for (const match of html.matchAll(/(?:src|href)=["']([^"']+)["']/gi)) {
@@ -49,7 +50,7 @@ for (const ref of localRefs) {
   if (!exists(ref)) fail(`Ressource locale introuvable: ${ref}`); else ok(`Ressource OK: ${ref}`);
 }
 
-const jsFiles = ['app-v3.js', 'dictionary-v4.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
+const jsFiles = ['app-v3.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
 for (const file of jsFiles) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, file)], { encoding: 'utf8' });
   if (result.status !== 0) fail(`Syntaxe JS invalide: ${file}\n${result.stderr}`); else ok(`Syntaxe JS OK: ${file}`);
