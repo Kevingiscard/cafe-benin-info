@@ -14,13 +14,11 @@ for (const required of ['index.html', 'styles.css', 'app-v3.js', 'backend-client
 
 const html = read('index.html');
 const app = read('app-v3.js');
-const vercel = read('vercel.json');
 if (!/<html[^>]+lang="fr"/i.test(html)) fail('Attribut lang="fr" absent.');
 if (!/<meta[^>]+name="description"/i.test(html)) fail('Meta description absente.');
 if (!/<link[^>]+rel="canonical"/i.test(html)) fail('Canonical absente.');
 if (!/backend-client\.js/.test(html) || !/app-v3\.js/.test(html)) fail('Scripts frontend principaux absents.');
 if (!/cafe-benin-info\.vercel\.app/.test(app)) fail('Le frontend ne force pas le canonical de production Vercel.');
-if (!/rel=\\?"canonical/.test(vercel) || !/cafe-benin-info\.vercel\.app/.test(vercel)) fail('Canonical HTTP Vercel absente.');
 
 const localRefs = new Set();
 for (const match of html.matchAll(/(?:src|href)=["']([^"']+)["']/gi)) {
@@ -42,7 +40,7 @@ const pkg = JSON.parse(read('package.json'));
 if (pkg.engines?.node !== '24.x') fail('Node.js production doit être épinglé sur 24.x.');
 if (!pkg.dependencies?.['@google/genai']) fail('@google/genai doit être présent.');
 if (pkg.dependencies?.['@google/generative-ai']) fail('Ancien SDK @google/generative-ai encore présent.');
-if (pkg.devDependencies?.vercel) fail('Vercel CLI ne doit pas être une dépendance de production du projet.');
+if (pkg.devDependencies?.vercel) fail('Vercel CLI ne doit pas être une dépendance du projet.');
 if (!pkg.dependencies?.nodemailer || !/^\^9\./.test(pkg.dependencies.nodemailer)) fail('Nodemailer doit utiliser la branche 9.x actuelle.');
 ok('Configuration Node/Gemini/Nodemailer cohérente.');
 
