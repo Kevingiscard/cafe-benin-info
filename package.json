@@ -1,7 +1,7 @@
 {
   "name": "cafe-benin-info",
-  "version": "3.0.1",
-  "description": "Encyclopédie numérique du café béninois — frontend statique et API Vercel",
+  "version": "4.0.0",
+  "description": "Café Bénin — encyclopédie et dictionnaire francophone du café, avec dossier documentaire sur le Bénin",
   "private": true,
   "engines": {
     "node": "24.x"
