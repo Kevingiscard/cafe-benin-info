@@ -10,21 +10,16 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const write = (file, value) => fs.writeFileSync(path.join(root, file), value, 'utf8');
 const exists = file => fs.existsSync(path.join(root, file));
 
-for (const required of ['index.html', 'styles.css', 'app-v3.js', 'backend-client.js', 'package.json', 'vercel.json', 'robots.txt']) {
+for (const required of ['index.html', 'styles.css', 'v4.css', 'app-v3.js', 'dictionary-v4.js', 'backend-client.js', 'package.json', 'vercel.json', 'robots.txt']) {
   if (!exists(required)) fail(`Fichier requis absent: ${required}`); else ok(`Présent: ${required}`);
 }
 
 if (!exists('index.html')) process.exit(1);
 
-// Normalise les URLs de production avant les contrôles et avant le déploiement.
-// Cela évite qu'une ancienne URL GitHub Pages reste dans le HTML, robots.txt ou sitemap.
 let html = read('index.html');
 const canonical = '<link rel="canonical" href="https://cafe-benin-info.vercel.app/">';
-if (/<link[^>]+rel=["']canonical["'][^>]*>/i.test(html)) {
-  html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*>/i, canonical);
-} else {
-  html = html.replace('</head>', `${canonical}\n</head>`);
-}
+if (/<link[^>]+rel=["']canonical["'][^>]*>/i.test(html)) html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*>/i, canonical);
+else html = html.replace('</head>', `${canonical}\n</head>`);
 write('index.html', html);
 
 write('robots.txt', `User-agent: *\nDisallow: /*?*\nAllow: /$\nSitemap: ${PROD_ORIGIN}sitemap.xml\n`);
@@ -41,7 +36,7 @@ const app = read('app-v3.js');
 if (!/<html[^>]+lang="fr"/i.test(html)) fail('Attribut lang="fr" absent.');
 if (!/<meta[^>]+name="description"/i.test(html)) fail('Meta description absente.');
 if (!/<link[^>]+rel="canonical"[^>]+cafe-benin-info\.vercel\.app/i.test(html)) fail('Canonical production Vercel absente.');
-if (!/backend-client\.js/.test(html) || !/app-v3\.js/.test(html)) fail('Scripts frontend principaux absents.');
+if (!/backend-client\.js/.test(html) || !/app-v3\.js/.test(html) || !/dictionary-v4\.js/.test(html)) fail('Scripts frontend principaux absents.');
 if (!/cafe-benin-info\.vercel\.app/.test(app)) fail('Le frontend ne force pas le canonical de production Vercel.');
 
 const localRefs = new Set();
@@ -54,7 +49,7 @@ for (const ref of localRefs) {
   if (!exists(ref)) fail(`Ressource locale introuvable: ${ref}`); else ok(`Ressource OK: ${ref}`);
 }
 
-const jsFiles = ['app-v3.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
+const jsFiles = ['app-v3.js', 'dictionary-v4.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
 for (const file of jsFiles) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, file)], { encoding: 'utf8' });
   if (result.status !== 0) fail(`Syntaxe JS invalide: ${file}\n${result.stderr}`); else ok(`Syntaxe JS OK: ${file}`);
