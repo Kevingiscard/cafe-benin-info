@@ -1,20 +1,22 @@
 {
   "name": "cafe-benin-info",
-  "version": "2.0.0",
-  "description": "Encyclopédie Mondiale du Café Bénin - Backend API",
+  "version": "3.0.0",
+  "description": "Encyclopédie numérique du café béninois — frontend statique et API Vercel",
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "vercel dev",
-    "build": "echo 'Static site - no build needed'"
+    "validate": "node scripts/validate.mjs",
+    "build": "npm run validate"
   },
   "dependencies": {
+    "@google/genai": "^2.13.0",
     "@supabase/supabase-js": "^2.39.0",
-    "@google/generative-ai": "^0.2.1",
     "nodemailer": "^6.9.8"
   },
   "devDependencies": {
-    "vercel": "^33.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "vercel": "^58.0.0"
   }
 }
