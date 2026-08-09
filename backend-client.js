@@ -1,5 +1,5 @@
 /**
- * Café Bénin — Backend Client v3.0
+ * Café Bénin — Backend Client v3.1
  * Connecte le frontend aux Vercel Serverless Functions
  * Supporte Ollama local + Gemini fallback
  */
@@ -22,21 +22,18 @@ const cafeBenin = (() => {
   }
 
   return {
-    /** Récupère les articles encyclopédie */
     async getEncyclopedia(category = null) {
       const params = category ? `?category=${encodeURIComponent(category)}` : '';
       const data = await fetchAPI(`encyclopedia${params}`);
       return data.articles;
     },
 
-    /** Recherche dans le dictionnaire */
     async searchDictionary(query = '') {
       const params = query ? `?q=${encodeURIComponent(query)}` : '';
       const data = await fetchAPI(`dictionary${params}`);
       return data.terms;
     },
 
-    /** Soumet un commentaire */
     async submitComment(name, email, content, section = null, rating = null) {
       return fetchAPI('comments', {
         method: 'POST',
@@ -44,19 +41,11 @@ const cafeBenin = (() => {
       });
     },
 
-    /** Récupère les commentaires approuvés */
     async getComments() {
       const data = await fetchAPI('comments');
       return data.comments;
     },
 
-    /**
-     * Recommandation café par humeur
-     * Utilise Ollama en priorité, Gemini en fallback
-     * @param {string} mood - Ex: "fatigué", "joyeux", "concentré"
-     * @param {string[]} preferences - Ex: ["fort", "épicé"]
-     * @param {string[]} excludes - Ex: ["sucré"]
-     */
     async getAIRecommendation(mood, preferences = [], excludes = []) {
       const data = await fetchAPI('ai', {
         method: 'POST',
@@ -65,23 +54,14 @@ const cafeBenin = (() => {
       return data.recommendation;
     },
 
-    /**
-     * Chat conversationnel avec CaféBot (Ollama/Gemini)
-     * @param {Array<{role: string, content: string}>} messages - Historique
-     * @returns {Promise<{reply: string, source: string, model: string}>}
-     */
     async chat(messages) {
-      return fetchAPI('chat', {
+      const data = await fetchAPI('chat', {
         method: 'POST',
         body: JSON.stringify({ messages })
       });
+      return data;
     },
 
-    /**
-     * Appel direct Ollama (prompt simple)
-     * @param {string} prompt
-     * @param {string} [model] - Modèle Ollama optionnel
-     */
     async askOllama(prompt, model = null) {
       const body = model ? { prompt, model } : { prompt };
       return fetchAPI('ollama', {
@@ -92,5 +72,20 @@ const cafeBenin = (() => {
   };
 })();
 
-// Export pour modules ES6
 if (typeof module !== 'undefined') module.exports = cafeBenin;
+
+/* Progressive V2 enhancements. Loaded from the existing backend-client hook so
+ * no existing HTML structure has to be replaced. */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const s = document.createElement('script');
+    s.src = 'v2-enhancements.js';
+    s.defer = true;
+    document.body.appendChild(s);
+  }, { once: true });
+} else {
+  const s = document.createElement('script');
+  s.src = 'v2-enhancements.js';
+  s.defer = true;
+  document.body.appendChild(s);
+}
