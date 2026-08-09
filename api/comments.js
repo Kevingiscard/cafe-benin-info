@@ -6,22 +6,33 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
+const escapeHTML = (value = '') => String(value).replace(/[&<>"']/g, char => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+}[char]));
+
+const cleanText = (value, max) => String(value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim().slice(0, max);
+
 async function sendNotificationEmail(comment) {
-  if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) return;
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD || !process.env.ADMIN_EMAIL) return;
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_PASSWORD }
   });
+  const name = escapeHTML(comment.name);
+  const email = escapeHTML(comment.email);
+  const section = escapeHTML(comment.section || 'N/A');
+  const rating = escapeHTML(comment.rating || 'N/A');
+  const content = escapeHTML(comment.content).replace(/\n/g, '<br>');
   await transporter.sendMail({
     from: process.env.GMAIL_USER,
     to: process.env.ADMIN_EMAIL,
     subject: `[Café Bénin] Nouveau commentaire de ${comment.name}`,
     html: `<h3>Nouveau commentaire</h3>
-      <p><strong>Nom:</strong> ${comment.name}</p>
-      <p><strong>Email:</strong> ${comment.email}</p>
-      <p><strong>Section:</strong> ${comment.section || 'N/A'}</p>
-      <p><strong>Note:</strong> ${comment.rating || 'N/A'}/5</p>
-      <p><strong>Message:</strong> ${comment.content}</p>`
+      <p><strong>Nom:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Section:</strong> ${section}</p>
+      <p><strong>Note:</strong> ${rating}/5</p>
+      <p><strong>Message:</strong> ${content}</p>`
   });
 }
 
@@ -43,10 +54,22 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { name, email, content, section, rating } = req.body;
+    const name = cleanText(req.body?.name, 80);
+    const email = cleanText(req.body?.email, 160);
+    const content = cleanText(req.body?.content, 3000);
+    const section = cleanText(req.body?.section, 100) || null;
+    const rating = req.body?.rating == null || req.body.rating === '' ? null : Number(req.body.rating);
+
     if (!name || !email || !content) {
       return res.status(400).json({ error: 'Champs requis: name, email, content' });
     }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Adresse email invalide' });
+    }
+    if (rating !== null && (!Number.isInteger(rating) || rating < 1 || rating > 5)) {
+      return res.status(400).json({ error: 'La note doit être comprise entre 1 et 5' });
+    }
+
     const { data, error } = await supabase
       .from('comments')
       .insert([{ name, email, content, section, rating, approved: false }])
