@@ -1,22 +1,19 @@
 {
   "name": "cafe-benin-info",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Encyclopédie numérique du café béninois — frontend statique et API Vercel",
   "private": true,
   "engines": {
     "node": "24.x"
   },
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "npx vercel dev",
     "validate": "node scripts/validate.mjs",
     "build": "npm run validate"
   },
   "dependencies": {
     "@google/genai": "^2.13.0",
     "@supabase/supabase-js": "^2.39.0",
-    "nodemailer": "^6.9.8"
-  },
-  "devDependencies": {
-    "vercel": "^58.0.0"
+    "nodemailer": "^9.0.3"
   }
 }
