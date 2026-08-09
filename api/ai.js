@@ -1,59 +1,45 @@
-/**
- * api/ai.js — Recommandation café par humeur
- * Stratégie: Ollama local d'abord → fallback Gemini
- */
+/** Café Bénin — recommendation endpoint. */
+const { GoogleGenAI } = require('@google/genai');
+const { setCors } = require('../lib/cors');
+
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+const clean = (value, max = 300) => String(value || '').replace(/[\u0000-\u001F\u007F]/g, ' ').trim().slice(0, max);
+
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  setCors(req, res, 'POST,OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { mood, preferences = [], excludes = [] } = req.body;
+  const mood = clean(req.body?.mood, 200);
+  const preferences = Array.isArray(req.body?.preferences) ? req.body.preferences.slice(0, 8).map(v => clean(v, 100)).filter(Boolean) : [];
+  const excludes = Array.isArray(req.body?.excludes) ? req.body.excludes.slice(0, 8).map(v => clean(v, 100)).filter(Boolean) : [];
   if (!mood) return res.status(400).json({ error: 'mood requis' });
 
-  const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
-  const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'llama3.2';
-  const GEMINI_KEY = process.env.GEMINI_API_KEY;
+  const prompt = `Tu es un expert du café béninois.\nHumeur: ${mood}\nPréférences: ${preferences.join(', ') || 'aucune'}\nÀ éviter: ${excludes.join(', ') || 'rien'}\n\nRecommande 2 à 3 options de café adaptées. N’invente pas l’existence d’un producteur, d’une marque ou d’un café béninois précis si tu n’en as pas la certitude. Si les données locales sont insuffisantes, formule la réponse comme une suggestion générale. Réponds en français, brièvement.`;
 
-  const prompt = `Tu es un expert en café béninois.
-Un client cherche un café avec l'humeur: "${mood}".
-Préférences: ${preferences.join(', ') || 'aucune'}.
-À éviter: ${excludes.join(', ') || 'rien'}.
-Recommande 2-3 cafés béninois spécifiques avec une description courte. Réponds en français, de façon concise.`;
-
-  // 1. Essai Ollama
-  try {
-    const ollamaRes = await fetch(`${OLLAMA_URL}/api/generate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: OLLAMA_MODEL, prompt, stream: false }),
-      signal: AbortSignal.timeout(25000)
-    });
-    if (ollamaRes.ok) {
-      const data = await ollamaRes.json();
-      return res.status(200).json({
-        recommendation: data.response,
-        source: 'ollama',
-        model: OLLAMA_MODEL
+  const ollamaUrl = process.env.OLLAMA_URL;
+  if (ollamaUrl) {
+    try {
+      const response = await fetch(`${ollamaUrl.replace(/\/$/, '')}/api/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: process.env.OLLAMA_MODEL || 'llama3.2', prompt, stream: false }),
+        signal: AbortSignal.timeout(8000)
       });
-    }
-  } catch (_) { /* fallback */ }
+      if (response.ok) {
+        const data = await response.json();
+        if (data.response) return res.status(200).json({ recommendation: data.response, source: 'ollama', model: process.env.OLLAMA_MODEL || 'llama3.2' });
+      }
+    } catch (_) {}
+  }
 
-  // 2. Fallback Gemini
-  if (!GEMINI_KEY) return res.status(500).json({ error: 'Aucune IA disponible (OLLAMA_URL ou GEMINI_API_KEY requis)' });
+  if (!process.env.GEMINI_API_KEY) return res.status(503).json({ error: 'Aucun moteur IA n’est configuré.' });
 
   try {
-    const { GoogleGenerativeAI } = require('@google/generative-ai');
-    const genAI = new GoogleGenerativeAI(GEMINI_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const result = await model.generateContent(prompt);
-    return res.status(200).json({
-      recommendation: result.response.text(),
-      source: 'gemini',
-      model: 'gemini-1.5-flash'
-    });
-  } catch (error) {
-    return res.status(500).json({ error: 'Erreur IA: ' + error.message });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const response = await ai.models.generateContent({ model: MODEL, contents: prompt });
+    return res.status(200).json({ recommendation: response.text || '', source: 'gemini', model: MODEL });
+  } catch (_) {
+    return res.status(502).json({ error: 'Le service IA est temporairement indisponible.' });
   }
 }
