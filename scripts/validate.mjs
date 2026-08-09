@@ -5,7 +5,6 @@ import { spawnSync } from 'node:child_process';
 const root = process.cwd();
 const fail = message => { console.error(`✖ ${message}`); process.exitCode = 1; };
 const ok = message => console.log(`✓ ${message}`);
-
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const exists = file => fs.existsSync(path.join(root, file));
 
@@ -14,11 +13,14 @@ for (const required of ['index.html', 'styles.css', 'app-v3.js', 'backend-client
 }
 
 const html = read('index.html');
+const app = read('app-v3.js');
+const vercel = read('vercel.json');
 if (!/<html[^>]+lang="fr"/i.test(html)) fail('Attribut lang="fr" absent.');
 if (!/<meta[^>]+name="description"/i.test(html)) fail('Meta description absente.');
 if (!/<link[^>]+rel="canonical"/i.test(html)) fail('Canonical absente.');
 if (!/backend-client\.js/.test(html) || !/app-v3\.js/.test(html)) fail('Scripts frontend principaux absents.');
-if (/https:\/\/kevingiscard\.github\.io\/cafe-benin-info\//.test(html)) fail('Canonical encore configurée sur GitHub Pages: Vercel doit être la cible de production.');
+if (!/cafe-benin-info\.vercel\.app/.test(app)) fail('Le frontend ne force pas le canonical de production Vercel.');
+if (!/rel=\\?"canonical/.test(vercel) || !/cafe-benin-info\.vercel\.app/.test(vercel)) fail('Canonical HTTP Vercel absente.');
 
 const localRefs = new Set();
 for (const match of html.matchAll(/(?:src|href)=["']([^"']+)["']/gi)) {
@@ -30,7 +32,7 @@ for (const ref of localRefs) {
   if (!exists(ref)) fail(`Ressource locale introuvable: ${ref}`); else ok(`Ressource OK: ${ref}`);
 }
 
-const jsFiles = ['app-v3.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`)];
+const jsFiles = ['app-v3.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
 for (const file of jsFiles) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, file)], { encoding: 'utf8' });
   if (result.status !== 0) fail(`Syntaxe JS invalide: ${file}\n${result.stderr}`); else ok(`Syntaxe JS OK: ${file}`);
@@ -40,7 +42,9 @@ const pkg = JSON.parse(read('package.json'));
 if (pkg.engines?.node !== '24.x') fail('Node.js production doit être épinglé sur 24.x.');
 if (!pkg.dependencies?.['@google/genai']) fail('@google/genai doit être présent.');
 if (pkg.dependencies?.['@google/generative-ai']) fail('Ancien SDK @google/generative-ai encore présent.');
-ok('Configuration Node/Gemini cohérente.');
+if (pkg.devDependencies?.vercel) fail('Vercel CLI ne doit pas être une dépendance de production du projet.');
+if (!pkg.dependencies?.nodemailer || !/^\^9\./.test(pkg.dependencies.nodemailer)) fail('Nodemailer doit utiliser la branche 9.x actuelle.');
+ok('Configuration Node/Gemini/Nodemailer cohérente.');
 
 const env = exists('.env.example') ? read('.env.example') : '';
 if (env.includes('AIza') || env.includes('SUPABASE_SERVICE_ROLE')) fail('Secret potentiel détecté dans .env.example.');
