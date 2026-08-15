@@ -34,7 +34,7 @@
         <div class="visual-lead">
           <div>
             <span class="eyebrow">Récit visuel</span>
-            <h2 class="display">Le café se lit aussi<br><em>par la lumière.</em></h2>
+            <h2 class="display" style="color:#f6f0e7 !important">Le café se lit aussi<br><em style="color:#d58a4d !important">par la lumière.</em></h2>
           </div>
           <p>Ces scènes éditoriales prolongent l’encyclopédie : matière, geste, territoire et rencontre. Elles accompagnent les explications sans les remplacer.</p>
         </div>
