@@ -34,4 +34,6 @@ La revue locale de la version typographique allégée confirme une hiérarchie s
 
 Le contrôle de l’ancre Histoire confirme que le titre est désormais entièrement visible sous le header fixe. En thème sombre, le navigateur applique bien `DM Sans` au hero et au corps, tandis que l’en-tête de section utilise une grille de deux colonnes calculée, avec un espacement cohérent ; aucun style de police décoratif n’est conservé dans la hiérarchie principale.
 
+La vérification sur GitHub Pages confirme le chargement de `theme.css?v=3`, l’application de `DM Sans` au hero et une grille d’en-tête de section effective. Pour l’ancre Histoire, le titre démarre à 235 px alors que le bas de la navigation est à 138 px : le titre reste donc dégagé sous le header fixe.
+
 Les tests visuels doivent continuer avec le thème sombre, la recherche, le dictionnaire, l’assistant local, le menu mobile et l’ancre historique `#coffee-shops`.
