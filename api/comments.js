@@ -2,7 +2,9 @@ const { createClient } = require('@supabase/supabase-js');
 const nodemailer = require('nodemailer');
 const { setCors } = require('../lib/cors');
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_KEY
+  ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
+  : null;
 const escapeHTML = (value = '') => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const cleanText = (value, max) => String(value || '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim().slice(0, max);
 
@@ -25,10 +27,12 @@ async function sendNotificationEmail(comment) {
   });
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCors(req, res, 'GET,POST,OPTIONS');
   res.setHeader('Cache-Control', 'no-store');
   if (req.method === 'OPTIONS') return res.status(204).end();
+
+  if (!supabase) return res.status(503).json({ error: 'Le service de commentaires n’est pas encore configuré.' });
 
   if (req.method === 'GET') {
     const { data, error } = await supabase.from('comments')
@@ -55,4 +59,4 @@ export default async function handler(req, res) {
 
   try { await sendNotificationEmail({ name, email, content, section, rating }); } catch (_) {}
   return res.status(201).json({ success: true, comment: data });
-}
+};

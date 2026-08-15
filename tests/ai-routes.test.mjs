@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const recommendationHandler = require('../api/ai.js');
 const chatHandler = require('../api/chat.js');
+const healthHandler = require('../api/health.js');
 
 function responseMock() {
   return {
@@ -52,4 +53,11 @@ test('les routes IA refusent les méthodes non prévues', async () => {
   const res = responseMock();
   await chatHandler({ method: 'GET', headers: {}, body: {} }, res);
   assert.equal(res.statusCode, 405);
+});
+
+test('la route de santé répond sans dépendre des services externes', async () => {
+  const res = responseMock();
+  await healthHandler({ method: 'GET', headers: {}, body: {} }, res);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.payload.status, 'ok');
 });

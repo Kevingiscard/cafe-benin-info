@@ -8,3 +8,9 @@
 - [x] Nettoyer les paramètres sensibles de l’URL après l’envoi des formulaires et uniformiser le contact officiel.
 - [x] Vérifier les ancres, la recherche, le dictionnaire, le responsive et les performances avant publication.
 - [x] Publier les changements vérifiés sur le dépôt GitHub et contrôler le rendu GitHub Pages.
+- [ ] Finaliser la configuration de production de Gemini dans Vercel et confirmer les réponses de CaféBot.
+- [ ] Ajouter un dossier éditorial enrichi sur le café au Bénin avec contenu sourcé et appels à l’exploration.
+- [ ] Créer une galerie immersive supplémentaire avec images locales optimisées, légendes et navigation accessible.
+- [ ] Ajouter des interactions éditoriales supplémentaires sans nuire aux performances ni au confort sur mobile.
+- [ ] Renforcer l’expérience de recherche et les passerelles entre articles, dictionnaire et recettes.
+- [ ] Vérifier l’accessibilité, la compatibilité mobile, les performances et le déploiement public final.
