@@ -37,3 +37,7 @@ Le contrôle de l’ancre Histoire confirme que le titre est désormais entière
 La vérification sur GitHub Pages confirme le chargement de `theme.css?v=3`, l’application de `DM Sans` au hero et une grille d’en-tête de section effective. Pour l’ancre Histoire, le titre démarre à 235 px alors que le bas de la navigation est à 138 px : le titre reste donc dégagé sous le header fixe.
 
 Les tests visuels doivent continuer avec le thème sombre, la recherche, le dictionnaire, l’assistant local, le menu mobile et l’ancre historique `#coffee-shops`.
+
+## Release V1.0+ — contrôle local final
+
+La page `404.html` s’affiche sans dépendance applicative, expose un titre explicite, une explication lisible et deux sorties fonctionnelles vers l’accueil et le dictionnaire. Le contrôle de `index.html#coffee-shops` confirme que l’ancre historique est toujours résolue et que les composants de navigation, recherche, dictionnaire et recommandation restent présents dans le DOM local. Aucun changement de contenu interactif n’a été introduit par la préparation de production.

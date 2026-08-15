@@ -1,0 +1,5 @@
+node_modules/
+.lighthouseci/
+monitoring/
+*.log
+*.tmp

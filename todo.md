@@ -42,3 +42,9 @@
 - [x] Documenter la V1.0, les tests, le déploiement GitHub Pages et la maintenance dans le README et le changelog.
 - [x] Résoudre la course d’initialisation entre dictionnaire et recherche globale, puis vérifier le résultat sur un chargement neuf.
 - [x] Alléger la typographie, harmoniser les alignements et améliorer la lisibilité globale selon le retour utilisateur.
+- [x] Inventorier la V1.0, ses ancres, scripts, assets, workflows et risques de non-régression pour la mise en production V1.0+.
+- [x] Renforcer les scripts de validation, tests fonctionnels et contrôles de sécurité pour les parcours critiques.
+- [x] Ajouter des scripts réutilisables de santé, liens, qualité des assets et budgets de performance.
+- [x] Mettre en place les workflows GitHub Actions de CI, déploiement, contrôle des liens, santé, performance et sécurité.
+- [x] Documenter l’exploitation, les seuils, les alertes et la procédure de récupération de production.
+- [ ] Valider la release, vérifier la publication GitHub Pages et remettre le rapport V1.0+.

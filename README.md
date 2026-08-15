@@ -30,7 +30,8 @@ La version V1.0 est un **site statique autonome**. Elle fonctionne sur GitHub Pa
 | `dictionary-v4.js` | Corpus, filtres, favoris et fiches du dictionnaire. |
 | `local-assistant.js` | Réponses locales documentaires, sans appel réseau. |
 | `motion.js` | Sections éditoriales complémentaires et améliorations de mouvement progressives. |
-| `scripts/validate.mjs` | Contrôle non destructif des ressources, métadonnées, architecture statique et syntaxe. |
+| `scripts/` | Contrôles de structure, tests, assets, budgets, accessibilité, SEO, liens, santé publique et sécurité. |
+| `docs/` | Exploitation, stratégie de tests, sécurité, récupération et checklist de release. |
 
 ## Développement local
 
@@ -39,16 +40,15 @@ Une version récente de Node.js, à partir de 18, suffit. Aucune variable d’en
 ```bash
 git clone https://github.com/Kevingiscard/cafe-benin-info.git
 cd cafe-benin-info
-npm test
-npm run validate
-npm run build
+npm ci --ignore-scripts
+npm run verify
 ```
 
 Pour consulter la page localement, servez le dossier avec un serveur statique, par exemple `npx serve .`. Cette commande n’est pas nécessaire pour les validations automatisées.
 
 ## Déploiement GitHub Pages
 
-Le dépôt est conçu pour être servi à la racine de la branche `main` avec GitHub Pages. Après avoir poussé une modification sur `main`, vérifiez dans **Settings → Pages** que la source sélectionnée est **Deploy from a branch**, avec la branche `main` et le dossier `/ (root)`.
+Le dépôt est conçu pour GitHub Pages. Après la publication des workflows V1.0+, sélectionnez **GitHub Actions** dans **Settings → Pages**. Le workflow `pages-deploy.yml` exécute la release gate, prépare un artefact strictement statique et le déploie dans l’environnement `github-pages`. Cette méthode suit les actions Pages officielles.[1]
 
 Les chemins sont relatifs afin de rester compatibles avec `https://kevingiscard.github.io/cafe-benin-info/`. Le fichier `robots.txt`, le sitemap, le manifest, le favicon et les métadonnées Open Graph utilisent l’URL publique canonique.
 
@@ -58,7 +58,11 @@ Les données locales demandent une source, une période et un contexte. Les info
 
 ## Maintenance
 
-Avant toute publication, exécutez `npm run build`, vérifiez les ancres, le menu mobile, la recherche, le dictionnaire, les favoris, CaféBot et les deux thèmes. Ne modifiez pas les contenus relatifs au Bénin sans source vérifiable. Le détail des évolutions se trouve dans [`CHANGELOG.md`](CHANGELOG.md).
+Avant toute publication, exécutez `npm run verify`, vérifiez les ancres, le menu mobile, la recherche, le dictionnaire, les favoris, CaféBot et les deux thèmes. Après publication, lancez `npm run health`. Ne modifiez pas les contenus relatifs au Bénin sans source vérifiable. Le détail de l’exploitation est disponible dans [`docs/OPERATIONS.md`](docs/OPERATIONS.md), la récupération dans [`docs/RECOVERY.md`](docs/RECOVERY.md) et la checklist dans [`docs/PRODUCTION_CHECKLIST.md`](docs/PRODUCTION_CHECKLIST.md).
+
+## Référence GitHub Pages
+
+[1] [GitHub Docs — Using custom workflows with GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
 
 ## Contact
 

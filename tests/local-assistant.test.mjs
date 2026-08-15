@@ -18,6 +18,13 @@ test('l’assistant local propose un conseil de préparation sans API', () => {
   assert.match(response, /filtre/i);
 });
 
+test('l’assistant local répond honnêtement lorsqu’une question sort de son corpus', () => {
+  const response = localAssistant.answer('Quel est le cours orbital du grain de café sur Mars ?');
+  assert.equal(response.source, 'local');
+  assert.match(response.reply, /assistant de recherche local/i);
+  assert.ok(response.links.some(link => link.href === '#dictionnaire'));
+});
+
 test('le thème est amorcé avant rendu et possède un contrôle accessible', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const app = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
