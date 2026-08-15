@@ -34,3 +34,11 @@ test('la recherche se branche sur le dictionnaire enrichi même si le corpus est
   assert.match(app, /Array\.isArray\(window\.cafeBeninDictionary\)/);
   assert.match(dictionary, /cafeBeninDictionary/);
 });
+
+test('la direction typographique utilise une famille sans sérif cohérente et versionne sa feuille de thème', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const theme = fs.readFileSync(new URL('../theme.css', import.meta.url), 'utf8');
+  assert.match(theme, /--font-display: "DM Sans"/);
+  assert.match(html, /theme\.css\?v=3/);
+  assert.doesNotMatch(html, /Cormorant\+Garamond/);
+});

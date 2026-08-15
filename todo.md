@@ -41,3 +41,4 @@
 - [x] Renforcer les états vides, les erreurs locales, les focus et la robustesse des interactions sans serveur.
 - [x] Documenter la V1.0, les tests, le déploiement GitHub Pages et la maintenance dans le README et le changelog.
 - [x] Résoudre la course d’initialisation entre dictionnaire et recherche globale, puis vérifier le résultat sur un chargement neuf.
+- [x] Alléger la typographie, harmoniser les alignements et améliorer la lisibilité globale selon le retour utilisateur.

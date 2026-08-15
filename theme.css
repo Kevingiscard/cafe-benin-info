@@ -15,9 +15,9 @@
   --shadow-soft: 0 18px 45px rgb(68 42 23 / 8%);
   --shadow-raised: 0 22px 60px rgb(68 42 23 / 13%);
   --ease-out: cubic-bezier(.23, 1, .32, 1);
-  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-display: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-meta: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-meta: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 :root[data-theme="light"] {
@@ -193,4 +193,82 @@ body, .nav, .section, .v4-intro, .field-notes, .card, .v4-panel, .v4-diagram, .v
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* V1.0.1 — direction typographique plus lisible et alignements de lecture. */
+body {
+  font-size: 16px;
+  line-height: 1.65;
+  letter-spacing: -.006em;
+}
+
+h1, h2, h3, h4, h5, h6, .display, .brand, .editorial-title,
+.story-card h3, .method-card h3, .step h3, .metric strong,
+.sensory h3, .dictionary-intro strong, .dict-card h3, .value-node b,
+.source-card strong, .bot-panel h3, .v4-index b, .v4-panel h3,
+.v4-fact strong, .v4-era h3, .v4-diagram h3, .v4-numbered h3,
+.v4-source strong, .v4-callout strong, .dict-detail-panel h2,
+.field-card h3, .field-reader-header strong, .visual-card-copy strong {
+  font-family: var(--font-display) !important;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+}
+
+.eyebrow, .tag, .nav-links, .btn, .search-trigger, .dict-meta,
+.field-card-number, .image-caption, .field label, .chat small,
+.dictionary-intro span, .source-card span, .theme-toggle {
+  font-family: var(--font-meta) !important;
+  font-weight: 600;
+  letter-spacing: .075em;
+}
+
+.container { width: min(1160px, calc(100% - 48px)); }
+main section[id], #voyage-visuel, #carnet { scroll-margin-top: 6.5rem; }
+.section { padding: clamp(4rem, 7vw, 6.75rem) 0; }
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(17rem, .85fr);
+  align-items: start;
+  gap: clamp(2rem, 6vw, 5.5rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.section-head h2 { font-size: clamp(2.5rem, 5.2vw, 4.75rem); line-height: 1.02; }
+.section-head p { max-width: 34rem; margin: .55rem 0 0; font-size: 1rem; line-height: 1.72; }
+.section-head em, .display em { font-style: normal; }
+
+.hero { min-height: min(820px, 100svh); }
+.hero-content { max-width: 860px; padding: clamp(8rem, 15vw, 10.5rem) 0 clamp(4.5rem, 7vw, 6.25rem); }
+.hero h1, .hero .display { max-width: 10.5ch; font-size: clamp(3.25rem, 7.2vw, 6.6rem); line-height: .98; letter-spacing: -.055em; }
+.hero-copy { max-width: 43rem; font-size: clamp(1rem, 1.45vw, 1.12rem); line-height: 1.72; }
+.hero-search { max-width: 680px; margin-top: 2rem; }
+.hero-meta { gap: clamp(1.25rem, 4vw, 2.75rem); margin-top: 2rem; }
+.hero-meta strong { font-size: 1.4rem; letter-spacing: -.025em; }
+
+.split { gap: clamp(2rem, 5vw, 4.5rem); }
+.v4-kicker { max-width: 760px; }
+.v4-kicker h2 { font-size: clamp(2.35rem, 4.8vw, 4.5rem); line-height: 1.03; }
+.v4-kicker p, .visual-lead p, .field-lead p { font-size: 1rem; line-height: 1.72; }
+.v4-index b { font-size: 1.2rem; }
+.v4-panel h3, .v4-era h3, .v4-diagram h3 { font-size: 1.5rem; }
+.v4-numbered h3, .method-card h3, .step h3 { font-size: 1.35rem; }
+.dict-card h3 { font-size: 1.2rem; margin: .75rem 0 .35rem; }
+.dict-card p, .v4-index span, .v4-numbered p, .v4-source span { font-size: .9rem; line-height: 1.6; }
+.visual-lead, .field-lead { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.visual-card-copy strong { font-size: clamp(1.5rem, 2.4vw, 2.15rem); }
+.field-card h3 { font-size: clamp(1.65rem, 2.7vw, 2.35rem); }
+.field-reader-header strong { font-size: 1.6rem; }
+
+@media (max-width: 900px) {
+  .section-head { grid-template-columns: 1fr; gap: .5rem; }
+  .section-head p { margin-top: 0; max-width: 42rem; }
+}
+
+@media (max-width: 720px) {
+  .container { width: min(100% - 32px, 1160px); }
+  .hero h1, .hero .display { font-size: clamp(2.8rem, 13vw, 4.2rem); max-width: 11ch; }
+  .hero-copy { font-size: 1rem; }
+  .section-head h2 { font-size: clamp(2.25rem, 11vw, 3.25rem); }
+  .visual-lead, .field-lead { grid-template-columns: 1fr; }
 }

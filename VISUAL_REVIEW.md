@@ -28,4 +28,10 @@ Un rechargement isolé confirme que `app.js?v=2` est exécuté, que le corpus co
 
 Après publication, la page `https://kevingiscard.github.io/cafe-benin-info/` sert bien la V1.0. Le contrôle sur le site public confirme l’exécution de `app.js?v=2`, un corpus de 254 fiches, un résultat pour « canephora », une réponse de CaféBot avec la source `local` et aucune ressource chargée avec un statut HTTP d’échec.
 
+## Révision typographique — en cours
+
+La revue locale de la version typographique allégée confirme une hiérarchie sans sérif plus compacte : le hero, les boutons, les métriques et les textes documentaires utilisent désormais une lecture homogène, avec des titres réduits et une largeur de contenu resserrée. La grille des en-têtes de section aligne le titre et le texte d’introduction sur deux colonnes à large écran, puis les empile sur mobile. Un `scroll-margin-top` est appliqué aux sections afin que les titres atteints par ancre ne soient plus masqués par la navigation fixe.
+
+Le contrôle de l’ancre Histoire confirme que le titre est désormais entièrement visible sous le header fixe. En thème sombre, le navigateur applique bien `DM Sans` au hero et au corps, tandis que l’en-tête de section utilise une grille de deux colonnes calculée, avec un espacement cohérent ; aucun style de police décoratif n’est conservé dans la hiérarchie principale.
+
 Les tests visuels doivent continuer avec le thème sombre, la recherche, le dictionnaire, l’assistant local, le menu mobile et l’ancre historique `#coffee-shops`.
