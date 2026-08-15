@@ -116,7 +116,7 @@
     if (prefersReducedMotion()) return;
     const selectors = [
       '.v4-index a', '.v4-era', '.v4-panel', '.v4-numbered article',
-      '.card', '.metric', '.sensory', '.v4-source', '.visual-card', '.field-card', '.field-reader', '.bot-panel'
+      '.card', '.metric', '.sensory', '.v4-source', '.visual-card', '.bot-panel'
     ].join(',');
     const items = [...document.querySelectorAll(selectors)];
     const observer = new IntersectionObserver((entries) => {

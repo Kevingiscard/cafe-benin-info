@@ -16,3 +16,4 @@
 - [ ] Vérifier l’accessibilité, la compatibilité mobile, les performances et le déploiement public final.
 - [x] Corriger le défilement direct des liens vers les sections dynamiques « Visuels » et « Carnet ».
 - [x] Optimiser les grands visuels du récit et du carnet pour préserver les performances mobiles.
+- [x] Empêcher les cartes du Carnet de créer un espace vide lors de l’ouverture d’un lien direct.
