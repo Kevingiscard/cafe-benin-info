@@ -25,4 +25,4 @@
 - [x] Retirer les interfaces, routes, dépendances et documents uniquement utiles aux services externes non configurés.
 - [x] Remplacer les formulaires nécessitant un serveur par des interactions statiques explicites et fonctionnelles.
 - [x] Simplifier la configuration et les scripts pour un déploiement GitHub Pages sans API ni secret.
-- [ ] Vérifier le site autonome, nettoyer le dépôt et publier la version finale GitHub Pages.
+- [x] Vérifier le site autonome, nettoyer le dépôt et publier la version finale GitHub Pages.
