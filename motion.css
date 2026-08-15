@@ -114,6 +114,88 @@
   text-transform: uppercase;
 }
 
+.field-notes {
+  position: relative;
+  background: #efe6d9;
+  color: #211b16;
+}
+
+.field-notes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 84% 0%, rgba(213, 138, 77, .16), transparent 32%);
+  pointer-events: none;
+}
+
+.field-notes .container { position: relative; z-index: 1; }
+.field-notes .eyebrow { color: #9e4f25; }
+.field-notes .display { color: #211b16; }
+.field-notes .display em { color: #a35025; }
+
+.field-lead {
+  display: grid;
+  grid-template-columns: minmax(0, .94fr) minmax(280px, .75fr);
+  gap: clamp(30px, 6vw, 90px);
+  align-items: end;
+  margin-bottom: 38px;
+}
+
+.field-lead p { margin: 0; color: #5e4d41; }
+.field-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.field-card {
+  display: flex;
+  min-height: 480px;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #211b16;
+  color: #f7efe5;
+  isolation: isolate;
+}
+
+.field-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.72) contrast(1.04);
+  transition: transform 1s var(--motion-ease-slow), filter .7s ease;
+}
+
+.field-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16, 12, 9, .02), rgba(16, 12, 9, .92) 88%);
+  z-index: 1;
+}
+
+.field-card-content { position: relative; z-index: 2; padding: 28px; }
+.field-card-number { color: #e2a469; font: 600 11px 'IBM Plex Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+.field-card h3 { margin: 14px 0 8px; font: 600 clamp(31px, 3vw, 44px)/.94 'Cormorant Garamond', Georgia, serif; }
+.field-card p { margin: 0; color: #d8cbbd; font-size: 13px; line-height: 1.6; }
+.field-card a { display: inline-flex; margin-top: 15px; color: #f4bd85; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+
+.field-reader { display: grid; grid-template-columns: .7fr 1.3fr; gap: 16px; margin-top: 18px; }
+.field-reader-header, .field-details { border: 1px solid rgba(82, 58, 43, .22); border-radius: 16px; background: rgba(255, 255, 255, .42); }
+.field-reader-header { padding: 24px; }
+.field-reader-header strong { display: block; font: 600 34px/.96 'Cormorant Garamond', Georgia, serif; }
+.field-reader-header p { margin: 10px 0 0; color: #625044; font-size: 13px; }
+.field-details { overflow: hidden; }
+.field-details details + details { border-top: 1px solid rgba(82, 58, 43, .18); }
+.field-details summary { list-style: none; cursor: pointer; padding: 19px 52px 19px 22px; position: relative; font-weight: 700; }
+.field-details summary::-webkit-details-marker { display: none; }
+.field-details summary::after { content: '+'; position: absolute; right: 22px; top: 14px; color: #9e4f25; font-size: 25px; font-weight: 400; transition: transform 180ms var(--motion-ease); }
+.field-details details[open] summary::after { transform: rotate(45deg); }
+.field-details p { margin: 0; padding: 0 22px 20px; color: #625044; font-size: 13px; line-height: 1.65; }
+
+@media (hover: hover) and (pointer: fine) { .field-card:hover img { transform: scale(1.06); filter: saturate(1) contrast(1.08); } }
+
 .ai-availability {
   display: inline-flex;
   align-items: center;
@@ -166,6 +248,9 @@
   .visual-lead { grid-template-columns: 1fr; gap: 18px; }
   .visual-grid { grid-template-columns: 1fr 1fr; min-height: 0; }
   .visual-card:first-child { grid-row: span 1; grid-column: 1 / -1; min-height: 390px; }
+  .field-lead, .field-reader { grid-template-columns: 1fr; }
+  .field-grid { grid-template-columns: 1fr; }
+  .field-card { min-height: 410px; }
 }
 
 @media (max-width: 640px) {

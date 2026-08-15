@@ -73,11 +73,42 @@
     image.alt = 'Tasse de café au lever du jour dans une ambiance béninoise contemporaine';
   }
 
+  function addFieldNotes() {
+    const beninSection = document.querySelector('#benin');
+    if (!beninSection || document.querySelector('#carnet')) return;
+
+    const section = document.createElement('section');
+    section.id = 'carnet';
+    section.className = 'section field-notes';
+    section.setAttribute('aria-label', 'Carnet de terrain Café Bénin');
+    section.innerHTML = `
+      <div class="container">
+        <div class="field-lead">
+          <div><span class="eyebrow">Carnet de terrain · Afrique & Bénin</span><h2 class="display">Suivre les gestes,<br><em>documenter les lieux.</em></h2></div>
+          <p>Ce carnet ouvre trois portes : mieux lire les sources sur le Bénin, replacer les traditions africaines dans leur contexte et passer d’une curiosité de dégustation à une recherche précise dans l’encyclopédie.</p>
+        </div>
+        <div class="field-grid">
+          <article class="field-card"><img src="img/v14_atlas_world.png" alt="Carte illustrée des régions caféières du monde" loading="lazy"><div class="field-card-content"><span class="field-card-number">01 · Situer</span><h3>Le Bénin, sans raccourci.</h3><p>Une information locale est utile lorsqu’elle est datée, attribuée et définie. Le site transforme les zones d’ombre en pistes de recherche plutôt qu’en certitudes.</p><a href="#benin">Lire le dossier Bénin</a></div></article>
+          <article class="field-card"><img src="img/ethiopian-coffee-ceremony-ccby.jpg" alt="Cérémonie du café en Éthiopie" loading="lazy"><div class="field-card-content"><span class="field-card-number">02 · Relier</span><h3>Rituels africains du café.</h3><p>La cérémonie photographiée est éthiopienne. Elle rappelle que le café est aussi un langage d’hospitalité, de transmission et de temps partagé, sans être confondu avec les pratiques béninoises.</p><a href="https://commons.wikimedia.org/wiki/File:Ethiopian_Coffee_Ceremony_011.jpg" target="_blank" rel="noopener">Photo : Steve Evans · CC BY 2.0</a></div></article>
+          <article class="field-card"><img src="img/coffee_shop_cotonou.png" alt="Espace café contemporain à Cotonou" loading="lazy"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
+        </div>
+        <div class="field-reader">
+          <div class="field-reader-header"><span class="eyebrow">Parcours guidé</span><strong>Trois manières de commencer.</strong><p>Ouvrez une piste, puis naviguez vers les définitions, sections et sources correspondantes.</p></div>
+          <div class="field-details">
+            <details open><summary>Comprendre une tasse</summary><p>Commencez par la <a href="#extraction">méthode d’extraction</a>, puis utilisez le <a href="#dictionnaire">dictionnaire</a> pour explorer ratio, mouture, eau, TDS et texture. Comparez ensuite vos sensations dans la partie dégustation.</p></details>
+            <details><summary>Lire une information sur le Bénin</summary><p>Recherchez l’année, l’unité, la zone exacte et la source initiale. Le dossier Bénin renvoie vers la <a href="https://dsa.agriculture.gouv.bj/" target="_blank" rel="noopener">Direction de la Statistique Agricole</a> et vers une source FAO historique, qui doivent être distinguées des données contemporaines.</p></details>
+            <details><summary>Construire une culture café plus précise</summary><p>Reliez les gestes de préparation aux réalités de la plante : espèce, récolte, fermentation, séchage et torréfaction. Une tasse devient plus lisible lorsqu’on comprend la chaîne entière, de la cerise au service.</p></details>
+          </div>
+        </div>
+      </div>`;
+    beninSection.after(section);
+  }
+
   function enhanceReveals() {
     if (prefersReducedMotion()) return;
     const selectors = [
       '.v4-index a', '.v4-era', '.v4-panel', '.v4-numbered article',
-      '.card', '.metric', '.sensory', '.v4-source', '.visual-card', '.bot-panel'
+      '.card', '.metric', '.sensory', '.v4-source', '.visual-card', '.field-card', '.field-reader', '.bot-panel'
     ].join(',');
     const items = [...document.querySelectorAll(selectors)];
     const observer = new IntersectionObserver((entries) => {
@@ -123,6 +154,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     removeSensitiveQueryParameters();
     addVisualJourney();
+    addFieldNotes();
     replaceHeroVisual();
     enhanceReveals();
     addMagneticFeedback();
