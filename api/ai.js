@@ -5,7 +5,7 @@ const { setCors } = require('../lib/cors');
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.6-flash';
 const clean = (value, max = 300) => String(value || '').replace(/[\u0000-\u001F\u007F]/g, ' ').trim().slice(0, max);
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCors(req, res, 'POST,OPTIONS');
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -37,9 +37,11 @@ export default async function handler(req, res) {
 
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    const response = await ai.models.generateContent({ model: MODEL, contents: prompt });
-    return res.status(200).json({ recommendation: response.text || '', source: 'gemini', model: MODEL });
-  } catch (_) {
+    const interaction = await ai.interactions.create({ model: MODEL, input: prompt });
+    const recommendation = String(interaction.output_text || '').trim();
+    if (!recommendation) throw new Error('Réponse IA vide.');
+    return res.status(200).json({ recommendation, source: 'gemini', model: MODEL });
+  } catch (error) {
     return res.status(502).json({ error: 'Le service IA est temporairement indisponible.' });
   }
 }

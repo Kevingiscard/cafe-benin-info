@@ -1,0 +1,178 @@
+/* Café Bénin — couche de mouvement et d’images éditoriales */
+
+:root {
+  --motion-ease: cubic-bezier(.23, 1, .32, 1);
+  --motion-ease-slow: cubic-bezier(.16, 1, .3, 1);
+}
+
+.hero { isolation: isolate; }
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: min(48vw, 720px);
+  height: min(48vw, 720px);
+  right: -16vw;
+  top: -20vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(213, 138, 77, .18) 0%, rgba(182, 91, 42, .07) 35%, transparent 69%);
+  pointer-events: none;
+}
+
+.hero-media img {
+  transform: scale(1.04);
+  transform-origin: 70% 55%;
+}
+
+.visual-journey {
+  position: relative;
+  overflow: clip;
+  background: linear-gradient(150deg, #100e0b 0%, #090807 47%, #140e09 100%);
+}
+
+.visual-journey::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .35;
+  background-image: linear-gradient(rgba(213, 138, 77, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(213, 138, 77, .08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  pointer-events: none;
+}
+
+.visual-journey .container { position: relative; z-index: 1; }
+
+.visual-lead {
+  display: grid;
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  gap: clamp(28px, 5vw, 78px);
+  align-items: end;
+  margin-bottom: 34px;
+}
+
+.visual-lead h2 { margin-bottom: 0; }
+.visual-lead p { color: var(--muted); max-width: 590px; margin: 0; }
+
+.visual-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr .8fr;
+  min-height: 500px;
+  gap: 14px;
+}
+
+.visual-card {
+  position: relative;
+  min-height: 290px;
+  overflow: hidden;
+  border: 1px solid rgba(213, 138, 77, .28);
+  border-radius: 22px;
+  background: #100e0b;
+  isolation: isolate;
+}
+
+.visual-card:first-child { grid-row: span 2; }
+.visual-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.72) contrast(1.04);
+  transition: transform 1.2s var(--motion-ease-slow), filter .8s ease;
+}
+
+.visual-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 22%, rgba(9, 8, 7, .26) 48%, rgba(9, 8, 7, .94) 100%);
+}
+
+.visual-card-copy {
+  position: absolute;
+  z-index: 2;
+  left: 24px;
+  right: 24px;
+  bottom: 22px;
+}
+
+.visual-card-copy strong,
+.visual-card-copy span { display: block; }
+.visual-card-copy strong { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(30px, 3.5vw, 50px); line-height: .94; }
+.visual-card-copy span { color: #d3c2ae; font-size: 12px; line-height: 1.5; margin-top: 10px; }
+
+.image-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  color: #978c80;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ai-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: #bcb0a4;
+  font-size: 12px;
+}
+
+.ai-availability::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent2);
+  box-shadow: 0 0 0 5px rgba(213, 138, 77, .11);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .visual-card:hover img { transform: scale(1.075); filter: saturate(1) contrast(1.08); }
+  .visual-card:hover { border-color: rgba(213, 138, 77, .65); }
+  .motion-magnetic { transition: transform 160ms var(--motion-ease); will-change: transform; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero::before { animation: ambient-orbit 16s var(--motion-ease-slow) infinite alternate; }
+  .hero-media img { animation: hero-drift 18s var(--motion-ease-slow) infinite alternate; }
+  .motion-card {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+    transition: opacity 720ms var(--motion-ease), transform 720ms var(--motion-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .motion-card.is-motion-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+  .visual-card.motion-card { transform: translate3d(0, 38px, 0) scale(.985); }
+  .visual-card.motion-card.is-motion-visible { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes hero-drift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(-1.8%, 1.1%, 0); }
+}
+
+@keyframes ambient-orbit {
+  from { transform: translate3d(0, 0, 0) scale(.95); opacity: .45; }
+  to { transform: translate3d(-8vw, 7vw, 0) scale(1.1); opacity: .95; }
+}
+
+@media (max-width: 900px) {
+  .visual-lead { grid-template-columns: 1fr; gap: 18px; }
+  .visual-grid { grid-template-columns: 1fr 1fr; min-height: 0; }
+  .visual-card:first-child { grid-row: span 1; grid-column: 1 / -1; min-height: 390px; }
+}
+
+@media (max-width: 640px) {
+  .visual-grid { grid-template-columns: 1fr; }
+  .visual-card, .visual-card:first-child { grid-column: auto; min-height: 320px; }
+  .image-caption { display: block; line-height: 1.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before, .hero-media img { animation: none !important; }
+  .motion-card { opacity: 1 !important; transform: none !important; transition: none !important; }
+}

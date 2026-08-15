@@ -25,7 +25,7 @@ function normalizeMessages(messages, question) {
   });
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCors(req, res, 'POST,OPTIONS');
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -63,17 +63,19 @@ export default async function handler(req, res) {
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const transcript = messages.map(m => `${m.role === 'assistant' ? 'CaféBot' : 'Utilisateur'}: ${m.content}`).join('\n');
-    const response = await ai.models.generateContent({
+    const interaction = await ai.interactions.create({
       model: MODEL,
-      contents: `${systemPrompt}\n\nConversation:\n${transcript}\n\nRéponds au dernier message de l'utilisateur.`
+      input: `${systemPrompt}\n\nConversation:\n${transcript}\n\nRéponds au dernier message de l'utilisateur.`
     });
+    const reply = String(interaction.output_text || '').trim();
+    if (!reply) throw new Error('Réponse IA vide.');
 
     return res.status(200).json({
-      reply: response.text || 'Je n’ai pas pu générer de réponse.',
+      reply,
       source: 'gemini',
       model: MODEL
     });
   } catch (error) {
     return res.status(400).json({ error: error.message || 'Requête invalide.' });
   }
-}
+};
