@@ -1,7 +1,7 @@
 {
   "name": "cafe-benin-info",
-  "version": "4.0.0",
-  "description": "Café Bénin — encyclopédie et dictionnaire francophone du café, avec dossier documentaire sur le Bénin",
+  "version": "1.0.0",
+  "description": "Café Bénin V1.0 — plateforme documentaire statique francophone sur le café et le Bénin",
   "private": true,
   "engines": {
     "node": ">=18"
@@ -9,6 +9,7 @@
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "test": "node --test tests/local-assistant.test.mjs",
-    "build": "npm run validate && npm test"
+    "build": "npm run validate && npm test",
+    "verify": "npm run build"
   }
 }

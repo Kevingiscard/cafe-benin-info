@@ -1,0 +1,10 @@
+{
+  "name": "Café Bénin — Encyclopédie du café",
+  "short_name": "Café Bénin",
+  "lang": "fr",
+  "start_url": "/cafe-benin-info/",
+  "display": "standalone",
+  "background_color": "#f5f0e7",
+  "theme_color": "#9c4f27",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -34,30 +34,26 @@
         <div class="visual-lead">
           <div>
             <span class="eyebrow">Récit visuel</span>
-            <h2 class="display" style="color:#f6f0e7 !important">Le café se lit aussi<br><em style="color:#d58a4d !important">par la lumière.</em></h2>
+            <h2 class="display">Le café se lit aussi<br><em>par la lumière.</em></h2>
           </div>
           <p>Ces scènes éditoriales prolongent l’encyclopédie : matière, geste, territoire et rencontre. Elles accompagnent les explications sans les remplacer.</p>
         </div>
         <div class="visual-grid">
           <figure class="visual-card">
-            <img src="img/coffee_beans_macro.png" alt="Cerises et grains de café évoquant le terroir" loading="lazy">
+            <img src="img/coffee_beans_macro.webp" alt="Cerises et grains de café évoquant le terroir" loading="lazy" width="1024" height="1024">
             <figcaption class="visual-card-copy"><strong>Terroir</strong><span>Le sol, le climat et le travail humain se retrouvent dans chaque lot.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/premium_coffee_pour.png" alt="Préparation lente d’un café filtre avec un dripper" loading="lazy">
+            <img src="img/premium_coffee_pour.webp" alt="Préparation lente d’un café filtre avec un dripper" loading="lazy" width="853" height="1280">
             <figcaption class="visual-card-copy"><strong>Geste</strong><span>La précision commence par une attention portée à l’eau, au temps et à la mouture.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/coffee_shop_cotonou.png" alt="Ambiance de communauté autour du café à Cotonou" loading="lazy">
+            <img src="img/coffee_shop_cotonou.webp" alt="Ambiance de communauté autour du café à Cotonou" loading="lazy" width="1536" height="1024">
             <figcaption class="visual-card-copy"><strong>Partage</strong><span>Le café relie la connaissance, les métiers et les conversations.</span></figcaption>
           </figure>
         </div>
         <div class="image-caption"><span>Images éditoriales — Café Bénin</span><span>Une expérience documentaire, de la parcelle à la communauté</span></div>
       </div>`;
-    const visualTitle = section.querySelector('.display');
-    const visualEmphasis = section.querySelector('.display em');
-    visualTitle?.style.setProperty('color', '#f6f0e7', 'important');
-    visualEmphasis?.style.setProperty('color', '#d58a4d', 'important');
     beninSection.before(section);
   }
 
@@ -90,7 +86,7 @@
         <div class="field-grid">
           <article class="field-card"><img src="img/v14_atlas_world.jpg" alt="Carte illustrée des régions caféières du monde" loading="lazy"><div class="field-card-content"><span class="field-card-number">01 · Situer</span><h3>Le Bénin, sans raccourci.</h3><p>Une information locale est utile lorsqu’elle est datée, attribuée et définie. Le site transforme les zones d’ombre en pistes de recherche plutôt qu’en certitudes.</p><a href="#benin">Lire le dossier Bénin</a></div></article>
           <article class="field-card"><img src="img/ethiopian-coffee-ceremony-ccby.jpg" alt="Cérémonie du café en Éthiopie" loading="lazy"><div class="field-card-content"><span class="field-card-number">02 · Relier</span><h3>Rituels africains du café.</h3><p>La cérémonie photographiée est éthiopienne. Elle rappelle que le café est aussi un langage d’hospitalité, de transmission et de temps partagé, sans être confondu avec les pratiques béninoises.</p><a href="https://commons.wikimedia.org/wiki/File:Ethiopian_Coffee_Ceremony_011.jpg" target="_blank" rel="noopener">Photo : Steve Evans · CC BY 2.0</a></div></article>
-          <article class="field-card"><img src="img/coffee_shop_cotonou.png" alt="Espace café contemporain à Cotonou" loading="lazy"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
+          <article class="field-card"><img src="img/coffee_shop_cotonou.webp" alt="Espace café contemporain à Cotonou" loading="lazy" width="1536" height="1024"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
         </div>
         <div class="field-reader">
           <div class="field-reader-header"><span class="eyebrow">Parcours guidé</span><strong>Trois manières de commencer.</strong><p>Ouvrez une piste, puis naviguez vers les définitions, sections et sources correspondantes.</p></div>
@@ -155,7 +151,7 @@
     if (!helper || helper.querySelector('.ai-availability')) return;
     const status = document.createElement('span');
     status.className = 'ai-availability';
-    status.textContent = 'Assistant documentaire — réponse générée côté serveur lorsque le moteur IA est configuré.';
+    status.textContent = 'Assistant documentaire local — réponses orientées vers les contenus et sources du site.';
     helper.after(status);
   }
 

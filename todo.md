@@ -26,3 +26,18 @@
 - [x] Remplacer les formulaires nécessitant un serveur par des interactions statiques explicites et fonctionnelles.
 - [x] Simplifier la configuration et les scripts pour un déploiement GitHub Pages sans API ni secret.
 - [x] Vérifier le site autonome, nettoyer le dépôt et publier la version finale GitHub Pages.
+- [x] Auditer le HTML, CSS, JavaScript, médias, scripts, tests et déploiement sans modifier les fonctionnalités existantes.
+- [x] Documenter l’architecture, les risques de régression et les corrections prioritaires avant la refonte.
+- [x] Mettre en place un système de design centralisé avec thèmes clair et sombre persistants et accessibles.
+- [x] Repenser le header, le menu mobile, le hero, la hiérarchie typographique et les espacements responsive.
+- [x] Renforcer la recherche Ctrl/Cmd+K, le dictionnaire, les favoris et l’assistant local avec navigation clavier et états accessibles.
+- [x] Optimiser les images, les polices, les animations, les métadonnées SEO et les liens sans inventer de contenu factuel.
+- [x] Tester les comportements desktop, tablette et mobile, puis publier uniquement après validation complète.
+- [x] Vérifier la cohérence du second cahier des charges joint avec le plan de refonte et couvrir toutes les exigences non encore traitées.
+- [x] Comparer le troisième cahier des charges aux exigences déjà couvertes et intégrer ses éventuels compléments V1.0.
+- [x] Ajouter des crédits complets et une interaction accessible à la galerie documentaire sans perdre les sources existantes.
+- [x] Optimiser les médias réellement affichés, ajouter des dimensions et supprimer les références distantes non vérifiables.
+- [x] Compléter les métadonnées sociales, données structurées, favicon, manifest et footer documentaire sans inventer de coordonnées.
+- [x] Renforcer les états vides, les erreurs locales, les focus et la robustesse des interactions sans serveur.
+- [x] Documenter la V1.0, les tests, le déploiement GitHub Pages et la maintenance dans le README et le changelog.
+- [x] Résoudre la course d’initialisation entre dictionnaire et recherche globale, puis vérifier le résultat sur un chargement neuf.

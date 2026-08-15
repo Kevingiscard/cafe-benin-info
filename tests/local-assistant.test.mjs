@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createRequire } from 'node:module';
+import fs from 'node:fs';
 
 const require = createRequire(import.meta.url);
 const localAssistant = require('../local-assistant.js');
@@ -15,4 +16,21 @@ test('l’assistant local explique les procédés sans réseau', () => {
 test('l’assistant local propose un conseil de préparation sans API', () => {
   const response = localAssistant.recommend('Je veux un café doux et calme', ['filtre']);
   assert.match(response, /filtre/i);
+});
+
+test('le thème est amorcé avant rendu et possède un contrôle accessible', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const app = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
+  assert.match(html, /localStorage\.getItem\('cb-theme'\)/);
+  assert.match(html, /id="theme-toggle"/);
+  assert.match(app, /function setupTheme\(\)/);
+  assert.match(app, /aria-pressed/);
+});
+
+test('la recherche se branche sur le dictionnaire enrichi même si le corpus est déjà initialisé', () => {
+  const app = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
+  const dictionary = fs.readFileSync(new URL('../dictionary-v4.js', import.meta.url), 'utf8');
+  assert.match(app, /cafeb:dictionary-ready/);
+  assert.match(app, /Array\.isArray\(window\.cafeBeninDictionary\)/);
+  assert.match(dictionary, /cafeBeninDictionary/);
 });
