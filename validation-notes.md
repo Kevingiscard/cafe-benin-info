@@ -9,3 +9,5 @@ La vérification du serveur Vercel confirme que la fonction CaféBot charge dés
 La première vérification de l’ancre `#carnet` juste après le commit `7b4d7e0` a encore chargé `motion.js?v=contrast-2`, alors que le dépôt contient la version `contrast-3`. GitHub Pages diffusait donc encore une version précédemment mise en cache du document. Le test doit être répété après propagation avant de conclure sur le comportement du défilement direct.
 
 Après propagation, la version publique charge bien `motion.js?v=contrast-3`. Le partage avec `#carnet` place correctement la vue sur le carnet de terrain, affiche les trois cartes documentaires et présente l’attribution visible de l’image de cérémonie éthiopienne à Steve Evans sous CC BY 2.0.
+
+La vérification de la version `motion.js?v=contrast-4` confirme que l’ancre `#carnet` mène au Carnet sans espace vide : la carte mondiale, désormais servie en JPEG optimisé, est visible dès l’ouverture. Les autres cartes suivent immédiatement dans le flux de lecture.
