@@ -17,3 +17,4 @@
 - [x] Corriger le défilement direct des liens vers les sections dynamiques « Visuels » et « Carnet ».
 - [x] Optimiser les grands visuels du récit et du carnet pour préserver les performances mobiles.
 - [x] Empêcher les cartes du Carnet de créer un espace vide lors de l’ouverture d’un lien direct.
+- [x] Forcer le rechargement du script du Carnet afin d’appliquer la correction d’affichage sur les navigateurs en cache.
