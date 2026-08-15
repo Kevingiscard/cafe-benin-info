@@ -214,6 +214,13 @@
   box-shadow: 0 0 0 5px rgba(213, 138, 77, .11);
 }
 
+.local-assistant-note { color: #ad9e90; font-size: 12px; line-height: 1.5; margin: 12px 0 0; }
+.bot-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.bot-suggestions button { border: 1px solid rgba(213, 138, 77, .42); border-radius: 999px; background: transparent; color: #e6c9aa; padding: 8px 11px; cursor: pointer; font: 500 11px/1.25 'DM Sans', sans-serif; text-align: left; }
+.bot-suggestions button:focus-visible, .bot-suggestions button:hover { background: rgba(213, 138, 77, .13); outline: none; }
+.chat-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 11px 0 0 !important; }
+.chat-links a { color: #f2bd88; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+
 @media (hover: hover) and (pointer: fine) {
   .visual-card:hover img { transform: scale(1.075); filter: saturate(1) contrast(1.08); }
   .visual-card:hover { border-color: rgba(213, 138, 77, .65); }
@@ -257,6 +264,7 @@
   .visual-grid { grid-template-columns: 1fr; }
   .visual-card, .visual-card:first-child { grid-column: auto; min-height: 320px; }
   .image-caption { display: block; line-height: 1.9; }
+  .bot-suggestions { gap: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -10,7 +10,7 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const write = (file, value) => fs.writeFileSync(path.join(root, file), value, 'utf8');
 const exists = file => fs.existsSync(path.join(root, file));
 
-for (const required of ['index.html', 'styles.css', 'v4.css', 'motion.css', 'app-v3.js', 'motion.js', 'dictionary-v4.js', 'backend-client.js', 'content-sources.md', 'package.json', 'vercel.json', 'robots.txt']) {
+for (const required of ['index.html', 'styles.css', 'v4.css', 'motion.css', 'app-v3.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.js', 'backend-client.js', 'content-sources.md', 'package.json', 'vercel.json', 'robots.txt']) {
   if (!exists(required)) fail(`Fichier requis absent: ${required}`); else ok(`Présent: ${required}`);
 }
 if (!exists('index.html')) process.exit(1);
@@ -54,7 +54,7 @@ for (const visual of ['img/benin-coffee-dawn.jpg', 'img/ethiopian-coffee-ceremon
   if (!exists(visual)) fail(`Visuel éditorial absent: ${visual}`); else ok(`Visuel éditorial OK: ${visual}`);
 }
 
-const jsFiles = ['app-v3.js', 'motion.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
+const jsFiles = ['app-v3.js', 'local-assistant.js', 'motion.js', 'backend-client.js', ...fs.readdirSync(path.join(root, 'api')).filter(f => f.endsWith('.js')).map(f => `api/${f}`), 'lib/cors.js'];
 for (const file of jsFiles) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, file)], { encoding: 'utf8' });
   if (result.status !== 0) fail(`Syntaxe JS invalide: ${file}\n${result.stderr}`); else ok(`Syntaxe JS OK: ${file}`);

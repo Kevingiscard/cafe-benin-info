@@ -18,3 +18,6 @@
 - [x] Optimiser les grands visuels du récit et du carnet pour préserver les performances mobiles.
 - [x] Empêcher les cartes du Carnet de créer un espace vide lors de l’ouverture d’un lien direct.
 - [x] Forcer le rechargement du script du Carnet afin d’appliquer la correction d’affichage sur les navigateurs en cache.
+- [x] Créer un assistant de recherche local qui répond sans API à partir du contenu de Café Bénin.
+- [x] Ajouter des suggestions de questions, des réponses pédagogiques et des liens internes vers les rubriques pertinentes.
+- [x] Garantir une bascule transparente vers l’assistant local lorsque le service IA distant est indisponible.

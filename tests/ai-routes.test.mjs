@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const recommendationHandler = require('../api/ai.js');
 const chatHandler = require('../api/chat.js');
 const healthHandler = require('../api/health.js');
+const localAssistant = require('../local-assistant.js');
 
 function responseMock() {
   return {
@@ -60,4 +61,11 @@ test('la route de santé répond sans dépendre des services externes', async ()
   await healthHandler({ method: 'GET', headers: {}, body: {} }, res);
   assert.equal(res.statusCode, 200);
   assert.equal(res.payload.status, 'ok');
+});
+
+test('l’assistant local répond sans réseau et oriente vers la transformation', () => {
+  const response = localAssistant.answer('Quelle est la différence entre un café naturel et un café lavé ?');
+  assert.equal(response.source, 'local');
+  assert.match(response.reply, /café naturel/i);
+  assert.equal(response.links[0].href, '#processus');
 });
