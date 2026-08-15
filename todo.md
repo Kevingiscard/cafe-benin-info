@@ -13,7 +13,7 @@
 - [x] Créer une galerie immersive supplémentaire avec images locales optimisées, légendes et navigation accessible.
 - [x] Ajouter des interactions éditoriales supplémentaires sans nuire aux performances ni au confort sur mobile.
 - [x] Renforcer l’expérience de recherche et les passerelles entre articles, dictionnaire et recettes.
-- [ ] Vérifier l’accessibilité, la compatibilité mobile, les performances et le déploiement public final.
+- [x] Vérifier l’accessibilité, la compatibilité mobile, les performances et le déploiement public final.
 - [x] Corriger le défilement direct des liens vers les sections dynamiques « Visuels » et « Carnet ».
 - [x] Optimiser les grands visuels du récit et du carnet pour préserver les performances mobiles.
 - [x] Empêcher les cartes du Carnet de créer un espace vide lors de l’ouverture d’un lien direct.
@@ -21,3 +21,4 @@
 - [x] Créer un assistant de recherche local qui répond sans API à partir du contenu de Café Bénin.
 - [x] Ajouter des suggestions de questions, des réponses pédagogiques et des liens internes vers les rubriques pertinentes.
 - [x] Garantir une bascule transparente vers l’assistant local lorsque le service IA distant est indisponible.
+- [ ] Optionnel : connecter Gemini, Supabase et les notifications de commentaires pour étendre la version autonome avec des services distants.
