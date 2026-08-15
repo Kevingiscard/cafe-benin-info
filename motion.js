@@ -104,6 +104,14 @@
     beninSection.after(section);
   }
 
+  function restoreDynamicHash() {
+    const targetId = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (!['voyage-visuel', 'carnet'].includes(targetId)) return;
+    requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+  }
+
   function enhanceReveals() {
     if (prefersReducedMotion()) return;
     const selectors = [
@@ -155,6 +163,7 @@
     removeSensitiveQueryParameters();
     addVisualJourney();
     addFieldNotes();
+    restoreDynamicHash();
     replaceHeroVisual();
     enhanceReveals();
     addMagneticFeedback();
