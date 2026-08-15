@@ -1,33 +1,30 @@
-# ☕ Café Bénin : Le Portail Mondial du Café
+# Café Bénin — Encyclopédie Mondiale Interactive
 
-Bienvenue sur le portail d'information dédié au café, avec un focus particulier sur le Bénin, l'Afrique et le monde entier. Ce site est une ressource complète pour les passionnés de café, explorant son histoire, sa culture, ses bienfaits pour la santé, et l'art de sa préparation.
+Le site est une encyclopédie francophone du café, avec un dossier documentaire consacré au Bénin, à l’Afrique et aux cultures du café. Il est conçu comme un **site statique autonome** : il fonctionne sur GitHub Pages sans base de données, serveur, clé API ni compte tiers.
 
-## 🌐 Voir le site en ligne
+## Fonctionnalités disponibles
 
-👉 **[https://kevingiscard.github.io/cafe-benin-info](https://kevingiscard.github.io/cafe-benin-info)**
+Le site propose une encyclopédie structurée, un dictionnaire consultable, des recettes et méthodes de préparation, un carnet de terrain enrichi d’images documentaires, des favoris stockés dans le navigateur et un **assistant de recherche local**. Cet assistant donne des réponses pédagogiques immédiates et renvoie vers les sections pertinentes ; il ne prétend pas remplacer une source primaire ou un avis médical.
 
-## 📋 Sections du Portail
+## Publication
 
-Ce portail est structuré pour offrir une exploration approfondie du monde du café :
+La version publique est servie par GitHub Pages :
 
--   **L'Or Noir du Bénin** : Découvrez la filière caféière béninoise, ses variétés (principalement Robusta), ses zones de production et les initiatives de relance. Un point à jour sur la campagne 2025-2026.
--   **Voyage à travers les Continents** : Un panorama de la production de café en Afrique (Ouganda, Éthiopie, Côte d'Ivoire, Cameroun) et dans le monde (Brésil, Vietnam, Colombie, Indonésie), avec les spécificités de chaque terroir (Arabica vs Robusta).
--   **Café et Santé** : Une synthèse des recherches scientifiques récentes (2025-2026) sur les bienfaits du café pour le cerveau, le système cardiovasculaire, ses propriétés antioxydantes et son impact sur le métabolisme.
--   **L'Art de la Préparation** : Explorez les secrets de la torréfaction artisanale, les astuces béninoises pour sublimer le café (gingembre, clous de girofle, sel), et l'expérience authentique du café de rue.
--   **Culture et Anecdotes** : Plongez dans les légendes du café (Kaldi), découvrez des traditions comme le Café Touba sénégalais et les cérémonies du café éthiopiennes.
--   **Le Cercle des Passionnés** : Un espace communautaire simulé pour le partage d'expériences, de recettes, d'astuces et l'organisation de rencontres entre amateurs de café.
+<https://kevingiscard.github.io/cafe-benin-info/>
 
-## 🛠️ Technologies utilisées
+Pour publier une modification, poussez les fichiers sur la branche `main` du dépôt. Dans GitHub, vérifiez que **Settings → Pages** utilise la branche `main` et le répertoire racine (`/`).
 
--   **HTML5** sémantique et accessible
--   **CSS3** (variables, animations, responsive design pour une expérience optimale sur tous les appareils)
--   **JavaScript** vanilla (navigation mobile, smooth scroll, gestion des sections actives)
--   **Google Fonts** (Merriweather pour les titres, Open Sans pour le corps de texte)
+## Vérification locale
 
-## 🚀 Déploiement
+Une installation Node.js récente est facultative mais permet de lancer les contrôles :
 
-Ce site est déployé via **GitHub Pages** sur la branche `main`.
+```bash
+npm test
+npm run validate
+```
 
----
+Ces commandes vérifient les scripts JavaScript, les liens locaux, les images, les métadonnées GitHub Pages et l’absence de dépendances serveur.
 
-*Fait avec ❤️ pour les passionnés de café.*
+## Contact
+
+Les contributions passent par le formulaire du site, qui prépare un e-mail à envoyer à **kevingiscard93@outlook.com**. Instagram : **@kevin48life**.

@@ -21,4 +21,8 @@
 - [x] Créer un assistant de recherche local qui répond sans API à partir du contenu de Café Bénin.
 - [x] Ajouter des suggestions de questions, des réponses pédagogiques et des liens internes vers les rubriques pertinentes.
 - [x] Garantir une bascule transparente vers l’assistant local lorsque le service IA distant est indisponible.
-- [ ] Optionnel : connecter Gemini, Supabase et les notifications de commentaires pour étendre la version autonome avec des services distants.
+- [x] Écarter les intégrations Gemini, Supabase et notifications afin que la version publique ne dépende plus de services distants.
+- [x] Retirer les interfaces, routes, dépendances et documents uniquement utiles aux services externes non configurés.
+- [x] Remplacer les formulaires nécessitant un serveur par des interactions statiques explicites et fonctionnelles.
+- [x] Simplifier la configuration et les scripts pour un déploiement GitHub Pages sans API ni secret.
+- [ ] Vérifier le site autonome, nettoyer le dépôt et publier la version finale GitHub Pages.
