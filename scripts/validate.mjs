@@ -50,7 +50,7 @@ for (const ref of localRefs) {
   if (!exists(ref)) fail(`Ressource locale introuvable: ${ref}`); else ok(`Ressource OK: ${ref}`);
 }
 
-for (const visual of ['img/benin-coffee-dawn.jpg', 'img/ethiopian-coffee-ceremony-ccby.jpg', 'img/v14_atlas_world.png', 'img/coffee_shop_cotonou.png']) {
+for (const visual of ['img/benin-coffee-dawn.jpg', 'img/ethiopian-coffee-ceremony-ccby.jpg', 'img/v14_atlas_world.jpg', 'img/coffee_shop_cotonou.png']) {
   if (!exists(visual)) fail(`Visuel éditorial absent: ${visual}`); else ok(`Visuel éditorial OK: ${visual}`);
 }
 

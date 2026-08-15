@@ -15,3 +15,4 @@
 - [x] Renforcer l’expérience de recherche et les passerelles entre articles, dictionnaire et recettes.
 - [ ] Vérifier l’accessibilité, la compatibilité mobile, les performances et le déploiement public final.
 - [x] Corriger le défilement direct des liens vers les sections dynamiques « Visuels » et « Carnet ».
+- [x] Optimiser les grands visuels du récit et du carnet pour préserver les performances mobiles.
