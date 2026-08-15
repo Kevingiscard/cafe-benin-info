@@ -54,6 +54,10 @@
         </div>
         <div class="image-caption"><span>Images éditoriales — Café Bénin</span><span>Une expérience documentaire, de la parcelle à la communauté</span></div>
       </div>`;
+    const visualTitle = section.querySelector('.display');
+    const visualEmphasis = section.querySelector('.display em');
+    visualTitle?.style.setProperty('color', '#f6f0e7', 'important');
+    visualEmphasis?.style.setProperty('color', '#d58a4d', 'important');
     beninSection.before(section);
   }
 
