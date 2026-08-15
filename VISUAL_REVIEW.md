@@ -24,4 +24,8 @@ Le journal de la console ne relève aucune erreur JavaScript et le contrôle ré
 
 Un rechargement isolé confirme que `app.js?v=2` est exécuté, que le corpus contient 254 fiches et que « canephora » retourne la fiche « Liberica » sans réinjection. Le défaut de recherche est donc résolu sur un chargement neuf.
 
+## Vérification publique — GitHub Pages
+
+Après publication, la page `https://kevingiscard.github.io/cafe-benin-info/` sert bien la V1.0. Le contrôle sur le site public confirme l’exécution de `app.js?v=2`, un corpus de 254 fiches, un résultat pour « canephora », une réponse de CaféBot avec la source `local` et aucune ressource chargée avec un statut HTTP d’échec.
+
 Les tests visuels doivent continuer avec le thème sombre, la recherche, le dictionnaire, l’assistant local, le menu mobile et l’ancre historique `#coffee-shops`.
