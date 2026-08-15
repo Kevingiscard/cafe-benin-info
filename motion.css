@@ -52,8 +52,8 @@
 }
 
 .visual-lead h2 { margin-bottom: 0; }
-.visual-journey .display { color: #f6f0e7; }
-.visual-journey .display em { color: var(--accent2); }
+.visual-journey .visual-lead .display { color: #f6f0e7 !important; }
+.visual-journey .visual-lead .display em { color: var(--accent2) !important; }
 .visual-lead p { color: var(--muted); max-width: 590px; margin: 0; }
 
 .visual-grid {
