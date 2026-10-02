@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11100e"><meta name="description" content="UMAMI Chill & Grill — menu digital et commande par QR Code"><title>UMAMI Chill & Grill — Menu & Commande</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="top"><div class="brand"><span class="mark">U</span><div><b>UMAMI</b><small>CHILL & GRILL</small></div></div><button id="cartBtn" class="cart">Panier <span id="cartCount">0</span></button></header>
+<main>
+<section class="hero"><div><span class="eyebrow">MENU DIGITAL · COMMANDE À TABLE</span><h1>La magie du feu.<br><em>Le goût du partage.</em></h1><p>Scannez, choisissez, commandez. Votre table est identifiée automatiquement.</p></div></section>
+<section class="tablebar"><label>Table <select id="table"><option value="">Choisir</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option></select></label><input id="search" placeholder="Rechercher un plat ou une boisson…"></section>
+<nav id="cats" class="cats"></nav><section id="menu" class="grid"></section>
+</main>
+<aside id="drawer" class="drawer" aria-hidden="true"><div class="drawerHead"><h2>Votre commande</h2><button id="close">×</button></div><div id="cart"></div><div class="total"><span>Total</span><b id="total">0 FCFA</b></div><textarea id="note" placeholder="Note pour la cuisine (facultatif)"></textarea><button id="order" class="primary full">Envoyer la commande</button><p class="hint">La commande est transmise à UMAMI via WhatsApp.</p></aside>
+<div id="overlay" class="overlay"></div>
+<footer>UMAMI Chill & Grill · Akogbato Cité Glèlè, Cotonou · <a href="tel:+2290196825782">01 96 82 57 82</a></footer>
+<script>
+const MENU=[
+ {id:"brochettes",cat:"Grillades",name:"Brochettes grillées",desc:"Grillades au feu de charbon.",price:0,tag:"Signature"},
+ {id:"grillades",cat:"Grillades",name:"Assiette de grillades",desc:"Sélection de grillades préparées au charbon.",price:0,tag:"Maison"},
+ {id:"igname",cat:"Accompagnements",name:"Frites d’igname",desc:"Frites d’igname croustillantes.",price:0,tag:"Populaire"},
+ {id:"boissons",cat:"Boissons",name:"Boissons fraîches",desc:"Sélection de boissons disponibles au restaurant.",price:0,tag:"Frais"},
+ {id:"cafe",cat:"Boissons",name:"Café",desc:"Café servi chaud.",price:0,tag:""},
+ {id:"evenement",cat:"Expériences",name:"Soirée Live & Karaoké",desc:"Programmation événementielle selon le calendrier UMAMI.",price:0,tag:"Événement"}
+];
+const cats=["Tous",...new Set(MENU.map(x=>x.cat))];let active="Tous",cart=[];
+const fmt=n=>n?new Intl.NumberFormat("fr-FR").format(n)+" FCFA":"Prix sur demande";
+function renderCats(){catsEl.innerHTML=cats.map(c=>`<button class="${c===active?"on":""}" onclick="active='${c}';render()">${c}</button>`).join("")}
+function render(){renderCats();const q=search.value.toLowerCase();menu.innerHTML=MENU.filter(x=>(active==="Tous"||x.cat===active)&&(x.name+x.desc).toLowerCase().includes(q)).map(x=>`<article class="card"><div class="photo"><span>${x.tag||x.cat}</span></div><div class="cardbody"><div><small>${x.cat}</small><h3>${x.name}</h3><p>${x.desc}</p></div><div class="row"><strong>${fmt(x.price)}</strong><button onclick="add('${x.id}')">+ Ajouter</button></div></div></article>`).join("")}
+function add(id){const p=MENU.find(x=>x.id===id),e=cart.find(x=>x.id===id);e?e.qty++:cart.push({...p,qty:1});renderCart()}
+function renderCart(){cartCount.textContent=cart.reduce((a,x)=>a+x.qty,0);cart.innerHTML=cart.length?cart.map(x=>`<div class="line"><div><b>${x.name}</b><small>${fmt(x.price)}</small></div><div class="qty"><button onclick="change('${x.id}',-1)">−</button><b>${x.qty}</b><button onclick="change('${x.id}',1)">+</button></div></div>`).join(""):"<p class='empty'>Votre panier est vide.</p>";total.textContent=fmt(cart.reduce((a,x)=>a+x.price*x.qty,0))}
+function change(id,n){const x=cart.find(x=>x.id===id);if(!x)return;x.qty+=n;if(x.qty<=0)cart=cart.filter(y=>y.id!==id);renderCart()}
+function openCart(){drawer.classList.add("open");overlay.classList.add("show");drawer.setAttribute("aria-hidden","false");renderCart()}
+function closeCart(){drawer.classList.remove("open");overlay.classList.remove("show")}
+function sendOrder(){const t=table.value;if(!t)return alert("Sélectionnez votre numéro de table.");if(!cart.length)return alert("Votre panier est vide.");const lines=cart.map(x=>x.qty+" × "+x.name).join("%0A");const note=encodeURIComponent(document.getElementById("note").value);const msg=encodeURIComponent("Bonjour UMAMI, je souhaite commander.%0ATable: "+t+"%0A"+lines+"%0ANote: "+note);location.href="https://wa.me/229196825782?text="+msg}
+const menu=document.getElementById("menu"),catsEl=document.getElementById("cats"),search=document.getElementById("search"),cartBtn=document.getElementById("cartBtn"),cartCount=document.getElementById("cartCount"),drawer=document.getElementById("drawer"),overlay=document.getElementById("overlay"),total=document.getElementById("total");
+search.oninput=render;cartBtn.onclick=openCart;document.getElementById("close").onclick=closeCart;overlay.onclick=closeCart;document.getElementById("order").onclick=sendOrder;render();renderCart();
+</script></body></html>
