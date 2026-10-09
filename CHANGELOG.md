@@ -29,3 +29,9 @@ La V1.0 introduit une refonte documentaire premium avec design tokens, thème cl
 | Accessibilité | Lien d’évitement, états `:focus-visible`, modale de recherche, réduction de mouvement et repli des images. |
 | SEO | Canonical, Open Graph, Twitter/X, données structurées, favicon, manifest, robots et sitemap. |
 | Qualité | Validation non destructive, tests de l’assistant, du thème et de l’intégration dictionnaire. |
+## 2026-10-10 · Mise à jour éditoriale et sociale
+
+- Ajout d’un guide pratique de préparation filtre avec repères mesurables et méthode d’ajustement.
+- Ajout d’un accès Instagram public (`@kevin48life`) dans le parcours principal et le pied de page.
+- Ajout du lien Guide pratique à la navigation desktop et mobile.
+- Ajout du décodage asynchrone des images différées et de styles de focus visibles pour l’accessibilité.
