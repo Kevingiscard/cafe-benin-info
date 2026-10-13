@@ -1,0 +1,15 @@
+PROMPT POUR CLAUDE — CAFÉ BÉNIN INFO
+
+Travaille exclusivement sur le site Café Bénin Info dans le dépôt GitHub https://github.com/Kevingiscard/cafe-benin-info (branche main) : https://kevingiscard.github.io/cafe-benin-info/
+
+Commence par lire le brief technique du dépôt : docs/CLAUDE_HANDOFF_CAFE_BENIN.md. Inspecte ensuite le code et la configuration actuels avant de proposer des changements.
+
+Ta mission est d’auditer puis de corriger réellement les problèmes détectés, pas seulement de produire des conseils. Préserve les fonctionnalités existantes (encyclopédie, recherche Ctrl/Cmd+K, dictionnaire, favoris locaux, CaféBot hors ligne, modes clair/sombre, recommandations, PWA, accessibilité). Ne touche pas au dossier umami/ et ne le supprime pas : vérifie d’abord sa relation au périmètre.
+
+Priorités : 1) bugs bloquants et fonctionnalités cassées ; 2) sécurité et stabilité ; 3) responsive et accessibilité ; 4) performances, SEO et PWA ; 5) cohérence visuelle et maintenance. Ne fabrique aucune donnée ni statistique sur le café béninois. Sources fiables pour les faits et références.
+
+Exécute les tests et contrôles adaptés au projet en vérifiant les commandes disponibles avant de les utiliser. Inspecte GitHub Actions et la version en ligne. Vérifie également le projet Vercel et ses journaux si ton accès le permet ; indique clairement tout élément qui ne peut pas être vérifié. N’expose aucun secret.
+
+Implémente les corrections utiles avec des changements minimaux et lisibles, teste-les, puis prépare des commits/une pull request ou applique les modifications selon les permissions réellement disponibles. N’affirme pas que le site est corrigé ou déployé sans preuve.
+
+À la fin, fournis : (1) problèmes trouvés et criticité, (2) fichiers modifiés et raisons, (3) commandes/tests exécutés et résultats, (4) statut GitHub Pages et Vercel, (5) risques restant à traiter.
