@@ -12,7 +12,10 @@ La version V1.0 est un **site statique autonome**. Elle fonctionne sur GitHub Pa
 
 La branche `main` est la source unique de la version publiée. GitHub Pages et Vercel servent le même site statique, avec le même contenu documentaire, les mêmes assets et le même assistant local. Vercel ne nécessite aucune variable d’environnement ni API distante : le dépôt est servi directement comme site statique.
 
-Adresse miroir : <https://cafe-benin-info.vercel.app>
+- GitHub Pages : <https://kevingiscard.github.io/cafe-benin-info/>
+- Vercel : <https://cafe-benin-info.vercel.app/>
+
+Le fichier `vercel.json` configure explicitement Vercel pour publier la racine du dépôt comme site statique et appliquer des en-têtes de sécurité. Les deux plateformes doivent être reliées à ce dépôt et à la branche `main` pour rester synchronisées. Les déploiements et leur état doivent être vérifiés séparément dans GitHub Actions et le tableau de bord Vercel.
 
 ## Fonctionnalités
 
@@ -36,6 +39,7 @@ Adresse miroir : <https://cafe-benin-info.vercel.app>
 | `dictionary-v4.js` | Corpus, filtres, favoris et fiches du dictionnaire. |
 | `local-assistant.js` | Réponses locales documentaires, sans appel réseau. |
 | `motion.js` | Sections éditoriales complémentaires et améliorations de mouvement progressives. |
+| `vercel.json` | Configuration de publication statique Vercel et en-têtes de sécurité. |
 | `scripts/` | Contrôles de structure, tests, assets, budgets, accessibilité, SEO, liens, santé publique et sécurité. |
 | `docs/` | Exploitation, stratégie de tests, sécurité, récupération et checklist de release. |
 
@@ -54,9 +58,13 @@ Pour consulter la page localement, servez le dossier avec un serveur statique, p
 
 ## Déploiement GitHub Pages
 
-Le dépôt est conçu pour GitHub Pages. Après la publication des workflows V1.0+, sélectionnez **GitHub Actions** dans **Settings → Pages**. Le workflow `pages-deploy.yml` exécute la release gate, prépare un artefact strictement statique et le déploie dans l’environnement `github-pages`. Cette méthode suit les actions Pages officielles.[1]
+Le dépôt est conçu pour GitHub Pages. Dans **Settings → Pages**, sélectionnez **GitHub Actions** comme source. Le workflow `.github/workflows/pages-deploy.yml` exécute la validation, prépare un artefact statique et le déploie dans l’environnement `github-pages`.
 
 Les chemins sont relatifs afin de rester compatibles avec `https://kevingiscard.github.io/cafe-benin-info/`. Le fichier `robots.txt`, le sitemap, le manifest, le favicon et les métadonnées Open Graph utilisent l’URL publique canonique.
+
+## Déploiement Vercel
+
+Importez le dépôt `Kevingiscard/cafe-benin-info` dans Vercel, choisissez `main` comme branche de production et laissez le projet publier la racine statique du dépôt. Aucun framework, build command, variable d’environnement ou service externe n’est requis. Chaque commit sur `main` déclenchera le déploiement Vercel si l’intégration Git est active.
 
 ## Politique éditoriale et médias
 
