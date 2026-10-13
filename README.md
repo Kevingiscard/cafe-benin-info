@@ -1,82 +1,71 @@
-# Café Bénin — V1.0
+# Café Bénin — Encyclopédie du café
 
-**Café Bénin** est une plateforme documentaire francophone consacrée au café : histoire, botanique, culture, transformation, torréfaction, extraction, dégustation, santé, économie et filière béninoise. Le site distingue les sources générales sur le café des informations locales documentées et n’affiche pas de statistiques béninoises non vérifiées.
+**Café Bénin** est une plateforme documentaire francophone consacrée au café, de la plante à la tasse, avec un dossier dédié à la filière béninoise. Le site couvre l’histoire, la botanique, la culture, la transformation, la torréfaction, l’extraction, la dégustation, la santé et l’économie. Les données locales doivent être accompagnées de sources vérifiables.
 
-La version V1.0 est un **site statique autonome**. Elle fonctionne sur GitHub Pages sans base de données, serveur, clé API, compte tiers ou dépendance d’exécution.
+## Site public
 
-## Adresse publique
+- **Site principal :** https://kevingiscard.github.io/cafe-benin-info/
+- **Miroir Vercel :** https://cafe-benin-info.vercel.app/
+- **Code source :** https://github.com/Kevingiscard/cafe-benin-info
 
-<https://kevingiscard.github.io/cafe-benin-info/>
-
-## Déploiement miroir
-
-La branche `main` est la source unique de la version publiée. GitHub Pages et Vercel servent le même site statique, avec le même contenu documentaire, les mêmes assets et le même assistant local. Vercel ne nécessite aucune variable d’environnement ni API distante : le dépôt est servi directement comme site statique.
-
-- GitHub Pages : <https://kevingiscard.github.io/cafe-benin-info/>
-- Vercel : <https://cafe-benin-info.vercel.app/>
-
-Le fichier `vercel.json` configure explicitement Vercel pour publier la racine du dépôt comme site statique et appliquer des en-têtes de sécurité. Les deux plateformes doivent être reliées à ce dépôt et à la branche `main` pour rester synchronisées. Les déploiements et leur état doivent être vérifiés séparément dans GitHub Actions et le tableau de bord Vercel.
+Le dépôt GitHub et sa branche `main` constituent la source unique. GitHub Pages est déployé par GitHub Actions. Vercel doit être relié au même dépôt, avec `main` comme branche de production, afin de publier le même site statique. Les déploiements des deux plateformes se vérifient séparément.
 
 ## Fonctionnalités
 
 | Fonction | Comportement |
 |---|---|
-| Encyclopédie | Parcours éditorial de la plante à la tasse, avec dossier Bénin et sources institutionnelles. |
-| Recherche | Ouverture avec le bouton, `Ctrl + K` ou `Cmd + K` ; recherche dans les sections et le dictionnaire. |
-| Dictionnaire | Filtre, recherche, fiche détaillée et favoris persistants stockés uniquement dans le navigateur. |
-| CaféBot local | Assistant documentaire sans réseau ; il répond avec prudence et renvoie vers les rubriques pertinentes. |
-| Recommandation | Conseils de préparation locaux et explicables, sans collecte de données. |
-| Thèmes | Mode clair et sombre, préférence système au premier chargement et préférence mémorisée localement. |
-| Contribution | Prépare un e-mail local vers l’adresse du projet ; aucun message n’est envoyé ni stocké par le site. |
+| Encyclopédie | Parcours de la plante à la tasse et dossier consacré au Bénin. |
+| Recherche globale | Recherche dans les sections et le dictionnaire ; raccourcis `Ctrl + K` ou `Cmd + K`. |
+| Dictionnaire | Recherche, filtres, fiches et favoris enregistrés localement dans le navigateur. |
+| CaféBot local | Assistant documentaire sans appel réseau ni clé API. |
+| Recommandations | Conseils de préparation locaux et explicables. |
+| Thèmes | Mode clair et sombre, avec préférence locale. |
+| Contribution | Prépare un e-mail ; le site n’envoie ni ne stocke lui-même la contribution. |
+| PWA | Manifeste et chemins relatifs compatibles avec le sous-chemin GitHub Pages. |
 
 ## Architecture
 
-| Élément | Rôle |
-|---|---|
-| `index.html` | Structure sémantique, métadonnées, sections documentaires et points d’entrée. |
-| `styles.css`, `v4.css`, `motion.css`, `theme.css` | Mise en page éditoriale, composants, récits visuels et tokens clair/sombre. |
-| `app.js` | Thème, navigation, recherche, focus, CaféBot local, recommandations et contribution. |
-| `dictionary-v4.js` | Corpus, filtres, favoris et fiches du dictionnaire. |
-| `local-assistant.js` | Réponses locales documentaires, sans appel réseau. |
-| `motion.js` | Sections éditoriales complémentaires et améliorations de mouvement progressives. |
-| `vercel.json` | Configuration de publication statique Vercel et en-têtes de sécurité. |
-| `scripts/` | Contrôles de structure, tests, assets, budgets, accessibilité, SEO, liens, santé publique et sécurité. |
-| `docs/` | Exploitation, stratégie de tests, sécurité, récupération et checklist de release. |
+- `index.html` : structure, contenu, métadonnées SEO et points d’entrée.
+- `styles.css`, `v4.css`, `motion.css`, `theme.css` : présentation, composants, animations et thèmes.
+- `app.js` : navigation, recherche, thème, recommandations et contribution.
+- `dictionary-v4.js` : corpus et fonctionnalités du dictionnaire.
+- `local-assistant.js` : réponses documentaires locales.
+- `motion.js` : enrichissements éditoriaux progressifs.
+- `img/` : visuels et schémas locaux.
+- `scripts/` et `tests/` : contrôles automatiques de structure, sécurité, accessibilité, SEO, ressources et fonctionnement.
+- `docs/` : procédures d’exploitation, de test et de récupération.
+- `content-sources.md` : références et crédits éditoriaux.
 
-## Développement local
+Le site est statique : il ne nécessite ni serveur applicatif, ni base de données, ni variable d’environnement, ni dépendance JavaScript d’exécution.
 
-Une version récente de Node.js, à partir de 18, suffit. Aucune variable d’environnement n’est requise.
+## Vérifier avant publication
+
+Prérequis : Node.js 18 ou plus récent.
 
 ```bash
-git clone https://github.com/Kevingiscard/cafe-benin-info.git
-cd cafe-benin-info
 npm ci --ignore-scripts
 npm run verify
+npm run health
 ```
 
-Pour consulter la page localement, servez le dossier avec un serveur statique, par exemple `npx serve .`. Cette commande n’est pas nécessaire pour les validations automatisées.
+Pour une vérification locale, servez le dossier avec un serveur statique, par exemple `npx serve .`.
 
 ## Déploiement GitHub Pages
 
-Le dépôt est conçu pour GitHub Pages. Dans **Settings → Pages**, sélectionnez **GitHub Actions** comme source. Le workflow `.github/workflows/pages-deploy.yml` exécute la validation, prépare un artefact statique et le déploie dans l’environnement `github-pages`.
+Dans **Settings → Pages**, choisissez **GitHub Actions** comme source. Le workflow `.github/workflows/pages-deploy.yml` valide le site avant de publier le contenu statique. Chaque commit sur `main` déclenche le workflow.
 
-Les chemins sont relatifs afin de rester compatibles avec `https://kevingiscard.github.io/cafe-benin-info/`. Le fichier `robots.txt`, le sitemap, le manifest, le favicon et les métadonnées Open Graph utilisent l’URL publique canonique.
+- [Historique des déploiements GitHub Actions](https://github.com/Kevingiscard/cafe-benin-info/actions)
+- [Documentation GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
 
 ## Déploiement Vercel
 
-Importez le dépôt `Kevingiscard/cafe-benin-info` dans Vercel, choisissez `main` comme branche de production et laissez le projet publier la racine statique du dépôt. Aucun framework, build command, variable d’environnement ou service externe n’est requis. Chaque commit sur `main` déclenchera le déploiement Vercel si l’intégration Git est active.
+Dans Vercel, importez `Kevingiscard/cafe-benin-info`, sélectionnez `main` comme branche de production et publiez la racine du dépôt en tant que site statique. Aucun framework ni build command n’est requis. Activez l’intégration Git pour que chaque commit sur `main` déclenche le déploiement. Vérifiez ensuite le statut dans le tableau de bord Vercel.
 
-## Politique éditoriale et médias
+## Politique éditoriale et maintenance
 
-Les données locales demandent une source, une période et un contexte. Les informations historiques restent présentées comme historiques. Les crédits de la photographie de cérémonie éthiopienne et les statuts des schémas pédagogiques figurent dans [`content-sources.md`](content-sources.md).
+Ne publiez pas de statistiques locales sans source, période et contexte. Avant chaque publication, vérifiez les ancres, le menu mobile, la recherche, le dictionnaire, les favoris, CaféBot et les deux thèmes. Après publication, exécutez `npm run health`.
 
-## Maintenance
-
-Avant toute publication, exécutez `npm run verify`, vérifiez les ancres, le menu mobile, la recherche, le dictionnaire, les favoris, CaféBot et les deux thèmes. Après publication, lancez `npm run health`. Ne modifiez pas les contenus relatifs au Bénin sans source vérifiable. Le détail de l’exploitation est disponible dans [`docs/OPERATIONS.md`](docs/OPERATIONS.md), la récupération dans [`docs/RECOVERY.md`](docs/RECOVERY.md) et la checklist dans [`docs/PRODUCTION_CHECKLIST.md`](docs/PRODUCTION_CHECKLIST.md).
-
-## Référence GitHub Pages
-
-[1] [GitHub Docs — Using custom workflows with GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+Consultez `docs/OPERATIONS.md`, `docs/RECOVERY.md`, `docs/PRODUCTION_CHECKLIST.md` et `docs/SECURITY.md` pour les procédures détaillées.
 
 ## Contact
 
