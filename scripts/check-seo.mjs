@@ -31,6 +31,6 @@ const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'site.webmanifest'), 'utf8'));
 if (!robots.includes(`${origin}sitemap.xml`)) fail('robots.txt ne déclare pas le sitemap public.');
 if (!sitemap.includes(`<loc>${origin}</loc>`)) fail('sitemap.xml ne déclare pas la page d’accueil publique.');
-if (manifest.start_url !== '/cafe-benin-info/') fail('Le manifest ne respecte pas le chemin GitHub Pages.');
+if (!['./', '/cafe-benin-info/'].includes(manifest.start_url)) fail('Le manifest doit utiliser un chemin compatible avec GitHub Pages et Vercel.');
 ok('Balises, JSON-LD, robots, sitemap et manifest vérifiés.');
 if (failures.length) process.exit(1);
