@@ -84,11 +84,12 @@
     });
     window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
     $$('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
-      const target = $(link.getAttribute('href'));
+      const targetId = link.getAttribute('href').slice(1);
+      const target = document.getElementById(decodeURIComponent(targetId));
       if (!target) return;
       event.preventDefault();
       target.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
-      history.replaceState(null, '', link.getAttribute('href'));
+      if (history.replaceState) history.replaceState(null, '', link.getAttribute('href'));
     }));
   }
 
