@@ -20,9 +20,10 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: npm
 
-      - name: Install dependencies
-        run: npm install --ignore-scripts
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
 
-      - name: Validate project
-        run: npm run validate
+      - name: Run complete production verification
+        run: npm run verify
