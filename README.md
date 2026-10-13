@@ -8,6 +8,12 @@ La version V1.0 est un **site statique autonome**. Elle fonctionne sur GitHub Pa
 
 <https://kevingiscard.github.io/cafe-benin-info/>
 
+## Déploiement miroir
+
+La branche `main` est la source unique de la version publiée. GitHub Pages et Vercel servent le même site statique, avec le même contenu documentaire, les mêmes assets et le même assistant local. Vercel ne nécessite aucune variable d’environnement ni API distante : le dépôt est servi directement comme site statique.
+
+Adresse miroir : <https://cafe-benin-info.vercel.app>
+
 ## Fonctionnalités
 
 | Fonction | Comportement |
