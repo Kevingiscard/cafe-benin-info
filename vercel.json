@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://kevingiscard.github.io/cafe-benin-info/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "destination": "https://kevingiscard.github.io/cafe-benin-info/:path*",
       "permanent": true
