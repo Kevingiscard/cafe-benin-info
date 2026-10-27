@@ -2,7 +2,7 @@
 
 ## Source de vérité
 
-La branche main du dépôt GitHub est l’unique source du site officiel : https://kevingiscard.github.io/cafe-benin-info/. Les interactions courantes sont exécutées dans le navigateur; aucun serveur applicatif n’est requis.
+La branche main du dépôt GitHub est l’unique source du site officiel : https://kevingiscard.github.io/cafe-benin-info/. Les interactions courantes sont exécutées dans le navigateur; aucun serveur applicatif n’est requis. Les cinq routes statiques sont construites à partir du même dépôt et déployées ensemble.
 
 ## Automatisations réellement présentes
 
@@ -24,7 +24,7 @@ Aucun workflow de surveillance quotidienne, de contrôle hebdomadaire des liens 
 | npm run check:links:external | Vérifie les références externes avec le réseau; les indisponibilités temporaires doivent être revérifiées. |
 | npm run health | Vérifie l’URL publique, les ancres, scripts, manifeste, robots, sitemap et images-clés. |
 
-Le contrôle public de santé et les liens externes sont des opérations manuelles; ils ne sont pas planifiés par GitHub Actions.
+Le contrôle public de santé et les liens externes sont des opérations manuelles; ils ne sont pas planifiés par GitHub Actions. Les nouvelles pages statiques suivent le déploiement normal de GitHub Pages.
 
 ## GitHub Actions et jetons
 
@@ -38,4 +38,4 @@ Une fois l’association faite, tout commit fusionné sur main republiera GitHub
 
 ## Budgets médias et protection des visiteurs
 
-Le contrôle d’assets bloque le dépôt si le total des images dépasse 7 Mo ou si une image dépasse son budget individuel. Les photos supplémentaires ne doivent être ajoutées qu’après vérification de leur provenance et de leur licence. Le site ne charge pas de service d’analytics, mais charge actuellement la police depuis Google Fonts.
+Le contrôle d’assets bloque le dépôt si le total des images dépasse 7 Mo ou si une image dépasse son budget individuel. Les photos supplémentaires ne doivent être ajoutées qu’après vérification de leur provenance et de leur licence. Le site ne charge pas de service d’analytics. Le carnet et les préférences restent sur l’appareil; aucune synchronisation serveur ou multi-appareil n’est activée. La police est chargée depuis Google Fonts.

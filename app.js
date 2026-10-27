@@ -10,11 +10,10 @@
   };
 
   function setCanonical() {
-    const url = 'https://kevingiscard.github.io/cafe-benin-info/';
     const canonical = $('link[rel="canonical"]');
-    if (canonical) canonical.href = url;
+    const pageUrl = canonical?.href || location.href.split('#')[0];
     const og = $('meta[property="og:url"]');
-    if (og) og.content = url;
+    if (og) og.content = pageUrl;
   }
 
   function toast(message) {
@@ -136,7 +135,7 @@
     const makeResult = item => {
       const link = document.createElement('a');
       link.className = 'search-result';
-      link.href = `#${item.id}`;
+      link.href = item.href || `#${item.id}`;
       link.dataset.searchResult = 'true';
       const type = document.createElement('small'); type.textContent = item.type;
       const title = document.createElement('b'); title.textContent = item.title;
@@ -147,7 +146,14 @@
     };
     const draw = () => {
       const query = normalize(input.value.trim());
-      const records = [...sectionRecords(), ...glossary.map(item => ({ ...item, id: 'dictionnaire', type: item.category || 'Dictionnaire', title: item.term, description: item.definition }))];
+      const pages = [
+        { id: 'explorer', href: 'explorer.html', type: 'Parcours', title: 'Explorer les chapitres', description: 'Parcours guidé : histoire, botanique, culture, transformation, torréfaction, extraction, dégustation, santé et filière.' },
+        { id: 'benin', href: 'benin.html', type: 'Dossier', title: 'Dossier Bénin', description: 'Repères historiques, sources institutionnelles, limites des données et priorités de documentation.' },
+        { id: 'outils', href: 'outils.html', type: 'Outils', title: 'Outils pratiques', description: 'Calculateur, guide, diagnostic de tasse, roue aromatique et carnet local.' },
+        { id: 'dictionnaire', href: 'dictionnaire.html', type: 'Dictionnaire', title: 'Dictionnaire du café', description: '254 termes classés en 19 catégories, avec recherche, filtres et favoris.' },
+        { id: 'sources', href: 'sources.html', type: 'Sources', title: 'Sources et contribuer', description: 'Méthode éditoriale, crédits visuels et formulaire de contribution.' }
+      ];
+      const records = [...pages, ...sectionRecords(), ...glossary.map(item => ({ ...item, id: 'dictionnaire', href: 'dictionnaire.html?q=' + encodeURIComponent(item.term), type: item.category || 'Dictionnaire', title: item.term, description: item.definition }))];
       const ranked = records.map(item => {
         const haystack = normalize(`${item.title} ${item.description} ${item.type}`);
         const exact = query && normalize(item.title) === query ? 3 : 0;

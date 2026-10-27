@@ -10,18 +10,20 @@ Le dépôt GitHub et sa branche main sont la source de vérité. Chaque modifica
 
 ## Ce que le site permet de faire
 
-- Parcourir les chapitres histoire, Bénin, botanique, culture, post-récolte, torréfaction, extraction, dégustation, économie et santé.
+- Naviguer entre cinq espaces : Explorer, Dossier Bénin, Outils pratiques, Dictionnaire, Sources & contribution. L’encyclopédie complète reste disponible sur l’accueil.
 - Rechercher dans les chapitres et le dictionnaire avec Ctrl+K ou Cmd+K.
-- Filtrer le dictionnaire, ouvrir des fiches et enregistrer jusqu’à 100 favoris dans ce navigateur.
+- Filtrer 254 termes dans 19 catégories, ouvrir des fiches et enregistrer jusqu’à 100 favoris dans ce navigateur.
 - Interroger CaféBot localement et obtenir une recommandation de préparation sans compte, clé d’IA ni appel à une API.
-- Calculer une dose de café filtre selon la quantité d’eau et le ratio choisi.
+- Utiliser cinq outils hors ligne : ratio café/eau, guide d’infusion, diagnostic de tasse, roue aromatique et carnet de dégustation exportable en CSV.
 - Choisir un thème clair ou sombre; la préférence est enregistrée localement.
 - Préparer une contribution dans l’application e-mail choisie par le visiteur. Le site ne transmet ni ne conserve ce message.
 
 ## Architecture
 
 - index.html : contenu, navigation, métadonnées et formulaires accessibles.
-- app.js : recherche, navigation, thème, recommandation, calculateur et préparation de l’e-mail.
+- app.js : recherche, navigation, thème, calculateur, recommandation et préparation de l’e-mail.
+- explorer.js, map.js, tools.js : progression de lecture, carte schématique et outils locaux.
+- portal.css : présentation partagée des nouveaux espaces.
 - dictionary-v4.js et local-assistant.js : dictionnaire et réponses documentaires locales.
 - styles.css, v4.css, motion.css, theme.css : présentation, composants, mouvement progressif et thèmes.
 - img/ : photographies et schémas locaux.
