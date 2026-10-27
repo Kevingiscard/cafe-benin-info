@@ -16,3 +16,11 @@ Le visuel **Ethiopian Coffee Ceremony 011** a été sélectionné comme illustra
 ## Photographies dont les crédits restent à compléter
 
 La photo de cérémonie éthiopienne et les quatre schémas pédagogiques ci-dessus ont des crédits décrits. Les autres photographies utilisées par la page n’ont pas encore de provenance/licence documentée dans ce fichier : hero-bg.jpg, coffee_beans_macro.webp, robusta.webp, epices.webp, coffee_preparation_modern.webp, premium_coffee_pour.webp et coffee_shop_cotonou.webp. Avant toute nouvelle utilisation ou diffusion, noter pour chaque fichier l’auteur, la page source et la licence, ou préciser qu’il s’agit d’une illustration générée et non documentaire. benin-coffee-dawn.jpg et v14_atlas_world.jpg sont présents dans img/ mais ne sont pas utilisés dans la page actuelle; ils ne sont pas ajoutés sans provenance validée.
+
+
+## Illustrations éditoriales générées le 27 octobre 2026
+
+- `img/cafe-scene-generated.jpg` : scène fictive de service du café au comptoir, créée avec l’outil intégré de génération d’images OpenAI. Elle illustre une ambiance générale et ne documente pas un établissement ou un événement réel.
+- `img/manual-brew-generated.jpg` : scène fictive de préparation manuelle du café, créée avec l’outil intégré de génération d’images OpenAI. Elle illustre le matériel et la préparation, sans documenter une origine particulière.
+
+Ces deux images sont explicitement légendées comme illustrations générées par IA dans la page. Elles ne remplacent pas des photos de terrain ni des sources factuelles.
