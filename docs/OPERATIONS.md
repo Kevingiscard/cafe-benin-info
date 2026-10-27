@@ -1,59 +1,41 @@
-# Exploitation de production
+# Exploitation et publication
 
-La V1.0+ reste une publication **statique, autonome et sans collecte serveur**. L’exploitation repose sur les scripts locaux du dépôt, GitHub Actions et GitHub Pages. Aucun contenu factuel, média ou source documentaire n’est modifié par une automatisation.
+## Source de vérité
 
-## Déclencheurs et responsabilités
+La branche main du dépôt GitHub est l’unique source du site officiel : https://kevingiscard.github.io/cafe-benin-info/. Les interactions courantes sont exécutées dans le navigateur; aucun serveur applicatif n’est requis.
 
-| Mécanisme | Déclencheur | Contrôle | Réaction attendue |
-|---|---|---|---|
-| CI — Qualité Café Bénin | Push et pull request vers `main` | Validation, tests, assets, budgets, accessibilité, SEO, sécurité, liens internes | Corriger avant fusion ou publication. |
-| Déploiement GitHub Pages | Push vers `main` | Release gate puis artefact statique | Publier uniquement si la release est valide. |
-| Santé publique | Chaque jour à 07:20 UTC | Accueil, ancres critiques, scripts, manifest, robots, sitemap et images-clés | Consulter le rapport si l’exécution échoue. |
-| Liens documentaires | Chaque lundi à 08:30 UTC | Liens locaux et sources externes, avec relances | Remplacer un lien définitivement indisponible ; surveiller les erreurs temporaires. |
-| Dépendances et budgets | Chaque jour à 07:20 UTC | `npm audit`, secrets, tailles, accessibilité et SEO | Ouvrir une correction proportionnée au risque. |
-| Dependabot | Npm mensuel, GitHub Actions hebdomadaire | Propositions de mises à jour en pull request | Lire le diff et exécuter la CI avant fusion. |
+## Automatisations réellement présentes
 
-> Les contrôles planifiés utilisent des permissions minimales. Une issue d’alerte n’est créée que si une exécution planifiée échoue ; le workflow recherche d’abord une issue ouverte de même titre afin d’éviter les doublons.
+| Automatisation | Déclencheur | Fonction |
+|---|---|---|
+| Validation | Push vers main et pull request vers main | npm run verify : structure, tests, assets, taille, accessibilité, SEO, sécurité et liens internes. |
+| Publication GitHub Pages | Push vers main, après validation | Déploie la racine statique du dépôt. |
+| Dependabot npm | Mensuel | Propose des mises à jour du verrouillage npm. |
+| Dependabot GitHub Actions | Hebdomadaire | Propose des mises à jour de workflows. |
 
-## Commandes locales
+Aucun workflow de surveillance quotidienne, de contrôle hebdomadaire des liens externes ou de création automatique d’issues n’est présent dans le dépôt. Les liens externes se contrôlent à la demande.
+
+## Contrôles locaux
 
 | Commande | Rôle |
 |---|---|
-| `npm run validate` | Structure, SEO minimum, ancres, assets, syntaxe et autonomie du runtime. |
-| `npm test` | Parcours critiques, CaféBot, formulaires, stockage local, ancres et supports de production. |
-| `npm run check:assets` | Formats, présence et budgets des médias. |
-| `npm run check:size` | Budgets HTML, CSS et JavaScript. |
-| `npm run check:a11y` | Structure, étiquettes, alternatives, focus et mouvement réduit. |
-| `npm run check:seo` | Balises, données structurées, manifest, robots et sitemap. |
-| `npm run check:security` | Signatures de secrets, primitives JavaScript dangereuses et audit npm. |
-| `npm run check:links` | Liens locaux uniquement, sans réseau. |
-| `npm run check:links:external` | Vérification des sources externes avec relances. |
-| `npm run health` | Smoke test de l’URL publique et génération optionnelle d’un rapport JSON. |
-| `npm run verify` | Release gate complet local, incluant les liens internes. |
+| npm ci --ignore-scripts | Installe les dépendances verrouillées sans scripts de paquet. |
+| npm run verify | Exécute le release gate local complet et les liens internes. |
+| npm run check:links:external | Vérifie les références externes avec le réseau; les indisponibilités temporaires doivent être revérifiées. |
+| npm run health | Vérifie l’URL publique, les ancres, scripts, manifeste, robots, sitemap et images-clés. |
 
-## Budgets actuels
+Le contrôle public de santé et les liens externes sont des opérations manuelles; ils ne sont pas planifiés par GitHub Actions.
 
-| Famille | Seuil de blocage | Mesure actuelle de référence |
-|---|---:|---:|
-| HTML | 180 000 octets | 43 111 octets |
-| CSS cumulé | 180 000 octets | 47 345 octets |
-| JavaScript cumulé | 450 000 octets | 71 018 octets |
-| Images cumulées | 7 000 000 octets | 5 336 528 octets |
-| Image standard | 1 300 000 octets | Contrôlée à chaque release |
+## GitHub Actions et jetons
 
-Ces seuils sont volontairement explicites, stables et indépendants d’un service tiers. Ils complètent les inspections de navigateur ; ils ne sont pas un substitut à une étude laboratoire de performance.
+Les workflows de validation ne reçoivent que contents: read. Le workflow Pages garde contents: read au niveau général, puis attribue pages: write et id-token: write uniquement au job deploy. GitHub fournit au job un jeton d’exécution limité et un jeton OIDC temporaire pour la publication. Aucun PAT n’est stocké dans le dépôt.
 
-## Bascule GitHub Pages
+## Unifier l’ancienne adresse Vercel
 
-Après publication des fichiers de workflow, ouvrez **Settings → Pages** et sélectionnez **GitHub Actions** comme source de publication. Le workflow `pages-deploy.yml` suit la séquence officielle : configuration Pages, upload d’un artefact statique, puis déploiement avec un environnement `github-pages`.[1]
+Le fichier vercel.json redirige toutes les routes de l’ancien domaine Vercel vers le site officiel GitHub Pages. Pour que cette redirection et les prochaines mises à jour fonctionnent, le projet Vercel doit être relié à Kevingiscard/cafe-benin-info, avec main comme branche de production et la racine du dépôt comme répertoire. Cette association n’a pas pu être confirmée depuis la connexion Vercel disponible.
 
-Le job de déploiement reçoit uniquement `pages: write` et `id-token: write`. Les jobs de contrôle utilisent `contents: read` ; seul l’agrégateur d’alerte reçoit `issues: write`.[2]
+Une fois l’association faite, tout commit fusionné sur main republiera GitHub Pages et déclenchera le déploiement Vercel; la règle de redirection présentera alors une seule adresse publique.
 
-## Absence volontaire de télémétrie externe
+## Budgets médias et protection des visiteurs
 
-La V1.0+ n’ajoute ni Google Analytics, ni Sentry, ni service de performance tiers dans le runtime. Les logs GitHub Actions, les artefacts de santé de 30 jours et les contrôles déterministes suffisent au périmètre actuel, tout en protégeant les visiteurs d’un traçage non nécessaire.
-
-## Références
-
-[1] [GitHub Docs — Using custom workflows with GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)  
-[2] [GitHub Docs — Use GITHUB_TOKEN for authentication in workflows](https://docs.github.com/actions/reference/authentication-in-a-workflow)
+Le contrôle d’assets bloque le dépôt si le total des images dépasse 7 Mo ou si une image dépasse son budget individuel. Les photos supplémentaires ne doivent être ajoutées qu’après vérification de leur provenance et de leur licence. Le site ne charge pas de service d’analytics, mais charge actuellement la police depuis Google Fonts.

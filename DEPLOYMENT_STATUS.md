@@ -1,19 +1,22 @@
-# État de déploiement — Café Bénin
+# État des déploiements — Café Bénin
 
-## Source de vérité
-Le dépôt GitHub `Kevingiscard/cafe-benin-info`, branche `main`, est la source de vérité du site statique.
+## Adresse officielle
 
-- Site principal : https://kevingiscard.github.io/cafe-benin-info/
-- Miroir Vercel déclaré : https://cafe-benin-info.vercel.app/
-- Dépôt : https://github.com/Kevingiscard/cafe-benin-info
+Le dépôt GitHub Kevingiscard/cafe-benin-info, branche main, est la source unique. Le site officiel et son URL canonique sont : https://kevingiscard.github.io/cafe-benin-info/.
 
-## Dernière vérification du dépôt
-Le commit `94840a36bb3b412ac098ee913c0ea0d9db35a160` a passé le workflow de validation et le workflow de déploiement GitHub Pages le 13 octobre 2026. Les liens vers les journaux sont disponibles dans l'onglet Actions du dépôt.
+## Constat du 27 octobre 2026, avant la réunification
 
-Le workflow de validation a été renforcé pour exécuter `npm run verify`, qui inclut les tests, les contrôles des assets, de l'accessibilité, du SEO, de la sécurité et des liens internes.
+- GitHub Pages répondait HTTP 200. Son HTML, de 44 048 octets, correspondait au fichier index.html de main; son en-tête indiquait une publication datée du 13 octobre 2026.
+- L’URL Vercel répondait HTTP 200, mais servait un HTML différent de main (39 267 octets), qui chargeait backend-client.js v4 et app-v3.js, absents de main.
+- Le statut Vercel associé au dernier commit main était en échec. Le lien public restait accessible via une version déjà déployée; cela ne prouvait pas une synchronisation avec GitHub.
+- La connexion Vercel disponible ne donnait pas accès au projet cafe-benin-info. Sa branche de production, sa racine et ses journaux n’ont donc pas pu être vérifiés.
 
-## Vercel
-Le domaine Vercel est conservé comme miroir, mais son état de production doit être vérifié séparément dans le tableau de bord Vercel. La connexion Vercel disponible pendant la dernière intervention n'a pas autorisé l'accès au scope du compte ; aucun statut Vercel ne doit donc être présenté comme confirmé.
+## Réunification
 
-## Architecture
-Le site public est statique. L'assistant documentaire `local-assistant.js` fonctionne sans API distante ni clé applicative. Le dépôt ne doit pas contenir de secrets actifs. Les procédures d'exploitation et de récupération sont conservées dans `docs/`.
+Le fichier vercel.json dans main redirige toutes les routes Vercel vers l’URL officielle. Cela ne prendra effet qu’après un déploiement Vercel qui utilise main. GitHub Pages, lui, est publié automatiquement par GitHub Actions après validation d’un push sur main.
+
+## Action restante dans Vercel
+
+Dans le tableau de bord Vercel, reconnecter Kevingiscard/cafe-benin-info, choisir main comme branche de production et la racine comme répertoire. Garder le build statique sans commande ni framework; lancer un déploiement, puis vérifier que cafe-benin-info.vercel.app redirige vers le site officiel.
+
+Après toute fusion, vérifier l’exécution des workflows GitHub Actions et la date de publication Pages. Ne pas annoncer que l’alias Vercel est synchronisé tant que son redéploiement et sa redirection n’ont pas été confirmés.
