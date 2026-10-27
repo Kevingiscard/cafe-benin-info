@@ -89,12 +89,17 @@ if (exists('vercel.json')) {
   } catch {
     fail('Configuration Vercel JSON invalide.');
   }
-  const canonicalRedirect = vercel?.redirects?.some(rule =>
+  const rootRedirect = vercel?.redirects?.some(rule =>
+    rule.source === '/' &&
+    rule.destination === PROD_ORIGIN &&
+    rule.permanent === true
+  );
+  const pathRedirect = vercel?.redirects?.some(rule =>
     rule.source === '/:path*' &&
     rule.destination === `${PROD_ORIGIN}:path*` &&
     rule.permanent === true
   );
-  if (!canonicalRedirect) fail('Vercel doit rediriger durablement toutes les routes vers GitHub Pages.');
+  if (!rootRedirect || !pathRedirect) fail('Vercel doit rediriger durablement la racine et toutes les routes vers GitHub Pages.');
 }
 if (/\beval\(|new Function|document\.write/i.test(`${app}\n${motion}\n${dictionary}`)) fail('Primitive JavaScript dangereuse détectée.');
 if (/fetch\(|XMLHttpRequest|WebSocket/i.test(`${app}\n${motion}\n${dictionary}`)) fail('Le runtime autonome ne doit pas dépendre d’un appel réseau applicatif.');
