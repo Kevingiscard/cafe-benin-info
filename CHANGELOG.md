@@ -2,6 +2,17 @@
 
 Toutes les évolutions notables de Café Bénin sont consignées dans ce fichier.
 
+## V1.1.0 — 27 octobre 2026
+
+| Domaine | Évolution |
+|---|---|
+| Navigation | Menus desktop/mobile reliés aux sections existantes; ancres accentuées résolues sans sélecteur CSS fragile. |
+| Préparation | Calculateur local de dose café/eau et préinfusion indicative. |
+| Publication | Une adresse canonique; Vercel redirige vers GitHub Pages après reconnexion du projet à main. |
+| Sécurité | Permissions Pages réduites au seul job de déploiement; fichiers .env ignorés. |
+| Maintenance | Actions GitHub mises à jour; alertes Dependabot débarrassées de labels absents. |
+| Documentation | Flux d’authentification, état réel de Vercel, limites PWA, sécurité et crédits visuels clarifiés. |
+
 ## V1.0.1 — 15 août 2026
 
 La version V1.0.1 met l’accent sur la lisibilité typographique, la préparation à la production et l’exploitation autonome sur GitHub Pages.
@@ -12,7 +23,7 @@ La version V1.0.1 met l’accent sur la lisibilité typographique, la préparati
 | Récupération | Ajout d’une page 404 éditoriale offrant un retour à l’accueil et au dictionnaire. |
 | Qualité | Extension de la validation et passage de 5 à 13 tests couvrant ancres, formulaires, fallback CaféBot, sécurité et supports de production. |
 | Contrôles | Scripts réutilisables pour assets, taille, accessibilité, SEO, liens, santé publique et sécurité. |
-| CI/CD | Workflows GitHub Actions de CI, déploiement Pages, surveillance quotidienne/hebdomadaire et Dependabot. |
+| CI/CD | Workflows GitHub Actions de validation et déploiement Pages; mises à jour Dependabot npm et Actions. Les contrôles planifiés de santé et de liens ne sont pas présents. |
 | Documentation | Audit, opérations, stratégie de tests, sécurité, récupération et checklist de release. |
 | Sources | Remplacement du lien historique instable de l’OIC par le domaine francophone public. |
 

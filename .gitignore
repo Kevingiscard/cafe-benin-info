@@ -3,3 +3,8 @@ node_modules/
 monitoring/
 *.log
 *.tmp
+
+# Secrets locaux et configuration personnelle
+.env
+.env.*
+!.env.example

@@ -83,12 +83,14 @@
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
     window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-    $$('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
-      const target = $(link.getAttribute('href'));
+    $('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
+      const targetId = link.getAttribute('href').slice(1);
+      let target;
+      try { target = document.getElementById(decodeURIComponent(targetId)); } catch { return; }
       if (!target) return;
       event.preventDefault();
       target.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
-      history.replaceState(null, '', link.getAttribute('href'));
+      if (history.replaceState) history.replaceState(null, '', link.getAttribute('href'));
     }));
   }
 
@@ -268,6 +270,34 @@
     });
   }
 
+  function setupBrewCalculator() {
+    const calculator = $('#brew-calculator');
+    const waterInput = $('#brew-water');
+    const ratioInput = $('#brew-ratio');
+    const coffeeOutput = $('#brew-coffee');
+    const bloomOutput = $('#brew-bloom');
+    if (!calculator || !waterInput || !ratioInput || !coffeeOutput || !bloomOutput) return;
+
+    const update = () => {
+      const water = Number(waterInput.value);
+      const ratio = Number(ratioInput.value);
+      if (!Number.isFinite(water) || water < 100 || water > 1500 || !Number.isFinite(ratio) || ratio < 15 || ratio > 18) {
+        coffeeOutput.textContent = '—';
+        bloomOutput.textContent = 'Saisissez une quantité d’eau entre 100 et 1 500 g.';
+        return;
+      }
+
+      const coffee = water / ratio;
+      const formattedCoffee = coffee.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      coffeeOutput.textContent = formattedCoffee + ' g';
+      bloomOutput.textContent = 'Préinfusion indicative : ' + Math.round(coffee * 2) + ' g d’eau (environ deux fois la dose de café).';
+    };
+
+    calculator.addEventListener('input', update);
+    calculator.addEventListener('change', update);
+    update();
+  }
+
   function setupContribution() {
     const form = $('#comment-form');
     if (!form) return;
@@ -307,6 +337,7 @@
     setupSearch();
     setupBot();
     setupRecommendation();
+    setupBrewCalculator();
     setupContribution();
     setupImageFallbacks();
     setYear();

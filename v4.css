@@ -15,3 +15,18 @@ h1,h2,h3,.display,.brand{font-family:"Cormorant Garamond",Georgia,serif;letter-s
 @media(max-width:900px){.v4-index{grid-template-columns:repeat(2,1fr)}.v4-hero-note{grid-template-columns:1fr}.v4-gallery{grid-template-columns:1fr 1fr}.v4-gallery figure:first-child{grid-row:auto;grid-column:span 2}.v4-flow{grid-template-columns:repeat(3,1fr)}.v4-numbered{grid-template-columns:1fr 1fr}.v4-source-list{grid-template-columns:1fr}}
 @media(max-width:600px){.v4-intro{padding-top:42px}.v4-index{grid-template-columns:1fr}.v4-gallery{grid-template-columns:1fr}.v4-gallery figure:first-child{grid-column:auto}.v4-flow{grid-template-columns:1fr 1fr}.v4-numbered{grid-template-columns:1fr}.v4-fact-grid{grid-template-columns:1fr}.dict-detail-panel{padding:25px 20px;margin-top:4vh}.dict-detail-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.v4-gallery img,.v4-index a{transition:none}}
+
+/* Calculateur de recette filtre, autonome et utilisable au clavier. */
+.brew-calculator{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);gap:24px;align-items:stretch;margin-top:30px;padding:26px;border:1px solid var(--line);border-radius:22px;background:rgba(17,16,14,.86);color:var(--text)}
+.brew-calculator h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(30px,4vw,44px);line-height:1;margin:10px 0}
+.brew-calculator>div:first-child>p{max-width:620px;color:var(--muted)}
+.brew-calculator-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.brew-calculator .field label{display:block;margin-bottom:7px}
+.brew-calculator .field input,.brew-calculator .field select{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#0b0a09;color:var(--text)}
+.brew-calculator-hint{font-size:12px}
+.brew-calculator-result{display:flex;flex-direction:column;justify-content:center;padding:22px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#20150f,#11100e)}
+.brew-calculator-result>span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);font-weight:700}
+.brew-calculator-result output{display:block;margin:8px 0;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(44px,7vw,68px);line-height:1;color:var(--text)}
+.brew-calculator-result p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+#mobile-nav{overflow-y:auto}
+@media(max-width:700px){.brew-calculator{grid-template-columns:1fr;padding:20px}.brew-calculator-fields{grid-template-columns:1fr}}
