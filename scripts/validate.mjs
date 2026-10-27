@@ -79,8 +79,22 @@ for (const file of ['app.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.
   const result = spawnSync(process.execPath, ['--check', path.join(root, file)], { encoding: 'utf8' });
   result.status === 0 ? ok(`Syntaxe JS OK: ${file}`) : fail(`Syntaxe JS invalide: ${file}\n${result.stderr}`);
 }
-for (const removed of ['api', 'lib', 'backend-client.js', 'vercel.json', 'app-v3.js']) {
+for (const removed of ['api', 'lib', 'backend-client.js', 'app-v3.js']) {
   if (exists(removed)) fail(`Intégration ou version obsolète à retirer: ${removed}`);
+}
+if (exists('vercel.json')) {
+  let vercel;
+  try {
+    vercel = JSON.parse(read('vercel.json'));
+  } catch {
+    fail('Configuration Vercel JSON invalide.');
+  }
+  const canonicalRedirect = vercel?.redirects?.some(rule =>
+    rule.source === '/:path*' &&
+    rule.destination === `${PROD_ORIGIN}:path*` &&
+    rule.permanent === true
+  );
+  if (!canonicalRedirect) fail('Vercel doit rediriger durablement toutes les routes vers GitHub Pages.');
 }
 if (/\beval\(|new Function|document\.write/i.test(`${app}\n${motion}\n${dictionary}`)) fail('Primitive JavaScript dangereuse détectée.');
 if (/fetch\(|XMLHttpRequest|WebSocket/i.test(`${app}\n${motion}\n${dictionary}`)) fail('Le runtime autonome ne doit pas dépendre d’un appel réseau applicatif.');
