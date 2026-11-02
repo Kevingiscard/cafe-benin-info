@@ -40,16 +40,16 @@
         </div>
         <div class="visual-grid">
           <figure class="visual-card">
-            <img src="img/coffee-cherries-generated.jpg" alt="Illustration générée de cerises de café, sans origine géographique représentée" loading="lazy" width="1024" height="1024">
-            <figcaption class="visual-card-copy"><strong>Terroir</strong><span>Le sol, le climat et le travail humain se retrouvent dans chaque lot.</span></figcaption>
+            <img src="img/arabica-canephora-botany-web.jpg" alt="Illustration générée comparant deux plantes génériques de café, Arabica et Canephora" loading="lazy" width="2304" height="1536">
+            <figcaption class="visual-card-copy"><strong>Botanique</strong><span>Espèces, variétés et environnement donnent un premier cadre pour lire un café.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/manual-brew-generated.jpg" alt="Illustration générée d’une préparation manuelle, sans origine géographique représentée" loading="lazy" width="1280" height="853">
-            <figcaption class="visual-card-copy"><strong>Geste</strong><span>La précision commence par une attention portée à l’eau, au temps et à la mouture.</span></figcaption>
+            <img src="img/coffee-drying-process-web.jpg" alt="Illustration générée de cerises de café séchant sur des claies, sans lieu réel représenté" loading="lazy" width="2304" height="1536">
+            <figcaption class="visual-card-copy"><strong>Transformation</strong><span>Récolte, séchage et tri modifient la matière avant la torréfaction.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/cafe-scene-generated.jpg" alt="Illustration générée d’un comptoir fictif, sans lieu réel représenté" loading="lazy" width="1536" height="1024">
-            <figcaption class="visual-card-copy"><strong>Partage</strong><span>Le café relie la connaissance, les métiers et les conversations.</span></figcaption>
+            <img src="img/coffee-cupping-sensory-web.jpg" alt="Illustration générée d’une table de dégustation sensorielle, sans lieu réel représenté" loading="lazy" width="2304" height="1536">
+            <figcaption class="visual-card-copy"><strong>Dégustation</strong><span>Arômes, texture et équilibre deviennent des observations à décrire et à comparer.</span></figcaption>
           </figure>
         </div>
         <div class="image-caption"><span>Images éditoriales — Café Bénin</span><span>Une expérience documentaire, de la parcelle à la communauté</span></div>

@@ -32,5 +32,8 @@ Ces deux images sont explicitement légendées comme illustrations générées p
 - `img/coffee-cherries-generated.jpg` : image illustrative générique de cerises de café ; l’espèce, le pays et le lieu ne sont pas établis.
 - `img/roasting-generated.jpg` : scène générique de refroidissement après torréfaction ; elle ne documente aucun atelier.
 - `img/manual-brew-generated.jpg` et `img/cafe-scene-generated.jpg` : visuels pédagogiques générés déjà décrits ci-dessus.
+- `img/arabica-canephora-botany-web.jpg` : comparaison botanique générique Arabica/Canephora ; illustration pédagogique, sans lieu réel.
+- `img/coffee-drying-process-web.jpg` : séchage générique de cerises de café ; illustration pédagogique, sans reportage ni localisation réelle.
+- `img/coffee-cupping-sensory-web.jpg` : table de dégustation sensorielle générique ; illustration pédagogique, sans établissement ni personne identifiable.
 
 Ces images sont des illustrations générées par IA, non des photos de terrain ni des preuves de production, d’origine, d’établissement ou de pratique béninoise. Les fichiers historiques non documentés restent dans le dépôt mais ne sont pas utilisés dans le contenu public. Les scènes injectées par motion.js utilisent uniquement les illustrations générées décrites ci-dessus et la photographie éthiopienne créditée.
