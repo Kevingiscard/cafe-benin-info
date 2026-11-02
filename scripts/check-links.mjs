@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const root = process.cwd();
 const shouldCheckExternal = process.argv.includes('--external');
-const sourceFiles = ['index.html', 'motion.js', 'content-sources.md'];
+const sourceFiles = [...fs.readdirSync(root).filter(file => file.endsWith('.html') && file !== '404.html'), 'motion.js', 'content-sources.md'];
 const refs = new Set();
 const failures = [];
 const warnings = [];

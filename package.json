@@ -15,9 +15,10 @@
     "check:links:external": "node scripts/check-links.mjs --external",
     "check:seo": "node scripts/check-seo.mjs",
     "check:security": "node scripts/check-security.mjs",
+    "check:site": "node scripts/check-site.mjs",
     "check:size": "node scripts/check-size.mjs",
     "health": "node scripts/health-check.mjs",
-    "build": "npm run validate && npm test && npm run check:assets && npm run check:size && npm run check:a11y && npm run check:seo && npm run check:security",
+    "build": "npm run validate && npm test && npm run check:assets && npm run check:size && npm run check:a11y && npm run check:seo && npm run check:security && npm run check:site",
     "verify": "npm run build && npm run check:links"
   }
 }

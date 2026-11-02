@@ -12,7 +12,7 @@ const exists = file => fs.existsSync(path.join(root, file));
 const requireFile = file => exists(file) ? ok(`Présent: ${file}`) : fail(`Fichier requis absent: ${file}`);
 
 [
-  'index.html', '404.html', 'styles.css', 'v4.css', 'motion.css', 'theme.css',
+  'index.html', '404.html', 'a-propos.html', 'styles.css', 'v4.css', 'motion.css', 'theme.css',
   'app.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.js', 'content-sources.md',
   'favicon.svg', 'site.webmanifest', 'package.json', 'package-lock.json', 'robots.txt', 'sitemap.xml'
 ].forEach(requireFile);

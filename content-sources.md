@@ -15,7 +15,7 @@ Le visuel **Ethiopian Coffee Ceremony 011** a été sélectionné comme illustra
 
 ## Photographies historiques non réutilisées
 
-Les fichiers hero-bg.jpg, coffee_beans_macro.webp, robusta.webp, epices.webp, coffee_preparation_modern.webp, premium_coffee_pour.webp et coffee_shop_cotonou.webp sont conservés dans le dépôt pour référence historique, mais ne sont plus affichés tant qu’auteur, source et licence ne sont pas établis. benin-coffee-dawn.jpg et v14_atlas_world.jpg ne sont pas affichés faute de provenance vérifiée.
+Les fichiers hero-bg.jpg, coffee_beans_macro.webp, robusta.webp, epices.webp, coffee_preparation_modern.webp, premium_coffee_pour.webp, coffee_shop_cotonou.webp, benin-coffee-dawn.jpg et v14_atlas_world.jpg sont conservés dans le dépôt pour référence historique, mais ne sont pas affichés dans le parcours public tant que leur auteur, leur source et leur licence ne sont pas établis.
 
 
 ## Illustrations éditoriales générées le 27 octobre 2026
@@ -33,4 +33,4 @@ Ces deux images sont explicitement légendées comme illustrations générées p
 - `img/roasting-generated.jpg` : scène générique de refroidissement après torréfaction ; elle ne documente aucun atelier.
 - `img/manual-brew-generated.jpg` et `img/cafe-scene-generated.jpg` : visuels pédagogiques générés déjà décrits ci-dessus.
 
-Ces images sont des illustrations générées par IA, non des photos de terrain ni des preuves de production, d’origine, d’établissement ou de pratique béninoise. Les fichiers historiques non documentés restent dans le dépôt mais ne sont pas utilisés dans le contenu public.
+Ces images sont des illustrations générées par IA, non des photos de terrain ni des preuves de production, d’origine, d’établissement ou de pratique béninoise. Les fichiers historiques non documentés restent dans le dépôt mais ne sont pas utilisés dans le contenu public. Les scènes injectées par motion.js utilisent uniquement les illustrations générées décrites ci-dessus et la photographie éthiopienne créditée.

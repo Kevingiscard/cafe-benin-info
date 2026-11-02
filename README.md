@@ -10,7 +10,7 @@ Le dépôt GitHub et sa branche main sont la source de vérité. Chaque modifica
 
 ## Ce que le site permet de faire
 
-- Naviguer entre cinq espaces : Explorer, Dossier Bénin, Outils pratiques, Dictionnaire, Sources & contribution. L’encyclopédie complète reste disponible sur l’accueil.
+- Naviguer entre six espaces : Explorer, Dossier Bénin, Outils pratiques, Dictionnaire, Sources & contribution, et À propos de Kevin. L’encyclopédie complète reste disponible sur l’accueil.
 - Rechercher dans les chapitres et le dictionnaire avec Ctrl+K ou Cmd+K.
 - Filtrer 254 termes dans 19 catégories, ouvrir des fiches et enregistrer jusqu’à 100 favoris dans ce navigateur.
 - Interroger CaféBot localement et obtenir une recommandation de préparation sans compte, clé d’IA ni appel à une API.

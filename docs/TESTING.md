@@ -15,6 +15,8 @@ Les tests protègent les comportements qui rendent l’encyclopédie utilisable,
 | Sécurité | Absence de primitives dangereuses dans le runtime, de requêtes applicatives et de signatures de secrets. |
 | Production | Page 404, lockfile, budgets et scripts de santé présents. |
 
+Le contrôle global `npm run check:site` parcourt toutes les pages HTML principales pour vérifier titres, descriptions, canoniques, H1, alternatives, liens locaux et sécurité des nouveaux onglets.
+
 ## Exécution avant une publication
 
 Exécutez `npm ci --ignore-scripts`, puis `npm run verify`. Si la modification touche l’interface, vérifiez aussi manuellement la page d’accueil, `#coffee-shops`, la recherche de « Canephora », l’ouverture/fermeture mobile, les deux thèmes et CaféBot. Une vérification publique supplémentaire se fait avec `npm run health` après la propagation GitHub Pages.

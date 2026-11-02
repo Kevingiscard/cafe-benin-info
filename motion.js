@@ -40,33 +40,21 @@
         </div>
         <div class="visual-grid">
           <figure class="visual-card">
-            <img src="img/coffee_beans_macro.webp" alt="Cerises et grains de café évoquant le terroir" loading="lazy" width="1024" height="1024">
+            <img src="img/coffee-cherries-generated.jpg" alt="Illustration générée de cerises de café, sans origine géographique représentée" loading="lazy" width="1024" height="1024">
             <figcaption class="visual-card-copy"><strong>Terroir</strong><span>Le sol, le climat et le travail humain se retrouvent dans chaque lot.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/premium_coffee_pour.webp" alt="Préparation lente d’un café filtre avec un dripper" loading="lazy" width="853" height="1280">
+            <img src="img/manual-brew-generated.jpg" alt="Illustration générée d’une préparation manuelle, sans origine géographique représentée" loading="lazy" width="1280" height="853">
             <figcaption class="visual-card-copy"><strong>Geste</strong><span>La précision commence par une attention portée à l’eau, au temps et à la mouture.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/coffee_shop_cotonou.webp" alt="Ambiance de communauté autour du café à Cotonou" loading="lazy" width="1536" height="1024">
+            <img src="img/cafe-scene-generated.jpg" alt="Illustration générée d’un comptoir fictif, sans lieu réel représenté" loading="lazy" width="1536" height="1024">
             <figcaption class="visual-card-copy"><strong>Partage</strong><span>Le café relie la connaissance, les métiers et les conversations.</span></figcaption>
           </figure>
         </div>
         <div class="image-caption"><span>Images éditoriales — Café Bénin</span><span>Une expérience documentaire, de la parcelle à la communauté</span></div>
       </div>`;
     beninSection.before(section);
-  }
-
-  function replaceHeroVisual() {
-    const image = document.querySelector('.hero-media img');
-    if (!image || image.dataset.editorialVisual === 'true') return;
-    const fallback = image.getAttribute('src');
-    image.dataset.editorialVisual = 'true';
-    image.addEventListener('error', () => {
-      image.src = fallback;
-    }, { once: true });
-    image.src = 'img/benin-coffee-dawn.jpg';
-    image.alt = 'Tasse de café au lever du jour dans une ambiance béninoise contemporaine';
   }
 
   function addFieldNotes() {
@@ -84,9 +72,9 @@
           <p>Ce carnet ouvre trois portes : mieux lire les sources sur le Bénin, replacer les traditions africaines dans leur contexte et passer d’une curiosité de dégustation à une recherche précise dans l’encyclopédie.</p>
         </div>
         <div class="field-grid">
-          <article class="field-card"><img src="img/v14_atlas_world.jpg" alt="Carte illustrée des régions caféières du monde" loading="lazy"><div class="field-card-content"><span class="field-card-number">01 · Situer</span><h3>Le Bénin, sans raccourci.</h3><p>Une information locale est utile lorsqu’elle est datée, attribuée et définie. Le site transforme les zones d’ombre en pistes de recherche plutôt qu’en certitudes.</p><a href="#benin">Lire le dossier Bénin</a></div></article>
+          <article class="field-card"><img src="img/coffee-cherries-generated.jpg" alt="Illustration générée de cerises de café, sans carte géographique représentée" loading="lazy" width="1024" height="1024"><div class="field-card-content"><span class="field-card-number">01 · Situer</span><h3>Le Bénin, sans raccourci.</h3><p>Une information locale est utile lorsqu’elle est datée, attribuée et définie. Le site transforme les zones d’ombre en pistes de recherche plutôt qu’en certitudes.</p><a href="#benin">Lire le dossier Bénin</a></div></article>
           <article class="field-card"><img src="img/ethiopian-coffee-ceremony-ccby.jpg" alt="Cérémonie du café en Éthiopie" loading="lazy"><div class="field-card-content"><span class="field-card-number">02 · Relier</span><h3>Rituels africains du café.</h3><p>La cérémonie photographiée est éthiopienne. Elle rappelle que le café est aussi un langage d’hospitalité, de transmission et de temps partagé, sans être confondu avec les pratiques béninoises.</p><a href="https://commons.wikimedia.org/wiki/File:Ethiopian_Coffee_Ceremony_011.jpg" target="_blank" rel="noopener">Photo : Steve Evans · CC BY 2.0</a></div></article>
-          <article class="field-card"><img src="img/coffee_shop_cotonou.webp" alt="Espace café contemporain à Cotonou" loading="lazy" width="1536" height="1024"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
+          <article class="field-card"><img src="img/cafe-scene-generated.jpg" alt="Illustration générée d’un espace café fictif, sans localisation réelle" loading="lazy" width="1536" height="1024"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
         </div>
         <div class="field-reader">
           <div class="field-reader-header"><span class="eyebrow">Parcours guidé</span><strong>Trois manières de commencer.</strong><p>Ouvrez une piste, puis naviguez vers les définitions, sections et sources correspondantes.</p></div>
@@ -160,7 +148,6 @@
     addVisualJourney();
     addFieldNotes();
     restoreDynamicHash();
-    replaceHeroVisual();
     enhanceReveals();
     addMagneticFeedback();
     surfaceAiStatus();
