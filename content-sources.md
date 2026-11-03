@@ -37,3 +37,23 @@ Ces deux images sont explicitement légendées comme illustrations générées p
 - `img/coffee-cupping-sensory-web.jpg` : table de dégustation sensorielle générique ; illustration pédagogique, sans établissement ni personne identifiable.
 
 Ces images sont des illustrations générées par IA, non des photos de terrain ni des preuves de production, d’origine, d’établissement ou de pratique béninoise. Les fichiers historiques non documentés restent dans le dépôt mais ne sont pas utilisés dans le contenu public. Les scènes injectées par motion.js utilisent uniquement les illustrations générées décrites ci-dessus et la photographie éthiopienne créditée.
+
+## Observatoire — données et sources ajoutées le 3 novembre 2026
+
+Les cartes et graphiques de `observatoire.html` séparent les périmètres et conservent les réserves éditoriales dans `data/coffee-observatory.js`.
+
+- **FAO — page café** : https://www.fao.org/coffee/fr — repères mondiaux 2024 : production supérieure à 11 millions de tonnes, valeur de production estimée à 25 milliards USD, commerce supérieur à 34 milliards USD, environ 8 millions de tonnes exportées et Arabica autour de 60 %. Ces données sont mondiales.
+- **USDA FAS — Production - Coffee** : https://www.fas.usda.gov/data/production/0711100 — prévisions mondiales en années commerciales, exprimées en sacs de 60 kg. Les graphiques convertissent 174,855 millions de sacs en 10,4913 Mt pour MY 2024/25 et 178,83 millions de sacs en 10,7298 Mt pour MY 2025/26.
+- **Décret béninois n° 2001-351** : https://sgg.gouv.bj/doc/decret-2001-351/download — repères historiques 1960–1999. Les superficies et productions citées sont affichées comme historiques et ne décrivent pas automatiquement la filière actuelle.
+- **Africa API — Benin Coffee Production** : https://africa-api.com/data/benin/coffee — relais secondaire déclarant utiliser FAOSTAT. La série 2021–2024 est affichée comme « à confirmer » : 55,00 ; 55,30 ; 55,09 ; 55,13 tonnes de café vert.
+- **OIC — Rules on Statistics** : https://www.ico.org/documents/icc-102-10e-rules-statistical-reports-final.pdf — définitions du café vert, des types Arabica/Robusta et du sac statistique de 60 kg.
+- **OMS — caféine et grossesse** : https://www.who.int/tools/elena/interventions/caffeine-pregnancy — seuil de consommation élevée supérieur à 300 mg/jour sur la page consultée et recommandation de réduction pendant la grossesse.
+- **Plants 2022 — climat** : https://doi.org/10.3390/plants12010102 — revue systématique de 148 publications sur les impacts du changement climatique dans les agrosystèmes caféiers. Les résultats ne constituent pas une mesure spécifique du Bénin.
+
+## Schémas déterministes
+
+- `img/coffee-chain-diagram.svg` : schéma original Café Bénin de la plante à la tasse ; aucune photographie ni source extérieure.
+- `img/extraction-flow.svg` : schéma original Café Bénin du diagnostic d’extraction ; il ne remplace pas une méthode de mesure.
+- `img/evidence-ladder.svg` : schéma original Café Bénin sur la hiérarchie des preuves.
+
+Les trois schémas sont des SVG accessibles avec titre, description et texte alternatif dans la page. Les images générées précédemment restent explicitement présentées comme des illustrations, jamais comme des photographies de terrain ou des preuves de production béninoise.
