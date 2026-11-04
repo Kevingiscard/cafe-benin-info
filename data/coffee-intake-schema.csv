@@ -1,0 +1,17 @@
+record_type,field,required,public_by_default,description,example
+professional,display_name,yes,yes,Nom public de l'établissement ou de l'organisation,Café exemple
+professional,city,yes,yes,Ville ou zone générale sans adresse privée,Cotonou
+professional,website,no,yes,Site public ou page officielle,https://example.com
+professional,public_contact,no,no,Contact professionnel après accord explicite,contact@example.com
+professional,description,yes,yes,Description courte vérifiable,Torréfacteur indépendant
+professional,proof_url,no,no,URL ou document permettant la vérification,https://example.com/about
+professional,photo_license,no,yes,Source et licence de la photo,Photo fournie par l'établissement
+professional,publication_consent,yes,no,Accord pour publier la fiche,yes
+professional,commercial_contact_consent,no,no,Accord distinct pour recevoir des offres,yes
+observation,observed_at,yes,yes,Date de l'observation,2026-11-04
+observation,city,yes,yes,Ville ou zone générale,Cotonou
+observation,category,yes,yes,Catégorie de prix ou produit,café filtre
+observation,format,no,yes,Format ou volume si publié,250 ml
+observation,price,no,yes,Prix observé avec devise,2500 XOF
+observation,source_type,yes,yes,Source de l'observation,menu public
+observation,anonymized,yes,yes,Indique si l'agrégation empêche l'identification,yes

@@ -50,7 +50,7 @@ try {
   record('homepage', false, `${error.name}: ${error.message}`);
 }
 
-for (const relative of ['theme.css?v=3', 'app.js?v=2', 'dictionary-v4.js', 'local-assistant.js', 'observatoire.html', 'observatoire.css', 'observatoire.js', 'data/coffee-observatory.js', 'favicon.svg', 'site.webmanifest', 'robots.txt', 'sitemap.xml', 'img/hero-bg.jpg', 'img/benin-coffee-dawn.jpg', 'img/coffee-chain-diagram.svg', 'img/extraction-flow.svg', 'img/evidence-ladder.svg']) await checkAsset(relative);
+for (const relative of ['theme.css?v=3', 'app.js?v=2', 'dictionary-v4.js', 'local-assistant.js', 'observatoire.html', 'observatoire.css', 'observatoire.js', 'data/coffee-observatory.js', 'professionnels.html', 'professionnels.css', 'politique-editoriale.html', 'confidentialite.html', 'mentions-legales.html', 'data/coffee-intake-schema.csv', 'favicon.svg', 'site.webmanifest', 'robots.txt', 'sitemap.xml', 'img/hero-bg.jpg', 'img/benin-coffee-dawn.jpg', 'img/coffee-chain-diagram.svg', 'img/extraction-flow.svg', 'img/evidence-ladder.svg']) await checkAsset(relative);
 
 const report = { base: base.href, passed: failures.length === 0, failures, results, finishedAt: new Date().toISOString() };
 if (reportPath) fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`);

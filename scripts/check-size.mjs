@@ -4,7 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 const groups = {
   html: { files: ['index.html', '404.html'], limit: 180_000 },
-  css: { files: ['styles.css', 'v4.css', 'motion.css', 'theme.css', 'observatoire.css'], limit: 220_000 },
+  css: { files: ['styles.css', 'v4.css', 'motion.css', 'theme.css', 'observatoire.css', 'professionnels.css'], limit: 230_000 },
   javascript: { files: ['app.js', 'dictionary-v4.js', 'local-assistant.js', 'motion.js', 'observatoire.js', 'data/coffee-observatory.js'], limit: 480_000 }
 };
 const failures = [];

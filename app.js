@@ -151,7 +151,11 @@
         { id: 'benin', href: 'benin.html', type: 'Dossier', title: 'Dossier Bénin', description: 'Repères historiques, sources institutionnelles, limites des données et priorités de documentation.' },
         { id: 'outils', href: 'outils.html', type: 'Outils', title: 'Outils pratiques', description: 'Calculateur, guide, diagnostic de tasse, roue aromatique et carnet local.' },
         { id: 'dictionnaire', href: 'dictionnaire.html', type: 'Dictionnaire', title: 'Dictionnaire du café', description: '254 termes classés en 19 catégories, avec recherche, filtres et favoris.' },
-        { id: 'sources', href: 'sources.html', type: 'Sources', title: 'Sources et contribuer', description: 'Méthode éditoriale, crédits visuels et formulaire de contribution.' }
+        { id: 'sources', href: 'sources.html', type: 'Sources', title: 'Sources et contribuer', description: 'Méthode éditoriale, crédits visuels et formulaire de contribution.' },
+        { id: 'professionnels', href: 'professionnels.html', type: 'Professionnels', title: 'Espace professionnel', description: 'Bulletin de veille, annuaire vérifié, données agrégées, formation et mise en relation consentie.' },
+        { id: 'politique-editoriale', href: 'politique-editoriale.html', type: 'Transparence', title: 'Politique éditoriale', description: 'Règles de preuve, corrections, fiches, sponsoring et indépendance éditoriale.' },
+        { id: 'confidentialite', href: 'confidentialite.html', type: 'Confidentialité', title: 'Politique de confidentialité', description: 'Données réellement utilisées, collecte actuelle, droits et limites du site statique.' },
+        { id: 'mentions-legales', href: 'mentions-legales.html', type: 'Transparence', title: 'Mentions légales', description: 'Statut actuel du projet et informations à compléter avant toute commercialisation.' }
       ];
       const records = [...pages, ...sectionRecords(), ...glossary.map(item => ({ ...item, id: 'dictionnaire', href: 'dictionnaire.html?q=' + encodeURIComponent(item.term), type: item.category || 'Dictionnaire', title: item.term, description: item.definition }))];
       const ranked = records.map(item => {

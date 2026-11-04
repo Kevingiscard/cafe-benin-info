@@ -57,3 +57,9 @@ Les cartes et graphiques de `observatoire.html` séparent les périmètres et co
 - `img/evidence-ladder.svg` : schéma original Café Bénin sur la hiérarchie des preuves.
 
 Les trois schémas sont des SVG accessibles avec titre, description et texte alternatif dans la page. Les images générées précédemment restent explicitement présentées comme des illustrations, jamais comme des photographies de terrain ou des preuves de production béninoise.
+
+## Stratégie professionnelle et collecte responsable — 4 novembre 2026
+
+La page `professionnels.html` ne promet pas encore de paiement ni de collecte serveur. Les formulaires ouvrent un e-mail et le consentement de réponse est explicitement séparé de la publication ou de la prospection. Le schéma `data/coffee-intake-schema.csv` distingue les fiches professionnelles, les observations de prix et les champs publics ou non publics.
+
+La stratégie s’appuie sur la plateforme Coffee Trade Globe de l’Organisation internationale du Café, les outils de market intelligence de l’International Trade Centre, les modèles d’adhésion et d’éducation de la Specialty Coffee Association, les règles CNIL sur les traceurs et la prospection, le RGPD, le droit européen des bases de données et le Code du numérique béninois. Les liens et réserves détaillés figurent dans `cafe-benin-strategie-monetisation.md`.
