@@ -21,3 +21,5 @@
 .vocab-group-empty{padding:22px;color:var(--color-text-secondary,#6a5e54)}
 @media(max-width:980px){.vocab-toolbar{grid-template-columns:1fr 1fr}.vocab-toolbar .field:first-child{grid-column:1/-1}.vocab-group-body{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.vocab-toolbar{grid-template-columns:1fr}.vocab-toolbar .field:first-child{grid-column:auto}.vocab-group>summary{padding:15px}.vocab-group-body{grid-template-columns:1fr;padding:10px}.vocab-group-meta{font-size:.72rem}.vocab-count{width:100%;margin-left:0}.vocab-actions{align-items:stretch}.vocab-actions .btn{flex:1}}
+
+.vocab-group:not(.is-complete) .dict-card:nth-child(n+7){display:none}.vocab-load-more{grid-column:1/-1;justify-self:start;border:1px solid var(--color-border-strong,#bda98e);border-radius:999px;background:transparent;color:var(--color-accent,#9c4f27);padding:.7rem 1rem;font-weight:700;cursor:pointer}.vocab-load-more:hover,.vocab-load-more:focus-visible{background:var(--color-accent-soft,#f0d4b6)}
