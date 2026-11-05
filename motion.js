@@ -118,22 +118,6 @@
     });
   }
 
-  function addMagneticFeedback() {
-    if (prefersReducedMotion() || !window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) return;
-    document.querySelectorAll('.btn.primary').forEach((button) => {
-      button.classList.add('motion-magnetic');
-      button.addEventListener('pointermove', (event) => {
-        const rect = button.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - .5;
-        const y = (event.clientY - rect.top) / rect.height - .5;
-        button.style.transform = `translate3d(${x * 5}px, ${y * 4}px, 0)`;
-      });
-      button.addEventListener('pointerleave', () => {
-        button.style.transform = '';
-      });
-    });
-  }
-
   function surfaceAiStatus() {
     const helper = document.querySelector('#cafebot .bot-panel .notice');
     if (!helper || helper.querySelector('.ai-availability')) return;
@@ -149,7 +133,6 @@
     addFieldNotes();
     restoreDynamicHash();
     enhanceReveals();
-    addMagneticFeedback();
     surfaceAiStatus();
   });
 })();

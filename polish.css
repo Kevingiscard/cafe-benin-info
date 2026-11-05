@@ -1,10 +1,19 @@
-/* Café Bénin — finition éditoriale originale.
-   Les transitions répondent à une action ; les mouvements décoratifs restent séparés. */
+/* Café Bénin — finition éditoriale stable et originale. */
 :root {
   --cb-ease-out: cubic-bezier(.23, 1, .32, 1);
-  --cb-ease-in-out: cubic-bezier(.77, 0, .175, 1);
   --cb-fast: 160ms;
   --cb-medium: 220ms;
+}
+
+/* Règle prioritaire : le contenu documentaire reste visible même si JavaScript tarde. */
+.reveal,
+.reveal.in,
+.motion-card,
+.motion-card.is-motion-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  transition: none !important;
 }
 
 .btn,
@@ -20,7 +29,7 @@
 .pro-card,
 .visual-card,
 .field-card a {
-  transition-property: transform, background-color, border-color, box-shadow, color, opacity;
+  transition-property: transform, background-color, border-color, box-shadow, color;
   transition-duration: var(--cb-medium);
   transition-timing-function: var(--cb-ease-out);
 }
@@ -74,7 +83,7 @@ img[loading="lazy"] {
   background: var(--color-surface-muted, #211b16);
 }
 
-/* Sur la couverture sombre, le texte de navigation reste lisible avant le scroll. */
+/* Sur la couverture sombre, le header reste lisible avant et après le scroll. */
 body:has(.hero) .brand,
 body:has(.hero) .nav-links a,
 body:has(.hero) .theme-toggle,
@@ -87,7 +96,29 @@ body:has(.hero) .nav-links a:focus-visible {
   color: #f3b879;
 }
 
+/* Le thème change doucement, sans retarder le contenu ni le focus clavier. */
+html,
+body,
+.nav,
+.section,
+.card,
+.v4-panel,
+.footer,
+.search-panel,
+.mobile-nav,
+.cookie-banner {
+  transition: background-color 220ms var(--cb-ease-out), color 180ms var(--cb-ease-out), border-color 180ms var(--cb-ease-out);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+
   .btn:hover,
   .icon-btn:hover,
   .theme-toggle:hover,
