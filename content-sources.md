@@ -12,11 +12,9 @@ Le visuel **Ethiopian Coffee Ceremony 011** a été sélectionné comme illustra
 - Licence : https://creativecommons.org/licenses/by/2.0/
 - Usage prévu : encadré documentaire consacré aux rituels africains du café ; le contenu doit préciser qu’il s’agit d’une cérémonie éthiopienne et non d’une pratique béninoise.
 
-
 ## Photographies historiques non réutilisées
 
 Les fichiers hero-bg.jpg, coffee_beans_macro.webp, robusta.webp, epices.webp, coffee_preparation_modern.webp, premium_coffee_pour.webp, coffee_shop_cotonou.webp, benin-coffee-dawn.jpg et v14_atlas_world.jpg sont conservés dans le dépôt pour référence historique, mais ne sont pas affichés dans le parcours public tant que leur auteur, leur source et leur licence ne sont pas établis.
-
 
 ## Illustrations éditoriales générées le 27 octobre 2026
 
@@ -24,7 +22,6 @@ Les fichiers hero-bg.jpg, coffee_beans_macro.webp, robusta.webp, epices.webp, co
 - `img/manual-brew-generated.jpg` : scène fictive de préparation manuelle du café, créée avec l’outil intégré de génération d’images OpenAI. Elle illustre le matériel et la préparation, sans documenter une origine particulière.
 
 Ces deux images sont explicitement légendées comme illustrations générées par IA dans la page. Elles ne remplacent pas des photos de terrain ni des sources factuelles.
-
 
 ## Illustrations éditoriales générées le 27 octobre 2026
 
@@ -63,3 +60,9 @@ Les trois schémas sont des SVG accessibles avec titre, description et texte alt
 La page `professionnels.html` ne promet pas encore de paiement ni de collecte serveur. Les formulaires ouvrent un e-mail et le consentement de réponse est explicitement séparé de la publication ou de la prospection. Le schéma `data/coffee-intake-schema.csv` distingue les fiches professionnelles, les observations de prix et les champs publics ou non publics.
 
 La stratégie s’appuie sur la plateforme Coffee Trade Globe de l’Organisation internationale du Café, les outils de market intelligence de l’International Trade Centre, les modèles d’adhésion et d’éducation de la Specialty Coffee Association, les règles CNIL sur les traceurs et la prospection, le RGPD, le droit européen des bases de données et le Code du numérique béninois. Les liens et réserves détaillés figurent dans `cafe-benin-strategie-monetisation.md`.
+
+## Mise à jour vocabulaire et torréfaction — novembre 2026
+
+- `img/roast-curve.svg` : schéma pédagogique original de lecture d’une courbe de torréfaction.
+- `img/roast-curve.png` : version raster locale de secours du même schéma, utilisée lorsque le rendu SVG n’est pas disponible.
+- `vocabulaire.css` et `dictionary-v4.js` : interface originale de navigation par familles, recherche, tri, accordéons et fiches détaillées ; les fiches existantes sont conservées.
