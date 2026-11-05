@@ -40,15 +40,15 @@
         </div>
         <div class="visual-grid">
           <figure class="visual-card">
-            <img src="img/arabica-canephora-botany-web.jpg" alt="Illustration générée comparant deux plantes génériques de café, Arabica et Canephora" loading="lazy" width="2304" height="1536">
+            <img src="img/arabica-canephora-botany-web.jpg" alt="Illustration générée comparant deux plantes génériques de café, Arabica et Canephora" loading="lazy" decoding="async" width="2304" height="1536">
             <figcaption class="visual-card-copy"><strong>Botanique</strong><span>Espèces, variétés et environnement donnent un premier cadre pour lire un café.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/coffee-drying-process-web.jpg" alt="Illustration générée de cerises de café séchant sur des claies, sans lieu réel représenté" loading="lazy" width="2304" height="1536">
+            <img src="img/coffee-drying-process-web.jpg" alt="Illustration générée de cerises de café séchant sur des claies, sans lieu réel représenté" loading="lazy" decoding="async" width="2304" height="1536">
             <figcaption class="visual-card-copy"><strong>Transformation</strong><span>Récolte, séchage et tri modifient la matière avant la torréfaction.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/coffee-cupping-sensory-web.jpg" alt="Illustration générée d’une table de dégustation sensorielle, sans lieu réel représenté" loading="lazy" width="2304" height="1536">
+            <img src="img/coffee-cupping-sensory-web.jpg" alt="Illustration générée d’une table de dégustation sensorielle, sans lieu réel représenté" loading="lazy" decoding="async" width="2304" height="1536">
             <figcaption class="visual-card-copy"><strong>Dégustation</strong><span>Arômes, texture et équilibre deviennent des observations à décrire et à comparer.</span></figcaption>
           </figure>
         </div>
@@ -72,9 +72,9 @@
           <p>Ce carnet ouvre trois portes : mieux lire les sources sur le Bénin, replacer les traditions africaines dans leur contexte et passer d’une curiosité de dégustation à une recherche précise dans l’encyclopédie.</p>
         </div>
         <div class="field-grid">
-          <article class="field-card"><img src="img/coffee-cherries-generated.jpg" alt="Illustration générée de cerises de café, sans carte géographique représentée" loading="lazy" width="1024" height="1024"><div class="field-card-content"><span class="field-card-number">01 · Situer</span><h3>Le Bénin, sans raccourci.</h3><p>Une information locale est utile lorsqu’elle est datée, attribuée et définie. Le site transforme les zones d’ombre en pistes de recherche plutôt qu’en certitudes.</p><a href="#benin">Lire le dossier Bénin</a></div></article>
-          <article class="field-card"><img src="img/ethiopian-coffee-ceremony-ccby.jpg" alt="Cérémonie du café en Éthiopie" loading="lazy"><div class="field-card-content"><span class="field-card-number">02 · Relier</span><h3>Rituels africains du café.</h3><p>La cérémonie photographiée est éthiopienne. Elle rappelle que le café est aussi un langage d’hospitalité, de transmission et de temps partagé, sans être confondu avec les pratiques béninoises.</p><a href="https://commons.wikimedia.org/wiki/File:Ethiopian_Coffee_Ceremony_011.jpg" target="_blank" rel="noopener">Photo : Steve Evans · CC BY 2.0</a></div></article>
-          <article class="field-card"><img src="img/cafe-scene-generated.jpg" alt="Illustration générée d’un espace café fictif, sans localisation réelle" loading="lazy" width="1536" height="1024"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
+          <article class="field-card"><img src="img/coffee-cherries-generated.jpg" alt="Illustration générée de cerises de café, sans carte géographique représentée" loading="lazy" decoding="async" width="1024" height="1024"><div class="field-card-content"><span class="field-card-number">01 · Situer</span><h3>Le Bénin, sans raccourci.</h3><p>Une information locale est utile lorsqu’elle est datée, attribuée et définie. Le site transforme les zones d’ombre en pistes de recherche plutôt qu’en certitudes.</p><a href="#benin">Lire le dossier Bénin</a></div></article>
+          <article class="field-card"><img src="img/ethiopian-coffee-ceremony-ccby.jpg" alt="Cérémonie du café en Éthiopie" loading="lazy" decoding="async"><div class="field-card-content"><span class="field-card-number">02 · Relier</span><h3>Rituels africains du café.</h3><p>La cérémonie photographiée est éthiopienne. Elle rappelle que le café est aussi un langage d’hospitalité, de transmission et de temps partagé, sans être confondu avec les pratiques béninoises.</p><a href="https://commons.wikimedia.org/wiki/File:Ethiopian_Coffee_Ceremony_011.jpg" target="_blank" rel="noopener">Photo : Steve Evans · CC BY 2.0</a></div></article>
+          <article class="field-card"><img src="img/cafe-scene-generated.jpg" alt="Illustration générée d’un espace café fictif, sans localisation réelle" loading="lazy" decoding="async" width="1536" height="1024"><div class="field-card-content"><span class="field-card-number">03 · Partager</span><h3>De la matière à la conversation.</h3><p>Un café se raconte aussi par les métiers, les lieux et les personnes qui apprennent à préparer, goûter et transmettre. La communauté peut enrichir cette mémoire avec des sources et des récits vérifiables.</p><a href="#contact">Contribuer au projet</a></div></article>
         </div>
         <div class="field-reader">
           <div class="field-reader-header"><span class="eyebrow">Parcours guidé</span><strong>Trois manières de commencer.</strong><p>Ouvrez une piste, puis naviguez vers les définitions, sections et sources correspondantes.</p></div>

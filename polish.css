@@ -1,0 +1,109 @@
+/* Café Bénin — finition éditoriale originale.
+   Les transitions répondent à une action ; les mouvements décoratifs restent séparés. */
+:root {
+  --cb-ease-out: cubic-bezier(.23, 1, .32, 1);
+  --cb-ease-in-out: cubic-bezier(.77, 0, .175, 1);
+  --cb-fast: 160ms;
+  --cb-medium: 220ms;
+}
+
+.btn,
+.icon-btn,
+.theme-toggle,
+.bot-suggestions button,
+.obs-filter,
+.fav,
+.dict-card,
+.card,
+.source-card,
+.v4-index a,
+.pro-card,
+.visual-card,
+.field-card a {
+  transition-property: transform, background-color, border-color, box-shadow, color, opacity;
+  transition-duration: var(--cb-medium);
+  transition-timing-function: var(--cb-ease-out);
+}
+
+.btn:hover,
+.icon-btn:hover,
+.theme-toggle:hover,
+.bot-suggestions button:hover,
+.obs-filter:hover,
+.source-card:hover,
+.v4-index a:hover,
+.pro-card:hover,
+.dict-card:hover,
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active,
+.icon-btn:active,
+.theme-toggle:active,
+.bot-suggestions button:active,
+.obs-filter:active,
+.fav:active {
+  transform: scale(.975);
+  transition-duration: var(--cb-fast);
+}
+
+.card:focus-within,
+.source-card:focus-within,
+.pro-card:focus-within,
+.visual-card:focus-within {
+  border-color: var(--color-focus, #f0b66e);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus, #f0b66e) 24%, transparent);
+}
+
+main > section:not(.hero),
+main > .section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 720px;
+}
+
+.card-media,
+.v4-gallery figure,
+.portal-visual-strip figure,
+.source-card figure {
+  overflow: hidden;
+  background: var(--color-surface-muted, #211b16);
+}
+
+img[loading="lazy"] {
+  background: var(--color-surface-muted, #211b16);
+}
+
+/* Sur la couverture sombre, le texte de navigation reste lisible avant le scroll. */
+body:has(.hero) .brand,
+body:has(.hero) .nav-links a,
+body:has(.hero) .theme-toggle,
+body:has(.hero) .menu-toggle {
+  color: #fffaf2;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 42%);
+}
+body:has(.hero) .nav-links a:hover,
+body:has(.hero) .nav-links a:focus-visible {
+  color: #f3b879;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .icon-btn:hover,
+  .theme-toggle:hover,
+  .bot-suggestions button:hover,
+  .obs-filter:hover,
+  .source-card:hover,
+  .v4-index a:hover,
+  .pro-card:hover,
+  .dict-card:hover,
+  .card:hover,
+  .btn:active,
+  .icon-btn:active,
+  .theme-toggle:active,
+  .bot-suggestions button:active,
+  .obs-filter:active,
+  .fav:active {
+    transform: none;
+  }
+}
