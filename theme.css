@@ -272,3 +272,6 @@ main section[id], #voyage-visuel, #carnet { scroll-margin-top: 6.5rem; }
   .section-head h2 { font-size: clamp(2.25rem, 11vw, 3.25rem); }
   .visual-lead, .field-lead { grid-template-columns: 1fr; }
 }
+
+/* Quality baseline: readable, responsive and keyboard-friendly on every route. */
+img,svg,video{max-width:100%;height:auto}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.btn:focus-visible,.icon-btn:focus-visible,.theme-toggle:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--color-focus);outline-offset:3px}.muted{line-height:1.65}.legal-content a{overflow-wrap:anywhere}@media(max-width:640px){.legal-content{padding-bottom:5rem}.legal-content h1{font-size:clamp(3rem,14vw,5rem)}.pro-action,.chat-form{flex-wrap:wrap}.pro-action .btn,.chat-form .btn{width:100%;justify-content:center}}

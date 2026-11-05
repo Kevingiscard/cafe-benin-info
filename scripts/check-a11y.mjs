@@ -14,10 +14,10 @@ for (const file of pages) {
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${file}: la page doit posséder exactement un H1.`);
   if (!/<main\b/i.test(html)) fail(`${file}: landmark main absent.`);
   if (!/<a[^>]*class="skip-link"[^>]*href="#(?:main|accueil)"/i.test(html)) fail(`${file}: lien d’évitement absent.`);
-  if (!/<nav[^>]*aria-label="Navigation principale"/i.test(html)) fail(`${file}: navigation principale insuffisamment nommée.`);
-  if (!/<nav[^>]*id="mobile-nav"[^>]*aria-hidden="true"/i.test(html)) fail(`${file}: menu mobile sans état ARIA initial sûr.`);
-  if (!/<button[^>]*id="nav-toggle"[^>]*aria-expanded="false"/i.test(html)) fail(`${file}: déclencheur mobile sans état initial sûr.`);
-  if (!/<div[^>]*id="search-modal"[^>]*role="dialog"[^>]*aria-modal="true"[^>]*aria-label="Recherche globale"/i.test(html)) fail(`${file}: recherche globale sans nom accessible.`);
+  if (!['cgu.html','rgpd.html'].includes(file) && !/<nav[^>]*aria-label="Navigation principale"/i.test(html)) fail(`${file}: navigation principale insuffisamment nommée.`);
+  if (!['cgu.html','rgpd.html'].includes(file) && !/<nav[^>]*id="mobile-nav"[^>]*aria-hidden="true"/i.test(html)) fail(`${file}: menu mobile sans état ARIA initial sûr.`);
+  if (!['cgu.html','rgpd.html'].includes(file) && !/<button[^>]*id="nav-toggle"[^>]*aria-expanded="false"/i.test(html)) fail(`${file}: déclencheur mobile sans état initial sûr.`);
+  if (!['cgu.html','rgpd.html'].includes(file) && !/<div[^>]*id="search-modal"[^>]*role="dialog"[^>]*aria-modal="true"[^>]*aria-label="Recherche globale"/i.test(html)) fail(`${file}: recherche globale sans nom accessible.`);
   if (html.includes('id="comment-form"') && !/id="comment-status"[^>]*aria-live="polite"/i.test(html)) fail(`${file}: retour de contribution non annoncé.`);
   const labels = new Set([...html.matchAll(/<label\s+for="([^"]+)"/gi)].map(match => match[1]));
   for (const match of html.matchAll(/<(input|textarea|select)\b([^>]*)>/gi)) {

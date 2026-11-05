@@ -14,7 +14,7 @@ const requireFile = file => exists(file) ? ok(`Présent: ${file}`) : fail(`Fichi
 [
   'index.html', '404.html', 'a-propos.html', 'styles.css', 'v4.css', 'motion.css', 'theme.css',
   'app.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.js', 'content-sources.md',
-  'favicon.svg', 'site.webmanifest', 'package.json', 'package-lock.json', 'robots.txt', 'sitemap.xml'
+  'favicon.svg', 'site.webmanifest', 'package.json', 'package-lock.json', 'robots.txt', 'sitemap.xml', 'rgpd.html', 'cgu.html', 'cookie-consent.js', 'cookie-consent.css', 'form-guard.js', 'https-redirect.js', 'img/social-card.svg', 'img/social-card.jpg', 'api/openapi.yaml'
 ].forEach(requireFile);
 if (failed) process.exit(1);
 
@@ -75,11 +75,11 @@ for (const linkTag of html.matchAll(/<a\b([^>]+)>/gi)) {
 }
 ok('Assets locaux, textes alternatifs et liens externes sécurisés.');
 
-for (const file of ['app.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.js']) {
+for (const file of ['app.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.js', 'cookie-consent.js', 'form-guard.js', 'https-redirect.js']) {
   const result = spawnSync(process.execPath, ['--check', path.join(root, file)], { encoding: 'utf8' });
   result.status === 0 ? ok(`Syntaxe JS OK: ${file}`) : fail(`Syntaxe JS invalide: ${file}\n${result.stderr}`);
 }
-for (const removed of ['api', 'lib', 'backend-client.js', 'app-v3.js']) {
+for (const removed of ['lib', 'backend-client.js', 'app-v3.js']) {
   if (exists(removed)) fail(`Intégration ou version obsolète à retirer: ${removed}`);
 }
 if (exists('vercel.json')) {

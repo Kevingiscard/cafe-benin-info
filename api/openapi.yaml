@@ -1,0 +1,44 @@
+openapi: 3.0.3
+info:
+  title: Café Bénin API — contrat hors frontend
+  version: 0.1.0
+  description: >-
+    Contrat préparatoire pour un futur service serveur. GitHub Pages ne sert pas
+    ce dossier comme une API : aucun secret ni appel réseau n'est injecté dans le frontend.
+servers:
+  - url: https://api.example.invalid/cafe-benin
+    description: Placeholder à remplacer après choix d'un hébergeur backend
+paths:
+  /health:
+    get:
+      summary: Vérifier la disponibilité du service
+      responses:
+        '200':
+          description: Service disponible
+  /v1/observations:
+    get:
+      summary: Lire des observations agrégées et documentées
+      parameters:
+        - name: city
+          in: query
+          schema: { type: string, maxLength: 80 }
+        - name: category
+          in: query
+          schema: { type: string, maxLength: 80 }
+      responses:
+        '200': { description: Observations publiques agrégées }
+        '429': { description: Limite de débit atteinte }
+  /v1/professional-submissions:
+    post:
+      summary: Recevoir une contribution professionnelle après consentement
+      security: [{ bearerAuth: [] }]
+      responses:
+        '202': { description: Contribution reçue pour modération }
+        '400': { description: Validation invalide }
+        '429': { description: Limite anti-spam atteinte }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Jeton serveur uniquement, jamais embarqué dans le frontend

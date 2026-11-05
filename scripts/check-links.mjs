@@ -16,6 +16,24 @@ for (const file of sourceFiles) {
   for (const match of content.matchAll(/(?:href|src)=["']([^"']+)["']|\[[^\]]+\]\((https?:\/\/[^)\s]+)\)/gi)) refs.add(match[1] || match[2]);
 }
 
+for (const file of sourceFiles.filter(name => name.endsWith('.html'))) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const ids = new Set([...html.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]));
+  for (const match of html.matchAll(/href=["']([^"']*#[^"']+)["']/gi)) {
+    const [target, fragment] = match[1].split('#');
+    if (!fragment) continue;
+    if (!target && !ids.has(fragment)) fail(`${file}: ancre interne absente : #${fragment}`);
+    if (target) {
+      const localTarget = target.replace(/^\.\//, '');
+      if (fs.existsSync(path.join(root, localTarget))) {
+        const targetHtml = fs.readFileSync(path.join(root, localTarget), 'utf8');
+        const targetIds = new Set([...targetHtml.matchAll(/\bid=["']([^"']+)["']/gi)].map(item => item[1]));
+        if (!targetIds.has(fragment)) fail(`${file}: ancre absente dans ${target} : #${fragment}`);
+      }
+    }
+  }
+}
+
 const isExternal = ref => /^https?:\/\//i.test(ref);
 const internal = [...refs].filter(ref => ref && !isExternal(ref) && !ref.startsWith('#') && !ref.startsWith('mailto:'));
 for (const ref of internal) {
