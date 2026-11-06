@@ -115,12 +115,13 @@
   }
 
   function setupSearch() {
+    if (document.documentElement.dataset.cbSearchReady === 'true') return;
     const modal = $('#search-modal');
     const input = $('#global-search');
     const resultBox = $('#search-results');
     const openButton = $('#search-open');
     const closeButton = $('#search-close');
-    if (!modal || !input || !resultBox) return;
+    if (!modal || !input || !resultBox) { window.setTimeout(setupSearch, 100); return; }
     // Le dictionnaire peut être prêt avant DOMContentLoaded : récupérer aussi le corpus déjà exposé.
     let glossary = Array.isArray(window.cafeBeninDictionary) ? window.cafeBeninDictionary : [];
     let activeIndex = -1;
@@ -147,7 +148,7 @@
     const draw = () => {
       const query = normalize(input.value.trim());
       const pages = [
-        { id: 'explorer', href: 'explorer.html', type: 'Parcours', title: 'Explorer les chapitres', description: 'Parcours guidé : histoire, botanique, culture, transformation, torréfaction, extraction, dégustation, santé et filière.' },
+        { id: 'explorer', href: 'explorer.html', type: 'Parcours', title: 'Explorer les chapitres', description: 'Parcours guidé : histoire, botanique, Arabica, culture, transformation, torréfaction, extraction, dégustation, santé et filière.' },
         { id: 'benin', href: 'benin.html', type: 'Dossier', title: 'Dossier Bénin', description: 'Repères historiques, sources institutionnelles, limites des données et priorités de documentation.' },
         { id: 'outils', href: 'outils.html', type: 'Outils', title: 'Outils pratiques', description: 'Calculateur, guide, diagnostic de tasse, roue aromatique et carnet local.' },
         { id: 'dictionnaire', href: 'dictionnaire.html', type: 'Dictionnaire', title: 'Dictionnaire du café', description: '254 termes classés en 19 catégories, avec recherche, filtres et favoris.' },
@@ -190,8 +191,9 @@
       input.focus();
       input.select();
     };
-    openButton?.addEventListener('click', open);
-    closeButton?.addEventListener('click', close);
+    if (openButton) openButton.onclick = open;
+    if (closeButton) closeButton.onclick = close;
+    document.documentElement.dataset.cbSearchReady = 'true';
     modal.addEventListener('click', event => { if (event.target === modal) close(); });
     input.addEventListener('input', draw);
     $('#hero-search-form')?.addEventListener('submit', event => {
@@ -339,17 +341,22 @@
 
   function setYear() { const year = $('#year'); if (year) year.textContent = new Date().getFullYear(); }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  const init = () => {
+    if (document.documentElement.dataset.cbAppReady === 'true') return;
+    document.documentElement.dataset.cbAppReady = 'true';
     setCanonical();
     setupTheme();
     setupNavigation();
     setupProgressAndReveal();
     setupSearch();
+    window.setTimeout(() => { if (document.documentElement.dataset.cbSearchReady !== 'true') setupSearch(); }, 150);
     setupBot();
     setupRecommendation();
     setupBrewCalculator();
     setupContribution();
     setupImageFallbacks();
     setYear();
-  });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
 })();

@@ -1,27 +1,2 @@
 <!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f5f0e7">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="theme.css?v=3">
-  <title>Page introuvable — Café Bénin</title>
-</head>
-<body>
-  <main id="accueil" class="section" style="min-height:100vh;display:grid;place-items:center">
-    <div class="container" style="max-width:760px;text-align:center">
-      <p class="eyebrow">Erreur 404</p>
-      <h1 class="display" style="font-size:clamp(3rem,8vw,6rem);margin:1rem 0">Cette page n’est<br><em>pas dans l’encyclopédie.</em></h1>
-      <p class="muted" style="max-width:38rem;margin:0 auto 2rem">L’adresse demandée est introuvable ou a changé. Vous pouvez revenir à l’accueil ou chercher une notion dans le dictionnaire Café Bénin.</p>
-      <p style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap">
-        <a class="btn primary" href="./">Retour à l’accueil</a>
-        <a class="btn" href="./#dictionnaire">Ouvrir le dictionnaire</a>
-      </p>
-    </div>
-  </main>
-</body>
-</html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><meta name="theme-color" content="#f5f0e7"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="theme.css?v=3"><link rel="stylesheet" href="polish.css?v=2"><title>Page introuvable — Café Bénin</title><script>try{document.documentElement.dataset.theme=localStorage.getItem('cb-theme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script></head><body><header id="site-nav" class="nav"><div class="container nav-inner"><a class="brand" href="#accueil"><span class="brand-mark">C</span><span>Café Bénin</span></a><nav class="nav-links" aria-label="Navigation principale"><a href="explorer.html">Explorer</a><a href="benin.html">Dossier Bénin</a><a href="observatoire.html">Observatoire</a><a href="professionnels.html">Professionnels</a><a href="outils.html">Outils</a><a href="dictionnaire.html">Dictionnaire</a><a href="sources.html">Sources</a></nav><div class="nav-actions"><button id="search-open" class="search-trigger" type="button">⌕ Rechercher <span>Ctrl K</span></button><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activer le mode sombre" aria-pressed="false"><span aria-hidden="true">◐</span><span class="theme-toggle-label">Thème</span></button><button id="nav-toggle" class="menu-toggle icon-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">☰</button></div></div></header><nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile" aria-hidden="true"><a class="mobile-link" href="explorer.html">Explorer les chapitres</a><a class="mobile-link" href="benin.html">Dossier Bénin</a><a class="mobile-link" href="observatoire.html">Observatoire des données</a><a class="mobile-link" href="professionnels.html">Espace professionnel</a><a class="mobile-link" href="outils.html">Outils pratiques</a><a class="mobile-link" href="dictionnaire.html">Dictionnaire</a><a class="mobile-link" href="sources.html">Sources et contribuer</a><a class="mobile-link" href="#cafebot">CaféBot local</a></nav><main id="main" class="section" style="min-height:100vh;display:grid;place-items:center"><div class="container" style="max-width:760px;text-align:center"><p class="eyebrow">Erreur 404</p><h1 class="display" style="font-size:clamp(3rem,8vw,6rem);margin:1rem 0">Cette page n’est<br><em>pas dans l’encyclopédie.</em></h1><p class="muted" style="max-width:38rem;margin:0 auto 2rem">L’adresse demandée est introuvable ou a changé. Vous pouvez revenir à l’accueil ou chercher une notion dans le dictionnaire Café Bénin.</p><p style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap"><a class="btn primary" href="./">Retour à l’accueil</a><a class="btn" href="dictionnaire.html">Ouvrir le dictionnaire</a></p></div></main><div id="search-modal" class="search-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Recherche globale"><div class="search-panel"><div class="search-head"><span id="search-title">⌕</span><input id="global-search" type="search" placeholder="Rechercher dans Café Bénin…" aria-label="Recherche globale" aria-controls="search-results"><button id="search-close" class="icon-btn" type="button" aria-label="Fermer la recherche">×</button></div><div id="search-results" class="search-results" aria-live="polite"></div></div></div><div id="toast" class="toast" role="status" aria-live="polite"></div><script src="app.js?v=ui-fix-4" defer></script><script src="cookie-consent.js" defer></script><script src="search-fallback.js?v=4" defer></script></body></html>
