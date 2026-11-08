@@ -1,35 +1,36 @@
-# TODO — Portail documentaire Café Bénin
+# TODO — Refonte Atlas vivant du café
 
-## Observatoire public
+## Accueil immersif et hiérarchie documentaire
 
-- [ ] Publier une page Observatoire qui sépare clairement monde, Bénin récent, Bénin historique et données non établies.
-- [ ] Afficher l’année, l’unité, le périmètre, le niveau de confiance et le lien source pour chaque chiffre.
-- [ ] Ajouter graphique mondial en tonnes et graphique Bénin en tonnes de café vert.
-- [ ] Ajouter convertisseur sacs de 60 kg / tonnes et avertissement sur les années commerciales.
-- [ ] Ajouter filtres par thème et niveau de preuve.
+- [ ] Remplacer l’accueil par un récit visuel clair : promesse, parcours, métriques, chapitres et appel à l’exploration.
+- [ ] Préserver les liens vers Explorer, Dossier Bénin, Observatoire, Outils, Dictionnaire, Sources et Professionnels.
+- [ ] Donner à chaque chapitre une image, un niveau documentaire et une action visible.
 
-## Pédagogie interactive
+## Visuels et illustrations
 
-- [ ] Ajouter frise chronologique filtrable.
-- [ ] Ajouter trois schémas SVG accessibles et légendés.
-- [ ] Ajouter panneaux « ce que la source permet de dire » et « ce qu’elle ne permet pas de dire ».
-- [ ] Ajouter parcours santé, climat et préparation sans promesse médicale ni généralisation abusive.
+- [ ] Générer des visuels originaux dédiés à la couverture, la botanique, la chaîne du café et le laboratoire sensoriel.
+- [ ] Ajouter textes alternatifs, crédits, dimensions, chargement différé et fallback.
+- [ ] Ne jamais présenter une illustration générée comme une photographie documentaire réelle.
 
-## Qualité éditoriale
+## Interactions
 
-- [ ] Archiver les URL, éditeurs, dates de consultation et réserves dans les crédits.
-- [ ] Garder les données béninoises récentes comme relais secondaire tant que l’extraction FAOSTAT directe n’est pas archivée.
-- [ ] Ne jamais transformer une absence de donnée en zéro.
+- [ ] Ajouter un fil de progression plante → fruit → grain → tasse.
+- [ ] Ajouter une carte atlas filtrable par thème.
+- [ ] Ajouter un aperçu instantané des chapitres sans masquer le contenu.
+- [ ] Conserver la recherche instantanée, le mode clair/sombre et le menu mobile.
+- [ ] Respecter clavier, réduction des mouvements et mobile sans débordement.
 
-## Performance et accessibilité
+## Données, preuve et pédagogie
 
-- [ ] Ne charger aucune bibliothèque distante pour les graphiques.
-- [ ] Servir les images optimisées avec dimensions explicites.
-- [ ] Rendre les graphiques et filtres utilisables au clavier.
-- [ ] Étendre les contrôles SEO, ressources, tailles et health check à l’Observatoire.
+- [ ] Conserver l’Observatoire qui sépare monde, Bénin récent, Bénin historique et données non établies.
+- [ ] Afficher année, unité, périmètre, niveau de confiance et source pour les chiffres.
+- [ ] Conserver les schémas SVG, la frise, le convertisseur et les panneaux de preuve.
+- [ ] Ne jamais transformer une absence de donnée en zéro ni une illustration générée en reportage.
 
-## Publication
+## Qualité et publication
 
-- [ ] Exécuter `npm run verify`.
-- [ ] Vérifier les URL publiques après propagation GitHub Pages.
-- [ ] Publier les commits sur `main`.
+- [ ] Déclarer les routes dans `manus-routes.json`.
+- [ ] Faire passer `npm run verify`.
+- [ ] Vérifier tailles, liens, accessibilité, SEO et scripts.
+- [ ] Capturer un aperçu desktop et mobile.
+- [ ] Publier sur GitHub Pages après validation.

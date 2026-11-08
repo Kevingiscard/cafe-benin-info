@@ -14,7 +14,7 @@ const requireFile = file => exists(file) ? ok(`Présent: ${file}`) : fail(`Fichi
 [
   'index.html', '404.html', 'a-propos.html', 'styles.css', 'v4.css', 'motion.css', 'theme.css',
   'app.js', 'local-assistant.js', 'motion.js', 'dictionary-v4.js', 'content-sources.md',
-  'favicon.svg', 'site.webmanifest', 'package.json', 'package-lock.json', 'robots.txt', 'sitemap.xml', 'rgpd.html', 'cgu.html', 'cookie-consent.js', 'cookie-consent.css', 'form-guard.js', 'https-redirect.js', 'img/social-card.svg', 'img/social-card.jpg', 'api/openapi.yaml'
+  'favicon.svg', 'site.webmanifest', 'package.json', 'package-lock.json', 'robots.txt', 'sitemap.xml', 'rgpd.html', 'cgu.html', 'cookie-consent.js', 'cookie-consent.css', 'form-guard.js', 'https-redirect.js', 'img/social-card.svg', 'img/social-card.jpg', 'api/openapi.yaml', 'redesign.css', 'redesign.js', 'manus-routes.json'
 ].forEach(requireFile);
 if (failed) process.exit(1);
 

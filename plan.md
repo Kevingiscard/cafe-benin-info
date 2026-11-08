@@ -1,69 +1,82 @@
-# Plan de refonte — Café Bénin v2 documentaire
+# Plan de refonte — Café Bénin, Atlas vivant du café
 
 ## Objectif
 
-Faire évoluer Café Bénin d’une encyclopédie statique enrichie vers un portail documentaire plus structuré, interactif, actualisable et transparent sur ses niveaux de preuve.
+Refondre Café Bénin comme une plateforme documentaire francophone de référence : plus claire, plus immersive, plus visuelle et plus interactive, sans perdre les contenus existants, les sources, le dictionnaire, l’Observatoire ni les protections de confidentialité.
 
-## Périmètre livré
+## Direction choisie
 
-- créer une page `observatoire.html` dédiée aux données, tendances, chronologies et méthodes ;
-- séparer explicitement les données mondiales, béninoises historiques et béninoises récentes ;
-- afficher les unités, années, éditeurs, dates de consultation et niveaux de confiance ;
-- ajouter des graphiques SVG interactifs sans dépendance externe ;
-- ajouter un convertisseur sacs/tonnes et un comparateur de périmètres statistiques ;
-- ajouter une frise historique du café au Bénin et du café mondial ;
-- ajouter trois schémas pédagogiques : chaîne du café, extraction, lecture des preuves ;
-- enrichir la navigation et les pages existantes avec un lien vers l’Observatoire ;
-- documenter les nouvelles sources dans `content-sources.md` et les nouvelles données dans `data/coffee-observatory.js` ;
-- conserver les protections : aucune donnée personnelle inventée, aucun chiffre béninois présenté sans réserve, aucune photo générée présentée comme reportage.
+### Trois pistes
 
-## Architecture
+- **Atlas vivant du café** — probabilité 0,07 : grand récit visuel, cartes de connaissances, chapitres immersifs et données lisibles.
+- **Laboratoire de dégustation** — probabilité 0,05 : mesures, outils, fiches techniques et comparaisons.
+- **Carnet de terrain Bénin** — probabilité 0,08 : photographie documentaire, témoignages, terroirs et chronologies.
 
-- `observatoire.html` : page éditoriale et interface visible ;
-- `observatoire.js` : données, graphiques, filtres, convertisseur, interactions ;
-- `observatoire.css` : composants propres à la page ;
-- `data/coffee-observatory.js` : objets de données et métadonnées éditoriales ;
-- `img/coffee-chain-diagram.svg`, `img/extraction-flow.svg`, `img/evidence-ladder.svg` : schémas déterministes ;
-- `scripts/check-site.mjs`, `scripts/check-seo.mjs`, `scripts/check-a11y.mjs` : couverture étendue à la nouvelle page.
+Choix : **Atlas vivant du café**, enrichi de modules de laboratoire et de terrain.
 
-## Direction design choisie
+### Mouvement design
 
-Trois pistes considérées :
-
-- **Atlas éditorial vivant** — probabilité 0,06 : données en panneaux, frise et cartes de preuve ;
-- **Laboratoire de dégustation** — probabilité 0,04 : fiches techniques, mesures et interactions ;
-- **Carnet documentaire** — probabilité 0,08 : notes, citations et photos de terrain.
-
-Choix : **Atlas éditorial vivant**.
+Éditorial muséal contemporain : grands plans, cartes topographiques, panneaux de preuve, marges de lecture et détails à révélation progressive. L’interface doit donner la sensation de parcourir une exposition documentée, pas un long article empilé.
 
 ### Principes
 
-1. Une donnée importante est toujours accompagnée de son année, son unité et sa source.
-2. Le contenu doit distinguer observation, estimation historique, projection et absence de preuve.
-3. Les graphiques sont lisibles sans couleur seule et restent utilisables au clavier.
-4. Les interactions réduisent la complexité : filtre, détail au clic, conversion et comparaison.
+1. Le visiteur comprend en 10 secondes où commencer et peut ensuite descendre très loin dans le sujet.
+2. Chaque donnée importante indique son statut : fait documenté, estimation, repère historique ou point à vérifier.
+3. L’image explique une idée : botanique, transformation, torréfaction, extraction, dégustation ou filière.
+4. Les interactions servent la lecture : cartes filtrables, accordéons, frises, recherche instantanée, comparaisons et vues accessibles.
 
 ### Philosophie couleur
 
-Le brun torréfié sert de couleur de marque. Le vert feuille signale l’agronomie et la durabilité. Le bleu ardoise signale les données et la méthode. L’ambre signale une réserve ou une source secondaire, jamais une alerte sensationnaliste.
+Brun cacao pour l’histoire et la matière ; vert feuille pour le vivant et l’agronomie ; bleu minéral pour les preuves et les données ; corail torréfié pour les moments d’action. Le fond clair reste ivoire et le fond sombre devient espresso profond, avec des contrastes élevés et des bordures fines.
 
-### Typographie et voix
+### Layout paradigm
 
-DM Sans reste la police de l’interface. Les titres conservent le contraste display existant. Le ton est précis, accessible et honnête : « Ce que la source permet de dire » plutôt que « La vérité sur… ».
+Une composition en “récit vertical” : hero plein écran, bandeau de chiffres, navigation par chapitres, sections alternant pleine largeur et compositions asymétriques. Les cartes ne sont pas toutes identiques : grande carte manifeste, petites fiches, ruban horizontal et panneau latéral de contexte.
 
-## Données intégrées
+### Signature elements
 
-- FAO : monde 2024, plus de 11 Mt, valeur de production d’environ 25 Md USD, commerce supérieur à 34 Md USD, environ 8 Mt exportées, Arabica autour de 60 % ;
-- USDA FAS : prévisions de production mondiale en années commerciales 2024/25 et 2025/26, en sacs de 60 kg ;
-- Bénin : série 2021–2024 de café vert reprise par Africa API comme relais de FAOSTAT, 55,00 à 55,30 tonnes, affichée comme source secondaire à vérifier directement dans FAOSTAT ;
-- décret béninois de 2001 : repères historiques 1960–1999, affichés comme données historiques ;
-- OMS/BMJ : santé et grossesse, avec avertissement contre les promesses médicales ;
-- climat : revue Plants 2022 et étude carbone 2020, contextualisées et non généralisées au Bénin.
+- le **fil d’Ariane vivant** : une ligne de progression plante → fruit → grain → tasse qui suit la lecture ;
+- les **cartes de preuve** : une source, une date et un niveau de confiance visibles en une ligne ;
+- les **pastilles atlas** : repères numérotés qui ouvrent une explication sans faire disparaître le contenu.
 
-## Contraintes
+### Interaction philosophy
 
-Ne pas publier une donnée béninoise comme nulle en cas d’absence de source. Ne pas mélanger année civile et année commerciale. Ne pas comparer tonnes de café vert, sacs de 60 kg, café torréfié et consommation intérieure sans afficher la conversion et le périmètre. Ne pas utiliser de données privées ou personnelles sur Kevin sans validation.
+Les animations sont courtes, explicatives et réversibles. Aucun texte documentaire ne dépend d’un reveal pour être visible. Les images peuvent se déplacer légèrement au survol, les panneaux s’ouvrir au clavier, les filtres mettent à jour les résultats sans rechargement, et le mode sombre/clair garde les mêmes repères.
 
-## Validation
+### Animation
 
-Le build doit contrôler la nouvelle page, le nouveau JavaScript, les SVG et les liens externes. Les graphiques doivent être rendus en SVG accessible, les données tabulaires doivent être disponibles dans le HTML ou une vue accessible, et les interactions doivent fonctionner sans bibliothèque distante.
+Transitions de 160–240 ms, mouvement doux et uniquement sur transform/opacity décoratifs. Respect de `prefers-reduced-motion`. Pas de rotation infinie, pas de texte qui clignote, pas de contenu rendu invisible au chargement.
+
+### Typographie
+
+DM Sans pour l’interface et les données ; une serif de contraste uniquement pour les grands titres et les citations. Les titres sont courts, les paragraphes respirent, les métriques sont tabulaires et les libellés restent lisibles sur mobile.
+
+### Brand essence
+
+**Le grand atlas francophone pour comprendre le café, avec le Bénin comme territoire d’attention et de preuve.** Personnalités : précis, chaleureux, curieux.
+
+### Voix
+
+- Titre : « Le café n’est pas une boisson. C’est une chaîne de transformations. »
+- CTA : « Commencer par la plante » / « Voir ce que la source permet de dire ».
+
+### Wordmark & logo
+
+Conserver le monogramme circulaire C, mais le traiter comme un repère cartographique : cercle, point cardinal et ligne de progression plutôt qu’un simple badge.
+
+### Couleur de marque
+
+Corail torréfié `#c96b45`, utilisé avec parcimonie pour les actions et les points d’entrée.
+
+## Architecture livrée
+
+- `index.html` : nouvelle page d’accueil éditoriale et interactive.
+- `redesign.css` : couche de design complète et responsive, chargée en dernier.
+- `redesign.js` : progression, filtres de chapitres, atlas interactif, compteurs et micro-interactions.
+- `img/atlas-*.jpg` : visuels générés avec un usage explicite dans l’interface.
+- pages existantes conservées et progressivement harmonisées par la couche redesign.
+- `manus-routes.json` : routes documentaires déclarées pour le preview.
+
+## Contraintes conservées
+
+Ne supprimer aucun contenu documentaire existant. Ne pas présenter une image générée comme une photographie de terrain. Garder les crédits, les sources, le RGPD, les CGU, les contrôles de liens, l’accessibilité clavier, le responsive et le mode clair/sombre.
