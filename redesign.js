@@ -3,6 +3,12 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const reduced = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const setFilterUrl = value => {
+    const url = new URL(window.location.href);
+    if (value === 'all') url.searchParams.delete('theme');
+    else url.searchParams.set('theme', value);
+    history.replaceState({ theme: value }, '', `${url.pathname}${url.search}${url.hash}`);
+  };
   const init = () => {
     if (document.body.dataset.atlasReady === 'true') return;
     document.body.dataset.atlasReady = 'true';
@@ -19,7 +25,9 @@
     const filters = $$('.atlas-filter');
     const chapters = $$('.atlas-chapter');
     const count = $('#atlas-result-count');
-    const applyFilter = value => {
+    const applyFilter = (value, updateUrl = true) => {
+      const valid = ['all', 'vivant', 'transformation', 'tasse', 'societe'];
+      if (!valid.includes(value)) value = 'all';
       let visible = 0;
       chapters.forEach(card => {
         const show = value === 'all' || card.dataset.theme === value;
@@ -31,10 +39,17 @@
         button.classList.toggle('is-active', active);
         button.setAttribute('aria-pressed', String(active));
       });
-      if (count) count.textContent = `${visible} parcours visibles`;
+      if (count) count.textContent = `${visible} parcours visible${visible > 1 ? 's' : ''}`;
+      if (updateUrl) setFilterUrl(value);
     };
-    filters.forEach(button => button.addEventListener('click', () => applyFilter(button.dataset.filter)));
-    applyFilter('all');
+    filters.forEach(button => button.addEventListener('click', () => {
+      const value = button.dataset.filter;
+      const run = () => applyFilter(value);
+      if (document.startViewTransition && !reduced()) document.startViewTransition(run);
+      else run();
+    }));
+    applyFilter(new URLSearchParams(location.search).get('theme') || 'all', false);
+    addEventListener('popstate', () => applyFilter(new URLSearchParams(location.search).get('theme') || 'all', false));
 
     $$('.atlas-index-card').forEach(card => card.addEventListener('click', () => {
       $$('.atlas-index-card').forEach(item => item.classList.remove('is-active'));
@@ -60,8 +75,10 @@
       counters.forEach(counter => observer.observe(counter));
     } else counters.forEach(counter => { counter.textContent = `${counter.dataset.target}${counter.dataset.suffix || ''}`; });
 
-    const image = $('.atlas-feature-visual img');
-    if (image) image.addEventListener('error', () => image.closest('.atlas-feature-visual')?.classList.add('image-unavailable'), { once: true });
+    $$('.atlas-feature-visual img, .atlas-gallery img').forEach(image => image.addEventListener('error', () => {
+      image.closest('figure')?.classList.add('image-unavailable');
+      image.alt = `${image.alt} — visuel indisponible`;
+    }, { once: true }));
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
 })();

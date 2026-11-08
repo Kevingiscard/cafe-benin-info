@@ -1,4 +1,8 @@
 
-## Refonte Atlas vivant — visuels générés le 8 novembre 2026
+## Passe spécialisée — visuels générés le 8 novembre 2026
 
-Les quatre fichiers `img/atlas-hero-living-coffee-web.jpg`, `img/atlas-botany-lab-web.jpg`, `img/atlas-chain-journey-web.jpg` et `img/atlas-sensory-studio-web.jpg` sont des illustrations éditoriales générées avec l’outil intégré de génération d’images. Elles ont été produites pour des usages précis dans l’accueil : couverture, botanique, chaîne du café et laboratoire sensoriel. Elles ne représentent ni un lieu réel, ni une exploitation béninoise, ni une personne identifiable, et ne constituent pas une preuve d’origine ou de production. Les versions web compressées sont les seules utilisées dans le parcours public.
+- `img/atlas-benin-field-notebook-web.jpg` : carnet de recherche et carte stylisée pour le dossier Bénin ; illustration éditoriale fictive, sans relevé de terrain réel.
+- `img/atlas-roast-microscopy-web.jpg` : structure interne stylisée d’un grain pendant la torréfaction ; illustration scientifique conceptuelle, sans mesure quantitative.
+- `img/atlas-brewing-geometry-web.jpg` : extraction manuelle et relations entre eau, mouture et débit ; illustration pédagogique sans matériel de marque.
+
+Ces visuels sont générés et compressés pour le web. Ils servent à rendre les concepts visibles et sont toujours légendés comme illustrations, jamais comme photographies documentaires.
