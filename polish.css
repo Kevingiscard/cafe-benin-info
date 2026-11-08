@@ -1,140 +1,35 @@
-/* Café Bénin — finition éditoriale stable et originale. */
+/* Optimisations premium de fluidité et d'interactivité */
 :root {
-  --cb-ease-out: cubic-bezier(.23, 1, .32, 1);
-  --cb-fast: 160ms;
-  --cb-medium: 220ms;
+  --tap-min: 44px;
+  --transition-fast: 180ms cubic-bezier(.2, .8, .2, 1);
+  --transition-smooth: 320ms cubic-bezier(.23, 1, .32, 1);
 }
 
-/* Règle prioritaire : le contenu documentaire reste visible même si JavaScript tarde. */
-.reveal,
-.reveal.in,
-.motion-card,
-.motion-card.is-motion-visible {
-  opacity: 1 !important;
-  transform: none !important;
-  visibility: visible !important;
-  transition: none !important;
+button, a.btn, .portal-card, .atlas-chapter, .info-card, .source-card {
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--tap-min);
+  touch-action: manipulation;
 }
 
-.btn,
-.icon-btn,
-.theme-toggle,
-.bot-suggestions button,
-.obs-filter,
-.fav,
-.dict-card,
-.card,
-.source-card,
-.v4-index a,
-.pro-card,
-.visual-card,
-.field-card a {
-  transition-property: transform, background-color, border-color, box-shadow, color;
-  transition-duration: var(--cb-medium);
-  transition-timing-function: var(--cb-ease-out);
+button:active, a.btn:active, .portal-card:active {
+  transform: scale(.98);
 }
 
-.btn:hover,
-.icon-btn:hover,
-.theme-toggle:hover,
-.bot-suggestions button:hover,
-.obs-filter:hover,
-.source-card:hover,
-.v4-index a:hover,
-.pro-card:hover,
-.dict-card:hover,
-.card:hover {
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .portal-card:hover, .atlas-chapter:hover, .info-card:hover, .source-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent2);
+    box-shadow: 0 8px 24px rgba(182, 91, 42, .12);
+  }
 }
 
-.btn:active,
-.icon-btn:active,
-.theme-toggle:active,
-.bot-suggestions button:active,
-.obs-filter:active,
-.fav:active {
-  transform: scale(.975);
-  transition-duration: var(--cb-fast);
-}
-
-.card:focus-within,
-.source-card:focus-within,
-.pro-card:focus-within,
-.visual-card:focus-within {
-  border-color: var(--color-focus, #f0b66e);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-focus, #f0b66e) 24%, transparent);
-}
-
-main > section:not(.hero),
-main > .section {
+img {
   content-visibility: auto;
-  contain-intrinsic-size: 1px 720px;
-}
-
-.card-media,
-.v4-gallery figure,
-.portal-visual-strip figure,
-.source-card figure {
-  overflow: hidden;
-  background: var(--color-surface-muted, #211b16);
-}
-
-img[loading="lazy"] {
-  background: var(--color-surface-muted, #211b16);
-}
-
-/* Sur la couverture sombre, le header reste lisible avant et après le scroll. */
-body:has(.hero) .brand,
-body:has(.hero) .nav-links a,
-body:has(.hero) .theme-toggle,
-body:has(.hero) .menu-toggle {
-  color: #fffaf2;
-  text-shadow: 0 1px 12px rgb(0 0 0 / 42%);
-}
-body:has(.hero) .nav-links a:hover,
-body:has(.hero) .nav-links a:focus-visible {
-  color: #f3b879;
-}
-
-/* Le thème change doucement, sans retarder le contenu ni le focus clavier. */
-html,
-body,
-.nav,
-.section,
-.card,
-.v4-panel,
-.footer,
-.search-panel,
-.mobile-nav,
-.cookie-banner {
-  transition: background-color 220ms var(--cb-ease-out), color 180ms var(--cb-ease-out), border-color 180ms var(--cb-ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
+  *, *::before, *::after {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
-  }
-
-  .btn:hover,
-  .icon-btn:hover,
-  .theme-toggle:hover,
-  .bot-suggestions button:hover,
-  .obs-filter:hover,
-  .source-card:hover,
-  .v4-index a:hover,
-  .pro-card:hover,
-  .dict-card:hover,
-  .card:hover,
-  .btn:active,
-  .icon-btn:active,
-  .theme-toggle:active,
-  .bot-suggestions button:active,
-  .obs-filter:active,
-  .fav:active {
-    transform: none;
   }
 }
