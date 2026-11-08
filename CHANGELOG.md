@@ -1,12 +1,12 @@
 # Changelog
 
-## 2026-11-08 - Optimisation technique premium
-- Fluidité renforcée : transitions, états actifs et feedback tactile optimisés
-- Interactivité améliorée sur tous les éléments cliquables (cartes, boutons, navigation)
-- Compatibilité multi-plateformes : zones de toucher minimales, support reduced-motion, performances images
-- Français soutenu harmonisé avec le thème café dans les sections principales
-- Site prêt pour un déploiement fluide sur GitHub Pages
+## 2026-11-09 - Encyclopédie de référence
+- Page À propos premium avec signature claire de Kevin Giscard (consultant IA & expert digital)
+- Explorer enrichi : 10 chapitres détaillés avec descriptions approfondies et liens directs
+- Structure encyclopédique renforcée, français soutenu, tout cliquable
+- Images premium générées (portrait, anatomie de la cerise, chaîne de valeur)
+- Site positionné comme source d’information complète et méthodique sur le café
 
-## Édition Premium précédente
-- Structure éditoriale du Dossier Bénin renforcée
+## Optimisations précédentes
+- Fluidité, interactivité et compatibilité multi-plateformes
 - Lien gratuit maintenu
