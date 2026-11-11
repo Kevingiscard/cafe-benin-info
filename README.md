@@ -28,7 +28,7 @@ Le dépôt GitHub et sa branche main sont la source de vérité. Chaque modifica
 - styles.css, v4.css, motion.css, theme.css : présentation, composants, mouvement progressif et thèmes.
 - img/ : photographies et schémas locaux.
 - scripts/ et tests/ : validation, accessibilité, SEO, sécurité, liens et tests du projet.
-- docs/ : authentification réelle, procédures d’exploitation et limites connues.
+- docs/ : guide d’authentification, sécurité, exploitation et limites connues.
 
 Le site de main est statique. Il ne crée pas de compte visiteur, n’utilise pas de base de données ou d’API métier, et ne demande aucune variable d’environnement. Le manifeste web ne constitue pas un cache hors ligne : aucun service worker n’est installé.
 
@@ -42,7 +42,7 @@ npm run verify
 npm run health
 ```
 
-Pour vérifier les sources externes séparément : npm run check:links:external.
+Pour vérifier les sources externes séparément : `npm run check:links:external`.
 
 ## Publication et synchronisation
 
@@ -52,7 +52,7 @@ Pour garder l’ancienne adresse cafe-benin-info.vercel.app comme alias du site 
 
 ## Documentation
 
-- [Authentification et traitement des jetons](docs/AUTHENTICATION_AND_TOKENS.md)
+- [Guide complet : authentification, flux et jetons](docs/AUTHENTICATION_AND_TOKENS.md)
 - [Sécurité et vie privée](docs/SECURITY.md)
 - [Exploitation et publication](docs/OPERATIONS.md)
 - [État des déploiements](DEPLOYMENT_STATUS.md)
