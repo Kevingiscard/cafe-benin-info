@@ -53,6 +53,7 @@ Pour garder l’ancienne adresse cafe-benin-info.vercel.app comme alias du site 
 ## Documentation
 
 - [Guide complet : authentification, flux et jetons](docs/AUTHENTICATION_AND_TOKENS.md)
+- [État de l’audit technique et actions restantes](docs/AUDIT_STATUS.md)
 - [Sécurité et vie privée](docs/SECURITY.md)
 - [Exploitation et publication](docs/OPERATIONS.md)
 - [État des déploiements](DEPLOYMENT_STATUS.md)
