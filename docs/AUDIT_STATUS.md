@@ -9,7 +9,7 @@
 
 La branche `main` décrit un site statique GitHub Pages sans authentification de visiteurs ni API métier active. La publication est automatisée par GitHub Actions avec des permissions Pages et OIDC limitées au travail de déploiement.
 
-L’ancienne intégration Vercel n’a pas pu être auditée côté compte : l’API Vercel a refusé l’accès au périmètre d’équipe `kevingiscardd-6768` (403). Le commit de la PR de documentation a un statut Vercel en échec. Le statut combiné consulté ne remonte aucun contrôle GitHub Actions ; cela ne prouve ni succès ni échec des workflows Actions.
+L’ancienne intégration Vercel n’a pas pu être auditée côté compte : l’API Vercel a refusé l’accès au périmètre d’équipe `kevingiscardd-6768` (403). Le commit de la PR de documentation a un statut Vercel en échec. L’API GitHub Actions consultée sur le dernier commit de tête retourne zéro exécution associée ; le statut combiné ne retourne que l’intégration Vercel en échec. Cela ne prouve ni succès ni échec de validation, et peut signifier que l’exécution n’a pas été lancée ou n’est pas visible via la connexion.
 
 ## État par sujet
 
