@@ -244,3 +244,45 @@ Pour la situation actuelle, aucune de ces fonctions de compte n’est requise pa
 - [Concept du jeton `GITHUB_TOKEN`](https://docs.github.com/en/actions/concepts/security/github_token)
 - [Utilisation des secrets dans les workflows](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets)
 - [Référence des événements déclenchant les workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows)
+
+
+## 14. État d’audit des contrôles encore ouverts (12 novembre 2026)
+
+Cette section distingue ce qui a été observé dans le dépôt de ce qui nécessite un accès externe ou une action humaine. Elle évite de transformer une absence de preuve en conclusion.
+
+| Contrôle | Preuve consultée | État | Suite requise |
+|---|---|---|---|
+| Dépôt source | Arborescence GitHub de `Kevingiscard/cafe-benin-info` | Branche `main` publique identifiée | Refaire l’audit si le dépôt ou la branche de production change. |
+| Validation déclarée | `.github/workflows/validate.yml` | Push et pull request vers `main`; `contents: read`; exécute `npm run verify` | Vérifier le résultat dans l’onglet Actions après chaque changement. |
+| Déploiement déclaré | `.github/workflows/pages-deploy.yml` | Push vers `main` ou lancement manuel ; validation requise ; publication Pages dans l’environnement `github-pages` | Vérifier les protections de l’environnement dans les paramètres du dépôt. |
+| Statut CI du commit de documentation | Statut combiné GitHub consulté pour `cf44f43585f163f0159334255137ff3e48f1d729` | Le seul statut retourné est Vercel en échec ; aucun résultat Actions n’est remonté par cet endpoint | Consulter les exécutions Actions associées à la PR ; ne pas assimiler « aucun statut remonté » à « tests réussis ». |
+| Projet Vercel | API Vercel interrogée pour le projet `cafe-benin-info` | Accès refusé (HTTP 403) pour le périmètre d’équipe `kevingiscardd-6768` | Autoriser l’accès à l’équipe depuis le connecteur Vercel puis inspecter le projet, les domaines, les déploiements et les paramètres Git. |
+| Variables Vercel | Non consultables sans accès au projet | Inconnues ; les valeurs ne sont pas exposées ici | Après accès autorisé, vérifier seulement noms, cibles et environnements ; ne jamais copier de valeur secrète dans un ticket ou un journal. Supprimer les variables anciennes non utilisées après confirmation. |
+| Code serveur Vercel | Pas inspecté par l’accès disponible | Inconnu ; l’état de `main` ne prouve pas le contenu d’un ancien déploiement | Inspecter les fichiers du déploiement et les fonctions/API ; comparer au commit relié au projet. |
+| Pages actuellement servies | Le dépôt et la configuration de workflow ont été lus ; les réglages d’hébergement privés ne sont pas disponibles dans cette inspection | Le workflow décrit un déploiement Pages ; la configuration du compte n’est pas entièrement auditée | Confirmer Source = GitHub Actions dans Settings → Pages et comparer la dernière exécution réussie au commit de production. |
+| Consentement et analytics | `cookie-consent.js`, `confidentialite.html`, bannière embarquée dans la page de confidentialité | Le choix est stocké localement ; le code précise qu’aucun fournisseur d’audience n’est activé dans cette version. Le bouton « Autoriser la mesure » peut laisser croire qu’un service sera activé | Garder le contrôle désactivé/informatif ou, si un fournisseur est ajouté, implémenter le blocage avant consentement, le chargement après consentement et la révocation, puis mettre à jour l’information légale. |
+| Requêtes tierces | Référence DM Sans à Google Fonts observée dans le site et les documents | La requête de police est tierce ; aucun inventaire réseau exhaustif de toutes les pages en production n’a été fait | Effectuer une capture réseau des pages publiées ; décider de l’auto-hébergement de la police et vérifier sa licence si l’objectif est de réduire les requêtes tierces. |
+| Données locales | Scripts du frontend et politique de confidentialité | Les clés documentées comprennent thème, favoris et choix de bannière ; pas d’identité serveur | Maintenir une liste de clés exhaustive, incluant les outils/carnets, leur finalité, format et moyen d’effacement. |
+
+### Procédure Vercel après autorisation de l’équipe
+
+1. Lire la fiche du projet sans modifier ses paramètres ; relever son identifiant, son équipe, son dépôt Git, sa branche de production, son répertoire racine et sa commande de build.
+2. Lister les domaines et alias, puis lire leurs destinations et états TLS. Comparer la redirection attendue par `vercel.json` avec le comportement réellement servi.
+3. Examiner les déploiements récents et identifier le SHA du dépôt pour chacun. Lire les journaux du déploiement en échec ; ne pas publier de logs contenant des valeurs de secrets.
+4. Examiner les noms et environnements des variables sans révéler leur contenu. Comparer chaque variable à la configuration de code correspondant au déploiement actif ; documenter les variables orphelines sans recopier leurs valeurs.
+5. Vérifier si des fonctions `/api` sont présentes dans les fichiers du déploiement et si elles correspondent à un code maintenu. Vérifier leur authentification, validation, limitation de débit et contrôle d’accès.
+6. Si le projet doit simplement rediriger vers GitHub Pages, confirmer que le déploiement actuel contient le `vercel.json` attendu, puis tester plusieurs chemins et les codes HTTP. Ne supprimer ni secret ni projet avant d’avoir identifié ses consommateurs.
+7. Rapporter les résultats vérifiables dans cette documentation et ne modifier la configuration qu’après avoir établi le dépôt, le projet et le comportement attendus.
+
+### Procédure de vérification GitHub avant publication
+
+1. Ouvrir la PR associée à la branche de documentation et vérifier que le diff ne contient que les fichiers prévus.
+2. Vérifier l’exécution de `Validate production` pour le SHA de tête ; lire les logs si elle échoue et corriger les liens, le Markdown ou les assertions concernées.
+3. Vérifier qu’aucune modification non voulue de workflow, secret, droit ou code applicatif ne s’est glissée dans la PR.
+4. Après intégration, vérifier le déploiement GitHub Pages, son environnement et le commit effectivement publié.
+5. Ouvrir les pages de documentation depuis le site officiel et confirmer le rendu des tableaux, liens et diagrammes Mermaid.
+
+Aucune étape de cette liste n’est déclarée comme réalisée tant que sa preuve n’est pas disponible.
+
+
+Pour les preuves d’état, les blocages d’accès aux hébergeurs et la séquence de clôture de l’audit, voir [État de l’audit technique](AUDIT_STATUS.md).
