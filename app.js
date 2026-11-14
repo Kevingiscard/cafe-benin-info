@@ -49,7 +49,7 @@
     const menu = $('#mobile-nav');
     const trigger = $('#nav-toggle');
     let opener = null;
-    const focusables = () => $$('a[href], button:not([disabled])', menu);
+    const focusables = () => menu ? $('a[href], button:not([disabled])', menu) : [];
     const close = ({ restoreFocus = false } = {}) => {
       if (!menu || !trigger) return;
       menu.classList.remove('open');
@@ -71,7 +71,7 @@
     };
 
     trigger?.addEventListener('click', () => menu?.classList.contains('open') ? close({ restoreFocus: true }) : open());
-    $$('.mobile-link', menu).forEach(link => link.addEventListener('click', () => close()));
+    if (menu) $('.mobile-link', menu).forEach(link => link.addEventListener('click', () => close()));
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && menu?.classList.contains('open')) close({ restoreFocus: true });
       if (event.key !== 'Tab' || !menu?.classList.contains('open')) return;
