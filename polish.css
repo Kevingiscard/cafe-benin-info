@@ -33,3 +33,12 @@ img {
     transition-duration: .01ms !important;
   }
 }
+
+/* Installation et état réseau PWA */
+.pwa-install,.pwa-update{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 13px;border:1px solid var(--color-border-strong,var(--line));border-radius:999px;background:var(--color-surface-elevated,var(--panel));color:var(--color-text,var(--text));font:600 12px/1.2 var(--font-sans,system-ui,sans-serif);cursor:pointer}
+.pwa-install:hover,.pwa-update:hover{border-color:var(--color-accent,var(--accent2));}
+.pwa-install[hidden],.pwa-status[hidden]{display:none!important}
+.pwa-status{position:relative;z-index:20;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:9px 16px;background:var(--color-surface-muted,#eee4d6);color:var(--color-text,#231a14);border-bottom:1px solid var(--color-border,#ddcfbd);font-size:12px;line-height:1.5}
+.pwa-status[data-update-ready="true"]{background:var(--color-accent-soft,#f0d4b6)}
+.pwa-status button{min-height:36px}
+@media(max-width:640px){.pwa-install{padding:8px 10px;font-size:11px}.pwa-status{font-size:11px;text-align:center}}

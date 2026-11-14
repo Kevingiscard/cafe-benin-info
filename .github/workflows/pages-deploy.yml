@@ -1,6 +1,8 @@
 name: Deploy Café Bénin to GitHub Pages
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
   workflow_dispatch:
@@ -9,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: pages-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -28,6 +30,7 @@ jobs:
         run: npm run verify
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: validate
     permissions:
       contents: read

@@ -4,36 +4,243 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script>!function(){try{var e=localStorage.getItem('cb-theme'),t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=e||t}catch(e){document.documentElement.dataset.theme='light'}}();</script>
-<meta name="description" content="Café Bénin — encyclopédie et dictionnaire francophone du café : histoire, botanique, génétique, culture, post-récolte, torréfaction, extraction, dégustation, santé, économie et filière béninoise.">
+<meta name="description" content="Café Bénin est une encyclopédie documentaire du café : botanique, culture, transformation, torréfaction, extraction, dégustation et filière béninoise.">
 <meta name="theme-color" content="#f5f0e7">
 <meta name="robots" content="index,follow">
-<meta property="og:title" content="Café Bénin — Encyclopédie et dictionnaire du café">
-<meta property="og:description" content="De la plante à la tasse : histoire, science, botanique, transformation, terroir, extraction, dégustation et café au Bénin.">
+<meta property="og:title" content="Café Bénin — Atlas documentaire du café">
+<meta property="og:description" content="Comprendre le café de la plante à la tasse, explorer la filière béninoise et apprendre avec des outils pratiques.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kevingiscard.github.io/cafe-benin-info/">
 <meta property="og:image" content="https://kevingiscard.github.io/cafe-benin-info/img/social-card.jpg">
+<meta property="og:image:alt" content="Visuel éditorial de l’encyclopédie Café Bénin">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Café Bénin — Atlas documentaire du café">
+<meta name="twitter:description" content="De la plante à la tasse : science, pratiques, dégustation et dossier Bénin.">
+<meta name="twitter:image" content="https://kevingiscard.github.io/cafe-benin-info/img/social-card.jpg">
 <link rel="canonical" href="https://kevingiscard.github.io/cafe-benin-info/">
+<link rel="manifest" href="site.webmanifest">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="v4.css">
 <link rel="stylesheet" href="motion.css">
-<link rel="stylesheet" href="theme.css">
-<link rel="stylesheet" href="polish.css?v=3">
+<link rel="stylesheet" href="theme.css?v=3">
+<link rel="stylesheet" href="polish.css?v=4">
 <link rel="stylesheet" href="portal.css">
-<title>Café Bénin — Encyclopédie et dictionnaire du café</title>
+<link rel="stylesheet" href="vocabulaire.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Café Bénin","url":"https://kevingiscard.github.io/cafe-benin-info/","inLanguage":"fr-FR","description":"Encyclopédie documentaire francophone du café, de la plante à la tasse, avec un dossier consacré au Bénin."}</script>
+<title>Café Bénin — Encyclopédie et atlas du café</title>
 </head>
 <body>
 <a class="skip-link" href="#accueil">Aller au contenu principal</a>
-<header id="site-nav" class="nav"><div class="container nav-inner"><a class="brand" href="#accueil"><span class="brand-mark">C</span><span>Café Bénin</span></a><nav class="nav-links"><a href="explorer.html">Explorer</a><a href="benin.html">Dossier Bénin</a><a href="observatoire.html">Observatoire</a><a href="outils.html">Outils</a><a href="dictionnaire.html">Dictionnaire</a><a href="sources.html">Sources</a></nav><div class="nav-actions"><button id="search-open" class="search-trigger" type="button">⌕ Rechercher</button><button id="theme-toggle" class="theme-toggle" type="button">◐</button><button id="nav-toggle" class="menu-toggle" type="button">☰</button></div></div></header>
+<div id="progress" aria-hidden="true"></div>
+<header id="site-nav" class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="Café Bénin, accueil"><span class="brand-mark">C</span><span>Café Bénin</span></a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="explorer.html">Explorer</a>
+      <a href="benin.html">Dossier Bénin</a>
+      <a href="observatoire.html">Observatoire</a>
+      <a href="outils.html">Outils</a>
+      <a href="dictionnaire.html">Dictionnaire</a>
+      <a href="sources.html">Sources</a>
+    </nav>
+    <div class="nav-actions">
+      <button id="search-open" class="search-trigger" type="button">⌕ Rechercher <span>Ctrl K</span></button>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activer le mode sombre" aria-pressed="false"><span aria-hidden="true">◐</span><span class="theme-toggle-label">Thème</span></button>
+      <button id="nav-toggle" class="menu-toggle icon-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
+    </div>
+  </div>
+</header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile" aria-hidden="true">
+  <a class="mobile-link" href="explorer.html">Explorer les chapitres</a>
+  <a class="mobile-link" href="benin.html">Dossier Bénin</a>
+  <a class="mobile-link" href="observatoire.html">Observatoire des données</a>
+  <a class="mobile-link" href="professionnels.html">Espace professionnel</a>
+  <a class="mobile-link" href="outils.html">Outils pratiques</a>
+  <a class="mobile-link" href="dictionnaire.html">Dictionnaire</a>
+  <a class="mobile-link" href="sources.html">Sources et contribuer</a>
+  <a class="mobile-link" href="#cafebot">CaféBot local</a>
+  <a class="mobile-link" href="a-propos.html">À propos</a>
+</nav>
+
+<div id="search-modal" class="search-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Recherche globale">
+  <div class="search-panel">
+    <div class="search-head">
+      <span id="search-title" aria-hidden="true">⌕</span>
+      <input id="global-search" type="search" placeholder="Rechercher un terme, une méthode, un chapitre…" aria-label="Recherche dans Café Bénin" aria-controls="search-results">
+      <button id="search-close" class="icon-btn" type="button" aria-label="Fermer la recherche">×</button>
+    </div>
+    <div id="search-results" class="search-results" aria-live="polite"></div>
+  </div>
+</div>
+
 <main id="accueil">
-<section class="hero atlas-hero"><div class="hero-media"><img src="img/atlas-hero-living-coffee-web.jpg" alt="Illustration éditoriale d’un voyage visuel de la plante de café jusqu’à la tasse" fetchpriority="high"></div><div class="container hero-content"><span class="atlas-kicker">Encyclopédie · science · Bénin · filière</span><h1 class="display">Le café n’est pas une boisson.<br><span>C’est une chaîne de transformations.</span></h1><p class="hero-copy">Une plateforme documentaire destinée à comprendre la plante, le fruit, le grain, les métiers, les techniques et les territoires. Du caféier à la tasse, chaque chapitre relie une idée, une image, une méthode et une source.</p><div class="hero-actions"><a class="btn primary" href="#atlas-parcours">Commencer par la plante</a><a class="btn secondary" href="benin.html">Ouvrir le dossier Bénin</a></div></div></section>
-<section class="portal-home"><div class="container"><div class="portal-heading"><div><span class="eyebrow">Commencer ici</span><h2 class="display">Tout le café, <em>bien ordonné.</em></h2></div><p>Choisissez votre parcours : approfondir les connaissances, comprendre le Bénin, préparer une tasse ou vérifier une source.</p></div><div class="portal-grid">
-<a class="portal-card" href="explorer.html"><span class="portal-number">01</span><h3>Explorer</h3><p>Parcourez les chapitres de la plante à la tasse, avec une progression claire et structurée.</p></a>
-<a class="portal-card portal-card-featured" href="benin.html"><span class="portal-number">02</span><h3>Dossier Bénin</h3><p>Ce qui est établi, ce qui demeure à documenter et où rechercher des données fiables.</p></a>
-<a class="portal-card" href="outils.html"><span class="portal-number">03</span><h3>Outils pratiques</h3><p>Calculer un ratio, suivre une méthode, diagnostiquer une tasse et conserver ses observations.</p></a>
-</div></div></section>
+<section class="hero atlas-hero">
+  <div class="hero-media"><img src="img/atlas-hero-living-coffee-web.jpg" alt="Illustration éditoriale du parcours du café, du caféier jusqu’à la tasse" fetchpriority="high" decoding="async"></div>
+  <div class="container hero-content">
+    <span class="eyebrow">Encyclopédie · science · pratiques · Bénin</span>
+    <h1 class="display">Le café n’est pas une boisson.<br><span>C’est un monde à comprendre.</span></h1>
+    <p class="hero-copy">Un atlas documentaire francophone pour explorer le café de la plante à la tasse : espèces, agronomie, post-récolte, torréfaction, extraction, dégustation et enjeux de filière. Le dossier béninois distingue les faits établis des informations encore à documenter.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="explorer.html">Explorer l’encyclopédie</a>
+      <a class="btn secondary" href="benin.html">Découvrir le dossier Bénin</a>
+    </div>
+    <form id="hero-search-form" class="hero-search" role="search">
+      <label class="sr-only" for="hero-search">Rechercher dans l’encyclopédie</label>
+      <input id="hero-search" type="search" placeholder="Arabica, fermentation, mouture, terroir…">
+      <button class="btn primary" type="submit">Rechercher</button>
+    </form>
+    <div class="hero-meta"><span><strong>254+</strong> termes documentés</span><span><strong>10</strong> chapitres d’exploration</span><span><strong>5</strong> outils pratiques</span></div>
+  </div>
+</section>
+
+<section class="portal-home" id="atlas-parcours">
+  <div class="container">
+    <div class="portal-heading">
+      <div><span class="eyebrow">Un seul portail, plusieurs parcours</span><h2 class="display">Tout le café, <em>clairement relié.</em></h2></div>
+      <p>Chaque espace répond à un besoin précis. Les contenus documentaires restent consultables sans compte ; les outils et préférences sont gérés localement dans le navigateur.</p>
+    </div>
+    <div class="portal-grid">
+      <a class="portal-card" href="explorer.html"><span class="portal-number">01 · COMPRENDRE</span><h3>Explorer</h3><p>Histoire, botanique, génétique, culture, récolte, transformation, torréfaction et extraction.</p><span class="portal-link">Ouvrir les chapitres →</span></a>
+      <a class="portal-card portal-card-featured" id="benin" href="benin.html"><span class="portal-number">02 · TERRITOIRE</span><h3>Dossier Bénin</h3><p>Sources nationales et internationales, repères historiques, données à confirmer et questions de terrain.</p><span class="portal-link">Consulter le dossier →</span></a>
+      <a class="portal-card" href="observatoire.html"><span class="portal-number">03 · DONNÉES</span><h3>Observatoire</h3><p>Lire les indicateurs avec leurs unités, périodes, périmètres, sources et limites méthodologiques.</p><span class="portal-link">Voir les repères →</span></a>
+      <a class="portal-card" href="outils.html"><span class="portal-number">04 · EXPÉRIMENTER</span><h3>Laboratoire</h3><p>Ratio café/eau, guide d’infusion, diagnostic de tasse, roue aromatique et carnet de dégustation.</p><span class="portal-link">Utiliser les outils →</span></a>
+      <a class="portal-card" href="dictionnaire.html"><span class="portal-number">05 · DÉFINIR</span><h3>Dictionnaire</h3><p>Un vocabulaire structuré par familles, avec recherche, filtres, fiches et favoris sur cet appareil.</p><span class="portal-link">Chercher un terme →</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="filiere" aria-labelledby="parcours-title">
+  <div class="container">
+    <div class="section-head"><div><span class="eyebrow">La chaîne du café</span><h2 id="parcours-title">De la plante <em>à la tasse.</em></h2></div><p>Des portes d’entrée courtes vers les grands domaines de connaissance. Les chapitres complets, références et limites sont présentés dans l’espace Explorer.</p></div>
+    <div class="page-grid">
+      <article class="info-card" id="histoire"><small>01 · HISTOIRE</small><h3>Origines et circulation</h3><p>Des ressources génétiques d’Afrique de l’Est aux routes commerciales, aux lieux de consommation et aux transformations contemporaines.</p><a class="portal-link" href="explorer.html">Explorer l’histoire →</a></article>
+      <article class="info-card" id="botanique"><small>02 · BOTANIQUE</small><h3>Espèces et anatomie</h3><p>Genre Coffea, Arabica, Canephora, Liberica, fleur, cerise, graine et diversité génétique.</p><a class="portal-link" href="explorer.html">Explorer la botanique →</a></article>
+      <article class="info-card" id="culture"><small>03 · AGRONOMIE</small><h3>Sol, climat et pratiques</h3><p>Implantation, ombrage, nutrition, santé des caféiers, récolte et limites des rendements.</p><a class="portal-link" href="explorer.html">Explorer la culture →</a></article>
+      <article class="info-card" id="processus"><small>04 · POST-RÉCOLTE</small><h3>Fermentation et séchage</h3><p>Voies sèche et humide, mucilage, fermentation contrôlée, séchage, stockage et traçabilité.</p><a class="portal-link" href="explorer.html">Explorer les procédés →</a></article>
+      <article class="info-card" id="torréfaction"><small>05 · TORRÉFACTION</small><h3>Chaleur et arômes</h3><p>Transfert thermique, réactions chimiques, développement, refroidissement et dégazage.</p><a class="portal-link" href="explorer.html">Explorer la torréfaction →</a></article>
+      <article class="info-card" id="extraction"><small>06 · EXTRACTION</small><h3>Mesurer et ajuster</h3><p>Dose, mouture, ratio, eau, temps, débit, concentration et répétabilité des recettes.</p><a class="portal-link" href="outils.html">Ouvrir le laboratoire →</a></article>
+      <article class="info-card" id="degustation"><small>07 · SENSORIEL</small><h3>Décrire une tasse</h3><p>Arômes, acidité perçue, douceur, texture, équilibre, défauts et vocabulaire commun.</p><a class="portal-link" href="outils.html">Tester les outils sensoriels →</a></article>
+      <article class="info-card" id="sante"><small>08 · SANTÉ</small><h3>Lire les preuves avec prudence</h3><p>Composés du café, caféine, résultats d’études et limites : aucune information ne remplace un avis médical.</p><a class="portal-link" href="explorer.html">Lire le chapitre →</a></article>
+      <article class="info-card" id="coffee-shops"><small>09 · PROFESSIONNELS</small><h3>Acteurs et lieux du café</h3><p>Un espace destiné à structurer progressivement un annuaire vérifiable, sans publier de coordonnées non confirmées.</p><a class="portal-link" href="professionnels.html">Espace professionnel →</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="section visual-journey" id="cafebot">
+  <div class="container">
+    <div class="visual-lead">
+      <div><span class="eyebrow">Assistant documentaire local</span><h2 class="display">Une question sur le café ? <em>Commençons ici.</em></h2></div>
+      <p>CaféBot propose des réponses guidées à partir de thèmes intégrés au site. Il fonctionne sans compte, sans clé API et sans transmettre la question à un service distant. Il ne s’agit pas encore d’un grand modèle génératif.</p>
+    </div>
+    <div class="page-grid two">
+      <div class="bot-panel">
+        <div id="bot-log" class="chat-log" role="log" aria-live="polite" aria-label="Conversation avec CaféBot">
+          <div class="chat assistant"><small>CaféBot local</small><p>Bonjour. Je peux vous orienter sur les espèces, les procédés post-récolte, la torréfaction, l’extraction, la dégustation et le dossier Bénin.</p></div>
+        </div>
+        <form id="bot-form" class="chat-form">
+          <label class="sr-only" for="bot-input">Votre question sur le café</label>
+          <input id="bot-input" type="text" maxlength="4000" placeholder="Ex. : Quelle différence entre Arabica et Canephora ?" autocomplete="off">
+          <button class="btn primary" type="submit">Envoyer</button>
+        </form>
+      </div>
+      <article class="info-card">
+        <span class="eyebrow">Évolution technologique</span>
+        <h3>IA locale, sans promesse artificielle.</h3>
+        <p>Le socle actuel est un assistant documentaire à règles locales. L’exécution de modèles spécialisés avec LiteRT pourra être ajoutée lorsqu’un modèle compatible, suffisamment léger et correctement licencié aura été sélectionné et testé sur les appareils cibles.</p>
+        <p>LiteRT dans Google Play Services concerne une application Android native ; pour une PWA web, l’intégration doit utiliser une voie web compatible et un modèle adapté. Aucun modèle lourd n’est téléchargé à l’ouverture du site.</p>
+        <a class="portal-link" href="sources.html">Lire la méthode et les limites →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="dictionnaire" aria-labelledby="dictionary-title">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">Le vocabulaire du café</span><h2 id="dictionary-title">Un mot juste, <em>une meilleure lecture.</em></h2></div>
+      <p>Parcourez le dictionnaire directement depuis l’accueil. Les définitions sont structurées par catégories ; utilisez la recherche pour retrouver un terme précis.</p>
+    </div>
+    <div class="dict-toolbar" role="search" aria-label="Recherche dans le dictionnaire">
+      <div class="field"><label for="dict-search">Rechercher un terme</label><input id="dict-search" type="search" placeholder="Arabica, mucilage, extraction…"></div>
+      <div class="field"><label for="dict-filter">Catégorie</label><select id="dict-filter"><option value="">Toutes les catégories</option></select></div>
+    </div>
+    <p class="small-note" id="dict-visible-count" aria-live="polite">Chargement du vocabulaire…</p>
+    <div id="dict-list" class="dict-grid" aria-live="polite"></div>
+    <p class="small-note">Les favoris restent enregistrés sur cet appareil. <a href="dictionnaire.html">Ouvrir le dictionnaire complet →</a></p>
+  </div>
+</section>
+
+<section class="section field-notes" id="carnet">
+  <div class="container">
+    <div class="field-lead">
+      <div><span class="eyebrow">Préparer une tasse</span><h2 class="display">La recette commence par <em>une mesure.</em></h2></div>
+      <p>Un calculateur de départ pour le café filtre. Les valeurs sont indicatives : ajustez une seule variable à la fois et notez vos observations.</p>
+    </div>
+    <form id="brew-calculator" class="brew-calculator">
+      <div>
+        <span class="eyebrow">Calculateur café / eau</span><h3>Quel dosage choisir ?</h3>
+        <p>Choisissez une masse d’eau et un ratio. Le calcul ne constitue pas une recette universelle.</p>
+        <div class="brew-calculator-fields">
+          <div class="field"><label for="brew-water">Eau (grammes)</label><input id="brew-water" type="number" min="100" max="1500" step="10" value="250"></div>
+          <div class="field"><label for="brew-ratio">Ratio eau:café</label><select id="brew-ratio"><option value="15">1:15 · intense</option><option value="16" selected>1:16 · équilibré</option><option value="17">1:17 · léger</option><option value="18">1:18 · très léger</option></select></div>
+        </div>
+        <p class="brew-calculator-hint">Plage de calcul : 100 à 1 500 g d’eau, ratios de 1:15 à 1:18.</p>
+      </div>
+      <div class="brew-calculator-result">
+        <span>Café à peser</span><output id="brew-coffee" aria-live="polite">15,6 g</output>
+        <p id="brew-bloom">Préinfusion indicative : 31 g d’eau (environ deux fois la dose de café).</p>
+        <a class="portal-link" href="outils.html#ratio">Voir les cinq outils →</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="sources">
+  <div class="container">
+    <div class="section-head"><div><span class="eyebrow">Transparence et documentation</span><h2>Des connaissances <em>à vérifier.</em></h2></div><p>Le projet sépare les informations générales sur le café des données relatives au Bénin. Les chiffres locaux doivent être accompagnés d’une source, d’une date, d’une unité et d’un périmètre.</p></div>
+    <div class="page-grid three">
+      <a class="info-card" href="sources.html"><h3>Sources & contribution</h3><p>Références, crédits des visuels, méthode et modalités de correction.</p><span class="portal-link">Consulter les sources →</span></a>
+      <a class="info-card" href="politique-editoriale.html"><h3>Politique éditoriale</h3><p>Règles de preuve, distinction entre fait et hypothèse, corrections et indépendance.</p><span class="portal-link">Lire la politique →</span></a>
+      <a class="info-card" href="observatoire.html"><h3>Observatoire</h3><p>Repères mondiaux et pistes de travail béninoises avec leurs limites documentaires.</p><span class="portal-link">Examiner les données →</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-head"><div><span class="eyebrow">Participer au projet</span><h2>Une source, une correction, <em>un éclairage.</em></h2></div><p>Les contributions documentées sont les bienvenues. Le formulaire de la page Sources prépare un courriel sur votre appareil ; le site ne transmet pas ce message automatiquement.</p></div>
+    <a class="btn primary" href="sources.html#contribuer">Proposer une contribution</a>
+
+    <form id="comment-form" class="tool-control contribution-form">
+      <div class="field"><label for="comment-name">Nom</label><input id="comment-name" required maxlength="80" autocomplete="name"></div>
+      <div class="field"><label for="comment-email">Adresse e-mail</label><input id="comment-email" type="email" required maxlength="160" autocomplete="email"></div>
+      <div class="field"><label for="comment-content">Contribution, correction ou référence</label><textarea id="comment-content" required maxlength="4000" rows="5" placeholder="Décrivez votre proposition et indiquez les références disponibles."></textarea></div>
+      <p class="small-note">Ce formulaire prépare un courriel dans votre application. Aucun message n’est envoyé automatiquement ni stocké par le site.</p>
+      <button class="btn primary" type="submit">Préparer le courriel</button>
+      <p id="comment-status" aria-live="polite"></p>
+    </form>
+
+    <a class="btn secondary" href="a-propos.html">À propos du projet</a>
+  </div>
+</section>
 </main>
-<footer class="footer"><div class="container"><p class="muted">© <span id="year"></span> Café Bénin · Lien gratuit : <a href="https://kevingiscard.github.io/cafe-benin-info/">kevingiscard.github.io/cafe-benin-info</a></p></div></footer>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><a class="brand" href="index.html"><span class="brand-mark">C</span><span>Café Bénin</span></a><p class="muted">Atlas documentaire francophone du café, de la plante à la tasse.</p></div>
+    <div><p><a href="explorer.html">Explorer</a> · <a href="benin.html">Dossier Bénin</a> · <a href="outils.html">Outils</a> · <a href="dictionnaire.html">Dictionnaire</a></p><p><a href="observatoire.html">Observatoire</a> · <a href="professionnels.html">Professionnels</a> · <a href="sources.html">Sources</a></p><p><a href="confidentialite.html">Confidentialité</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="cgu.html">CGU</a></p></div>
+    <p class="muted">© <span id="year"></span> Café Bénin · Projet documentaire porté par Kevin Giscard.</p>
+  </div>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="dictionary-v4.js" defer></script>
+<script src="local-assistant.js" defer></script>
 <script src="app.js" defer></script>
 </body>
 </html>

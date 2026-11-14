@@ -26,7 +26,7 @@ const signatures = [
   { label: 'clé AWS', regex: /AKIA[0-9A-Z]{16}/ },
   { label: 'clé Stripe', regex: /sk_(?:live|test)_[A-Za-z0-9]{16,}/ }
 ];
-const runtimeFiles = new Set(['app.js', 'dictionary-v4.js', 'local-assistant.js', 'motion.js']);
+const runtimeFiles = new Set(['app.js', 'dictionary-v4.js', 'local-assistant.js', 'motion.js', 'sw.js']);
 
 for (const file of files) {
   if (!/\.(?:css|html|js|json|md|mjs|txt|ya?ml)$/i.test(file)) continue;
