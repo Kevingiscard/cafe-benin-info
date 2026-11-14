@@ -23,13 +23,14 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="v4.css">
 <link rel="stylesheet" href="motion.css">
-<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="theme.css?v=3">
 <link rel="stylesheet" href="polish.css?v=4">
 <link rel="stylesheet" href="portal.css">
+<link rel="stylesheet" href="vocabulaire.css?v=1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Café Bénin","url":"https://kevingiscard.github.io/cafe-benin-info/","inLanguage":"fr-FR","description":"Encyclopédie documentaire francophone du café, de la plante à la tasse, avec un dossier consacré au Bénin."}</script>
 <title>Café Bénin — Encyclopédie et atlas du café</title>
 </head>
@@ -108,12 +109,12 @@
       <a class="portal-card portal-card-featured" id="benin" href="benin.html"><span class="portal-number">02 · TERRITOIRE</span><h3>Dossier Bénin</h3><p>Sources nationales et internationales, repères historiques, données à confirmer et questions de terrain.</p><span class="portal-link">Consulter le dossier →</span></a>
       <a class="portal-card" href="observatoire.html"><span class="portal-number">03 · DONNÉES</span><h3>Observatoire</h3><p>Lire les indicateurs avec leurs unités, périodes, périmètres, sources et limites méthodologiques.</p><span class="portal-link">Voir les repères →</span></a>
       <a class="portal-card" href="outils.html"><span class="portal-number">04 · EXPÉRIMENTER</span><h3>Laboratoire</h3><p>Ratio café/eau, guide d’infusion, diagnostic de tasse, roue aromatique et carnet de dégustation.</p><span class="portal-link">Utiliser les outils →</span></a>
-      <a class="portal-card" id="dictionnaire" href="dictionnaire.html"><span class="portal-number">05 · DÉFINIR</span><h3>Dictionnaire</h3><p>Un vocabulaire structuré par familles, avec recherche, filtres, fiches et favoris sur cet appareil.</p><span class="portal-link">Chercher un terme →</span></a>
+      <a class="portal-card" href="dictionnaire.html"><span class="portal-number">05 · DÉFINIR</span><h3>Dictionnaire</h3><p>Un vocabulaire structuré par familles, avec recherche, filtres, fiches et favoris sur cet appareil.</p><span class="portal-link">Chercher un terme →</span></a>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="parcours-title">
+<section class="section" id="filiere" aria-labelledby="parcours-title">
   <div class="container">
     <div class="section-head"><div><span class="eyebrow">La chaîne du café</span><h2 id="parcours-title">De la plante <em>à la tasse.</em></h2></div><p>Des portes d’entrée courtes vers les grands domaines de connaissance. Les chapitres complets, références et limites sont présentés dans l’espace Explorer.</p></div>
     <div class="page-grid">
@@ -158,7 +159,24 @@
   </div>
 </section>
 
-<section class="section field-notes">
+
+<section class="section" id="dictionnaire" aria-labelledby="dictionary-title">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">Le vocabulaire du café</span><h2 id="dictionary-title">Un mot juste, <em>une meilleure lecture.</em></h2></div>
+      <p>Parcourez le dictionnaire directement depuis l’accueil. Les définitions sont structurées par catégories ; utilisez la recherche pour retrouver un terme précis.</p>
+    </div>
+    <div class="dict-toolbar" role="search" aria-label="Recherche dans le dictionnaire">
+      <div class="field"><label for="dict-search">Rechercher un terme</label><input id="dict-search" type="search" placeholder="Arabica, mucilage, extraction…"></div>
+      <div class="field"><label for="dict-filter">Catégorie</label><select id="dict-filter"><option value="">Toutes les catégories</option></select></div>
+    </div>
+    <p class="small-note" id="dict-visible-count" aria-live="polite">Chargement du vocabulaire…</p>
+    <div id="dict-list" class="dict-grid" aria-live="polite"></div>
+    <p class="small-note">Les favoris restent enregistrés sur cet appareil. <a href="dictionnaire.html">Ouvrir le dictionnaire complet →</a></p>
+  </div>
+</section>
+
+<section class="section field-notes" id="carnet">
   <div class="container">
     <div class="field-lead">
       <div><span class="eyebrow">Préparer une tasse</span><h2 class="display">La recette commence par <em>une mesure.</em></h2></div>
@@ -198,6 +216,16 @@
   <div class="container">
     <div class="section-head"><div><span class="eyebrow">Participer au projet</span><h2>Une source, une correction, <em>un éclairage.</em></h2></div><p>Les contributions documentées sont les bienvenues. Le formulaire de la page Sources prépare un courriel sur votre appareil ; le site ne transmet pas ce message automatiquement.</p></div>
     <a class="btn primary" href="sources.html#contribuer">Proposer une contribution</a>
+
+    <form id="comment-form" class="tool-control contribution-form">
+      <div class="field"><label for="comment-name">Nom</label><input id="comment-name" required maxlength="80" autocomplete="name"></div>
+      <div class="field"><label for="comment-email">Adresse e-mail</label><input id="comment-email" type="email" required maxlength="160" autocomplete="email"></div>
+      <div class="field"><label for="comment-content">Contribution, correction ou référence</label><textarea id="comment-content" required maxlength="4000" rows="5" placeholder="Décrivez votre proposition et indiquez les références disponibles."></textarea></div>
+      <p class="small-note">Ce formulaire prépare un courriel dans votre application. Aucun message n’est envoyé automatiquement ni stocké par le site.</p>
+      <button class="btn primary" type="submit">Préparer le courriel</button>
+      <p id="comment-status" aria-live="polite"></p>
+    </form>
+
     <a class="btn secondary" href="a-propos.html">À propos du projet</a>
   </div>
 </section>
