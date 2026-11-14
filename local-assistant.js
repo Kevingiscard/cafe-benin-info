@@ -9,16 +9,16 @@
     .replace(/\s+/g, ' ').trim();
 
   const links = {
-    botanique: { href: '#botanique', label: 'Botanique du café' },
-    culture: { href: '#culture', label: 'Culture et terroir' },
-    processus: { href: '#processus', label: 'Transformation du café' },
-    torrefaction: { href: '#torréfaction', label: 'Torréfaction' },
-    extraction: { href: '#extraction', label: 'Extraction et méthodes' },
-    degustation: { href: '#degustation', label: 'Dégustation' },
-    dictionnaire: { href: '#dictionnaire', label: 'Dictionnaire' },
-    benin: { href: '#benin', label: 'Dossier Bénin' },
-    carnet: { href: '#carnet', label: 'Carnet de terrain' },
-    sante: { href: '#sante', label: 'Café et santé' }
+    botanique: { href: 'explorer.html', label: 'Botanique du café' },
+    culture: { href: 'explorer.html', label: 'Culture et terroir' },
+    processus: { href: 'explorer.html', label: 'Transformation du café' },
+    torrefaction: { href: 'explorer.html', label: 'Torréfaction' },
+    extraction: { href: 'outils.html', label: 'Extraction et méthodes' },
+    degustation: { href: 'outils.html', label: 'Dégustation' },
+    dictionnaire: { href: 'dictionnaire.html', label: 'Dictionnaire' },
+    benin: { href: 'benin.html', label: 'Dossier Bénin' },
+    carnet: { href: 'outils.html', label: 'Carnet de terrain' },
+    sante: { href: 'explorer.html', label: 'Café et santé' }
   };
 
   const topics = [
