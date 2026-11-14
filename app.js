@@ -121,7 +121,7 @@
     const resultBox = $('#search-results');
     const openButton = $('#search-open');
     const closeButton = $('#search-close');
-    if (!modal || !input || !resultBox) { window.setTimeout(setupSearch, 100); return; }
+    if (!modal || !input || !resultBox) return;
     // Le dictionnaire peut être prêt avant DOMContentLoaded : récupérer aussi le corpus déjà exposé.
     let glossary = Array.isArray(window.cafeBeninDictionary) ? window.cafeBeninDictionary : [];
     let activeIndex = -1;
@@ -330,6 +330,120 @@
     });
   }
 
+
+  function setupPWA() {
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = new URL('site.webmanifest', document.baseURI).href;
+      document.head.append(link);
+    }
+
+    const header = $('#site-nav');
+    const actions = $('.nav-actions', header || document);
+    const status = document.createElement('div');
+    status.className = 'pwa-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.hidden = true;
+    if (header) header.insertAdjacentElement('afterend', status);
+    else document.body.prepend(status);
+
+    const showStatus = (message, action) => {
+      status.replaceChildren();
+      const text = document.createElement('span');
+      text.textContent = message;
+      status.append(text);
+      if (action) status.append(action);
+      status.hidden = false;
+    };
+    const installButton = document.createElement('button');
+    installButton.type = 'button';
+    installButton.className = 'pwa-install';
+    installButton.textContent = 'Installer';
+    installButton.setAttribute('aria-label', 'Installer Café Bénin sur cet appareil');
+    installButton.hidden = true;
+    actions?.append(installButton);
+
+    let installPrompt = null;
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.hidden = false;
+    });
+    installButton.addEventListener('click', async () => {
+      if (!installPrompt) return;
+      installButton.disabled = true;
+      try {
+        await installPrompt.prompt();
+        const choice = await installPrompt.userChoice;
+        if (choice?.outcome === 'accepted') toast('Café Bénin a été ajouté à votre appareil.');
+      } catch {
+        toast('L’installation n’est pas disponible dans ce navigateur.');
+      } finally {
+        installPrompt = null;
+        installButton.hidden = true;
+        installButton.disabled = false;
+      }
+    });
+    window.addEventListener('appinstalled', () => {
+      installPrompt = null;
+      installButton.hidden = true;
+      toast('Application Café Bénin installée.');
+    });
+
+    const updateConnection = () => {
+      if (!navigator.onLine) {
+        status.dataset.updateReady = 'false';
+        showStatus('Hors ligne : les pages et ressources déjà mises en cache restent disponibles.');
+      } else if (status.dataset.updateReady !== 'true') {
+        status.hidden = true;
+        status.replaceChildren();
+      }
+    };
+    window.addEventListener('online', updateConnection);
+    window.addEventListener('offline', updateConnection);
+    updateConnection();
+
+    if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
+    const hadController = Boolean(navigator.serviceWorker.controller);
+    let reloading = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (hadController && !reloading) {
+        reloading = true;
+        location.reload();
+      }
+    });
+
+    const revealUpdate = registration => {
+      if (!registration.waiting || !navigator.serviceWorker.controller) return;
+      status.dataset.updateReady = 'true';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'pwa-update';
+      button.textContent = 'Mettre à jour';
+      button.addEventListener('click', () => registration.waiting?.postMessage({ type: 'SKIP_WAITING' }));
+      showStatus('Une nouvelle version de Café Bénin est prête.', button);
+      status.dataset.updateReady = 'true';
+    };
+
+    const workerUrl = new URL('sw.js', document.baseURI);
+    const scopeUrl = new URL('./', document.baseURI);
+    navigator.serviceWorker.register(workerUrl.href, { scope: scopeUrl.pathname })
+      .then(registration => {
+        revealUpdate(registration);
+        registration.addEventListener('updatefound', () => {
+          const worker = registration.installing;
+          worker?.addEventListener('statechange', () => {
+            if (worker.state === 'installed') revealUpdate(registration);
+          });
+        });
+      })
+      .catch(() => {
+        // L'application reste utilisable en ligne même si le navigateur bloque le service worker.
+      });
+  }
+
   function setupImageFallbacks() {
     $$('img').forEach(image => image.addEventListener('error', () => {
       const container = image.closest('figure, .card-media, .big-image, .visual-card, .field-card, .hero-media') || image.parentElement;
@@ -349,7 +463,7 @@
     setupNavigation();
     setupProgressAndReveal();
     setupSearch();
-    window.setTimeout(() => { if (document.documentElement.dataset.cbSearchReady !== 'true') setupSearch(); }, 150);
+    setupPWA();
     setupBot();
     setupRecommendation();
     setupBrewCalculator();
