@@ -8,3 +8,5 @@ monitoring/
 .env
 .env.*
 !.env.example
+source-watch.md
+usda.pdf
