@@ -7,7 +7,7 @@
   const status = document.querySelector('#cookie-status');
   const close = () => { if (banner) { banner.hidden = true; banner.setAttribute('aria-hidden', 'true'); } };
   const announce = message => { if (status) status.textContent = message; };
-  const apply = choice => { save(choice); close(); announce(choice.analytics ? 'Mesure d’audience acceptée.' : 'Seuls les services essentiels sont conservés.'); };
+  const apply = choice => { save(choice); close(); if (choice.analytics && window.cbLoadStats) window.cbLoadStats(); announce(choice.analytics ? 'Mesure d’audience acceptée.' : 'Seuls les services essentiels sont conservés.'); };
   if (!banner) return;
   const existing = get();
   if (existing) close(); else { banner.hidden = false; banner.setAttribute('aria-hidden', 'false'); }
