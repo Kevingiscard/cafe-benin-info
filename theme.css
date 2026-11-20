@@ -288,3 +288,5 @@ img,svg,video{max-width:100%;height:auto}.sr-only{position:absolute!important;wi
 .support-link { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 22px; border-radius: 999px; background: #8f4a22; color: #fff !important; font-weight: 700; text-decoration: none !important; border: 1px solid #8f4a22; }
 .support-link:hover, .support-link:focus-visible { background: #6f3817; border-color: #6f3817; }
 .support-link:focus-visible { outline: 3px solid #f0b66e; outline-offset: 2px; }
+.footer .support-row .support-link { display: inline-flex; width: auto; max-width: 100%; }
+.footer .support-row { display: block; }
