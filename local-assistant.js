@@ -30,7 +30,7 @@
     { keys: ['naturel', 'naturelle', 'lave', 'lavage', 'honey', 'fermentation', 'sechage', 'mucilage'], reply: 'Les procédés post-récolte modifient la manière dont le fruit est traité avant le séchage. Un café naturel sèche avec le fruit ; un café lavé retire la pulpe et gère le mucilage avec fermentation, lavage ou moyens mécaniques selon le protocole.', links: [links.processus, links.dictionnaire] },
     { keys: ['espresso', 'filtre', 'v60', 'mouture', 'ratio', 'eau', 'extraction', 'cafe froid'], reply: 'Pour ajuster une tasse, changez une variable à la fois : dose, mouture, eau, temps ou agitation. Une mouture plus fine accélère généralement l’extraction ; une mouture plus grossière la ralentit.', links: [links.extraction, links.dictionnaire] },
     { keys: ['torrefaction', 'torrefie', 'crack', 'maillard', 'profil'], reply: 'La torréfaction transforme le grain vert par la chaleur : perte d’eau, expansion, réactions chimiques et développement aromatique. La couleur seule ne suffit pas à expliquer un profil ; le temps et l’énergie comptent aussi.', links: [links.torrefaction, links.dictionnaire] },
-    { keys: ['gout', 'acidite', 'amer', 'arome', 'corps', 'degustation', 'cupping'], reply: 'Décrire un café consiste à distinguer arômes, acidité perçue, douceur, texture, équilibre et finale. La dégustation gagne en précision lorsqu’elle compare plusieurs tasses préparées de façon identique.', links: [links.degustation, links.dictionnaire] },
+    { keys: ['gout', 'acidite', 'acide', 'amer', 'arome', 'corps', 'degustation', 'cupping'], reply: 'Décrire un café consiste à distinguer arômes, acidité perçue, douceur, texture, équilibre et finale. La dégustation gagne en précision lorsqu’elle compare plusieurs tasses préparées de façon identique.', links: [links.degustation, links.dictionnaire] },
     { keys: ['sante', 'cafeine', 'grossesse', 'sommeil', 'coeur'], reply: 'La rubrique santé présente les mécanismes et les limites des études sans les transformer en diagnostic personnel. Pour une question médicale, une grossesse, un traitement ou un symptôme, demandez conseil à un professionnel de santé.', links: [links.sante] }
   ];
 
@@ -42,39 +42,95 @@
 
   const DICT_STOPWORDS = new Set(['de', 'du', 'la', 'le', 'a', 'au', 'aux', 'et', 'd', 'l', 'en', 'sur', 'avec', 'pour', 'des', 'les', 'un', 'une', 'ou', 'the', 'of']);
 
+  // Tolérance morphologique légère : pluriels en s/x (« gland » retrouve « Café de glands »).
+  const stem = token => (token.length > 4 ? token.replace(/[sx]+$/, '') : token);
+
+  // Au-delà de ce nombre de fiches contenant le même mot, une question d'un seul mot
+  // est trop générique pour renvoyer une fiche au hasard (« café » seul par exemple).
+  const GENERIC_TOKEN_LIMIT = 8;
+
   function dictionaryAnswer(query) {
     const queryTokens = new Set(query.split(' ').filter(token => token.length > 0));
-    let best = null;
+    const stemmedQuery = new Set([...queryTokens].map(stem));
+    const significant = [...queryTokens].filter(token => token.length >= 3 && !DICT_STOPWORDS.has(token));
+    // « café » est le sujet du site : il ne doit pas diriger le matching quand d'autres mots précisent la question.
+    const focused = significant.length > 1 ? significant.filter(token => token !== 'cafe' && token !== 'coffee') : significant;
+    const dictionary = readDictionary();
+    let full = null;
     const related = [];
-    for (const entry of readDictionary()) {
+    const defMatch = [];
+    const tokenFrequency = new Map();
+    const defFrequency = new Map();
+    const defTokens = focused.filter(qt => qt.length >= 4);
+    const defRegexCache = new Map(defTokens.map(qt => [stem(qt), new RegExp(`\\b${escapeRegExp(stem(qt))}`)]));
+    for (const entry of dictionary) {
       if (!entry || !entry.term || !entry.definition) continue;
       const term = normalize(entry.term);
       if (term.length < 3) continue;
       const tokens = term.split(' ').filter(token => token.length >= 3 && !DICT_STOPWORDS.has(token));
       if (tokens.length === 0) continue;
-      let matched = 0;
-      if (tokens.length === 1) {
-        if (!new RegExp(`\\b${escapeRegExp(tokens[0])}\\b`).test(query)) continue;
-        matched = 1;
-      } else {
-        const allPresent = tokens.every(token => queryTokens.has(token) || new RegExp(`\\b${escapeRegExp(token)}`).test(query));
-        if (!allPresent) {
-          const significantQueryTokens = [...queryTokens].filter(token => token.length >= 3 && !DICT_STOPWORDS.has(token));
-          const coversQuery = significantQueryTokens.length > 0 && significantQueryTokens.every(token => tokens.includes(token));
-          if (coversQuery && tokens.length >= 2) related.push({ entry, normalized: term, matched: significantQueryTokens.length, total: tokens.length });
-          continue;
+      for (const token of tokens) tokenFrequency.set(stem(token), (tokenFrequency.get(stem(token)) || 0) + 1);
+      const tokenPresent = token => {
+        const st = stem(token);
+        if (stemmedQuery.has(st)) return true;
+        if (new RegExp(`\\b${escapeRegExp(st)}`).test(query)) return true;
+        // Variante longue (« decaf » retrouve « décaféiné ») : préfixe commun d'au moins 5 lettres.
+        return [...queryTokens].some(qt => qt.length >= 5 && (token.startsWith(qt) || qt.startsWith(token)));
+      };
+      const allPresent = tokens.every(tokenPresent);
+      if (allPresent) {
+        const matched = tokens.length;
+        if (!full || matched > full.matched || (matched === full.matched && term.length > full.normalized.length)) {
+          full = { entry, normalized: term, matched };
         }
-        matched = tokens.length;
+        continue;
       }
-      if (!best || matched > best.matched || (matched === best.matched && term.length > best.normalized.length)) {
-        best = { entry, normalized: term, matched };
+      const coversQuery = focused.length > 0 && focused.every(qt => tokens.some(token => stem(token) === stem(qt)));
+      if (coversQuery && tokens.length >= 2) {
+        related.push({ entry, normalized: term, matched: focused.length, total: tokens.length, demoted: false });
+        continue;
+      }
+      // Repli : tous les mots significatifs de la question apparaissent dans la définition.
+      if (defTokens.length > 0) {
+        const defNorm = normalize(entry.definition);
+        const hits = defTokens.filter(qt => defRegexCache.get(stem(qt)).test(defNorm));
+        hits.forEach(qt => defFrequency.set(stem(qt), (defFrequency.get(stem(qt)) || 0) + 1));
+        if (hits.length === defTokens.length) defMatch.push({ entry, normalized: term, matched: hits.length });
       }
     }
-    if (!best && related.length > 0) {
-      related.sort((a, b) => (b.matched / b.total) - (a.matched / a.total) || (a.total - b.total) || a.normalized.localeCompare(b.normalized, 'fr'));
-      best = related.shift();
+    related.sort((a, b) => (b.matched / b.total) - (a.matched / a.total) || (a.total - b.total) || a.normalized.localeCompare(b.normalized, 'fr'));
+    // Une fiche exacte d'un seul mot ne prime que si elle couvre toute la question :
+    // « céréales torréfiées » vise « Café de céréales », pas le descripteur « Céréale ».
+    if (full && (significant.length <= 1 || full.matched >= significant.length)) return { kind: 'full', best: full, related };
+    if (full) related.push({ entry: full.entry, normalized: full.normalized, matched: full.matched, total: 1, demoted: true });
+    // Question d'un seul mot trop générique : pas de fiche précise à proposer.
+    if (significant.length === 1 && (tokenFrequency.get(stem(significant[0])) || 0) > GENERIC_TOKEN_LIMIT) return null;
+    if (related.length > 0) {
+      related.sort((a, b) => b.matched - a.matched || (a.demoted - b.demoted) || (b.matched / b.total) - (a.matched / a.total) || (a.total - b.total) || a.normalized.localeCompare(b.normalized, 'fr'));
+      // Une correspondance sur les termes, même partielle, prime sur les définitions.
+      if (related.some(item => !item.demoted)) return { kind: 'related', best: related.find(item => !item.demoted), related };
     }
-    if (!best) return null;
+    if (defMatch.length > 0) {
+      defMatch.sort((a, b) => b.matched - a.matched || a.normalized.localeCompare(b.normalized, 'fr'));
+      // Les mots très courants du corpus ne suffisent pas à désigner une fiche précise.
+      const rare = defMatch.length > 0 && defMatch.length <= 3;
+      if (defMatch.length === 1) return { kind: 'definition', best: defMatch[0], related, rare, focusedCount: focused.length };
+      return { kind: 'definitions', list: defMatch.slice(0, 3), rare, focusedCount: focused.length };
+    }
+    if (related.length > 0) return { kind: 'related', best: related[0], related };
+    return null;
+  }
+
+  function formatList(list) {
+    const names = list.map(item => item.entry.term).join(' ; ');
+    return {
+      reply: `Plusieurs fiches du dictionnaire évoquent ce terme : ${names}. Le dictionnaire permet de les comparer directement.`,
+      links: [links.dictionnaire],
+      source: 'local'
+    };
+  }
+
+  function formatEntry(best, related) {
     const also = related.filter(item => item.entry.term !== best.entry.term).slice(0, 2);
     const more = also.length > 0 ? ` Voir aussi : ${also.map(item => item.entry.term).join(' ; ')}.` : '';
     return {
@@ -86,12 +142,29 @@
 
   function answer(question) {
     const query = normalize(question);
+    const fromDictionary = dictionaryAnswer(query);
+    // Une fiche exacte prime toujours sur une réponse générale.
+    if (fromDictionary && fromDictionary.kind === 'full') return formatEntry(fromDictionary.best, fromDictionary.related);
     const ranked = topics.map(topic => ({ topic, score: topic.keys.reduce((total, key) => total + (keyPattern(key).test(query) ? 1 : 0), 0) }))
       .sort((a, b) => b.score - a.score);
     const best = ranked[0];
-    if (best && best.score > 0) return { reply: best.topic.reply, links: best.topic.links, source: 'local' };
-    const fromDictionary = dictionaryAnswer(query);
-    if (fromDictionary) return fromDictionary;
+    if (best && best.score > 0) {
+      // Une fiche précise qui couvre toute la question prime sur le thème général.
+      if (fromDictionary && fromDictionary.kind === 'related' && fromDictionary.best.matched >= 2) {
+        return formatEntry(fromDictionary.best, fromDictionary.related);
+      }
+      // Une correspondance rare dans les définitions prime sur un thème effleuré
+      // (une seule clé), uniquement pour une question précise d'au moins deux mots.
+      if (fromDictionary && fromDictionary.rare && best.score === 1 && fromDictionary.focusedCount >= 2) {
+        if (fromDictionary.kind === 'definition') return formatEntry(fromDictionary.best, []);
+        if (fromDictionary.kind === 'definitions') return formatList(fromDictionary.list);
+      }
+      return { reply: best.topic.reply, links: best.topic.links, source: 'local' };
+    }
+    if (fromDictionary && (fromDictionary.kind === 'related' || fromDictionary.kind === 'definition')) {
+      return formatEntry(fromDictionary.best, fromDictionary.related || []);
+    }
+    if (fromDictionary && fromDictionary.kind === 'definitions') return formatList(fromDictionary.list);
     return {
       reply: 'Ce sujet n’est pas encore couvert par le corpus local du site. Je suis l’assistant de recherche local de Café Bénin : je peux vous guider sur les espèces, la préparation, les procédés, la torréfaction, la dégustation, la santé ou le dossier Bénin, et le dictionnaire définit les termes techniques. Essayez par exemple : « différence entre café naturel et lavé » ou « comment régler une mouture filtre ? ».',
       links: [links.dictionnaire, links.extraction, links.benin],
