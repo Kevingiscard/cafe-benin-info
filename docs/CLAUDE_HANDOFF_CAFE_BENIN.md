@@ -37,7 +37,7 @@ PRÉCAUTIONS
 - Faire une sauvegarde logique via branche et commits propres avant changements significatifs.
 - Éviter les refontes inutiles ; corriger par priorité : blocage/crash, fonctionnalités, sécurité, accessibilité, performances, SEO, qualité visuelle.
 - Ne pas supprimer de contenu/fichier sans prouver qu’il est obsolète.
-- Le dossier `umami/` existe dans le dépôt et semble pouvoir être un projet distinct lié à un restaurant ; ne pas le supprimer, fusionner ou modifier sans vérifier sa relation au site Café Bénin Info.
+- Le dossier `umami/` (projet de restaurant distinct, sans lien avec le site) a été supprimé le 20 novembre 2026 à la demande de Kevin.
 - Ne pas déclarer « tout est corrigé » sans tests et vérification en production.
 
 LIVRABLES ATTENDUS
