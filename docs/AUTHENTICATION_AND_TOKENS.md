@@ -23,8 +23,8 @@ Le navigateur charge aussi DM Sans depuis Google Fonts; cette requête de police
 ## Publication GitHub Pages
 
 1. Une pull request vers main déclenche .github/workflows/validate.yml. Le job a contents: read et valide le dépôt.
-2. Un push sur main déclenche .github/workflows/pages-deploy.yml. Son job validate vérifie le même site avant la publication.
-3. Le job deploy téléverse l’artefact statique puis appelle l’action de déploiement Pages.
+2. Un push sur main déclenche .github/workflows/pages-deploy.yml. Son job validate vérifie le même site.
+3. La publication elle-même est faite par le workflow intégré « pages build and deployment » (source Pages : branche main, racine).
 
 Dans le workflow Pages, contents: read s’applique par défaut. Seul deploy reçoit pages: write et id-token: write. GitHub Actions crée automatiquement un jeton d’exécution limité pour les actions qui en ont besoin; le mécanisme OIDC fournit au service Pages une preuve temporaire du job. Il n’y a ni token GitHub personnel, ni secret applicatif à copier dans le dépôt. Le code destiné aux visiteurs ne reçoit aucun de ces jetons.
 

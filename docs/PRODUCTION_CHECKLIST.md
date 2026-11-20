@@ -7,5 +7,5 @@
 | Santé publique | `npm run health` | Accueil, ancres et assets critiques en HTTP 200. |
 | Sources externes | `npm run check:links:external` | Aucune 404/410 confirmée. |
 | Contrôle visuel | Accueil, thème sombre, mobile, recherche et CaféBot | Lisibilité et interactions intactes. |
-| Pages | Exécution « Déploiement GitHub Pages » | Artefact et environnement `github-pages` verts. |
+| Pages | Exécution « pages build and deployment » | Verte sur le dernier commit ; le site live affiche le changement. |
 | Documentation | Changelog et documentation opérationnelle | Mis à jour si le comportement change. |
