@@ -14,6 +14,9 @@ concurrency:
   group: pages-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# La publication est faite par le workflow intégré « pages build and deployment »
+# (Settings → Pages → Deploy from a branch, main, racine). Ce workflow ne fait que valider :
+# un second déploiement en parallèle entrait en conflit avec la publication réelle.
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -28,27 +31,3 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Validate site
         run: npm run verify
-
-  deploy:
-    if: github.event_name != 'pull_request'
-    needs: validate
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7.0.1
-      - name: Setup Pages
-        uses: actions/configure-pages@v6.0.0
-      - name: Upload static site
-        uses: actions/upload-pages-artifact@v5.0.0
-        with:
-          path: .
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5.0.1
