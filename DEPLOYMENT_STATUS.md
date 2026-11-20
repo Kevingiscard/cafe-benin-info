@@ -6,7 +6,7 @@
 ## Dernier état
 - Branche `main` à jour
 - Workflow `pages-deploy.yml` actif
-- Validation automatique avant déploiement
+- Validation automatique ; publication par « pages build and deployment » (source : branche main)
 - Aucun domaine personnalisé actif (100 % gratuit)
 
 ## Prochaines étapes recommandées

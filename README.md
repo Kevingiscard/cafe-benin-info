@@ -49,7 +49,7 @@ Pour vérifier les sources externes séparément : npm run check:links:external.
 
 ## Publication et synchronisation
 
-Le workflow .github/workflows/pages-deploy.yml valide le site puis le publie sur GitHub Pages après chaque push sur main. Dans Settings → Pages, la source doit être GitHub Actions.
+Le workflow .github/workflows/pages-deploy.yml valide le site après chaque push sur main. La publication est faite par le workflow intégré « pages build and deployment » : dans Settings → Pages, la source est « Deploy from a branch » (main, racine). Ne pas ajouter de second déploiement par artefact tant que cette source n’est pas changée.
 
 Pour garder l’ancienne adresse cafe-benin-info.vercel.app comme alias du site officiel, reconnecte une seule fois le projet Vercel au dépôt Kevingiscard/cafe-benin-info, choisis main comme branche de production et la racine du dépôt comme répertoire. Le fichier vercel.json redirige alors l’ensemble de l’ancienne adresse vers le lien officiel. Les réglages du projet Vercel n’étaient pas accessibles depuis la connexion utilisée pendant cette mise à jour; il faudra confirmer cette association dans le tableau de bord Vercel.
 
