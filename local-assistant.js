@@ -142,6 +142,14 @@
     return null;
   }
 
+  function pageResult(href, title, description) {
+    const complete = /[.!?…»'"’]$/.test(description.trim());
+    const reply = complete
+      ? `Ce sujet est traité dans une page du site — ${title} : ${description}`
+      : `Ce sujet est traité dans une page du site : ${title}.`;
+    return { reply, links: [{ href, label: title }], source: 'local' };
+  }
+
   function pageAnswer(focused) {
     if (focused.length === 0) return null;
     const scored = [];
@@ -167,21 +175,13 @@
       }
       if (rare.length !== 1) return null;
       const [href, title, description] = rare[0].page;
-      return {
-        reply: `Ce sujet est traité dans une page du site — ${title} : ${description}`,
-        links: [{ href, label: title }],
-        source: 'local'
-      };
+      return pageResult(href, title, description);
     }
     // Mot unique présent partout : trop générique pour désigner une page.
     if (focused.length === 1 && scored.length > 3) return null;
     scored.sort((a, b) => b.titleHits - a.titleHits);
     const best = scored[0];
-    return {
-      reply: `Ce sujet est traité dans une page du site — ${best.title} : ${best.description}`,
-      links: [{ href: best.href, label: best.title }],
-      source: 'local'
-    };
+    return pageResult(best.href, best.title, best.description);
   }
 
   function formatList(list) {
