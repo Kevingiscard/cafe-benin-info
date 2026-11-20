@@ -44,8 +44,8 @@ test('la recherche se branche sur le dictionnaire enrichi même si le corpus est
 
 test('la direction typographique utilise une famille sans sérif cohérente et versionne sa feuille de thème', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  const theme = fs.readFileSync(new URL('../theme.css', import.meta.url), 'utf8');
-  assert.match(theme, /--font-display: "DM Sans"/);
-  assert.match(html, /theme\.css\?v=3/);
+  const theme = fs.readFileSync(new URL('../atlas.css', import.meta.url), 'utf8');
+  assert.match(theme, /--font-display:"DM Sans"/);
+  assert.match(html, /atlas\.css\?v=1/);
   assert.doesNotMatch(html, /Cormorant\+Garamond/);
 });

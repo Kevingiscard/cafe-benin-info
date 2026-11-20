@@ -7,6 +7,8 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const exists = file => fs.existsSync(path.join(root, file));
 const html = read('index.html');
+const dictPage = read('dictionnaire.html');
+const sourcesPage = read('sources.html');
 const app = read('app.js');
 const dictionary = read('dictionary-v4.js');
 const motion = read('motion.js');
@@ -21,7 +23,7 @@ test('les points d’entrée et les ancres historiques restent disponibles', () 
 
 test('les composants critiques de navigation, recherche et dictionnaire sont présents', () => {
   for (const id of ['site-nav', 'nav-toggle', 'mobile-nav', 'search-open', 'search-modal', 'global-search', 'search-results', 'dict-search', 'dict-filter', 'dict-list']) {
-    assert.match(html, new RegExp(`id="${id}"`));
+    assert.match(['dict-search', 'dict-filter', 'dict-list'].includes(id) ? dictPage : html, new RegExp(`id="${id}"`));
   }
   assert.match(app, /ArrowDown/);
   assert.match(app, /Escape/);
@@ -29,10 +31,10 @@ test('les composants critiques de navigation, recherche et dictionnaire sont pr�
 });
 
 test('les formulaires exposent des contraintes HTML et des retours accessibles', () => {
-  assert.match(html, /id="comment-name" required maxlength="80"/);
-  assert.match(html, /id="comment-email" type="email" required maxlength="160"/);
-  assert.match(html, /id="comment-content" required maxlength="4000"/);
-  assert.match(html, /id="comment-status"[^>]*aria-live="polite"/);
+  assert.match(sourcesPage, /id="comment-name" required maxlength="80"/);
+  assert.match(sourcesPage, /id="comment-email" type="email" required maxlength="160"/);
+  assert.match(sourcesPage, /id="comment-content" required maxlength="4000"/);
+  assert.match(sourcesPage, /id="comment-status"[^>]*aria-live="polite"/);
   assert.match(app, /encodeURIComponent\(`Contribution Café Bénin/);
 });
 
