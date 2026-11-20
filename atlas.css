@@ -156,3 +156,5 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 
 .tbl-wrap{overflow-x:auto;margin:1rem 0}.tbl{border-collapse:collapse;width:100%;min-width:34rem;font-size:.95rem}.tbl caption{text-align:left;font-weight:700;padding:.25rem 0 .6rem}.tbl th,.tbl td{border-bottom:1px solid var(--border);padding:.5rem .6rem;text-align:right}.tbl th:first-child,.tbl thead th{text-align:left}.tbl thead th{font-size:.85rem}
 .chapter-body>.crumbs a{color:var(--accent)}
+
+.cards-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));margin:1.2rem 0}.chapter-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem}.chapter-card h3{margin:.2rem 0 .5rem}.chapter-card.is-read{border-color:var(--accent)}.card-actions{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}.chapter-status{font-weight:700;font-size:.85rem}.reading-progress{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin:1rem 0}.portal-link{font-weight:700}
