@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import { chapters, REFS, ACCESSED } from './chapters-data.mjs';
 const ORIGIN = 'https://kevingiscard.github.io/cafe-benin-info/';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const nav = [['explorer.html','Explorer'],['benin.html','Dossier Bénin'],['observatoire.html','Observatoire'],['outils.html','Outils'],['dictionnaire.html','Dictionnaire'],['sources.html','Sources']];
+const nav = [['explorer.html','Explorer'],['benin.html','Dossier Bénin'],['observatoire.html','Observatoire'],['professionnels.html','Professionnels'],['outils.html','Outils'],['dictionnaire.html','Dictionnaire'],['sources.html','Sources']];
 const head = ({ title, desc, url, image, extra = '' }) => `<!doctype html>
 <html lang="fr">
 <head>
@@ -166,7 +166,7 @@ const EXPLORER_CARDS = [["history", "Chapitre 01", "Histoire du café", "Origine
 function renderExplorer() {
   const bySlug = Object.fromEntries(chapters.map(c => [c.slug, c]));
   const extra = { preparation: ' <a class="portal-link" href="outils.html">Voir les outils →</a>', economy: ' <a class="portal-link" href="benin.html">Dossier Bénin →</a> <a class="portal-link" href="chapitre-afrique.html">Afrique et Bénin →</a>' };
-  const cards = EXPLORER_CARDS.map(([id, num, title, desc, slug]) => { const c = bySlug[slug]; return `<article class="chapter-card" data-chapter="${id}"><small>${num}</small><h3>${esc(title)}</h3><p>${esc(desc)}</p><p class="muted small">Publié dans le chapitre : ${esc(c.short)} Le reste du programme ci-dessus est en cours de rédaction et de sourçage.</p><p><a class="portal-link" href="chapitre-${slug}.html">Lire le chapitre →</a>${extra[id] || ''}</p><div class="card-actions"><button class="chapter-read btn" type="button" aria-pressed="false">Marquer comme lu</button><span class="chapter-status">À découvrir</span></div></article>`; }).join('\n');
+  const cards = EXPLORER_CARDS.map(([id, num, title, desc, slug]) => { const c = bySlug[slug]; return `<article class="chapter-card" data-chapter="${id}"><small>${num}</small><h3>${esc(title)}</h3><p class="card-teaser">${esc(desc.split(/(?<=\.)\s/)[0])}</p><details class="card-more"><summary>Description complète et contenu publié</summary><p>${esc(desc)}</p><p class="muted small">Publié dans le chapitre : ${esc(c.short)} Le reste du programme ci-dessus est en cours de rédaction et de sourçage.</p></details><p><a class="portal-link" href="chapitre-${slug}.html">Lire le chapitre →</a>${extra[id] || ''}</p><div class="card-actions"><button class="chapter-read btn" type="button" aria-pressed="false">Marquer comme lu</button><span class="chapter-status">À découvrir</span></div></article>`; }).join('\n');
   const url = `${ORIGIN}explorer.html`;
   return head({ title: 'Explorer les chapitres | Café Bénin', desc: 'Parcours en dix chapitres, de la plante à la tasse, avec progression conservée sur l’appareil.', url, image: 'img/ch-histoire.webp' }) + `
 <main id="main" class="chapter">
