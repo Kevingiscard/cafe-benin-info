@@ -42,6 +42,27 @@
 
   const DICT_STOPWORDS = new Set(['de', 'du', 'la', 'le', 'a', 'au', 'aux', 'et', 'd', 'l', 'en', 'sur', 'avec', 'pour', 'des', 'les', 'un', 'une', 'ou', 'the', 'of']);
 
+  const SITE_PAGES = [
+    ['chapitre-afrique.html', 'Afrique et Bénin', 'L’Afrique est le berceau de l’Arabica et un grand producteur de robusta. Cette page réunit des repères sourcés pour l’Afrique et pour le Bénin ; les chiffr', ['afrique','producteur','bénin','berceau']],
+    ['chapitre-agronomie.html', 'Culture et agronomie', 'La qualité d’un café se prépare dans le champ. Climat, altitude et pluie fixent déjà beaucoup de ce que la tasse peut offrir.', ['cultiver','culture','plantation','récolte','cerise','climat','altitude']],
+    ['chapitre-botanique.html', 'Botanique et diversité', 'Le café est une graine de la famille des Rubiacées. Deux espèces font l’essentiel du commerce : Arabica et Canephora (robusta). La diversité sauvage est, e', ['arabica','robusta','espèce','liberica','cultivar']],
+    ['chapitre-extraction.html', 'Extraction et préparation', 'Préparer un café, c’est dissoudre une partie des composés du grain. La norme « Golden Cup » donne des repères mesurables pour le café filtre.', ['recette','mouture','espresso','filtre','infusion','méthode','extraction','préparer']],
+    ['chapitre-filiere.html', 'Filière et marché', 'De la ferme au comptoir, la filière réunit producteurs, exportateurs, importateurs, torréfacteurs et cafés. Les chiffres ci-dessous précisent l’année et le', ['filière','marché','export','économie','commerce']],
+    ['chapitre-histoire.html', 'Histoire du café', 'L’histoire du café mêle botanique, religion, commerce, pouvoir et colonisation. Les récits légendaires circulent beaucoup ; seuls les faits documentés sont', ['histoire','origine','kaldi','légende','éthiopie']],
+    ['chapitre-post-recolte.html', 'Post-récolte', 'Entre la cerise cueillie et le café vert, la transformation influence la qualité finale. Les sources citées ici décrivent surtout les méthodes naturelle, s'],
+    ['chapitre-sante.html', 'Santé et qualité', 'Cette page présente des repères officiels, pas des conseils médicaux. En cas de doute (grossesse, traitement, maladie), demandez l’avis d’un professionnel ', ['santé','caféine','médecin','sommeil']],
+    ['chapitre-sensoriel.html', 'Dégustation et sensoriel', 'Goûter, c’est apprendre à nommer. La SCA a publié des normes de dégustation qui séparent la description objective de l’appréciation personnelle.'],
+    ['chapitre-torrefaction.html', 'Torréfaction', 'La torréfaction transforme un grain vert en café aromatique. Elle suit des étapes thermiques repérables, dont les craquements.', ['torréfaction','torréfier','grain','vert','rôti']],
+    ['explorer.html', 'Explorer les chapitres', 'Parcours en dix chapitres, de la plante à la tasse, avec progression conservée sur l’appareil.', ['explorer','carte','parcourir']],
+    ['benin.html', 'Dossier Bénin', 'Dossier documentaire sur le café au Bénin, ses sources, ses limites et les pistes de recherche.', ['bénin','ouèssè','dassa','kétou','paysan']],
+    ['observatoire.html', 'Observatoire du café', 'Observatoire Café Bénin : données mondiales, série béninoise à confirmer, unités, frise historique, graphiques interactifs et méthode de vérification.', ['données','chiffres','statistiques','prix','production','observatoire']],
+    ['outils.html', 'Outils pratiques', 'Cinq outils locaux pour préparer et déguster du café : ratio café/eau, infusion pas à pas, diagnostic, roue aromatique et carnet privé.', ['recette','outil','ratio','convertir','calcul']],
+    ['dictionnaire.html', 'Vocabulaire complet du café', 'Rechercher, trier et parcourir le vocabulaire complet du café, organisé par science, botanique, culture, transformation, torréfaction, extraction, dégustation et filière.', ['dictionnaire','vocabulaire','glossaire','terme']],
+    ['sources.html', 'Sources et contribuer', 'Consulter la méthode éditoriale, les sources de départ, les crédits visuels et contribuer une correction ou une référence à Café Bénin.', ['source','référence','contribuer']],
+    ['professionnels.html', 'Espace professionnel', 'Espace professionnel Café Bénin : observatoire, annuaire vérifié, bulletin de veille, données agrégées, formation et mise en relation.'],
+    ['a-propos.html', 'À propos du projet', 'À propos de Kevin Giscard et du projet Café Bénin : mission documentaire, principes éditoriaux, transparence et liens publics.'],
+  ];
+
   // Tolérance morphologique légère : pluriels en s/x (« gland » retrouve « Café de glands »).
   const stem = token => (token.length > 4 ? token.replace(/[sx]+$/, '') : token);
 
@@ -121,6 +142,48 @@
     return null;
   }
 
+  function pageAnswer(focused) {
+    if (focused.length === 0) return null;
+    const scored = [];
+    for (const [href, title, description, keywords] of SITE_PAGES) {
+      const hay = normalize(`${title} ${description} ${(keywords || []).join(' ')}`);
+      const titleNorm = normalize(`${title} ${(keywords || []).join(' ')}`);
+      const hits = focused.filter(qt => new RegExp(`\\b${escapeRegExp(stem(qt))}`).test(hay));
+      if (hits.length === focused.length) {
+        const titleHits = focused.filter(qt => new RegExp(`\\b${escapeRegExp(stem(qt))}`).test(titleNorm)).length;
+        scored.push({ href, title, description, titleHits });
+      }
+    }
+    if (scored.length === 0) {
+      // Dernier recours : un seul mot rare qui désigne une page et une seule.
+      if (focused.length < 2) return null;
+      const rare = [];
+      for (const qt of focused) {
+        if (qt.length < 4) continue;
+        const re = new RegExp(`\\b${escapeRegExp(stem(qt))}`);
+        const matches = SITE_PAGES.filter(([href, title, description, keywords]) =>
+          re.test(normalize(`${title} ${description} ${(keywords || []).join(' ')}`)));
+        if (matches.length === 1) rare.push({ qt, page: matches[0] });
+      }
+      if (rare.length !== 1) return null;
+      const [href, title, description] = rare[0].page;
+      return {
+        reply: `Ce sujet est traité dans une page du site — ${title} : ${description}`,
+        links: [{ href, label: title }],
+        source: 'local'
+      };
+    }
+    // Mot unique présent partout : trop générique pour désigner une page.
+    if (focused.length === 1 && scored.length > 3) return null;
+    scored.sort((a, b) => b.titleHits - a.titleHits);
+    const best = scored[0];
+    return {
+      reply: `Ce sujet est traité dans une page du site — ${best.title} : ${best.description}`,
+      links: [{ href: best.href, label: best.title }],
+      source: 'local'
+    };
+  }
+
   function formatList(list) {
     const names = list.map(item => item.entry.term).join(' ; ');
     return {
@@ -142,6 +205,11 @@
 
   function answer(question) {
     const query = normalize(question);
+    const focusedForPages = (() => {
+      const questionWords = new Set(['comment', 'pourquoi', 'quelle', 'quelles', 'quels', 'quel', 'combien', 'est', 'sont', 'ou', 'avec', 'sans', 'dans', 'pour', 'sur', 'les', 'des', 'une', 'est-ce']);
+      const tokens = query.split(' ').filter(token => token.length >= 3 && !DICT_STOPWORDS.has(token) && !questionWords.has(token));
+      return tokens.length > 1 ? tokens.filter(token => token !== 'cafe' && token !== 'coffee') : tokens;
+    })();
     const fromDictionary = dictionaryAnswer(query);
     // Une fiche exacte prime toujours sur une réponse générale.
     if (fromDictionary && fromDictionary.kind === 'full') return formatEntry(fromDictionary.best, fromDictionary.related);
@@ -156,11 +224,15 @@
       // Une correspondance rare dans les définitions prime sur un thème effleuré
       // (une seule clé), uniquement pour une question précise d'au moins deux mots.
       if (fromDictionary && fromDictionary.rare && best.score === 1 && fromDictionary.focusedCount >= 2) {
+        const fromPagesHere = pageAnswer(focusedForPages);
+        if (fromPagesHere) return fromPagesHere;
         if (fromDictionary.kind === 'definition') return formatEntry(fromDictionary.best, []);
         if (fromDictionary.kind === 'definitions') return formatList(fromDictionary.list);
       }
       return { reply: best.topic.reply, links: best.topic.links, source: 'local' };
     }
+    const fromPages = pageAnswer(focusedForPages);
+    if (fromPages) return fromPages;
     if (fromDictionary && (fromDictionary.kind === 'related' || fromDictionary.kind === 'definition')) {
       return formatEntry(fromDictionary.best, fromDictionary.related || []);
     }
