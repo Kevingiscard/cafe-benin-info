@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-node@v7.1.0
         with:
           node-version: 24
+      - name: Outils de lecture PDF
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       - name: Veille des sources
         run: node scripts/check-sources.mjs
       - name: Contrôle des liens externes
@@ -45,4 +47,7 @@ jobs:
             title="Veille hebdomadaire : points à relire"
             n=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')
             if [ -n "$n" ]; then gh issue comment "$n" --body-file body.md; else gh issue create --title "$title" --body-file body.md; fi
+          else
+            n=$(gh issue list --state open --search "Veille hebdomadaire : points à relire in:title" --json number --jq '.[0].number')
+            if [ -n "$n" ]; then gh issue close "$n" --comment "Plus aucun point à relire lors du dernier contrôle."; fi
           fi
