@@ -1,7 +1,7 @@
 'use strict';
 
-const SHELL_CACHE = 'cafe-benin-shell-v9';
-const RUNTIME_CACHE = 'cafe-benin-runtime-v9';
+const SHELL_CACHE = 'cafe-benin-shell-v10';
+const RUNTIME_CACHE = 'cafe-benin-runtime-v10';
 const MAX_RUNTIME_ENTRIES = 140;
 const scopeUrl = new URL(self.registration.scope);
 const shellFiles = [
@@ -119,7 +119,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (!isInsideScope(url)) return;
 
-  if (request.mode === 'navigate') {
+  if (request.mode === 'navigate' || /\/(?:cookie-consent|stats[^/]*)\.js$/i.test(url.pathname)) {
     event.respondWith(networkFirst(request));
     return;
   }
