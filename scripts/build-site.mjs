@@ -30,6 +30,7 @@ const head = ({ title, desc, url, image, extra = '' }) => `<!doctype html>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="atlas.css?v=1">
+<link rel="stylesheet" href="cookie-consent.css">
 ${extra}</head>
 <body>
 <a class="skip-link" href="#accueil">Aller au contenu principal</a>
@@ -80,7 +81,8 @@ const foot = `<footer class="footer">
 <script src="dictionary-v4.js" defer></script>
 <script src="local-assistant.js" defer></script>
 <script src="app.js" defer></script>
-<script src="stats.js?v=1" defer></script>
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-modal="false" aria-labelledby="cookie-title" hidden><div><h2 id="cookie-title">Respecter votre choix</h2><p>Le site utilise le stockage local nécessaire aux préférences. Une mesure d’audience sans cookie (GoatCounter) compte les pages vues ; voir la page Confidentialité. <a href="rgpd.html">Lire la page RGPD</a>.</p><p id="cookie-status" class="sr-only" aria-live="polite"></p><div id="cookie-settings-panel" class="cookie-settings" hidden><label><input type="checkbox" checked disabled> <span>Préférences essentielles — actives pour mémoriser votre choix.</span></label><label><input type="checkbox" disabled> <span>Mesure d’audience facultative supplémentaire — aucun autre fournisseur n’est activé.</span></label></div></div><div class="cookie-actions"><button id="cookies-essential" class="btn primary" type="button">Continuer sans analytics</button><button id="cookies-settings" class="btn" type="button">Choisir</button><button id="cookies-analytics" class="btn" type="button">Autoriser la mesure</button></div></div><button id="cookie-reset" class="cookie-preferences" type="button">Préférences cookies</button><script src="cookie-consent.js?v=2" defer></script>
+<script src="stats-v2.js" defer></script>
 </body>
 </html>
 `;
