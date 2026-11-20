@@ -118,7 +118,7 @@ ${sections}
   </section>
   <p class="img-note">Image : illustration générée pour le site, à valeur éditoriale, pas un document photographique.</p>
   ${terms ? `<section id="${c.slug}-termes" aria-labelledby="${c.slug}-ter-t"><h2 id="${c.slug}-ter-t">Termes du dictionnaire</h2><div class="chips">${terms}</div></section>` : ''}
-  <section id="${c.slug}-sources" class="refs" aria-labelledby="${c.slug}-src-t"><h2 id="${c.slug}-src-t">Références</h2><p class="muted small">Chaque affirmation chiffrée renvoie à une source consultable. Les mentions « repère de pratique » signalent un contenu en attente de source.</p><ol>
+  <section id="${c.slug}-sources" class="refs" aria-labelledby="${c.slug}-src-t"><h2 id="${c.slug}-src-t">Références</h2><p class="muted small">Les affirmations renvoient aux références numérotées ci-dessous, avec leur date de consultation. Les rubriques marquées « à documenter » n’ont pas encore de source vérifiée et n’affirment rien. Certaines sources sont secondaires : leur nature est indiquée dans leur intitulé.</p><ol>
 ${refs}
   </ol></section>
   <nav class="pager" aria-label="Chapitres voisins"><a href="chapitre-${prev.slug}.html"><small>← Précédent</small><b>${esc(prev.title)}</b></a><a href="chapitre-${next.slug}.html"><small>Suivant →</small><b>${esc(next.title)}</b></a></nav>
@@ -130,8 +130,12 @@ chapters.forEach((c, i) => fs.writeFileSync(`chapitre-${c.slug}.html`, renderCha
 
 // ---------- accueil
 const idMap = { histoire: 'histoire', botanique: 'botanique', agronomie: 'culture', 'post-recolte': 'processus', torrefaction: 'torréfaction', extraction: 'extraction', sensoriel: 'degustation', sante: 'sante', filiere: 'coffee-shops', afrique: 'benin' };
-const tiles = chapters.map(c => `      <a class="tile" id="${idMap[c.slug]}" href="chapitre-${c.slug}.html"><img src="img/${c.img}-700.webp" width="700" height="394" alt="${esc(c.alt)}" loading="lazy" decoding="async"><span class="tile-text"><small>${c.n} · ${esc(c.tag)}</small><b>${esc(c.title)}</b><span class="tile-desc">${esc(c.short)}</span></span></a>`).join('\n');
-const more = [['benin.html','Dossier Bénin','Sources, repères et données à confirmer.'],['observatoire.html','Observatoire','Indicateurs, unités, périodes et limites.'],['outils.html','Laboratoire','Calculateur, guide d’infusion, roue aromatique.'],['dictionnaire.html','Dictionnaire','254 termes classés en catégories.'],['professionnels.html','Professionnels','Acteurs et lieux du café.'],['sources.html','Sources et contribuer','Méthode, crédits, formulaire de contribution.']].map(([h, t, d]) => `      <a class="more" href="${h}"${t.startsWith('Sources') ? ' id="sources"' : ''}${t === 'Dictionnaire' ? ' id="dictionnaire"' : ''}><b>${t}</b><span>${d}</span></a>`).join('\n');
+const featured = ['histoire', 'botanique', 'torrefaction', 'afrique'];
+const tileHtml = c => `      <a class="tile" id="${idMap[c.slug]}" href="chapitre-${c.slug}.html"><img src="img/${c.img}-700.webp" width="700" height="394" alt="${esc(c.alt)}" loading="lazy" decoding="async"><span class="tile-text"><small>${c.n} · ${esc(c.tag)}</small><b>${esc(c.title)}</b><span class="tile-desc">${esc(c.short)}</span></span></a>`;
+const tiles = chapters.filter(c => featured.includes(c.slug)).map(tileHtml).join('\n');
+const rows = chapters.filter(c => !featured.includes(c.slug)).map(c => `        <a class="row" id="${idMap[c.slug]}" href="chapitre-${c.slug}.html"><img src="img/${c.img}-700.webp" width="700" height="394" alt="${esc(c.alt)}" loading="lazy" decoding="async"><span><small>${c.n} · ${esc(c.tag)}</small><b>${esc(c.title)}</b></span></a>`).join('\n');
+const moreItems = [['benin.html','Dossier Bénin','Sources, repères et données à confirmer.'],['observatoire.html','Observatoire','Indicateurs, unités, périodes et limites.'],['outils.html','Laboratoire','Calculateur, guide d’infusion, roue aromatique.'],['dictionnaire.html','Dictionnaire','254 termes classés en catégories.'],['professionnels.html','Professionnels','Acteurs et lieux du café.'],['sources.html','Sources et contribuer','Méthode, crédits, formulaire de contribution.']];
+const more = moreItems.map(([h, t, d]) => `      <a class="chip big" href="${h}" title="${esc(d)}"${t.startsWith('Sources') ? ' id="sources"' : ''}${t === 'Dictionnaire' ? ' id="dictionnaire"' : ''}>${t}</a>`).join('\n');
 const botHome = `<section class="band" id="cafebot" aria-labelledby="bot-title">
   <div class="container">
     <details class="acc bot-acc"><summary id="bot-title">CaféBot local : poser une question</summary>
@@ -161,7 +165,7 @@ const home = head({ title: 'Café Bénin — Encyclopédie et atlas du café', d
   <div class="container hero-text">
     <span class="eyebrow">Encyclopédie · science · pratiques · Afrique · Bénin</span>
     <h1>Le café n’est pas une boisson. <span>C’est un monde à comprendre.</span></h1>
-    <p class="lead">Un atlas documentaire francophone du café, de la plante à la tasse. Chaque affirmation renvoie à une source consultable.</p>
+    <p class="lead">Un atlas documentaire francophone du café, de la plante à la tasse. Les chapitres citent leurs sources ; ce qui reste à documenter est signalé.</p>
     <form id="hero-search-form" class="hero-search" role="search">
       <label class="sr-only" for="hero-search">Rechercher dans l’encyclopédie</label>
       <input id="hero-search" type="search" placeholder="Arabica, fermentation, mouture, terroir…">
@@ -176,12 +180,15 @@ const home = head({ title: 'Café Bénin — Encyclopédie et atlas du café', d
     <div class="tiles">
 ${tiles}
     </div>
+    <details class="acc all-chapters"><summary>Voir les ${chapters.length - featured.length} autres chapitres</summary><div class="acc-body rows">
+${rows}
+    </div></details>
   </div>
 </section>
 <section class="band alt" id="plus" aria-labelledby="plus-title">
   <div class="container">
     <h2 id="plus-title">Aller plus loin</h2>
-    <div class="mores">
+    <div class="chips">
 ${more}
     </div>
     <p class="contact-line" id="contact">Une correction ou une source à proposer ? <a href="sources.html#contribuer">Écrire depuis la page Sources</a>.</p>

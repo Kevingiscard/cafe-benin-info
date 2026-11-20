@@ -2,6 +2,23 @@
 // un repère qui n'a pas de source vérifiée est écrit dans <span class="repere"> et affiché comme tel.
 export const ACCESSED = '20 novembre 2026';
 export const REFS = {
+  dcn: ['Daily Coffee News (2017), « Honey process: get to know this sweetheart of specialty coffee »', 'https://dailycoffeenews.com/2017/12/04/honey-process-get-to-know-this-sweetheart-of-specialty-coffee/'],
+  barista: ['Barista Magazine, « Hello, Honey » : le procédé honey du Costa Rica', 'https://www.baristamagazine.com/hello-honey-look-costa-rican-process-thats-making-coffee-colorful/'],
+  rsc: ['Royal Society of Chemistry, « Introduction to Coffee Plant and Genetics » (Coffee: Production, Quality and Chemistry)', 'https://books.rsc.org/books/edited-volume/1829/chapter/2242994/Introduction-to-Coffee-Plant-and-Genetics'],
+  echo: ['ECHO, « A Primer on Coffee Harvesting and Processing »', 'https://www.echocommunity.org/en/resources/dc7d7a6b-6835-4121-9a06-fdb5aff8b3f6'],
+  coffearium: ['Coffearium, anatomie de la cerise de café (synthèse secondaire)', 'https://coffearium.org/entries/coffee-cherry-anatomy/'],
+  degasacs: ['Journal of Agricultural and Food Chemistry 66(21), « Time-resolved gravimetric method to assess degassing of roasted coffee »', 'https://pubs.acs.org/jafcau/article/66/21/5293/1515149/Time-Resolved-Gravimetric-Method-To-Assess'],
+  restudy: ['Café Kreyol, étude de repos post-torréfaction sur 21 cafés (étude de torréfacteur)', 'https://cafekreyol.com/research/post-roast-rest-study/'],
+  ratio16: ['Talk About Coffee, ratios usuels en pesée (reprise secondaire de repères SCA)', 'https://www.talkaboutcoffee.com/why-you-should-weigh-your-coffee.html'],
+  shade22: ['Agronomy for Sustainable Development (2022), « Shade effects on yield across different Coffea arabica cultivars »', 'https://link.springer.com/article/10.1007/s13593-022-00788-2'],
+  shade14: ['Jha et al. (2014), A review of production, ecosystem services and farmer livelihoods in shade coffee', 'http://w3.biosci.utexas.edu/jha/wp-content/uploads/sjha-CoffeeUpate-March2014.pdf'],
+  shaderob: ['Agronomy for Sustainable Development (2020), « Effects of shade trees on robusta coffee growth, yield and quality »', 'https://link.springer.com/article/10.1007/s13593-020-00642-3'],
+  faoharv: ['FAO, Coffee: conclusions et recommandations, qualité de la récolte (X6939E05)', 'https://www.fao.org/4/x6939e/x6939e05.htm'],
+  codex: ['Coffearium, récolte et tri des cerises (cite le code d’usages du Codex)', 'https://coffearium.org/entries/harvesting-and-sorting/'],
+  royal: ['Royal Coffee, « How to set up and run a coffee cupping » (décrit le protocole SCA)', 'https://royalcoffee.com/blogs/blog/how-to-set-up-and-run-a-coffee-cupping-a-step-by-step-guide'],
+  gota: ['Gota, « The SCA protocol » (décrit le protocole de cupping SCA)', 'https://gota.cafe/en/learn/cupping/sca-protocol'],
+  scagreen: ['SCA (2025), « Grounding green grading in sensory science » (classification des cafés verts, définition des défauts)', 'https://sca.coffee/sca-news/25/issue-24-grounding-green-grading-2btb6'],
+  faogreen: ['FAO, Annex 7 : Green coffee classification and grading', 'https://www.fao.org/4/X6939E/X6939e13.htm'],
   bm: ['British Museum, « Life in a cup: coffee culture in the Islamic world » (guide)', 'https://www.britishmuseum.org/sites/default/files/2021-10/Life_in_a_cup_coffee_culture_in_the_Islamic_world_large_print_guide_1021.pdf'],
   ucsc: ['Coffee, 1400–1800 (Université de Californie à Santa Cruz)', 'https://humwp.ucsc.edu/cwh/brooks/coffee-site/1400-1800.html'],
   folger: ['Folger Shakespeare Library, « Early modern coffee culture and history in the Islamic world »', 'https://www.folger.edu/blogs/shakespeare-and-beyond/islamic-history-of-coffee/'],
@@ -36,7 +53,7 @@ export const REFS = {
   beanesis: ['Beanesis, café du Bénin (données OIC citées, reprise secondaire)', 'https://beanesis.com/fr/origins/benin/'],
   iaco: ['IACO, rencontre avec le gouvernement du Bénin sur la filière café', 'https://www.iaco-oiac.org/actualite-detail/6ac4ed2ccd1f45b57987eba0'],
 };
-const NOTE = '<span class="repere">Repère de pratique, source à ajouter</span>';
+
 export const chapters = [
 { slug:'histoire', n:'01', tag:'Histoire', title:'Histoire du café', short:'Des hauts plateaux d’Afrique de l’Est aux cafés du monde.',
  img:'ch-histoire', alt:'Illustration générée : route caravanière, mer Rouge et branche de caféier',
@@ -60,9 +77,9 @@ export const chapters = [
  ['Un genre riche, des espèces menacées','<p>Le genre Coffea comprend au moins 124 espèces réparties en Afrique, à Madagascar et dans la zone Asie-Pacifique [[ars]]. L’évaluation de la Liste rouge de l’UICN, menée par Kew sur ces 124 espèces, conclut que 60 % sont menacées d’extinction [[kew]] [[sciadv]]. Les espèces sauvages comptent pour améliorer les variétés cultivées [[sciadv]].</p>'],
  ['Variétés et résistance','<p>Une étude coordonnée par World Coffee Research a comparé en 2025 la réponse de 29 variétés d’Arabica à la rouille dans 15 pays et sur 23 sites [[wcr2025]]. Les variétés se choisissent donc selon leur contexte local : résistance, rendement, qualité.</p>'],
  ['Rouille et scolyte','<p>La crise de la rouille en Amérique centrale, à partir de 2011-2012, a révélé un manque d’informations sur les bonnes pratiques de lutte [[wcrrust]]. Une revue systématique examine la gestion de la rouille et du scolyte du fruit en systèmes agroforestiers [[agrof]].</p>'],
- ['Anatomie de la cerise','<p>Une cerise contient en général deux graines face à face. '+NOTE+'</p>']
+ ['Anatomie de la cerise','<p>Le fruit du caféier est une drupe : un fruit charnu dont la paroi se différencie en exocarpe, mésocarpe et endocarpe autour de la graine [[rsc]]. Une cerise contient généralement deux graines, entourées de peau, pulpe, mucilage, parchemin et pellicule argentée [[coffearium]] [[echo]].</p>']
  ],
- terms:['Arabica','Canephora','Cerise','Mucilage'], refs:['ars','kew','sciadv','pubmed99','nature','fao','wcr2025','wcrrust','agrof'] },
+ terms:['Arabica','Canephora','Cerise','Mucilage'], refs:['ars','kew','sciadv','pubmed99','nature','fao','wcr2025','wcrrust','agrof','rsc','coffearium','echo'] },
 { slug:'agronomie', n:'03', tag:'Agronomie', title:'Culture et agronomie', short:'Climat, altitude, pluie et changement climatique.',
  img:'ch-agronomie', alt:'Illustration générée : plantation de caféiers ombragée à l’heure dorée',
  lead:'La qualité d’un café se prépare dans le champ. Climat, altitude et pluie fixent déjà beaucoup de ce que la tasse peut offrir.',
@@ -72,9 +89,10 @@ export const chapters = [
  ['Altitude','<p>Le robusta se cultive du niveau de la mer à environ 800 m ; l’Arabica donne de meilleurs résultats en altitude, souvent en zone vallonnée [[fao]].</p>'],
  ['Pluie','<p>Le café demande en général 1 500 à 3 000 mm de pluie par an ; le besoin dépend de la rétention du sol, de l’humidité de l’air, de la nébulosité et des pratiques [[fao]].</p>'],
  ['Changement climatique','<p>Selon une étude Kew–Éthiopie de 2017, jusqu’à 60 % des terres utilisées pour le café en Éthiopie pourraient devenir impropres d’ici la fin du siècle [[kew]].</p>'],
- ['Ombrage, sol, récolte','<p>Les pratiques agroforestières sont étudiées pour limiter la rouille et le scolyte [[agrof]]. Le choix de l’ombrage, de la fertilisation et de la méthode de récolte dépend du terroir. '+NOTE+'</p>']
+ ['Ombrage et agroforesterie','<p>L’effet de l’ombrage sur le rendement fait l’objet d’un long débat dans la recherche, avec des résultats contrastés selon les variétés [[shade22]]. Une synthèse indique que des niveaux d’ombrage intermédiaires (environ 35 à 50 %) donnent les rendements les plus élevés, avec des comparaisons difficiles d’une région à l’autre [[shade14]]. Pour le robusta, l’ombrage protège des variations de température, de l’érosion et du rayonnement, mais comporte des compromis de production [[shaderob]]. Les pratiques agroforestières sont aussi étudiées pour la gestion de la rouille et du scolyte [[agrof]].</p>'],
+ ['Récolte','<p>Dans la grande majorité des pays producteurs, le café est cueilli à la main ; pour une bonne qualité, les cerises doivent être cueillies une à une, seulement mûres [[faoharv]]. Le code d’usages du Codex distingue quatre systèmes : égrappage en un passage, égrappage en plusieurs passages, cueillette sélective en plusieurs passages et récolte mécanique [[codex]].</p>']
  ],
- terms:['Agroforesterie','Terroir','Rouille orangée','Altitude'], refs:['fao','kew','agrof'] },
+ terms:['Agroforesterie','Terroir','Rouille orangée','Altitude'], refs:['fao','kew','agrof','shade22','shade14','shaderob','faoharv','codex'] },
 { slug:'post-recolte', n:'04', tag:'Post-récolte', title:'Post-récolte', short:'Fermentation, séchage et café vert.',
  img:'ch-postrecolte', alt:'Illustration générée : cerises de café en séchage sur lits surélevés',
  lead:'Entre la cerise cueillie et le café vert, la transformation fixe une grande part du profil. Une erreur à cette étape ne se rattrape pas.',
@@ -83,9 +101,10 @@ export const chapters = [
  ['Du fruit au café vert','<p>La transformation fait passer la cerise fraîche à un grain vert propre, à 12 % d’humidité. Elle comprend la récolte, le dépulpage, la fermentation, le lavage, le séchage, le décorticage, le nettoyage, le classement, le stockage et le transport [[faopost]].</p>'],
  ['Voie lavée','<p>Le mucilage (couche sucrée) est laissé à fermenter un à deux jours, puis le parchemin est lavé à fond pour retirer toute trace de mucilage fermenté [[faopost]].</p>'],
  ['Voie naturelle','<p>Opération en une étape : le grain sèche à l’intérieur du fruit entier jusqu’à 12 % d’humidité [[faopost]].</p>'],
- ['Lots et contamination','<p>Toute partie fermentée de la veille contamine les cerises fraîchement récoltées et dégrade tout le lot [[faopost]]. Honey et autres variantes : '+NOTE+'</p>']
+ ['Lots et contamination','<p>Toute partie fermentée de la veille contamine les cerises fraîchement récoltées et dégrade tout le lot [[faopost]]. Une sélection rigoureuse des cerises rouges mûres facilite le dépulpage et le classement [[faopost]].</p>'],
+ ['Procédé honey','<p>Un « honey » est un café dépulpé puis séché avec son mucilage collant ; les définitions précises varient d’un producteur à l’autre [[dcn]]. Au Costa Rica, on distingue généralement trois degrés, du jaune au rouge puis au noir [[barista]]. Ces appellations ne sont pas normalisées : demandez le procédé réel.</p>']
  ],
- terms:['Mucilage','Parchemin','Fermentation','Café vert'], refs:['faopost'] },
+ terms:['Mucilage','Parchemin','Fermentation','Café vert'], refs:['faopost','dcn','barista'] },
 { slug:'torrefaction', n:'05', tag:'Torréfaction', title:'Torréfaction', short:'Chaleur, craquements et réactions chimiques.',
  img:'ch-torrefaction', alt:'Illustration générée : torréfacteur à tambour en cours de torréfaction',
  lead:'La torréfaction transforme un grain vert en café aromatique. Elle suit des étapes thermiques repérables, dont les craquements.',
@@ -94,20 +113,20 @@ export const chapters = [
  ['Premier crack','<p>Autour de 205 °C (400 °F), le grain double de volume, devient brun clair et perd environ 5 % de sa masse [[roast]].</p>'],
  ['Au-delà du premier crack','<p>De 205 °C à environ 220 °C, la couleur passe du brun clair au brun moyen et la perte de masse atteint environ 13 % ; une courte phase endothermique précède le second crack [[roast]]. La source déconseille de torréfier bien après le début du second crack [[roast]].</p>'],
  ['Chimie : Maillard et caramélisation','<p>La réaction de Maillard progresse rapidement entre environ 140 et 165 °C, dans une plage plus large en pratique dans la matrice du grain [[maillard]].</p>'],
- ['Repos et dégazage','<p>Dégazage, durée de repos et conservation : '+NOTE+'</p>']
+ ['Repos et dégazage','<p>La torréfaction forme des gaz, dont une grande part de dioxyde de carbone ; une partie est libérée pendant la torréfaction, une partie reste piégée dans la structure poreuse du grain [[degasacs]]. Une étude de torréfacteur sur 21 cafés indique qu’un repos de 24 heures peut ne pas suffire pour atteindre la qualité maximale ; elle ne vaut que pour ses conditions d’essai [[restudy]].</p>']
  ],
- terms:['Maillard','Crack','Dégazage'], refs:['roast','maillard'] },
+ terms:['Maillard','Crack','Dégazage'], refs:['roast','maillard','degasacs','restudy'] },
 { slug:'extraction', n:'06', tag:'Extraction', title:'Extraction et préparation', short:'Force, extraction, eau et ratio.',
  img:'ch-extraction', alt:'Illustration générée : préparation d’un café filtre avec bouilloire à col de cygne',
  lead:'Préparer un café, c’est dissoudre une partie des composés du grain. La norme « Golden Cup » donne des repères mesurables pour le café filtre.',
  points:['Force cible : 1,15 à 1,35 % de matières dissoutes (TDS), pour un rendement d’extraction de 18 à 22 % [[golden]] [[goldencrit]].','Eau à environ 93 °C ± 3 au contact du café [[golden]].','Ces repères valent pour le café filtre et viennent d’un travail de 1957 : ce n’est pas une loi universelle [[goldencrit]].'],
  sections:[
  ['La norme Golden Cup','<p>Elle définit un point de rencontre entre force (TDS) et rendement d’extraction, auquel des panels entraînés et des consommateurs ont jugé le café équilibré [[golden]]. Plage de force : 1,15 à 1,35 % ; rendement : 18 à 22 % [[golden]] [[goldencrit]].</p>'],
- ['Eau et ratio','<p>Température de l’eau : 93 °C ± 3 au contact du café [[golden]]. Un module de formation SCA cite environ 55 g de café par litre d’eau, soit un ratio proche de 1:18 [[scatrain]]. Les recettes courantes du café filtre manuel utilisent souvent des ratios de 1:15 à 1:17 : '+NOTE+'</p><p><a href="outils.html">Ouvrir le calculateur du Laboratoire →</a></p>'],
+ ['Eau et ratio','<p>Température de l’eau : 93 °C ± 3 au contact du café [[golden]]. Un module de formation SCA cite environ 55 g de café par litre d’eau, soit un ratio proche de 1:18 [[scatrain]]. Des guides pratiques reprennent aussi des ratios de 1:16 à 1:17 pour le filtre (source secondaire) [[ratio16]].</p><p><a href="outils.html">Ouvrir le calculateur du Laboratoire →</a></p>'],
  ['Limites de la norme','<p>Les deux plages 1,15–1,35 % et 18–22 % sont réelles, mais viennent d’un article de 1957 et décrivent le café filtre ; elles ne couvrent pas l’espresso [[goldencrit]].</p>'],
- ['Mouture, méthodes, diagnostic','<p>Réglage de la mouture et diagnostic goût/extraction : '+NOTE+'</p>']
+ ['Mouture','<p>La taille de mouture influe sur la vitesse d’extraction, par la surface de contact, et sur la vitesse d’écoulement de l’eau à travers le lit de café [[scatrain]]. Le diagnostic goût/extraction et les méthodes (espresso, piston, moka) sont <strong>à documenter</strong> avec leurs sources.</p>']
  ],
- terms:['Ratio','Mouture','Extraction','TDS'], refs:['golden','scatrain','goldencrit'] },
+ terms:['Ratio','Mouture','Extraction','TDS'], refs:['golden','scatrain','goldencrit','ratio16'] },
 { slug:'sensoriel', n:'07', tag:'Dégustation', title:'Dégustation et sensoriel', short:'Cupping, CVA et roue des arômes.',
  img:'ch-sensoriel', alt:'Illustration générée : table de cupping avec tasses, cuillères et carnet',
  lead:'Goûter, c’est apprendre à nommer. La SCA a publié des normes de dégustation qui séparent la description objective de l’appréciation personnelle.',
@@ -115,9 +134,10 @@ export const chapters = [
  sections:[
  ['Les normes de cupping SCA','<p>SCA-102 porte sur la préparation des échantillons et le cupping, SCA-103 sur l’évaluation descriptive, SCA-104 sur l’évaluation affective [[cva]].</p>'],
  ['La roue des arômes','<p>La Coffee Taster’s Flavor Wheel, publiée en 1995, a été mise à jour en 2016 en collaboration avec World Coffee Research [[scastore]]. Le Laboratoire du site propose une roue interactive.</p><p><a href="outils.html">Ouvrir le Laboratoire →</a></p>'],
- ['Pratique du cupping','<p>Protocole détaillé de dégustation et défauts courants : '+NOTE+'</p>']
+ ['Pratique du cupping','<p>Le protocole SCA décrit couramment : 8,25 g de café pour 150 ml d’eau (environ 1:18), eau vers 93 °C, croûte brisée après 4 minutes (description par des sources secondaires) [[royal]] [[gota]].</p>'],
+ ['Défauts du café vert','<p>La norme de classification des cafés verts de la SCA définit un défaut comme une propriété du café vert ou torréfié généralement perçue comme négative [[scagreen]]. La FAO présente les principaux systèmes de classification [[faogreen]].</p>']
  ],
- terms:['Cupping','Acidité','Corps','Finale'], refs:['cva','scastore'] },
+ terms:['Cupping','Acidité','Corps','Finale'], refs:['cva','scastore','royal','gota','scagreen','faogreen'] },
 { slug:'sante', n:'08', tag:'Santé', title:'Santé et qualité', short:'Caféine, repères EFSA et sécurité des aliments.',
  img:'ch-sante', alt:'Illustration générée : tasse de café noir à côté d’un verre d’eau et d’un carnet',
  lead:'Cette page présente des repères officiels, pas des conseils médicaux. En cas de doute (grossesse, traitement, maladie), demandez l’avis d’un professionnel de santé.',
@@ -136,7 +156,7 @@ export const chapters = [
  sections:[
  ['Production mondiale','<p>Selon l’OIC, la production mondiale a augmenté de 0,1 % à 168,2 millions de sacs de 60 kg en année caféière 2022/23, avec une répartition contrastée entre les Amériques et le reste du monde [[ico23]]. Le rapport met en avant l’effet de la gelée de juillet 2021 sur le Brésil et les Arabicas [[ico23]].</p>'],
  ['Données et statistiques','<p>L’OIC diffuse les volumes et tendances du commerce mondial du café : exportations, importations et réexportations [[icostats]].</p>'],
- ['Acteurs, prix, labels','<p>Chaîne de valeur, prix, classement et labels : '+NOTE+'</p><p><a href="professionnels.html">Ouvrir l’espace professionnel →</a></p>']
+ ['Acteurs, prix, labels','<p><strong>À documenter</strong> : chaîne de valeur, prix, classement qualité et labels, avec sources. Aucun chiffre n’est affiché tant qu’il n’est pas vérifié.</p><p><a href="professionnels.html">Ouvrir l’espace professionnel →</a></p>']
  ],
  terms:['Coopérative','Traçabilité'], refs:['ico23','icostats'] },
 { slug:'afrique', n:'10', tag:'Afrique', title:'Afrique et Bénin', short:'Producteurs africains, dossier Bénin.',
