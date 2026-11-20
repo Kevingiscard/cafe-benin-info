@@ -181,3 +181,4 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 .btn.secondary:hover { background: var(--surface-2); color: var(--accent-2); }
 .atlas-proof { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
 .atlas-proof span { border: 1px solid var(--border); border-radius: 999px; padding: .3rem .8rem; background: var(--surface); color: var(--text); font-size: .85rem; font-weight: 600; }
+.tbl.tbl-sm{min-width:0}.tbl.tbl-sm th,.tbl.tbl-sm td{padding:.5rem .45rem}.tbl.tbl-sm th:first-child{text-align:left}
