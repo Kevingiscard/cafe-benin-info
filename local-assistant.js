@@ -61,7 +61,7 @@
         if (!allPresent) {
           const significantQueryTokens = [...queryTokens].filter(token => token.length >= 3 && !DICT_STOPWORDS.has(token));
           const coversQuery = significantQueryTokens.length > 0 && significantQueryTokens.every(token => tokens.includes(token));
-          if (coversQuery && tokens.length >= 2) related.push(entry);
+          if (coversQuery && tokens.length >= 2) related.push({ entry, normalized: term, matched: significantQueryTokens.length, total: tokens.length });
           continue;
         }
         matched = tokens.length;
@@ -70,9 +70,13 @@
         best = { entry, normalized: term, matched };
       }
     }
+    if (!best && related.length > 0) {
+      related.sort((a, b) => (b.matched / b.total) - (a.matched / a.total) || (a.total - b.total) || a.normalized.localeCompare(b.normalized, 'fr'));
+      best = related.shift();
+    }
     if (!best) return null;
-    const also = related.filter(entry => entry.term !== best.entry.term).slice(0, 2);
-    const more = also.length > 0 ? ` Voir aussi : ${also.map(entry => entry.term).join(' ; ')}.` : '';
+    const also = related.filter(item => item.entry.term !== best.entry.term).slice(0, 2);
+    const more = also.length > 0 ? ` Voir aussi : ${also.map(item => item.entry.term).join(' ; ')}.` : '';
     return {
       reply: `D’après le dictionnaire du site (${best.entry.category || 'entrée'}) — ${best.entry.term} : ${best.entry.definition}${more}`,
       links: [links.dictionnaire],
