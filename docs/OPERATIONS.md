@@ -39,3 +39,10 @@ Une fois l’association faite, tout commit fusionné sur main republiera GitHub
 ## Budgets médias et protection des visiteurs
 
 Le contrôle d’assets bloque le dépôt si le total des images dépasse 7 Mo ou si une image dépasse son budget individuel. Les photos supplémentaires ne doivent être ajoutées qu’après vérification de leur provenance et de leur licence. Le site ne charge pas de service d’analytics. Le carnet et les préférences restent sur l’appareil; aucune synchronisation serveur ou multi-appareil n’est activée. La police est chargée depuis Google Fonts.
+## Veille hebdomadaire gratuite
+
+Le workflow `watch.yml` s’exécute chaque lundi matin (et à la demande depuis l’onglet Actions). Il contrôle les liens externes, la santé du site en ligne et l’édition du bulletin USDA cité par le site. S’il trouve quelque chose, il ouvre ou complète une seule fiche (issue) « Veille hebdomadaire : points à relire ».
+
+Garde-fous : lecture seule, aucun secret, aucune IA, aucune modification automatique du contenu. Toute mise à jour de chiffres ou de contenu de santé est préparée à part, relue contre la source puis publiée après `npm run verify`.
+
+Coût : zéro. Le dépôt est public et les exécuteurs standard de GitHub Actions y sont gratuits (documentation GitHub, « Standard GitHub-hosted runners in public repositories » reste gratuit).
