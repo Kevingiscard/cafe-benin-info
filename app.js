@@ -161,7 +161,7 @@
         { id: 'explorer', href: 'explorer.html', type: 'Parcours', title: 'Explorer les chapitres', description: 'Parcours guidé : histoire, botanique, Arabica, culture, transformation, torréfaction, extraction, dégustation, santé et filière.' },
         { id: 'benin', href: 'benin.html', type: 'Dossier', title: 'Dossier Bénin', description: 'Repères historiques, sources institutionnelles, limites des données et priorités de documentation.' },
         { id: 'outils', href: 'outils.html', type: 'Outils', title: 'Outils pratiques', description: 'Calculateur, guide, diagnostic de tasse, roue aromatique et carnet local.' },
-        { id: 'dictionnaire', href: 'dictionnaire.html', type: 'Dictionnaire', title: 'Dictionnaire du café', description: '254 termes classés en 19 catégories, avec recherche, filtres et favoris.' },
+        { id: 'dictionnaire', href: 'dictionnaire.html', type: 'Dictionnaire', title: 'Dictionnaire du café', description: '310 termes classés en 24 catégories, avec recherche, filtres et favoris.' },
         { id: 'sources', href: 'sources.html', type: 'Sources', title: 'Sources et contribuer', description: 'Méthode éditoriale, crédits visuels et formulaire de contribution.' },
         { id: 'professionnels', href: 'professionnels.html', type: 'Professionnels', title: 'Espace professionnel', description: 'Bulletin de veille, annuaire vérifié, données agrégées, formation et mise en relation consentie.' },
         { id: 'politique-editoriale', href: 'politique-editoriale.html', type: 'Transparence', title: 'Politique éditoriale', description: 'Règles de preuve, corrections, fiches, sponsoring et indépendance éditoriale.' },
@@ -173,7 +173,38 @@
       const escapeRe = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const STOPWORDS = new Set(['le', 'la', 'les', 'de', 'des', 'du', 'un', 'une', 'et', 'ou', 'en', 'au', 'aux', 'ce', 'cette', 'pour', 'sur', 'avec', 'sans', 'est', 'sont', 'comment', 'pourquoi', 'quelle', 'quel', 'quoi', 'combien']);
       const queryTokens = query.split(/[^a-z0-9]+/).filter(token => token.length >= 2 && !STOPWORDS.has(token));
-      const scoreItem = (item, requireAll) => {
+      // Tolérance de frappe bornée : distance 1 (substitution, ajout, retrait, inversion),
+      // uniquement pour un mot d'au moins 5 lettres sans aucune correspondance,
+      // et seulement si un seul candidat du vocabulaire de l'index convient.
+      const vocabulary = [...new Set(records.flatMap(item => normalize(`${item.title} ${item.type}`).split(/[^a-z0-9]+/).filter(word => word.length >= 5)))];
+      const distance1 = (a, b) => {
+        if (a === b) return true;
+        const la = a.length, lb = b.length;
+        if (Math.abs(la - lb) > 1) return false;
+        if (la === lb) {
+          let diff = 0;
+          for (let i = 0; i < la; i++) if (a[i] !== b[i]) diff++;
+          if (diff === 1) return true;
+          for (let i = 0; i < la - 1; i++) {
+            if (a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(0, i) === b.slice(0, i) && a.slice(i + 2) === b.slice(i + 2)) return true;
+          }
+          return false;
+        }
+        const [short, long] = la < lb ? [a, b] : [b, a];
+        let i = 0, j = 0, skips = 0;
+        while (i < short.length && j < long.length) {
+          if (short[i] === long[j]) { i++; j++; }
+          else { skips++; j++; if (skips > 1) return false; }
+        }
+        return true;
+      };
+      const corrections = [];
+      const correctToken = token => {
+        if (token.length < 5) return null;
+        const candidates = vocabulary.filter(word => distance1(token, word));
+        return candidates.length === 1 ? candidates[0] : null;
+      };
+      const scoreItem = (item, requireAll, allowTypo) => {
         const haystack = normalize(`${item.title} ${item.description} ${item.type}`);
         const titleNorm = normalize(item.title);
         const exact = query && titleNorm === query ? 6 : 0;
@@ -182,22 +213,46 @@
         let score = exact + starts;
         let covered = 0;
         for (const token of queryTokens) {
-          const re = new RegExp(`\\b${escapeRe(stemToken(token))}`);
-          if (re.test(titleNorm)) { score += 3; covered += 1; }
-          else if (re.test(haystack)) { score += 1; covered += 1; }
+          let re = new RegExp(`\\b${escapeRe(stemToken(token))}`);
+          if (re.test(titleNorm)) { score += 3; covered += 1; if (titleNorm === token) score += 2; continue; }
+          if (re.test(haystack)) { score += 1; covered += 1; continue; }
+          if (allowTypo) {
+            const fixed = correctToken(token);
+            if (fixed) {
+              re = new RegExp(`\\b${escapeRe(stemToken(fixed))}`);
+              if (re.test(titleNorm) || re.test(haystack)) {
+                score += 0.5; covered += 1;
+                if (!corrections.some(c => c.from === token)) corrections.push({ from: token, to: fixed });
+              }
+            }
+          }
         }
         if (requireAll && covered < queryTokens.length) return { item, score: exact + starts };
         if (covered) score += covered * 2;
         return { item, score };
       };
-      let ranked = records.map(item => scoreItem(item, true)).filter(entry => !query || entry.score > 0);
+      let fallbackUsed = false;
+      let ranked = records.map(item => scoreItem(item, true, true)).filter(entry => !query || entry.score > 0);
       if (query && !ranked.length && queryTokens.length > 1) {
         // Repli souple : au moins un mot correspond, les plus couverts d'abord.
-        ranked = records.map(item => scoreItem(item, false)).filter(entry => entry.score > 0);
+        corrections.length = 0;
+        ranked = records.map(item => scoreItem(item, false, true)).filter(entry => entry.score > 0);
+        fallbackUsed = ranked.length > 0;
       }
       ranked = ranked.sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title, 'fr')).slice(0, 12);
       resultBox.replaceChildren();
       activeIndex = -1;
+      if (fallbackUsed) {
+        const note = document.createElement('p');
+        note.className = 'search-empty';
+        note.textContent = 'Aucun résultat ne contient tous ces mots ; voici les plus proches.';
+        resultBox.append(note);
+      } else if (corrections.length) {
+        const note = document.createElement('p');
+        note.className = 'search-empty';
+        note.textContent = 'Recherche ajustée : ' + corrections.map(c => `« ${c.from} » → « ${c.to} »`).join(', ') + '.';
+        resultBox.append(note);
+      }
       if (!ranked.length) {
         const empty = document.createElement('p');
         empty.className = 'search-empty';
