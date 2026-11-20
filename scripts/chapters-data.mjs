@@ -112,10 +112,10 @@ export const chapters = [
 { slug:'torrefaction', n:'05', tag:'Torréfaction', title:'Torréfaction', short:'Chaleur, craquements et réactions chimiques.',
  img:'ch-torrefaction', alt:'Illustration générée : torréfacteur à tambour en cours de torréfaction',
  lead:'La torréfaction transforme un grain vert en café aromatique. Elle suit des étapes thermiques repérables, dont les craquements.',
- points:['Premier crack vers 205 °C : le grain double de volume et perd environ 5 % de masse [[roast]].','De 205 à environ 220 °C : couleur brun moyen, perte d’environ 13 % [[roast]].','Le second crack suit une courte phase endothermique [[roast]].'],
+ points:['Selon le Coffee Research Institute, qui cite l’ouvrage de Davids : premier crack vers 205 °C, volume doublé, perte d’environ 5 % de masse. Ce sont des repères indicatifs, pas des constantes [[roast]].','Même source : de 205 à environ 220 °C, couleur brun moyen et perte d’environ 13 % [[roast]].','Le second crack suit une courte phase endothermique [[roast]].'],
  sections:[
- ['Premier crack','<p>Autour de 205 °C (400 °F), le grain double de volume, devient brun clair et perd environ 5 % de sa masse [[roast]].</p>'],
- ['Au-delà du premier crack','<p>De 205 °C à environ 220 °C, la couleur passe du brun clair au brun moyen et la perte de masse atteint environ 13 % ; une courte phase endothermique précède le second crack [[roast]]. La source déconseille de torréfier bien après le début du second crack [[roast]].</p>'],
+ ['Premier crack','<p>Selon le Coffee Research Institute, autour de 205 °C (400 °F), le grain double de volume, devient brun clair et perd environ 5 % de sa masse [[roast]].</p>'],
+ ['Au-delà du premier crack','<p>De 205 °C à environ 220 °C, la couleur passe du brun clair au brun moyen et la perte de masse atteint environ 13 % ; une courte phase endothermique précède le second crack [[roast]]. La même page recommande, comme avis de ses auteurs, de ne pas torréfier bien au-delà du début du second crack ; c’est une préférence de goût, pas une règle [[roast]]. Les températures varient avec la machine, la charge et le capteur.</p>'],
  ['Chimie : Maillard et caramélisation','<p>La réaction de Maillard progresse rapidement entre environ 140 et 165 °C, dans une plage plus large en pratique dans la matrice du grain [[maillard]].</p>'],
  ['Repos et dégazage','<p>La torréfaction forme des gaz, dont une grande part de dioxyde de carbone ; une partie est libérée pendant la torréfaction, une partie reste piégée dans la structure poreuse du grain [[degasacs]]. Une étude de torréfacteur sur 21 cafés indique qu’un repos de 24 heures peut ne pas suffire pour atteindre la qualité maximale ; elle ne vaut que pour ses conditions d’essai [[restudy]].</p>']
  ],
