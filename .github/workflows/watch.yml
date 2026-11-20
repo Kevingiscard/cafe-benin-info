@@ -1,0 +1,48 @@
+name: Veille hebdomadaire
+
+# Gratuit : dépôt public, exécuteurs standard GitHub. Lecture seule : aucune modification du site,
+# aucun secret, aucune IA. Ouvre ou met à jour une seule fiche (issue) quand quelque chose est à relire.
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+      - name: Veille des sources
+        run: node scripts/check-sources.mjs
+      - name: Contrôle des liens externes
+        run: |
+          set +e
+          node scripts/check-links.mjs --external > links.log 2>&1
+          echo "LINKS_EXIT=$?" >> "$GITHUB_ENV"
+      - name: Santé du site en ligne
+        run: |
+          set +e
+          node scripts/health-check.mjs > health.log 2>&1
+          echo "HEALTH_EXIT=$?" >> "$GITHUB_ENV"
+      - name: Rapport
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            cat source-watch.md
+            if [ "$LINKS_EXIT" != "0" ]; then echo "- Liens externes en échec :"; grep '✖' links.log | sed 's/^/  /'; fi
+            if [ "$HEALTH_EXIT" != "0" ]; then echo "- Contrôle de santé en échec :"; grep '✖' health.log | sed 's/^/  /'; fi
+          } > body.md
+          if [ -s body.md ]; then
+            title="Veille hebdomadaire : points à relire"
+            n=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')
+            if [ -n "$n" ]; then gh issue comment "$n" --body-file body.md; else gh issue create --title "$title" --body-file body.md; fi
+          fi
