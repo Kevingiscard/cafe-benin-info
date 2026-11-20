@@ -80,6 +80,7 @@ const foot = `<footer class="footer">
 <script src="dictionary-v4.js" defer></script>
 <script src="local-assistant.js" defer></script>
 <script src="app.js" defer></script>
+<script data-goatcounter="https://cafe-benin.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 `;
