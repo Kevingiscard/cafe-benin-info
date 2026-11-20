@@ -1,0 +1,153 @@
+// Contenu éditorial. Règle : chaque affirmation factuelle porte une référence [[clé]] vers REFS ;
+// un repère qui n'a pas de source vérifiée est écrit dans <span class="repere"> et affiché comme tel.
+export const ACCESSED = '20 novembre 2026';
+export const REFS = {
+  bm: ['British Museum, « Life in a cup: coffee culture in the Islamic world » (guide)', 'https://www.britishmuseum.org/sites/default/files/2021-10/Life_in_a_cup_coffee_culture_in_the_Islamic_world_large_print_guide_1021.pdf'],
+  ucsc: ['Coffee, 1400–1800 (Université de Californie à Santa Cruz)', 'https://humwp.ucsc.edu/cwh/brooks/coffee-site/1400-1800.html'],
+  folger: ['Folger Shakespeare Library, « Early modern coffee culture and history in the Islamic world »', 'https://www.folger.edu/blogs/shakespeare-and-beyond/islamic-history-of-coffee/'],
+  bbc: ['BBC News, « Coffee and qahwa: how a drink for Arab mystics went global »', 'https://www.bbc.com/news/magazine-22190802'],
+  pubmed99: ['Lashermes et al., « Molecular characterisation and origin of the Coffea arabica L. genome » (1999)', 'https://pubmed.ncbi.nlm.nih.gov/10102360/'],
+  nature: ['Nature Genetics (2024), « The genome and population genomics of allopolyploid Coffea arabica »', 'https://www.nature.com/articles/s41588-024-01695-w'],
+  kew: ['Royal Botanic Gardens, Kew (2019), 60 % des espèces sauvages de café menacées', 'https://www.kew.org/about-our-organisation/press-media/press-releases/kew-scientists-reveal-that-60-of-wild-coffee'],
+  sciadv: ['Science Advances (2019), « High extinction risk for wild coffee species »', 'https://www.science.org/doi/10.1126/sciadv.aav3473'],
+  ars: ['USDA ARS, Coffee Crop Germplasm Vulnerability Statement (2020)', 'https://www.ars-grin.gov/npgs/cgc_reports/2020%20-%20Coffee%20Vulnerability%20Statement.pdf'],
+  fao: ['FAO, Coffee: introduction et écologie (X6939E)', 'https://www.fao.org/4/X6939E/X6939e01.htm'],
+  faopost: ['FAO, Arabica coffee manual for Lao PDR : transformation (ae939e)', 'https://www.fao.org/4/ae939e/ae939e08.htm'],
+  wcrrust: ['World Coffee Research, Prevention and Control of Coffee Leaf Rust', 'https://worldcoffeeresearch.org/resources/prevention-and-control-of-coffee-leaf-rust'],
+  wcr2025: ['World Coffee Research (2025), étude multi-pays sur 29 variétés d’Arabica face à la rouille', 'https://worldcoffeeresearch.org/news/2025/coffee-leaf-rust-knows-no-borders-neither-does-coffee-science'],
+  agrof: ['Revue systématique : rouille et scolyte en agroforesterie (Smart Agricultural Technology, 2024)', 'https://doi.org/10.1016/j.atech.2024.100656'],
+  roast: ['Coffee Research : torréfaction (Coffee Research Institute)', 'https://www.coffeeresearch.org/coffee/roasting2.htm'],
+  maillard: ['Coffeester, chimie de la torréfaction (Maillard, caramélisation)', 'https://www.coffeester.com/knowledge/roasting/chemistry'],
+  golden: ['Roastopedia, The Golden Cup Standard (synthèse de la norme SCAA/SCA)', 'https://roastopedia.com/golden-cup-standard/'],
+  goldenpdf: ['SCA, Golden Cup Standard (texte)', 'https://coffeegeek.com/wp-content/uploads/2023/10/SCAGoldCupStandard.pdf'],
+  scatrain: ['SCA Training (ROCC), module Brewing Foundation : Golden Cup, ratio eau/café', 'https://sca.training/howtocoffee/2018/7/21/brewing-foundation-module-posted'],
+  goldencrit: ['Beans & Barista, « SCA Golden Cup Standard: what it really says »', 'https://beansandbarista.com/blog/sca-golden-cup-standard/'],
+  cva: ['SCA, adoption des normes de cupping SCA-102, 103 et 104 (CVA)', 'https://sca.coffee/sca-news/sca-new-cva-cupping-standards-7ga28'],
+  scastore: ['SCA, Coffee Taster’s Flavor Wheel (1995, mise à jour 2016 avec World Coffee Research)', 'https://sca.coffee/store'],
+  efsa: ['EFSA, page « Caffeine » (avis scientifique de mai 2015)', 'https://www.efsa.europa.eu/en/topics/topic/caffeine'],
+  efsajour: ['EFSA Journal (2015), Scientific Opinion on the safety of caffeine', 'https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2015.4102'],
+  ota: ['Règlement (UE) 2022/1370 sur l’ochratoxine A (EUR-Lex)', 'https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32022R1370'],
+  ico23: ['OIC, Coffee Report and Outlook, décembre 2023', 'https://ico.org/documents/cy2023-24/Coffee_Report_and_Outlook_December_2023_ICO.pdf'],
+  icoafrica: ['OIC (2015), Overview of the coffee sector in Africa (ICC-114-5)', 'https://www.ico.org/documents/cy2014-15/icc-114-5e-overview-coffee-sector-africa.pdf'],
+  usda: ['USDA FAS, Coffee: World Markets and Trade (juin 2025)', 'https://apps.fas.usda.gov/psdonline/circulars/2025/06/coffee.pdf'],
+  icostats: ['OIC, base de données statistiques mondiales du café', 'https://ico.org/what-we-do/world-coffee-statistics-database/'],
+  faostatbj: ['Waramina, production de café au Bénin (série FAOSTAT, reprise secondaire)', 'https://waramina.com/pays/benin/production-de-cafe'],
+  terra: ['Terra Cultiva, café vert au Bénin (série FAOSTAT, reprise secondaire)', 'https://terra-cultiva.com/fr/pays/benin/cafe-vert/'],
+  beanesis: ['Beanesis, café du Bénin (données OIC citées, reprise secondaire)', 'https://beanesis.com/fr/origins/benin/'],
+  iaco: ['IACO, rencontre avec le gouvernement du Bénin sur la filière café', 'https://www.iaco-oiac.org/actualite-detail/6ac4ed2ccd1f45b57987eba0'],
+};
+const NOTE = '<span class="repere">Repère de pratique, source à ajouter</span>';
+export const chapters = [
+{ slug:'histoire', n:'01', tag:'Histoire', title:'Histoire du café', short:'Des hauts plateaux d’Afrique de l’Est aux cafés du monde.',
+ img:'ch-histoire', alt:'Illustration générée : route caravanière, mer Rouge et branche de caféier',
+ lead:'L’histoire du café mêle botanique, religion, commerce, pouvoir et colonisation. Les récits légendaires circulent beaucoup ; seuls les faits documentés sont affichés ici, avec leur source.',
+ points:['L’Arabica est une plante native des hautes terres d’Afrique de l’Est, mais la boisson est née dans le monde islamique [[bm]].','Peu de preuves écrites avant le début du XVIe siècle ; un petit commerce Éthiopie–Yémen existe dès le milieu du XVe [[ucsc]].','Le café reste presque exclusivement islamique jusqu’au milieu du XVIIe siècle, puis gagne l’Europe [[ucsc]].'],
+ sections:[
+ ['Origines : plante africaine, boisson islamique','<p>Le caféier Arabica est natif des hautes terres d’Afrique de l’Est, tandis que la boisson a ses racines dans le monde islamique [[bm]]. La région de la mer Rouge, côté yéménite et côté éthiopien, est celle où le café apparaît dans les sources [[bbc]].</p><p>Il existe des légendes d’origine. Elles ne constituent pas des sources et ne sont pas reprises comme des faits.</p>'],
+ ['Yémen et soufisme','<p>Au XVe siècle, des soufis du Yémen buvaient la qahwa pour rester éveillés pendant les longues nuits de récitation du zikr [[folger]]. Un petit commerce de café entre l’Éthiopie et le Yémen est attesté à partir du milieu du XVe siècle [[ucsc]].</p>'],
+ ['Moka et le monopole yéménite','<p>Jusqu’à la fin du XVIIe siècle, la production et la distribution du café restent concentrées au Yémen et au port de Moka [[ucsc]]. Les noms « Mocha » et « Java » désignent à l’origine des cafés vendus depuis les ports qui les portent, un héritage resté dans le langage [[ucsc]].</p>'],
+ ['Cafés, pouvoir et contrôle','<p>Les maisons de café inquiètent parfois les autorités. Le sultan Murat IV ordonne en 1623 la destruction complète des cafés d’Istanbul [[ucsc]].</p>'],
+ ['Europe, colonies et esclavage','<p>Le café arrive en Europe au XVIIe siècle et devient une marchandise mondiale lorsque les Européens le cultivent dans leurs colonies d’Amérique latine, d’Afrique et d’Asie [[ucsc]]. Aux Indes néerlandaises, sur l’île de Java, le café était prélevé sur les paysans comme impôt en nature [[ucsc]]. Le café a fait partie du système esclavagiste et du colonialisme [[ucsc]]. Cette histoire est présentée sans l’adoucir.</p>']
+ ],
+ terms:['Arabica','Moka','Qahwa'], refs:['bm','ucsc','folger','bbc'] },
+{ slug:'botanique', n:'02', tag:'Botanique', title:'Botanique et diversité', short:'Espèces, génétique, variétés et menaces.',
+ img:'ch-botanique', alt:'Illustration générée : planche botanique d’une branche de caféier avec fleurs, cerises et coupe de la graine',
+ lead:'Le café est une graine de la famille des Rubiacées. Deux espèces font l’essentiel du commerce : Arabica et Canephora (robusta). La diversité sauvage est, elle, fragile.',
+ points:['Le genre Coffea compte au moins 124 espèces connues [[ars]] ; 60 % des espèces sauvages sont menacées d’extinction [[kew]].','L’Arabica est un hybride allotétraploïde entre C. canephora et C. eugenioides, avec 44 chromosomes [[pubmed99]] [[nature]].','L’Arabica est la source d’environ 60 % des produits à base de café dans le monde [[nature]].'],
+ sections:[
+ ['Arabica : un hybride récent','<p>Coffea arabica est un allotétraploïde (2n = 44) issu de l’hybridation de C. canephora et C. eugenioides [[pubmed99]]. Il est la source d’environ 60 % des produits à base de café dans le monde ; ses lignées cultivées ont connu plusieurs goulots d’étranglement génétiques [[nature]].</p>'],
+ ['Canephora (robusta) et Arabica : différences de plante','<p>Selon la FAO, l’Arabica est autogame (il peut s’autopolliniser), alors que le robusta est allogame ; les feuilles du robusta sont beaucoup plus grandes [[fao]].</p>'],
+ ['Un genre riche, des espèces menacées','<p>Le genre Coffea comprend au moins 124 espèces réparties en Afrique, à Madagascar et dans la zone Asie-Pacifique [[ars]]. L’évaluation de la Liste rouge de l’UICN, menée par Kew sur ces 124 espèces, conclut que 60 % sont menacées d’extinction [[kew]] [[sciadv]]. Les espèces sauvages comptent pour améliorer les variétés cultivées [[sciadv]].</p>'],
+ ['Variétés et résistance','<p>Une étude coordonnée par World Coffee Research a comparé en 2025 la réponse de 29 variétés d’Arabica à la rouille dans 15 pays et sur 23 sites [[wcr2025]]. Les variétés se choisissent donc selon leur contexte local : résistance, rendement, qualité.</p>'],
+ ['Rouille et scolyte','<p>La crise de la rouille en Amérique centrale, à partir de 2011-2012, a révélé un manque d’informations sur les bonnes pratiques de lutte [[wcrrust]]. Une revue systématique examine la gestion de la rouille et du scolyte du fruit en systèmes agroforestiers [[agrof]].</p>'],
+ ['Anatomie de la cerise','<p>Une cerise contient en général deux graines face à face. '+NOTE+'</p>']
+ ],
+ terms:['Arabica','Canephora','Cerise','Mucilage'], refs:['ars','kew','sciadv','pubmed99','nature','fao','wcr2025','wcrrust','agrof'] },
+{ slug:'agronomie', n:'03', tag:'Agronomie', title:'Culture et agronomie', short:'Climat, altitude, pluie et changement climatique.',
+ img:'ch-agronomie', alt:'Illustration générée : plantation de caféiers ombragée à l’heure dorée',
+ lead:'La qualité d’un café se prépare dans le champ. Climat, altitude et pluie fixent déjà beaucoup de ce que la tasse peut offrir.',
+ points:['Le café se cultive entre 25° nord et 25° sud, avec des exigences précises selon l’espèce [[fao]].','Températures idéales moyennes : 15–24 °C pour l’Arabica, 24–30 °C pour le robusta [[fao]].','Jusqu’à 60 % des terres de café d’Éthiopie pourraient devenir impropres d’ici la fin du siècle [[kew]].'],
+ sections:[
+ ['Température et gel','<p>Les températures moyennes idéales vont de 15 à 24 °C pour l’Arabica et de 24 à 30 °C pour le robusta, qui supporte la chaleur et la sécheresse mais pas les températures nettement inférieures à 15 °C. Tous les caféiers craignent le gel [[fao]].</p>'],
+ ['Altitude','<p>Le robusta se cultive du niveau de la mer à environ 800 m ; l’Arabica donne de meilleurs résultats en altitude, souvent en zone vallonnée [[fao]].</p>'],
+ ['Pluie','<p>Le café demande en général 1 500 à 3 000 mm de pluie par an ; le besoin dépend de la rétention du sol, de l’humidité de l’air, de la nébulosité et des pratiques [[fao]].</p>'],
+ ['Changement climatique','<p>Selon une étude Kew–Éthiopie de 2017, jusqu’à 60 % des terres utilisées pour le café en Éthiopie pourraient devenir impropres d’ici la fin du siècle [[kew]].</p>'],
+ ['Ombrage, sol, récolte','<p>Les pratiques agroforestières sont étudiées pour limiter la rouille et le scolyte [[agrof]]. Le choix de l’ombrage, de la fertilisation et de la méthode de récolte dépend du terroir. '+NOTE+'</p>']
+ ],
+ terms:['Agroforesterie','Terroir','Rouille orangée','Altitude'], refs:['fao','kew','agrof'] },
+{ slug:'post-recolte', n:'04', tag:'Post-récolte', title:'Post-récolte', short:'Fermentation, séchage et café vert.',
+ img:'ch-postrecolte', alt:'Illustration générée : cerises de café en séchage sur lits surélevés',
+ lead:'Entre la cerise cueillie et le café vert, la transformation fixe une grande part du profil. Une erreur à cette étape ne se rattrape pas.',
+ points:['Le café vert prêt à l’export ou à la torréfaction est séché à 12 % d’humidité [[faopost]].','Voie naturelle : séchage dans le fruit entier jusqu’à 12 % d’humidité [[faopost]].','Surfermentation, moisissures, odeurs ou dommages : la perte de qualité est définitive [[faopost]].'],
+ sections:[
+ ['Du fruit au café vert','<p>La transformation fait passer la cerise fraîche à un grain vert propre, à 12 % d’humidité. Elle comprend la récolte, le dépulpage, la fermentation, le lavage, le séchage, le décorticage, le nettoyage, le classement, le stockage et le transport [[faopost]].</p>'],
+ ['Voie lavée','<p>Le mucilage (couche sucrée) est laissé à fermenter un à deux jours, puis le parchemin est lavé à fond pour retirer toute trace de mucilage fermenté [[faopost]].</p>'],
+ ['Voie naturelle','<p>Opération en une étape : le grain sèche à l’intérieur du fruit entier jusqu’à 12 % d’humidité [[faopost]].</p>'],
+ ['Lots et contamination','<p>Toute partie fermentée de la veille contamine les cerises fraîchement récoltées et dégrade tout le lot [[faopost]]. Honey et autres variantes : '+NOTE+'</p>']
+ ],
+ terms:['Mucilage','Parchemin','Fermentation','Café vert'], refs:['faopost'] },
+{ slug:'torrefaction', n:'05', tag:'Torréfaction', title:'Torréfaction', short:'Chaleur, craquements et réactions chimiques.',
+ img:'ch-torrefaction', alt:'Illustration générée : torréfacteur à tambour en cours de torréfaction',
+ lead:'La torréfaction transforme un grain vert en café aromatique. Elle suit des étapes thermiques repérables, dont les craquements.',
+ points:['Premier crack vers 205 °C : le grain double de volume et perd environ 5 % de masse [[roast]].','De 205 à environ 220 °C : couleur brun moyen, perte d’environ 13 % [[roast]].','Le second crack suit une courte phase endothermique [[roast]].'],
+ sections:[
+ ['Premier crack','<p>Autour de 205 °C (400 °F), le grain double de volume, devient brun clair et perd environ 5 % de sa masse [[roast]].</p>'],
+ ['Au-delà du premier crack','<p>De 205 °C à environ 220 °C, la couleur passe du brun clair au brun moyen et la perte de masse atteint environ 13 % ; une courte phase endothermique précède le second crack [[roast]]. La source déconseille de torréfier bien après le début du second crack [[roast]].</p>'],
+ ['Chimie : Maillard et caramélisation','<p>La réaction de Maillard progresse rapidement entre environ 140 et 165 °C, dans une plage plus large en pratique dans la matrice du grain [[maillard]].</p>'],
+ ['Repos et dégazage','<p>Dégazage, durée de repos et conservation : '+NOTE+'</p>']
+ ],
+ terms:['Maillard','Crack','Dégazage'], refs:['roast','maillard'] },
+{ slug:'extraction', n:'06', tag:'Extraction', title:'Extraction et préparation', short:'Force, extraction, eau et ratio.',
+ img:'ch-extraction', alt:'Illustration générée : préparation d’un café filtre avec bouilloire à col de cygne',
+ lead:'Préparer un café, c’est dissoudre une partie des composés du grain. La norme « Golden Cup » donne des repères mesurables pour le café filtre.',
+ points:['Force cible : 1,15 à 1,35 % de matières dissoutes (TDS), pour un rendement d’extraction de 18 à 22 % [[golden]] [[goldencrit]].','Eau à environ 93 °C ± 3 au contact du café [[golden]].','Ces repères valent pour le café filtre et viennent d’un travail de 1957 : ce n’est pas une loi universelle [[goldencrit]].'],
+ sections:[
+ ['La norme Golden Cup','<p>Elle définit un point de rencontre entre force (TDS) et rendement d’extraction, auquel des panels entraînés et des consommateurs ont jugé le café équilibré [[golden]]. Plage de force : 1,15 à 1,35 % ; rendement : 18 à 22 % [[golden]] [[goldencrit]].</p>'],
+ ['Eau et ratio','<p>Température de l’eau : 93 °C ± 3 au contact du café [[golden]]. Un module de formation SCA cite environ 55 g de café par litre d’eau, soit un ratio proche de 1:18 [[scatrain]]. Les recettes courantes du café filtre manuel utilisent souvent des ratios de 1:15 à 1:17 : '+NOTE+'</p><p><a href="outils.html">Ouvrir le calculateur du Laboratoire →</a></p>'],
+ ['Limites de la norme','<p>Les deux plages 1,15–1,35 % et 18–22 % sont réelles, mais viennent d’un article de 1957 et décrivent le café filtre ; elles ne couvrent pas l’espresso [[goldencrit]].</p>'],
+ ['Mouture, méthodes, diagnostic','<p>Réglage de la mouture et diagnostic goût/extraction : '+NOTE+'</p>']
+ ],
+ terms:['Ratio','Mouture','Extraction','TDS'], refs:['golden','scatrain','goldencrit'] },
+{ slug:'sensoriel', n:'07', tag:'Dégustation', title:'Dégustation et sensoriel', short:'Cupping, CVA et roue des arômes.',
+ img:'ch-sensoriel', alt:'Illustration générée : table de cupping avec tasses, cuillères et carnet',
+ lead:'Goûter, c’est apprendre à nommer. La SCA a publié des normes de dégustation qui séparent la description objective de l’appréciation personnelle.',
+ points:['La SCA a adopté trois composantes du « Coffee Value Assessment » comme normes de cupping : SCA-102, SCA-103 et SCA-104 [[cva]].','La Coffee Taster’s Flavor Wheel date de 1995 et a été mise à jour en 2016 avec World Coffee Research [[scastore]].','Évaluation descriptive : arôme, saveur, texture et arrière-goût, avec un langage standardisé [[cva]].'],
+ sections:[
+ ['Les normes de cupping SCA','<p>SCA-102 porte sur la préparation des échantillons et le cupping, SCA-103 sur l’évaluation descriptive, SCA-104 sur l’évaluation affective [[cva]].</p>'],
+ ['La roue des arômes','<p>La Coffee Taster’s Flavor Wheel, publiée en 1995, a été mise à jour en 2016 en collaboration avec World Coffee Research [[scastore]]. Le Laboratoire du site propose une roue interactive.</p><p><a href="outils.html">Ouvrir le Laboratoire →</a></p>'],
+ ['Pratique du cupping','<p>Protocole détaillé de dégustation et défauts courants : '+NOTE+'</p>']
+ ],
+ terms:['Cupping','Acidité','Corps','Finale'], refs:['cva','scastore'] },
+{ slug:'sante', n:'08', tag:'Santé', title:'Santé et qualité', short:'Caféine, repères EFSA et sécurité des aliments.',
+ img:'ch-sante', alt:'Illustration générée : tasse de café noir à côté d’un verre d’eau et d’un carnet',
+ lead:'Cette page présente des repères officiels, pas des conseils médicaux. En cas de doute (grossesse, traitement, maladie), demandez l’avis d’un professionnel de santé.',
+ points:['EFSA (2015) : jusqu’à 400 mg de caféine par jour ne soulèvent pas de problème de sécurité pour l’adulte en bonne santé [[efsa]].','Doses uniques jusqu’à 200 mg : pas de problème de sécurité pour l’adulte en bonne santé [[efsa]].','Femmes enceintes ou allaitantes : jusqu’à 200 mg par jour [[efsa]].'],
+ sections:[
+ ['Adultes en bonne santé','<p>D’après l’avis de l’EFSA de mai 2015, des apports de caféine jusqu’à 400 mg par jour, toutes sources confondues, ne soulèvent pas de problème de sécurité pour la population adulte en bonne santé ; des doses uniques jusqu’à 200 mg non plus [[efsa]] [[efsajour]].</p>'],
+ ['Grossesse et allaitement','<p>Pour les femmes enceintes ou allaitantes, l’EFSA indique que des apports jusqu’à 200 mg par jour répartis dans la journée ne soulèvent pas de problème de sécurité pour le fœtus [[efsa]].</p>'],
+ ['Ochratoxine A','<p>Le règlement (UE) 2022/1370 fixe des teneurs maximales en ochratoxine A de 3,0 µg/kg pour le café torréfié et 5,0 µg/kg pour le café soluble [[ota]]. Il n’existe pas de teneur maximale européenne pour le café vert [[ota]].</p>'],
+ ['Limites de ce site','<p>Ce site ne formule aucune promesse de santé et ne recommande aucun traitement.</p>']
+ ],
+ terms:['Caféine','Ochratoxine','Décaféiné'], refs:['efsa','efsajour','ota'] },
+{ slug:'filiere', n:'09', tag:'Filière', title:'Filière et marché', short:'Production mondiale et acteurs.',
+ img:'ch-professionnels', alt:'Illustration générée : plateaux d’échantillons de café vert, balance et carnet',
+ lead:'De la ferme au comptoir, la filière réunit producteurs, exportateurs, importateurs, torréfacteurs et cafés. Les chiffres ci-dessous précisent l’année et le périmètre.',
+ points:['Production mondiale : 168,2 millions de sacs en année caféière 2022/23, soit +0,1 % [[ico23]].','Les statistiques officielles de référence sont publiées par l’OIC [[icostats]].','L’annuaire professionnel du site n’affiche que des informations vérifiées.'],
+ sections:[
+ ['Production mondiale','<p>Selon l’OIC, la production mondiale a augmenté de 0,1 % à 168,2 millions de sacs de 60 kg en année caféière 2022/23, avec une répartition contrastée entre les Amériques et le reste du monde [[ico23]]. Le rapport met en avant l’effet de la gelée de juillet 2021 sur le Brésil et les Arabicas [[ico23]].</p>'],
+ ['Données et statistiques','<p>L’OIC diffuse les volumes et tendances du commerce mondial du café : exportations, importations et réexportations [[icostats]].</p>'],
+ ['Acteurs, prix, labels','<p>Chaîne de valeur, prix, classement et labels : '+NOTE+'</p><p><a href="professionnels.html">Ouvrir l’espace professionnel →</a></p>']
+ ],
+ terms:['Coopérative','Traçabilité'], refs:['ico23','icostats'] },
+{ slug:'afrique', n:'10', tag:'Afrique', title:'Afrique et Bénin', short:'Producteurs africains, dossier Bénin.',
+ img:'atlas-benin-field-notebook-web', alt:'Visuel éditorial du carnet de terrain Bénin (illustration du site)',
+ lead:'L’Afrique est le berceau de l’Arabica et un grand producteur de robusta. Cette page réunit des repères sourcés pour l’Afrique et pour le Bénin ; les chiffres béninois restent à confirmer.',
+ points:['Ouganda : 5,6 millions de sacs en 2022/23, en baisse de 6,8 % sur 6,0 millions en 2021/22 [[ico23]].','L’Ouganda est le 4e producteur mondial de robusta (prévision 2025/26) derrière le Vietnam, le Brésil et l’Indonésie [[usda]].','Bénin : environ 55 t en 2024 selon une reprise des séries FAOSTAT, chiffre estimé et à confirmer [[faostatbj]].'],
+ sections:[
+ ['Éthiopie, berceau de l’Arabica','<p>L’Éthiopie a enregistré la croissance la plus dynamique de la production africaine : +2,7 % par an en moyenne sur 43 ans, et +5,5 % par an depuis 1990 (rapport OIC de 2015) [[icoafrica]].</p>'],
+ ['Ouganda','<p>La production ougandaise a baissé de 6,8 % en 2022/23 à 5,6 millions de sacs (6,0 en 2021/22) [[ico23]]. Prévision USDA 2025/26 : 5,8 millions de sacs de robusta et 1,1 million d’arabica ; l’Ouganda reste le 4e producteur mondial de robusta [[usda]].</p>'],
+ ['Bénin : chiffres à confirmer','<p>Les séries FAOSTAT reprises par des sites secondaires donnent environ 55 t de café vert en 2024 (valeur estimée), contre un record de 3,0 kt en 1984 [[faostatbj]] [[terra]]. Un autre site cite des données OIC selon lesquelles la production enregistrée serait tombée à zéro à partir des années 1990 [[beanesis]]. Ces sources se contredisent : le chiffre est <strong>à confirmer</strong> auprès de FAOSTAT et de l’OIC.</p><p>Une rencontre entre l’Alliance interafricaine du café (IACO) et le gouvernement du Bénin a porté sur le développement de la filière nationale [[iaco]].</p><p><a href="benin.html">Ouvrir le dossier Bénin complet →</a></p>'],
+ ['Autres pays africains','<p>Côte d’Ivoire, Cameroun, Tanzanie, Kenya, Rwanda, Burundi, Togo, Ghana : fiches à documenter à partir de la base statistique de l’OIC [[icostats]]. Aucun chiffre n’est affiché tant qu’il n’est pas vérifié.</p>']
+ ],
+ terms:['Robusta','Canephora'], refs:['ico23','usda','icoafrica','faostatbj','terra','beanesis','iaco','icostats'] }
+];

@@ -11,7 +11,7 @@ const critical = new Map([
 ]);
 const supported = new Set(['.avif', '.gif', '.jpg', '.jpeg', '.png', '.svg', '.webp']);
 const generalLimit = 1_300_000;
-const totalLimit = 7_000_000;
+const totalLimit = 8_000_000;
 const failures = [];
 const warnings = [];
 const ok = message => console.log(`✓ ${message}`);

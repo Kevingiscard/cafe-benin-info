@@ -35,7 +35,7 @@ if ((html.match(/<h1\b/gi) || []).length !== 1) fail('La page doit contenir exac
 if (!/id="theme-toggle"/.test(html) || !/localStorage\.getItem\('cb-theme'\)/.test(html)) fail('Contrôle de thème accessible ou amorçage anti-flash absent.');
 if (!/id="search-modal"/.test(html) || !/id="global-search"/.test(html) || !/id="mobile-nav"/.test(html)) fail('Composants de recherche ou de navigation mobile absents.');
 if (!/id="cafebot"/.test(html) || !/id="dictionnaire"/.test(html) || !/id="benin"/.test(html) || !/id="sources"/.test(html) || !/id="contact"/.test(html)) fail('Contenu documentaire critique absent.');
-if (!/local-assistant\.js/.test(html) || !/app\.js/.test(html) || !/dictionary-v4\.js/.test(html) || !/theme\.css/.test(html)) fail('Scripts ou styles frontend autonomes absents.');
+if (!/local-assistant\.js/.test(html) || !/app\.js/.test(html) || !/dictionary-v4\.js/.test(html) || !/atlas\.css/.test(html)) fail('Scripts ou styles frontend autonomes absents.');
 if ((read('styles.css').match(/@import\s+url\([^)]*fonts\.googleapis/gi) || []).length) fail('Les polices ne doivent pas être importées deux fois.');
 if (/backend-client\.js|\/api\/|vercel\.app/i.test(`${html}\n${app}`)) fail('Référence serveur externe détectée dans le frontend.');
 if (pkg.dependencies && Object.keys(pkg.dependencies).length) fail('Le site statique ne doit pas exiger de dépendance runtime.');
