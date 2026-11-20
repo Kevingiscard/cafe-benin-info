@@ -136,7 +136,7 @@ function renderBenin() {
   const url = `${ORIGIN}benin.html`;
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Dossier Bénin | Café Bénin', url, inLanguage: 'fr-FR', description: 'Dossier documentaire sur le café au Bénin, ses sources, ses limites et les pistes de recherche.' });
   return head({ title: 'Dossier Bénin | Café Bénin', desc: 'Dossier documentaire sur le café au Bénin, ses sources, ses limites et les pistes de recherche.', url, image: 'img/atlas-benin-field-notebook-web.webp', extra: `<script type="application/ld+json">${ld}</script>\n` }) + `
-<main id="main" class="chapter">
+<main id="accueil" class="chapter">
 <div class="container chapter-body">
   <nav class="crumbs" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a> › <span>Dossier Bénin</span></nav>
   <span class="eyebrow">Territoire documentaire · édition premium</span>
@@ -168,8 +168,9 @@ function renderExplorer() {
   const extra = { preparation: ' <a class="portal-link" href="outils.html">Voir les outils →</a>', economy: ' <a class="portal-link" href="benin.html">Dossier Bénin →</a> <a class="portal-link" href="chapitre-afrique.html">Afrique et Bénin →</a>' };
   const cards = EXPLORER_CARDS.map(([id, num, title, desc, slug]) => { const c = bySlug[slug]; return `<article class="chapter-card" data-chapter="${id}"><small>${num}</small><h3>${esc(title)}</h3><p class="card-teaser">${esc(desc.split(/(?<=\.)\s/)[0])}</p><details class="card-more"><summary>Description complète et contenu publié</summary><p>${esc(desc)}</p><p class="muted small">Publié dans le chapitre : ${esc(c.short)} Le reste du programme ci-dessus est en cours de rédaction et de sourçage.</p></details><p><a class="portal-link" href="chapitre-${slug}.html">Lire le chapitre →</a>${extra[id] || ''}</p><div class="card-actions"><button class="chapter-read btn" type="button" aria-pressed="false">Marquer comme lu</button><span class="chapter-status">À découvrir</span></div></article>`; }).join('\n');
   const url = `${ORIGIN}explorer.html`;
-  return head({ title: 'Explorer les chapitres | Café Bénin', desc: 'Parcours en dix chapitres, de la plante à la tasse, avec progression conservée sur l’appareil.', url, image: 'img/ch-histoire.webp' }) + `
-<main id="main" class="chapter">
+  const ld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Explorer les chapitres | Café Bénin', url, inLanguage: 'fr-FR', description: 'Parcours en dix chapitres, de la plante à la tasse.' });
+  return head({ title: 'Explorer les chapitres | Café Bénin', desc: 'Parcours en dix chapitres, de la plante à la tasse, avec progression conservée sur l’appareil.', url, image: 'img/ch-histoire.webp', extra: `<script type="application/ld+json">${ld}</script>\n` }) + `
+<main id="accueil" class="chapter">
 <div class="container chapter-body">
   <nav class="crumbs" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a> › <span>Explorer</span></nav>
   <span class="eyebrow">Encyclopédie · 10 chapitres</span>
