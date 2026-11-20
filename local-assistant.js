@@ -63,6 +63,49 @@
     ['a-propos.html', 'À propos du projet', 'À propos de Kevin Giscard et du projet Café Bénin : mission documentaire, principes éditoriaux, transparence et liens publics.'],
   ];
 
+  // Texte intégral des pages (content-index.js, 68 Ko) chargé en arrière-plan :
+  // quand il est disponible, le bot cite un passage existant au lieu de renvoyer un simple lien.
+  if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.SITE_CONTENT) {
+    const s = document.createElement('script');
+    s.src = 'content-index.js';
+    s.async = true;
+    document.head.appendChild(s);
+  }
+
+  // Extrait qui ne coupe jamais une phrase : accumule des phrases entières entre minLen et maxLen.
+  function excerptOf(text, minLen = 160, maxLen = 420) {
+    if (text.length <= maxLen) return text;
+    const sentences = text.match(/[^.!?…]+[.!?…]+[\"'»’) ]*|[^.!?…]+$/g) || [text];
+    let acc = '';
+    for (const s of sentences) {
+      if (acc && (acc + s).length > maxLen) break;
+      acc += s;
+      if (acc.length >= minLen) break;
+    }
+    acc = acc.trim();
+    return acc.length >= 40 ? acc : text.slice(0, maxLen).replace(/\s+\S*$/, '') + '…';
+  }
+
+  // Meilleur passage de la page pour les mots de la question ; null si aucun mot ne s'y trouve.
+  function pagePassage(href, focused) {
+    if (typeof window === 'undefined' || !window.SITE_CONTENT || focused.length === 0) return null;
+    const page = window.SITE_CONTENT.find(p => p.url === href);
+    if (!page) return null;
+    let best = null;
+    for (const p of page.p) {
+      const withHeading = normalize(`${p.h} ${p.t}`);
+      const textOnly = normalize(p.t);
+      let score = 0;
+      for (const qt of focused) {
+        const re = new RegExp(`\\b${escapeRegExp(stem(qt))}`);
+        if (re.test(textOnly)) score += 2;
+        else if (re.test(withHeading)) score += 1;
+      }
+      if (score > 0 && (!best || score > best.score)) best = { p, score };
+    }
+    return best ? best.p : null;
+  }
+
   // Tolérance morphologique légère : pluriels en s/x (« gland » retrouve « Café de glands »).
   const stem = token => (token.length > 4 ? token.replace(/[sx]+$/, '') : token);
 
@@ -142,7 +185,16 @@
     return null;
   }
 
-  function pageResult(href, title, description) {
+  function pageResult(href, title, description, focused = []) {
+    const passage = pagePassage(href, focused);
+    if (passage) {
+      const where = passage.h ? ` — ${passage.h}` : '';
+      return {
+        reply: `Extrait de la page ${title}${where} : « ${excerptOf(passage.t)} »`,
+        links: [{ href, label: title }],
+        source: 'local'
+      };
+    }
     const complete = /[.!?…»'"’]$/.test(description.trim());
     const reply = complete
       ? `Ce sujet est traité dans une page du site — ${title} : ${description}`
@@ -175,13 +227,13 @@
       }
       if (rare.length !== 1) return null;
       const [href, title, description] = rare[0].page;
-      return pageResult(href, title, description);
+      return pageResult(href, title, description, focused);
     }
     // Mot unique présent partout : trop générique pour désigner une page.
     if (focused.length === 1 && scored.length > 3) return null;
     scored.sort((a, b) => b.titleHits - a.titleHits);
     const best = scored[0];
-    return pageResult(best.href, best.title, best.description);
+    return pageResult(best.href, best.title, best.description, focused);
   }
 
   function formatList(list) {
