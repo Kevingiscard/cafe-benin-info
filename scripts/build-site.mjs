@@ -128,6 +128,40 @@ ${refs}
 }
 chapters.forEach((c, i) => fs.writeFileSync(`chapitre-${c.slug}.html`, renderChapter(c, i)));
 
+// ---------- dossier Bénin (nouvelle présentation, contenu d'origine conservé)
+function renderBenin() {
+  const ICO = 'https://www.ico.org/documents/cy2014-15/icc-114-5e-overview-coffee-sector-africa.pdf';
+  const a = (h, t) => `<a href="${h}" target="_blank" rel="noopener noreferrer">${t}</a>`;
+  const acc = (t, h, open) => `<details class="acc"${open ? ' open' : ''}><summary>${t}</summary><div class="acc-body">${h}</div></details>`;
+  const url = `${ORIGIN}benin.html`;
+  const ld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Dossier Bénin | Café Bénin', url, inLanguage: 'fr-FR', description: 'Dossier documentaire sur le café au Bénin, ses sources, ses limites et les pistes de recherche.' });
+  return head({ title: 'Dossier Bénin | Café Bénin', desc: 'Dossier documentaire sur le café au Bénin, ses sources, ses limites et les pistes de recherche.', url, image: 'img/atlas-benin-field-notebook-web.webp', extra: `<script type="application/ld+json">${ld}</script>\n` }) + `
+<main id="main" class="chapter">
+<div class="container chapter-body">
+  <nav class="crumbs" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a> › <span>Dossier Bénin</span></nav>
+  <span class="eyebrow">Territoire documentaire · édition premium</span>
+  <h1>Le café au Bénin.</h1>
+  <p class="lead">Une page structurée pour distinguer ce qui est établi, ce qui est historique et ce qui reste à documenter. Aucun chiffre local n’est publié sans source datée et vérifiable.</p>
+  <section class="essential" id="benin-etat"><h2>État des preuves</h2><p>Cette version ne prétend pas décrire une production actuelle, des zones caféières ou une filière organisée. Le dossier est ouvert, évolutif et méthodologiquement prudent.</p></section>
+  <section id="benin-details"><h2>Approfondir</h2><p class="muted small">Touchez un titre pour ouvrir ou fermer la rubrique.</p>
+${acc('Ce que disent les sources (mise à jour du 20 novembre 2026)', `<p class="muted">Chaque donnée porte sa source, son année et son périmètre.</p>
+<h3>Historique de production (OIC, 2015)</h3><p>Production moyenne du Bénin : 18 000 sacs de 60 kg dans les années 1970, 33 000 dans les années 1980 (environ 1 980 t, calcul du site), puis aucune production enregistrée dans les années 1990, 2000 et en 2013/14 (estimation). Source : ${a(ICO, 'OIC, ICC-114-5 (2015), annexe, tableau 1')}.</p>
+<h3>Producteurs et superficie (OIC, 2015)</h3><p>Le même rapport estime 8 000 producteurs, tous en petites exploitations, et 15 000 ha de café, sans année précisée pour ce tableau. Source : ${a(ICO, 'OIC, ICC-114-5 (2015), annexe, tableau 3')}. Ce sont des chiffres de 2015, pas des chiffres actuels.</p>
+<h3>FAOSTAT : valeur récente, à confirmer</h3><p>Des sites secondaires reprenant FAOSTAT donnent environ 55 t de café vert en 2024, valeur estimée par la FAO ou issue d’une autre source internationale, non statistique nationale officielle (${a('https://beanesis.com/fr/origins/benin/', 'Beanesis')}, ${a('https://waramina.com/pays/benin/production-de-cafe', 'Waramina')}). Non vérifié sur la base FAOSTAT elle-même : à confirmer.</p>
+<h3>Initiative récente (déclarations non vérifiées)</h3><p>Le 26 juin 2026, un média béninois rapporte le lancement par l’Association IBILE et la Coopérative Cacao-Café Bénin d’un programme de plantation de cacao et de café dans le Centre et le Nord. Selon les promoteurs : plus de 300 producteurs déjà engagés et plus de 80 000 plants disponibles. Ce sont des affirmations des promoteurs, sans confirmation indépendante. Source : ${a('https://lanatayaise.com/production-du-cacao-et-du-cafe-un-programme-cooperatif-lance-pour-developper-la-filiere-au-centre-et-au-nord-du-benin/', 'Lanatayaise (2026)')}.</p>
+<p><strong>Lecture prudente :</strong> les périodes diffèrent (2013/14 pour l’OIC, 2024 pour FAOSTAT). L’écart entre « aucune production enregistrée » et environ 55 t estimées reste à confirmer auprès de FAOSTAT et de l’OIC. Aucune zone de culture actuelle n’est affirmée ici. Voir aussi le chapitre <a href="chapitre-afrique.html">Afrique et Bénin</a>.</p>`, true)}
+${acc('Architecture du dossier', '<p><b>1. Méthode.</b> Chaque affirmation locale doit porter sa source, sa date, son unité et son périmètre.</p><p><b>2. Sources.</b> DSA, FAO (historique), OIC et documents officiels uniquement.</p><p><b>3. Limites.</b> Les blancs sont signalés. « Non documenté » ≠ « inexistant ».</p>')}
+${acc('Sources de départ', `<ul><li><b>Nationale.</b> ${a('https://dsa.agriculture.gouv.bj/', 'Direction de la Statistique Agricole')} : point d’entrée pour les publications agricoles datées.</li><li><b>Historique.</b> ${a('https://www.fao.org/4/x6939e/X6939e03.htm', 'FAO – contexte de filière')} : à relire avec sa date. Ne pas présenter comme actuel.</li><li><b>Internationale.</b> ${a('https://www.ico.org/', 'Organisation internationale du café')} : statistiques mondiales. Extraire avec année et définition.</li></ul>`)}
+${acc('Prochaines étapes prioritaires', '<ul><li><b>Archivage primaire.</b> Extraire et dater les séries FAOSTAT / DSA avec métadonnées complètes.</li><li><b>Acteurs et terrain.</b> Identifier structures avec consentement, date, lieu et rôle.</li><li><b>Visuels documentaires.</b> Remplacer progressivement les illustrations générées par des photos licenciées.</li></ul><p><a class="btn primary" href="sources.html#contribuer">Proposer une source</a></p>')}
+  </section>
+  <p class="img-note">Aucune image n’illustre cette page : le dossier attend des photos licenciées et documentées.</p>
+</div>
+</main>
+` + foot;
+}
+fs.writeFileSync('benin.html', renderBenin());
+
+
 // ---------- accueil
 const idMap = { histoire: 'histoire', botanique: 'botanique', agronomie: 'culture', 'post-recolte': 'processus', torrefaction: 'torréfaction', extraction: 'extraction', sensoriel: 'degustation', sante: 'sante', filiere: 'coffee-shops', afrique: 'benin' };
 const featured = ['histoire', 'botanique', 'torrefaction', 'afrique'];
