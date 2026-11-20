@@ -49,7 +49,7 @@
     const menu = $('#mobile-nav');
     const trigger = $('#nav-toggle');
     let opener = null;
-    const focusables = () => menu ? $('a[href], button:not([disabled])', menu) : [];
+    const focusables = () => menu ? $$('a[href], button:not([disabled])', menu) : [];
     const close = ({ restoreFocus = false } = {}) => {
       if (!menu || !trigger) return;
       menu.classList.remove('open');
@@ -71,7 +71,7 @@
     };
 
     trigger?.addEventListener('click', () => menu?.classList.contains('open') ? close({ restoreFocus: true }) : open());
-    if (menu) $('.mobile-link', menu).forEach(link => link.addEventListener('click', () => close()));
+    if (menu) $$('.mobile-link', menu).forEach(link => link.addEventListener('click', () => close()));
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && menu?.classList.contains('open')) close({ restoreFocus: true });
       if (event.key !== 'Tab' || !menu?.classList.contains('open')) return;
@@ -82,7 +82,7 @@
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
     window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-    $('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
+    $$('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
       const targetId = link.getAttribute('href').slice(1);
       let target;
       try { target = document.getElementById(decodeURIComponent(targetId)); } catch { return; }
@@ -148,6 +148,16 @@
     const draw = () => {
       const query = normalize(input.value.trim());
       const pages = [
+        { id: 'chapitre-histoire', href: 'chapitre-histoire.html', type: 'Chapitre', title: "Histoire du café", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-botanique', href: 'chapitre-botanique.html', type: 'Chapitre', title: "Botanique et diversité", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-agronomie', href: 'chapitre-agronomie.html', type: 'Chapitre', title: "Culture et agronomie", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-post-recolte', href: 'chapitre-post-recolte.html', type: 'Chapitre', title: "Post-récolte", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-torrefaction', href: 'chapitre-torrefaction.html', type: 'Chapitre', title: "Torréfaction", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-extraction', href: 'chapitre-extraction.html', type: 'Chapitre', title: "Extraction et préparation", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-sensoriel', href: 'chapitre-sensoriel.html', type: 'Chapitre', title: "Dégustation et sensoriel", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-sante', href: 'chapitre-sante.html', type: 'Chapitre', title: "Santé et qualité", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-filiere', href: 'chapitre-filiere.html', type: 'Chapitre', title: "Filière et marché", description: 'Chapitre de l’encyclopédie avec sources.' },
+        { id: 'chapitre-afrique', href: 'chapitre-afrique.html', type: 'Chapitre', title: "Afrique et Bénin", description: 'Chapitre de l’encyclopédie avec sources.' },
         { id: 'explorer', href: 'explorer.html', type: 'Parcours', title: 'Explorer les chapitres', description: 'Parcours guidé : histoire, botanique, Arabica, culture, transformation, torréfaction, extraction, dégustation, santé et filière.' },
         { id: 'benin', href: 'benin.html', type: 'Dossier', title: 'Dossier Bénin', description: 'Repères historiques, sources institutionnelles, limites des données et priorités de documentation.' },
         { id: 'outils', href: 'outils.html', type: 'Outils', title: 'Outils pratiques', description: 'Calculateur, guide, diagnostic de tasse, roue aromatique et carnet local.' },
