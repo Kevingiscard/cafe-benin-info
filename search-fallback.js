@@ -38,37 +38,79 @@
       const glossary = Array.isArray(window.cafeBeninDictionary) ? window.cafeBeninDictionary : [];
       const records = [...pages.map(([href, title, description]) => ({ href, title, description, type: 'Page' })), ...glossary.map(item => ({ href: `dictionnaire.html?q=${encodeURIComponent(item.term)}`, title: item.term, description: item.definition, type: item.category || 'Dictionnaire' }))];
       const tokens = tokensOf(query);
-      const scored = records.map(item => {
+      // Tolérance de frappe bornée : distance 1, mot d'au moins 5 lettres sans
+      // correspondance, un seul candidat possible dans le vocabulaire de l'index.
+      const vocabulary = [...new Set(records.flatMap(item => normalize(`${item.title} ${item.type}`).split(/[^a-z0-9]+/).filter(word => word.length >= 5)))];
+      const distance1 = (a, b) => {
+        if (a === b) return true;
+        const la = a.length, lb = b.length;
+        if (Math.abs(la - lb) > 1) return false;
+        if (la === lb) {
+          let diff = 0;
+          for (let i = 0; i < la; i++) if (a[i] !== b[i]) diff++;
+          if (diff === 1) return true;
+          for (let i = 0; i < la - 1; i++) {
+            if (a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(0, i) === b.slice(0, i) && a.slice(i + 2) === b.slice(i + 2)) return true;
+          }
+          return false;
+        }
+        const [short, long] = la < lb ? [a, b] : [b, a];
+        let i = 0, j = 0, skips = 0;
+        while (i < short.length && j < long.length) {
+          if (short[i] === long[j]) { i++; j++; }
+          else { skips++; j++; if (skips > 1) return false; }
+        }
+        return true;
+      };
+      const corrections = [];
+      const correctToken = token => {
+        if (token.length < 5) return null;
+        const candidates = vocabulary.filter(word => distance1(token, word));
+        return candidates.length === 1 ? candidates[0] : null;
+      };
+      const scoreOne = (item, requireAll) => {
         if (!tokens.length) return { item, score: 1 };
         const titleNorm = normalize(item.title);
         const hay = normalize(`${item.title} ${item.description} ${item.type}`);
         let score = 0;
+        let covered = 0;
         for (const token of tokens) {
-          const re = new RegExp(`\\b${escapeRegExp(stem(token))}`);
-          if (re.test(titleNorm)) score += 3;
-          else if (re.test(hay)) score += 1;
-          else return null;
+          let re = new RegExp(`\\b${escapeRegExp(stem(token))}`);
+          if (re.test(titleNorm)) { score += titleNorm === token ? 5 : 3; covered += 1; continue; }
+          if (re.test(hay)) { score += 1; covered += 1; continue; }
+          const fixed = correctToken(token);
+          if (fixed) {
+            re = new RegExp(`\\b${escapeRegExp(stem(fixed))}`);
+            if (re.test(titleNorm) || re.test(hay)) {
+              score += 0.5; covered += 1;
+              if (!corrections.some(c => c.from === token)) corrections.push({ from: token, to: fixed });
+            }
+          }
         }
-        return { item, score };
-      }).filter(Boolean).sort((a, b) => b.score - a.score);
-      let ranked = scored;
+        if (requireAll && covered < tokens.length) return null;
+        return covered ? { item, score: score + covered * 2 } : null;
+      };
+      let ranked = records.map(item => scoreOne(item, true)).filter(Boolean).sort((a, b) => b.score - a.score);
+      let fallbackUsed = false;
       if (!ranked.length && tokens.length > 1) {
         // Repli souple : au moins un mot correspond, les plus couverts d'abord.
-        ranked = records.map(item => {
-          const titleNorm = normalize(item.title);
-          const hay = normalize(`${item.title} ${item.description} ${item.type}`);
-          let score = 0;
-          let covered = 0;
-          for (const token of tokens) {
-            const re = new RegExp(`\\b${escapeRegExp(stem(token))}`);
-            if (re.test(titleNorm)) { score += 3; covered += 1; }
-            else if (re.test(hay)) { score += 1; covered += 1; }
-          }
-          return covered ? { item, score } : null;
-        }).filter(Boolean).sort((a, b) => b.score - a.score);
+        corrections.length = 0;
+        ranked = records.map(item => scoreOne(item, false)).filter(Boolean).sort((a, b) => b.score - a.score);
+        fallbackUsed = ranked.length > 0;
       }
       const matches = ranked.map(entry => entry.item).slice(0, 12);
       results.replaceChildren();
+      if (fallbackUsed) {
+        const note = document.createElement('p');
+        note.className = 'search-empty';
+        note.textContent = 'Aucun résultat ne contient tous ces mots ; voici les plus proches.';
+        results.append(note);
+      } else if (corrections.length) {
+        const note = document.createElement('p');
+        note.className = 'search-empty';
+        note.textContent = 'Recherche ajustée : ' + corrections.map(c => `« ${c.from} » → « ${c.to} »`).join(', ') + '.';
+        results.append(note);
+      }
       if (!matches.length) { const empty = document.createElement('p'); empty.className = 'search-empty'; empty.textContent = 'Aucun résultat. Essayez « Arabica », « mouture » ou « fermentation ». '; results.append(empty); return; }
       matches.forEach(item => { const a = document.createElement('a'); a.className = 'search-result'; a.href = item.href; const small = document.createElement('small'); small.textContent = item.type; const title = document.createElement('b'); title.textContent = item.title; const description = document.createElement('span'); description.textContent = item.description; a.append(small, title, description); a.addEventListener('click', close); results.append(a); });
     };
