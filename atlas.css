@@ -167,3 +167,17 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 .support-link { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 22px; border-radius: 999px; background: #8f4a22; color: #fff !important; font-weight: 700; text-decoration: none !important; border: 1px solid #8f4a22; }
 .support-link:hover, .support-link:focus-visible { background: #6f3817; border-color: #6f3817; }
 .support-link:focus-visible { outline: 3px solid #f0b66e; outline-offset: 2px; }
+/* Pages historiques : mêmes variables que le reste du site (lisibilité claire et sombre) */
+.page-shell, .footer, main {
+  --panel: var(--surface); --panel2: var(--surface-2); --line: var(--border);
+  --muted: var(--text-2); --accent2: var(--accent);
+  --color-surface-muted: var(--surface-2); --color-surface-elevated: var(--surface);
+  --color-text: var(--text); --color-text-secondary: var(--text-2);
+  --color-border: var(--border); --color-border-strong: var(--border);
+}
+.observatory-hero .breadcrumbs, .observatory-hero .breadcrumbs a, .observatory-hero .breadcrumbs span { color: #fffaf2; opacity: 1; }
+.observatory-hero .breadcrumbs, .observatory-hero .breadcrumbs a, .observatory-hero .breadcrumbs span { color: #fffaf2 !important; }
+.btn.secondary { background: transparent; color: var(--accent); border-color: var(--accent); }
+.btn.secondary:hover { background: var(--surface-2); color: var(--accent-2); }
+.atlas-proof { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.atlas-proof span { border: 1px solid var(--border); border-radius: 999px; padding: .3rem .8rem; background: var(--surface); color: var(--text); font-size: .85rem; font-weight: 600; }
