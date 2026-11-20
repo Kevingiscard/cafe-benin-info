@@ -65,11 +65,25 @@
 
   // Texte intégral des pages (content-index.js, 68 Ko) chargé en arrière-plan :
   // quand il est disponible, le bot cite un passage existant au lieu de renvoyer un simple lien.
+  // État suivi : pendant le chargement, le bot affiche un état d'attente au lieu d'une réponse dégradée.
+  let contentState = 'loading';
+  let contentResolve;
+  const contentReady = new Promise(resolve => { contentResolve = resolve; });
+  function settleContent(state) {
+    if (contentState !== 'loading') return;
+    contentState = state;
+    contentResolve();
+  }
   if (typeof document !== 'undefined' && typeof window !== 'undefined' && !window.SITE_CONTENT) {
     const s = document.createElement('script');
     s.src = 'content-index.js';
     s.async = true;
+    s.onload = () => settleContent(window.SITE_CONTENT ? 'ready' : 'failed');
+    s.onerror = () => settleContent('failed');
     document.head.appendChild(s);
+    setTimeout(() => settleContent(window.SITE_CONTENT ? 'ready' : 'failed'), 8000);
+  } else {
+    settleContent(typeof window !== 'undefined' && window.SITE_CONTENT ? 'ready' : 'failed');
   }
 
   // Extrait qui ne coupe jamais une phrase : accumule des phrases entières entre minLen et maxLen.
@@ -186,6 +200,10 @@
   }
 
   function pageResult(href, title, description, focused = []) {
+    if (contentState === 'loading') {
+      // Index encore en transit : état d'attente, la réponse sera réévaluée à son arrivée.
+      return { reply: 'Je consulte le texte des pages du site pour citer le passage exact…', links: [{ href, label: title }], source: 'local', pending: true };
+    }
     const passage = pagePassage(href, focused);
     if (passage) {
       const where = passage.h ? ` — ${passage.h}` : '';
@@ -306,6 +324,8 @@
   return {
     answer,
     recommend,
+    whenReady: () => contentReady,
+    contentState: () => contentState,
     suggestions: ['Différence entre café naturel et lavé', 'Comment régler une mouture filtre ?', 'Que signifie Arabica ?', 'Comment lire une information sur le Bénin ?']
   };
 });
