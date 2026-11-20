@@ -1,5 +1,5 @@
 window.COFFEE_OBSERVATORY = {
-  updated: '3 novembre 2026',
+  updated: '20 novembre 2026',
   sources: {
     fao: { label: 'FAO', url: 'https://www.fao.org/coffee/fr', tone: 'institutionnelle' },
     faostat: { label: 'FAOSTAT', url: 'https://www.fao.org/faostat/fr/', tone: 'institutionnelle' },
