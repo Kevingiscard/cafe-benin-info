@@ -333,6 +333,7 @@
       }
       log.append(bubble);
       log.scrollTop = log.scrollHeight;
+      return bubble;
     };
     if (assistant && !form.dataset.ready) {
       form.dataset.ready = 'true';
@@ -354,6 +355,24 @@
       append('user', question);
       if (!assistant) return append('assistant', 'La recherche locale est indisponible. Actualisez la page puis réessayez.');
       const response = assistant.answer(question);
+      if (response && response.pending && assistant.whenReady) {
+        // Index de contenu encore en transit : bulle d'attente, puis réponse définitive à son arrivée.
+        const bubble = append('assistant', response.reply, response.links || []);
+        assistant.whenReady().then(() => {
+          const settled = assistant.answer(question);
+          const text = bubble.querySelector('p');
+          if (text) text.textContent = settled.reply;
+          const oldLinks = bubble.querySelector('.chat-links');
+          if (oldLinks) oldLinks.remove();
+          if (settled.links && settled.links.length) {
+            const related = document.createElement('p'); related.className = 'chat-links';
+            settled.links.forEach(link => { const anchor = document.createElement('a'); anchor.href = link.href; anchor.textContent = link.label; related.append(anchor); });
+            bubble.append(related);
+          }
+          log.scrollTop = log.scrollHeight;
+        });
+        return;
+      }
       append('assistant', response.reply, response.links || []);
     });
   }
