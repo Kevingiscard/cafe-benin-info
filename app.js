@@ -169,12 +169,33 @@
         { id: 'mentions-legales', href: 'mentions-legales.html', type: 'Transparence', title: 'Mentions légales', description: 'Statut actuel du projet et informations à compléter avant toute commercialisation.' }
       ];
       const records = [...pages, ...sectionRecords(), ...glossary.map(item => ({ ...item, id: 'dictionnaire', href: 'dictionnaire.html?q=' + encodeURIComponent(item.term), type: item.category || 'Dictionnaire', title: item.term, description: item.definition }))];
-      const ranked = records.map(item => {
+      const stemToken = token => token.length > 4 ? token.replace(/(es|s|e|er|ant|ent|tion)$/, '') : token;
+      const escapeRe = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const STOPWORDS = new Set(['le', 'la', 'les', 'de', 'des', 'du', 'un', 'une', 'et', 'ou', 'en', 'au', 'aux', 'ce', 'cette', 'pour', 'sur', 'avec', 'sans', 'est', 'sont', 'comment', 'pourquoi', 'quelle', 'quel', 'quoi', 'combien']);
+      const queryTokens = query.split(/[^a-z0-9]+/).filter(token => token.length >= 2 && !STOPWORDS.has(token));
+      const scoreItem = (item, requireAll) => {
         const haystack = normalize(`${item.title} ${item.description} ${item.type}`);
-        const exact = query && normalize(item.title) === query ? 3 : 0;
-        const starts = query && normalize(item.title).startsWith(query) ? 2 : 0;
-        return { item, score: exact + starts + (query && haystack.includes(query) ? 1 : 0) };
-      }).filter(entry => !query || entry.score > 0).sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title, 'fr')).slice(0, 12);
+        const titleNorm = normalize(item.title);
+        const exact = query && titleNorm === query ? 6 : 0;
+        const starts = query && titleNorm.startsWith(query) ? 4 : 0;
+        if (!queryTokens.length) return { item, score: exact + starts + (query && haystack.includes(query) ? 1 : 0) };
+        let score = exact + starts;
+        let covered = 0;
+        for (const token of queryTokens) {
+          const re = new RegExp(`\\b${escapeRe(stemToken(token))}`);
+          if (re.test(titleNorm)) { score += 3; covered += 1; }
+          else if (re.test(haystack)) { score += 1; covered += 1; }
+        }
+        if (requireAll && covered < queryTokens.length) return { item, score: exact + starts };
+        if (covered) score += covered * 2;
+        return { item, score };
+      };
+      let ranked = records.map(item => scoreItem(item, true)).filter(entry => !query || entry.score > 0);
+      if (query && !ranked.length && queryTokens.length > 1) {
+        // Repli souple : au moins un mot correspond, les plus couverts d'abord.
+        ranked = records.map(item => scoreItem(item, false)).filter(entry => entry.score > 0);
+      }
+      ranked = ranked.sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title, 'fr')).slice(0, 12);
       resultBox.replaceChildren();
       activeIndex = -1;
       if (!ranked.length) {
