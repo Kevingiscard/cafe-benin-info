@@ -281,3 +281,10 @@ img,svg,video{max-width:100%;height:auto}.sr-only{position:absolute!important;wi
 .legal-content p, .legal-content li { color: var(--color-text-secondary) !important; font-size: 16px; line-height: 1.65; }
 .breadcrumbs, .breadcrumbs span { color: var(--color-text-secondary) !important; }
 .breadcrumbs a { color: var(--color-text) !important; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Bouton de soutien (lien simple vers Ko-fi) */
+.support-row { padding-top: 8px; padding-bottom: 20px; }
+.support-row p { margin: 0; }
+.support-link { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 22px; border-radius: 999px; background: #8f4a22; color: #fff !important; font-weight: 700; text-decoration: none !important; border: 1px solid #8f4a22; }
+.support-link:hover, .support-link:focus-visible { background: #6f3817; border-color: #6f3817; }
+.support-link:focus-visible { outline: 3px solid #f0b66e; outline-offset: 2px; }
