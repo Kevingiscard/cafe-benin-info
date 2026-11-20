@@ -158,3 +158,5 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 .chapter-body>.crumbs a{color:var(--accent)}
 
 .cards-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));margin:1.2rem 0}.chapter-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.1rem}.chapter-card h3{margin:.2rem 0 .5rem}.chapter-card.is-read{border-color:var(--accent)}.card-actions{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}.chapter-status{font-weight:700;font-size:.85rem}.reading-progress{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin:1rem 0}.portal-link{font-weight:700}
+
+.card-teaser{margin:.2rem 0 .5rem}.card-more{margin:.3rem 0 .7rem}.card-more summary{cursor:pointer;font-weight:600;font-size:.9rem;color:var(--accent)}.card-more p{margin:.5rem 0}@media(max-width:640px){.cards-grid{gap:.7rem}.chapter-card{padding:.85rem}.chapter-card .card-actions{margin-top:.3rem}}
