@@ -51,7 +51,23 @@
         }
         return { item, score };
       }).filter(Boolean).sort((a, b) => b.score - a.score);
-      const matches = scored.map(entry => entry.item).slice(0, 12);
+      let ranked = scored;
+      if (!ranked.length && tokens.length > 1) {
+        // Repli souple : au moins un mot correspond, les plus couverts d'abord.
+        ranked = records.map(item => {
+          const titleNorm = normalize(item.title);
+          const hay = normalize(`${item.title} ${item.description} ${item.type}`);
+          let score = 0;
+          let covered = 0;
+          for (const token of tokens) {
+            const re = new RegExp(`\\b${escapeRegExp(stem(token))}`);
+            if (re.test(titleNorm)) { score += 3; covered += 1; }
+            else if (re.test(hay)) { score += 1; covered += 1; }
+          }
+          return covered ? { item, score } : null;
+        }).filter(Boolean).sort((a, b) => b.score - a.score);
+      }
+      const matches = ranked.map(entry => entry.item).slice(0, 12);
       results.replaceChildren();
       if (!matches.length) { const empty = document.createElement('p'); empty.className = 'search-empty'; empty.textContent = 'Aucun résultat. Essayez « Arabica », « mouture » ou « fermentation ». '; results.append(empty); return; }
       matches.forEach(item => { const a = document.createElement('a'); a.className = 'search-result'; a.href = item.href; const small = document.createElement('small'); small.textContent = item.type; const title = document.createElement('b'); title.textContent = item.title; const description = document.createElement('span'); description.textContent = item.description; a.append(small, title, description); a.addEventListener('click', close); results.append(a); });
