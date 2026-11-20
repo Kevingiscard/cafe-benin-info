@@ -220,7 +220,10 @@
             const fixed = correctToken(token);
             if (fixed) {
               re = new RegExp(`\\b${escapeRe(stemToken(fixed))}`);
-              if (re.test(titleNorm) || re.test(haystack)) {
+              if (re.test(titleNorm)) {
+                score += 1.5; covered += 1;
+                if (!corrections.some(c => c.from === token)) corrections.push({ from: token, to: fixed });
+              } else if (re.test(haystack)) {
                 score += 0.5; covered += 1;
                 if (!corrections.some(c => c.from === token)) corrections.push({ from: token, to: fixed });
               }
