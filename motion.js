@@ -40,15 +40,15 @@
         </div>
         <div class="visual-grid">
           <figure class="visual-card">
-            <img src="img/arabica-canephora-botany-web.jpg" alt="Illustration générée comparant deux plantes génériques de café, Arabica et Canephora" loading="lazy" decoding="async" width="2304" height="1536">
+            <img src="img/arabica-canephora-botany-web.webp" alt="Illustration générée comparant deux plantes génériques de café, Arabica et Canephora" loading="lazy" decoding="async" width="2304" height="1536">
             <figcaption class="visual-card-copy"><strong>Botanique</strong><span>Espèces, variétés et environnement donnent un premier cadre pour lire un café.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/coffee-drying-process-web.jpg" alt="Illustration générée de cerises de café séchant sur des claies, sans lieu réel représenté" loading="lazy" decoding="async" width="2304" height="1536">
+            <img src="img/coffee-drying-process-web.webp" alt="Illustration générée de cerises de café séchant sur des claies, sans lieu réel représenté" loading="lazy" decoding="async" width="2304" height="1536">
             <figcaption class="visual-card-copy"><strong>Transformation</strong><span>Récolte, séchage et tri modifient la matière avant la torréfaction.</span></figcaption>
           </figure>
           <figure class="visual-card">
-            <img src="img/coffee-cupping-sensory-web.jpg" alt="Illustration générée d’une table de dégustation sensorielle, sans lieu réel représenté" loading="lazy" decoding="async" width="2304" height="1536">
+            <img src="img/coffee-cupping-sensory-web.webp" alt="Illustration générée d’une table de dégustation sensorielle, sans lieu réel représenté" loading="lazy" decoding="async" width="2304" height="1536">
             <figcaption class="visual-card-copy"><strong>Dégustation</strong><span>Arômes, texture et équilibre deviennent des observations à décrire et à comparer.</span></figcaption>
           </figure>
         </div>

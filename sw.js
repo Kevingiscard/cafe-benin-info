@@ -1,13 +1,13 @@
 'use strict';
 
-const SHELL_CACHE = 'cafe-benin-shell-v1';
-const RUNTIME_CACHE = 'cafe-benin-runtime-v1';
+const SHELL_CACHE = 'cafe-benin-shell-v2';
+const RUNTIME_CACHE = 'cafe-benin-runtime-v2';
 const MAX_RUNTIME_ENTRIES = 140;
 const scopeUrl = new URL(self.registration.scope);
 const shellFiles = [
   './', './index.html', './site.webmanifest', './favicon.svg', './404.html',
   './styles.css', './v4.css', './motion.css', './theme.css', './polish.css',
-  './portal.css', './app.js', './dictionary-v4.js', './local-assistant.js',
+  './portal.css', './fonts.css', './fonts/dm-sans-latin.woff2', './fonts/dm-sans-latin-ext.woff2', './app.js', './dictionary-v4.js', './local-assistant.js',
   './explorer.js', './map.js', './tools.js', './sitemap.xml'
 ];
 
