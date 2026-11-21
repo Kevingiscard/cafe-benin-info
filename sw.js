@@ -1,7 +1,7 @@
 'use strict';
 
-const SHELL_CACHE = 'cafe-benin-shell-v30';
-const RUNTIME_CACHE = 'cafe-benin-runtime-v30';
+const SHELL_CACHE = 'cafe-benin-shell-v31';
+const RUNTIME_CACHE = 'cafe-benin-runtime-v31';
 const MAX_RUNTIME_ENTRIES = 140;
 const scopeUrl = new URL(self.registration.scope);
 const shellFiles = [
