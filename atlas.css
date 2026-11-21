@@ -186,3 +186,12 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 
 .chat-links{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 0}
 .chat-links a{color:var(--accent);font-size:.85rem;text-decoration:underline;text-underline-offset:2px}
+
+/* Bandeau d'etat applicatif (hors ligne / mise a jour) : meme rendu que polish.css sur les autres pages */
+.pwa-status{position:relative;z-index:20;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:9px 16px;background:var(--surface-2);color:var(--text);border-bottom:1px solid var(--border);font-size:12px;line-height:1.5}
+.pwa-status[data-update-ready="true"]{background:#f0d4b6}
+:root[data-theme="dark"] .pwa-status[data-update-ready="true"]{background:#3a2716}
+.pwa-status[hidden]{display:none!important}
+.pwa-status button,.pwa-update{min-height:36px;display:inline-flex;align-items:center;justify-content:center;padding:8px 13px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font:600 12px/1.2 var(--font-body);cursor:pointer}
+.pwa-status button:hover,.pwa-update:hover{border-color:var(--accent)}
+@media(max-width:640px){.pwa-status{font-size:11px;text-align:center}}
