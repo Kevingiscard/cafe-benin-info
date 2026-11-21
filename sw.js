@@ -1,7 +1,7 @@
 'use strict';
 
-const SHELL_CACHE = 'cafe-benin-shell-v25';
-const RUNTIME_CACHE = 'cafe-benin-runtime-v25';
+const SHELL_CACHE = 'cafe-benin-shell-v26';
+const RUNTIME_CACHE = 'cafe-benin-runtime-v26';
 const MAX_RUNTIME_ENTRIES = 140;
 const scopeUrl = new URL(self.registration.scope);
 const shellFiles = [
@@ -54,9 +54,19 @@ self.addEventListener('install', event => {
         const xml = await sitemapResponse.text();
         const urls = [...xml.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/gi)]
           .map(match => {
-            try { return new URL(match[1].trim(), scopeUrl); } catch { return null; }
+            try {
+              const loc = new URL(match[1].trim(), scopeUrl);
+              if (loc.origin === scopeUrl.origin) return isInsideScope(loc) ? loc : null;
+              // Le sitemap liste le domaine canonique : sur une autre origine du meme site
+              // (ex. edgeone.dev), on rebase le nom de page dans la portee courante.
+              // Le site est plat : chaque page est au niveau de la racine de portee.
+              const rel = loc.pathname.endsWith('/') ? './' : loc.pathname.split('/').pop();
+              if (!rel) return null;
+              const rebased = new URL(rel, scopeUrl);
+              return isInsideScope(rebased) ? rebased : null;
+            } catch { return null; }
           })
-          .filter(url => url && isInsideScope(url) && url.origin === scopeUrl.origin);
+          .filter(url => url && url.origin === scopeUrl.origin);
         await Promise.all(urls.map(url => precacheOne(cache, url.href)));
       }
     } catch {
