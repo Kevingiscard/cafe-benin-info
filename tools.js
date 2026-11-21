@@ -290,7 +290,8 @@
     const updateFresh = () => {
       const d = $('fraicheur-date') ? $('fraicheur-date').value : '';
       if (!d) { put('fraicheur-out', 'Choisissez la date de torréfaction indiquée sur le paquet.'); put('fraicheur-note', ''); return; }
-      const jours = Math.floor((Date.now() - new Date(d + 'T12:00:00').getTime()) / 86400000);
+      const aujourdhui = new Date(); aujourdhui.setHours(0, 0, 0, 0);
+      const jours = Math.round((aujourdhui.getTime() - new Date(d + 'T00:00:00').getTime()) / 86400000);
       if (jours < 0) { put('fraicheur-out', 'La date choisie est dans le futur : vérifiez la saisie.'); put('fraicheur-note', ''); return; }
       put('fraicheur-out', jours + (jours <= 1 ? ' jour' : ' jours') + ' depuis la torréfaction');
       put('fraicheur-note', textes[pureCalc.fraicheur(jours)] + ' Repères généraux : la torréfaction, le stockage et le conditionnement font varier ces durées.');
