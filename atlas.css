@@ -1,6 +1,6 @@
 /* Atlas Café Bénin : feuille autonome pour l'accueil et les chapitres. Contraste visé : WCAG AA. */
 :root{
-  --font-display:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-display:"Cormorant Garamond","DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --bg:#f6f1e8;--surface:#fffdf8;--surface-2:#efe6d8;--text:#221912;--text-2:#51443a;
   --border:#d9cbb7;--accent:#8a4220;--accent-2:#6d3216;--on-accent:#fffaf2;--focus:#1f5a45;
