@@ -401,16 +401,18 @@
     const update = () => {
       const water = Number(waterInput.value);
       const ratio = Number(ratioInput.value);
-      if (!Number.isFinite(water) || water < 100 || water > 1500 || !Number.isFinite(ratio) || ratio < 15 || ratio > 18) {
+      if (!Number.isFinite(water) || water <= 0 || !Number.isFinite(ratio) || ratio < 15 || ratio > 18) {
         coffeeOutput.textContent = '—';
-        bloomOutput.textContent = 'Saisissez une quantité d’eau entre 100 et 1 500 g.';
+        bloomOutput.textContent = 'Saisissez une quantité d’eau positive. Plage testée : 100 à 1 500 g.';
         return;
       }
 
       const coffee = water / ratio;
       const formattedCoffee = coffee.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
       coffeeOutput.textContent = formattedCoffee + ' g';
-      bloomOutput.textContent = 'Préinfusion indicative : ' + Math.round(coffee * 2) + ' g d’eau (environ deux fois la dose de café).';
+      const inRange = water >= 100 && water <= 1500;
+      const caveat = inRange ? '' : ' Hors de la plage testée (100 à 1 500 g) : proportion indicative, à vérifier en pratique.';
+      bloomOutput.textContent = 'Préinfusion indicative : ' + Math.round(coffee * 2) + ' g d’eau (environ deux fois la dose de café).' + caveat;
     };
 
     calculator.addEventListener('input', update);
