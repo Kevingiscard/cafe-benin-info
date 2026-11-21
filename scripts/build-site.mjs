@@ -99,7 +99,7 @@ function renderChapter(c, i) {
   const points = c.points.map(p => `<li>${cite(p)}</li>`).join('\n');
   const sections = c.sections.map(([t, h], j) => `<details class="acc"${j === 0 ? ' open' : ''}><summary>${t}</summary><div class="acc-body">${cite(h)}</div></details>`).join('\n');
   const terms = (c.terms || []).map(t => `<a class="chip" href="dictionnaire.html?q=${encodeURIComponent(t)}">${esc(t)}</a>`).join('');
-  const refs = order.map((k, n) => `<li id="ref-${k}"><a href="${REFS[k][1]}" rel="noopener noreferrer" target="_blank">${esc(REFS[k][0])}</a> <span class="muted">· consulté le ${ACCESSED}</span></li>`).join('\n');
+  const refs = order.map((k, n) => `<li id="ref-${k}"><a href="${REFS[k][1]}" rel="noopener noreferrer" target="_blank">${esc(REFS[k][0])}</a> <span class="muted">· consulté le ${REFS[k][2] || ACCESSED}</span></li>`).join('\n');
   const prev = chapters[(i + chapters.length - 1) % chapters.length], next = chapters[(i + 1) % chapters.length];
   const url = `${ORIGIN}chapitre-${c.slug}.html`;
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: c.title, inLanguage: 'fr-FR', url, image: `${ORIGIN}img/${c.img}.webp`, isPartOf: { '@type': 'WebSite', name: 'Café Bénin', url: ORIGIN } });
