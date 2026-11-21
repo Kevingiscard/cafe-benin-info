@@ -47,7 +47,10 @@ test('la direction typographique utilise un serif éditorial auto-hébergé avec
   const theme = fs.readFileSync(new URL('../atlas.css', import.meta.url), 'utf8');
   const fonts = fs.readFileSync(new URL('../fonts.css', import.meta.url), 'utf8');
   assert.match(theme, /--font-display:"Cormorant Garamond","DM Sans"/);
-  assert.match(fonts, /data:font\/woff2/);
+  // Serif auto-heberge en fichiers woff2 (la CSP bloque font-src data:).
+  assert.match(fonts, /url\('fonts\/cormorant-garamond-latin\.woff2'\)/);
+  assert.match(fonts, /font-family: 'Cormorant Garamond'/);
+  assert.doesNotMatch(fonts, /data:font\/woff2/);
   assert.match(html, /atlas\.css\?v=1/);
   assert.doesNotMatch(html, /Cormorant\+Garamond/);
 });
