@@ -42,10 +42,12 @@ test('la recherche se branche sur le dictionnaire enrichi même si le corpus est
   assert.match(dictionary, /cafeBeninDictionary/);
 });
 
-test('la direction typographique utilise une famille sans sérif cohérente et versionne sa feuille de thème', () => {
+test('la direction typographique utilise un serif éditorial auto-hébergé avec repli sans-serif et versionne sa feuille de thème', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const theme = fs.readFileSync(new URL('../atlas.css', import.meta.url), 'utf8');
-  assert.match(theme, /--font-display:"DM Sans"/);
+  const fonts = fs.readFileSync(new URL('../fonts.css', import.meta.url), 'utf8');
+  assert.match(theme, /--font-display:"Cormorant Garamond","DM Sans"/);
+  assert.match(fonts, /data:font\/woff2/);
   assert.match(html, /atlas\.css\?v=1/);
   assert.doesNotMatch(html, /Cormorant\+Garamond/);
 });
