@@ -100,7 +100,20 @@ function renderChapter(c, i) {
     return `<sup class="cite"><a href="#ref-${k}" aria-label="Source ${n + 1}">[${n + 1}]</a></sup>`;
   });
   const points = c.points.map(p => `<li>${cite(p)}</li>`).join('\n');
-  const sections = c.sections.map(([t, h], j) => `<details class="acc"${j === 0 ? ' open' : ''}><summary>${t}</summary><div class="acc-body">${cite(h)}</div></details>`).join('\n');
+  const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const linked = new Set();
+  const linkTerms = html => html.replace(/<p>[\s\S]*?<\/p>/g, p => {
+    for (const t of (c.terms || [])) {
+      if (linked.has(t)) continue;
+      const re = new RegExp('(^|[\\s>(«])(' + escRe(t) + ')(?=[\\s<.,;:!?»)]|$)', 'i');
+      if (re.test(p)) {
+        p = p.replace(re, (m, pre, term) => `${pre}<a class="term-link" href="dictionnaire.html?q=${encodeURIComponent(t)}">${term}</a>`);
+        linked.add(t);
+      }
+    }
+    return p;
+  });
+  const sections = c.sections.map(([t, h], j) => `<details class="acc"${j === 0 ? ' open' : ''}><summary>${t}</summary><div class="acc-body">${linkTerms(cite(h))}</div></details>`).join('\n');
   const terms = (c.terms || []).map(t => `<a class="chip" href="dictionnaire.html?q=${encodeURIComponent(t)}">${esc(t)}</a>`).join('');
   const refs = order.map((k, n) => `<li id="ref-${k}"><a href="${REFS[k][1]}" rel="noopener noreferrer" target="_blank">${esc(REFS[k][0])}</a> <span class="muted">· consulté le ${REFS[k][2] || ACCESSED}</span></li>`).join('\n');
   const prev = chapters[(i + chapters.length - 1) % chapters.length], next = chapters[(i + 1) % chapters.length];
