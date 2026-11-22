@@ -554,6 +554,32 @@
       });
   }
 
+  function setupChapterAids() {
+    // Chapitres : boutons pour déplier / replier toutes les rubriques.
+    const accs = $$('details.acc');
+    if (accs.length >= 2) {
+      const bar = document.createElement('div');
+      bar.className = 'acc-actions';
+      const openAll = document.createElement('button');
+      openAll.type = 'button'; openAll.className = 'btn'; openAll.textContent = 'Tout déplier';
+      const closeAll = document.createElement('button');
+      closeAll.type = 'button'; closeAll.className = 'btn'; closeAll.textContent = 'Tout replier';
+      openAll.addEventListener('click', () => accs.forEach(d => { d.open = true; }));
+      closeAll.addEventListener('click', () => accs.forEach(d => { d.open = false; }));
+      bar.append(openAll, closeAll);
+      accs[0].parentNode.insertBefore(bar, accs[0]);
+    }
+    // Retour en haut de page, sans gêner le bouton Préférences cookies.
+    const top = document.createElement('button');
+    top.type = 'button'; top.className = 'back-to-top'; top.textContent = '↑';
+    top.setAttribute('aria-label', 'Retour en haut de page');
+    document.body.append(top);
+    const onScroll = () => top.classList.toggle('show', window.scrollY > window.innerHeight * 1.5);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' }));
+  }
+
   function setupImageFallbacks() {
     $$('img').forEach(image => image.addEventListener('error', () => {
       const container = image.closest('figure, .card-media, .big-image, .visual-card, .field-card, .hero-media') || image.parentElement;
@@ -578,6 +604,7 @@
     setupRecommendation();
     setupBrewCalculator();
     setupContribution();
+    setupChapterAids();
     setupImageFallbacks();
     setYear();
   };
