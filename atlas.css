@@ -205,3 +205,9 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 .back-to-top{position:fixed;right:16px;bottom:64px;z-index:1100;width:44px;height:44px;border-radius:50%;border:1px solid var(--border,#d8cbb5);background:var(--card,#fffaf2);color:inherit;font-size:1.15rem;line-height:1;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
 .back-to-top.show{opacity:.95;pointer-events:auto}
 @media (prefers-reduced-motion:reduce){.back-to-top{transition:none}}
+
+/* Frise verticale : pleine largeur sur mobile, sans défilement horizontal */
+@media (max-width:700px){
+  .arch-fig.fit-mobile{overflow-x:visible}
+  .arch-fig.fit-mobile img{width:100%;max-width:none}
+}
