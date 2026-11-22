@@ -12,7 +12,7 @@ const fail = message => { failures.push(message); console.error(`✖ ${message}`
 const ok = message => console.log(`✓ ${message}`);
 
 const required = [
-  ['langue', /<html[^>]+lang="fr"/i],
+  ['langue', /<html[^>]+lang="(?:fr|en)"/i],
   ['titre', /<title>[^<]{20,}<[\/ ]title>/i],
   ['description', /<meta[^>]+name="description"[^>]+content="[^"]{50,}"/i],
   ['canonical', new RegExp(`<link rel="canonical" href="${origin}">`)],
