@@ -7,11 +7,18 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#f5f0e7",
   "theme_color": "#9c4f27",
-  "categories": ["education", "books", "food"],
+  "categories": [
+    "education",
+    "books",
+    "food"
+  ],
   "prefer_related_applications": false,
   "icons": [
     {
@@ -25,12 +32,40 @@
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    },
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "shortcuts": [
-    { "name": "Explorer", "short_name": "Explorer", "url": "explorer.html" },
-    { "name": "Dossier Bénin", "short_name": "Bénin", "url": "benin.html" },
-    { "name": "Outils café", "short_name": "Outils", "url": "outils.html" },
-    { "name": "Dictionnaire", "short_name": "Dictionnaire", "url": "dictionnaire.html" }
+    {
+      "name": "Explorer",
+      "short_name": "Explorer",
+      "url": "explorer.html"
+    },
+    {
+      "name": "Dossier Bénin",
+      "short_name": "Bénin",
+      "url": "benin.html"
+    },
+    {
+      "name": "Outils café",
+      "short_name": "Outils",
+      "url": "outils.html"
+    },
+    {
+      "name": "Dictionnaire",
+      "short_name": "Dictionnaire",
+      "url": "dictionnaire.html"
+    }
   ]
 }
