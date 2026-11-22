@@ -1,0 +1,12 @@
+@page{margin:18mm}
+:root{color-scheme:light!important}
+*,*::before,*::after{color:#111!important;background:transparent!important;text-shadow:none!important;box-shadow:none!important;border-color:#aaa!important}
+html,body{color:#111!important;background:#fff!important;font:11pt/1.45 Georgia,serif!important;margin:0!important}
+.nav,.mobile-nav,.nav-actions,.search-modal,.footer,#cookie-banner,#cookie-reset,#progress,.hero-img,.scroll-top,.tool-cards,.tool-back,.cb-discover,#back-to-top{display:none!important}
+.container,.page-shell,.chapter-body,.cb-reading{width:auto!important;max-width:none!important;padding:0!important;margin:0!important}
+main,section,details,.acc-body,.tool-doc,.tool-doc[hidden]{display:block!important;opacity:1!important;transform:none!important;content-visibility:visible!important;height:auto!important;max-height:none!important}
+details::details-content{display:block!important;content-visibility:visible!important;height:auto!important}
+details:not([open])> :not(summary){display:block!important;content-visibility:visible!important}
+h1{font-size:26pt!important}h2{font-size:19pt!important;break-after:avoid}h3,summary{font-size:14pt!important;break-after:avoid}summary::after{display:none!important}img{max-width:100%!important;max-height:100mm;object-fit:contain}table{width:100%;font-size:9pt}tr,figure{break-inside:avoid}a{color:#111!important;text-decoration:underline}button,input,select,textarea{display:none!important}
+
+body #main,body #main *,body #main *::before,body #main *::after{color:#111!important;background:transparent!important;opacity:1!important}

@@ -1,14 +1,14 @@
 'use strict';
 
-const SHELL_CACHE = 'cafe-benin-shell-v43';
-const RUNTIME_CACHE = 'cafe-benin-runtime-v43';
+const SHELL_CACHE = 'cafe-benin-shell-v46';
+const RUNTIME_CACHE = 'cafe-benin-runtime-v46';
 const MAX_RUNTIME_ENTRIES = 140;
 const scopeUrl = new URL(self.registration.scope);
 const shellFiles = [
   './', './index.html', './site.webmanifest', './favicon.svg', './404.html',
   './styles.css', './v4.css', './motion.css', './theme.css', './polish.css',
   './portal.css', './atlas.css', './fonts.css', './fonts/dm-sans-latin.woff2', './fonts/dm-sans-latin-ext.woff2', './fonts/cormorant-garamond-latin.woff2', './fonts/cormorant-garamond-latin-ext.woff2', './app.js', './dictionary-v4.js', './local-assistant.js',
-  './explorer.js', './map.js', './tools.js', './sitemap.xml'
+  './experience.css', './print.css', './print-support.js', './content-index.js', './english-tools.js', './cookie-consent.js', './cookie-consent.css', './search-fallback.js', './redesign.js', './redesign.css', './explorer.js', './map.js', './tools.js', './sitemap.xml'
 ];
 
 function isInsideScope(url) {

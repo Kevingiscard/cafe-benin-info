@@ -10,7 +10,7 @@ test('l’assistant local explique les procédés sans réseau', () => {
   const response = localAssistant.answer('Quelle est la différence entre un café naturel et un café lavé ?');
   assert.equal(response.source, 'local');
   assert.match(response.reply, /café naturel/i);
-  assert.equal(response.links[0].href, '#processus');
+  assert.equal(response.links[0].href, 'chapitre-post-recolte.html');
 });
 
 test('l’assistant local propose un conseil de préparation sans API', () => {
@@ -22,7 +22,7 @@ test('l’assistant local répond honnêtement lorsqu’une question sort de son
   const response = localAssistant.answer('Quel est le cours orbital du grain de café sur Mars ?');
   assert.equal(response.source, 'local');
   assert.match(response.reply, /assistant de recherche local/i);
-  assert.ok(response.links.some(link => link.href === '#dictionnaire'));
+  assert.ok(response.links.some(link => link.href === 'dictionnaire.html'));
 });
 
 test('le thème est amorcé avant rendu et possède un contrôle accessible', () => {

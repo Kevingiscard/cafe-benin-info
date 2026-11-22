@@ -1,6 +1,12 @@
 // Génère index.html et les pages chapitre-*.html à partir de scripts/chapters-data.mjs.
 // Usage : node scripts/build-site.mjs
 import fs from 'node:fs';
+// Historical generator. Static HTML now contains reviewed additions not represented here.
+if (!process.argv.includes('--allow-legacy-overwrite')) {
+  console.error('Génération historique suspendue : les fichiers HTML sont la source éditoriale actuelle. Voir MAINTENANCE.md. Aucun fichier modifié.');
+  process.exit(1);
+}
+
 import { chapters, REFS, ACCESSED } from './chapters-data.mjs';
 const ORIGIN = 'https://kevingiscard.github.io/cafe-benin-info/';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

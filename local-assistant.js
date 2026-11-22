@@ -12,16 +12,16 @@
   const keyPattern = key => new RegExp(`\\b${escapeRegExp(key)}`);
 
   const links = {
-    botanique: { href: '#botanique', label: 'Botanique du café' },
-    culture: { href: '#culture', label: 'Culture et terroir' },
-    processus: { href: '#processus', label: 'Transformation du café' },
-    torrefaction: { href: '#torréfaction', label: 'Torréfaction' },
-    extraction: { href: '#extraction', label: 'Extraction et méthodes' },
-    degustation: { href: '#degustation', label: 'Dégustation' },
-    dictionnaire: { href: '#dictionnaire', label: 'Dictionnaire' },
-    benin: { href: '#benin', label: 'Dossier Bénin' },
-    carnet: { href: '#carnet', label: 'Carnet de terrain' },
-    sante: { href: '#sante', label: 'Café et santé' }
+    botanique: { href: 'chapitre-botanique.html', label: 'Botanique du café' },
+    culture: { href: 'chapitre-agronomie.html', label: 'Culture et terroir' },
+    processus: { href: 'chapitre-post-recolte.html', label: 'Transformation du café' },
+    torrefaction: { href: 'chapitre-torrefaction.html', label: 'Torréfaction' },
+    extraction: { href: 'chapitre-extraction.html', label: 'Extraction et méthodes' },
+    degustation: { href: 'chapitre-sensoriel.html', label: 'Dégustation' },
+    dictionnaire: { href: 'dictionnaire.html', label: 'Dictionnaire' },
+    benin: { href: 'benin.html', label: 'Dossier Bénin' },
+    carnet: { href: 'outils.html', label: 'Carnet de terrain' },
+    sante: { href: 'chapitre-sante.html', label: 'Café et santé' }
   };
 
   const topics = [
@@ -43,6 +43,11 @@
   const DICT_STOPWORDS = new Set(['de', 'du', 'la', 'le', 'a', 'au', 'aux', 'et', 'd', 'l', 'en', 'sur', 'avec', 'pour', 'des', 'les', 'un', 'une', 'ou', 'the', 'of']);
 
   const SITE_PAGES = [
+    ['debuter.html','Débuter dans le café','Sept étapes pour préparer une première tasse et lire les sources.',['debuter','debutant','premiere','apprendre']],
+    ['questions.html','Questions fréquentes','Réponses courtes aux questions sur les espèces, méthodes, données et outils.',['question','faq']],
+    ['varietes.html','Variétés et clones','Premières fiches documentées : Bourbon, Typica et KR 3.',['variete','clone','bourbon','typica','kr']],
+    ['nouveautes.html','Nouveautés','Journal des révisions éditoriales et flux RSS sans inscription.',['nouveaute','rss','suivre']],
+
     ['chapitre-afrique.html', 'Afrique et Bénin', 'L’Afrique est le berceau de l’Arabica et un grand producteur de robusta. Cette page réunit des repères sourcés pour l’Afrique et pour le Bénin ; les chiffr', ['afrique','producteur','bénin','berceau']],
     ['chapitre-agronomie.html', 'Culture et agronomie', 'La qualité d’un café se prépare dans le champ. Climat, altitude et pluie fixent déjà beaucoup de ce que la tasse peut offrir.', ['cultiver','culture','plantation','récolte','cerise','climat','altitude']],
     ['chapitre-botanique.html', 'Botanique et diversité', 'Le café est une graine de la famille des Rubiacées. Deux espèces font l’essentiel du commerce : Arabica et Canephora (robusta). La diversité sauvage est, e', ['arabica','robusta','espèce','liberica','cultivar']],
@@ -56,8 +61,8 @@
     ['explorer.html', 'Explorer les chapitres', 'Parcours en dix chapitres, de la plante à la tasse, avec progression conservée sur l’appareil.', ['explorer','carte','parcourir']],
     ['benin.html', 'Dossier Bénin', 'Dossier documentaire sur le café au Bénin, ses sources, ses limites et les pistes de recherche.', ['bénin','ouèssè','dassa','kétou','paysan']],
     ['observatoire.html', 'Observatoire du café', 'Observatoire Café Bénin : données mondiales, série béninoise à confirmer, unités, frise historique, graphiques interactifs et méthode de vérification.', ['données','chiffres','statistiques','prix','production','observatoire']],
-    ['recettes.html', 'Recettes du café', 'Cinq recettes documentées et sourcées : tiramisu, café touba du Sénégal, cà phê sữa đá vietnamien, cold brew et dalgona, avec dosages, étapes et pièges.', ['recette','tiramisu','touba','vietnamien','cold brew','dalgona','dessert','cuisine']],
-    ['outils.html', 'Outils pratiques', 'Cinq outils locaux pour préparer et déguster du café : ratio café/eau, infusion pas à pas, diagnostic, roue aromatique et carnet privé.', ['recette','outil','ratio','convertir','calcul']],
+    ['recettes.html', 'Recettes du café', 'Huit recettes documentées et sourcées : tiramisu, café touba du Sénégal, cà phê sữa đá vietnamien, cold brew et dalgona, avec dosages, étapes et pièges.', ['recette','tiramisu','touba','vietnamien','cold brew','dalgona','dessert','cuisine']],
+    ['outils.html', 'Outils pratiques', 'Treize outils locaux pour préparer et déguster du café : ratio café/eau, infusion pas à pas, diagnostic, roue aromatique et carnet privé.', ['recette','outil','ratio','convertir','calcul']],
     ['dictionnaire.html', 'Vocabulaire complet du café', 'Rechercher, trier et parcourir le vocabulaire complet du café, organisé par science, botanique, culture, transformation, torréfaction, extraction, dégustation et filière.', ['dictionnaire','vocabulaire','glossaire','terme']],
     ['sources.html', 'Sources et contribuer', 'Consulter la méthode éditoriale, les sources de départ, les crédits visuels et contribuer une correction ou une référence à Café Bénin.', ['source','référence','contribuer']],
     ['professionnels.html', 'Espace professionnel', 'Espace professionnel Café Bénin : observatoire, annuaire vérifié, bulletin de veille, données agrégées, formation et mise en relation.'],
@@ -244,7 +249,7 @@
           re.test(normalize(`${title} ${description} ${(keywords || []).join(' ')}`)));
         if (matches.length === 1) rare.push({ qt, page: matches[0] });
       }
-      if (rare.length !== 1) return null;
+      if (rare.length !== 1 || focused.length > 3) return null;
       const [href, title, description] = rare[0].page;
       return pageResult(href, title, description, focused);
     }
@@ -256,9 +261,9 @@
   }
 
   function formatList(list) {
-    const names = list.map(item => item.entry.term).join(' ; ');
+    const names = list.map(item => item.entry.term + ' : ' + item.entry.definition).join(' ');
     return {
-      reply: `Plusieurs fiches du dictionnaire évoquent ce terme : ${names}. Le dictionnaire permet de les comparer directement.`,
+      reply: `Définitions du dictionnaire du site : ${names}`,
       links: [links.dictionnaire],
       source: 'local'
     };
@@ -276,6 +281,15 @@
 
   function answer(question) {
     const query = normalize(question);
+    // Two named concepts require two definitions, not a single alphabetical hit.
+    if (/\b(arabica)\b/.test(query) && /\b(robusta|canephora)\b/.test(query)) {
+      const dict = readDictionary();
+      const first = dict.find(e => normalize(e.term) === 'arabica');
+      const second = dict.find(e => ['canephora','robusta','coffea canephora'].includes(normalize(e.term)));
+      if (first && second) return {reply: first.term + ' : ' + first.definition + ' ' + second.term + ' : ' + second.definition + ' Ces noms ne désignent ni une origine géographique, ni un degré de torréfaction.', links:[{href:'chapitre-botanique.html',label:'Botanique et références'},{href:'dictionnaire.html?q=Arabica',label:'Définition Arabica'},{href:'dictionnaire.html?q='+encodeURIComponent(second.term),label:second.term}],source:'local'};
+      return {reply:'Arabica et Canephora sont deux espèces distinctes de caféiers. Le robusta appartient à Canephora. Le nom de l’espèce ne donne pas à lui seul le procédé, la torréfaction ou la qualité de la tasse.',links:[links.botanique,links.dictionnaire],source:'local'};
+    }
+
     const focusedForPages = (() => {
       const questionWords = new Set(['comment', 'pourquoi', 'quelle', 'quelles', 'quels', 'quel', 'combien', 'est', 'sont', 'ou', 'avec', 'sans', 'dans', 'pour', 'sur', 'les', 'des', 'une', 'est-ce']);
       const tokens = query.split(' ').filter(token => token.length >= 3 && !DICT_STOPWORDS.has(token) && !questionWords.has(token));

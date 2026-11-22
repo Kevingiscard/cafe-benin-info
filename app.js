@@ -168,6 +168,7 @@
         { id: 'confidentialite', href: 'confidentialite.html', type: 'Confidentialité', title: 'Politique de confidentialité', description: 'Données réellement utilisées, collecte actuelle, droits et limites du site statique.' },
         { id: 'mentions-legales', href: 'mentions-legales.html', type: 'Transparence', title: 'Mentions légales', description: 'Statut actuel du projet et informations à compléter avant toute commercialisation.' }
       ];
+      pages.push({id:'debuter',href:'debuter.html',type:'Parcours',title:'Débuter dans le café',description:'Première tasse : sept étapes, sans achat imposé.'},{id:'questions',href:'questions.html',type:'Questions',title:'Questions fréquentes',description:'Dix-huit réponses courtes sur le café, les outils et les sources.'},{id:'varietes',href:'varietes.html',type:'Botanique',title:'Variétés et clones',description:'Bourbon, Typica et KR 3 : premières fiches documentées.'},{id:'nouveautes',href:'nouveautes.html',type:'Projet',title:'Nouveautés et RSS',description:'Suivre les révisions sans inscription.'});
       const records = [...pages, ...sectionRecords(), ...glossary.map(item => ({ ...item, id: 'dictionnaire', href: 'dictionnaire.html?q=' + encodeURIComponent(item.term), type: item.category || 'Dictionnaire', title: item.term, description: item.definition }))];
       const stemToken = token => token.length > 4 ? token.replace(/(es|s|e|er|ant|ent|tion)$/, '') : token;
       const escapeRe = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
