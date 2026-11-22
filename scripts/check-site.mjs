@@ -15,7 +15,7 @@ if (!pages.length) fail('Aucune page HTML principale détectée.');
 for (const file of pages.sort()) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   const label = file;
-  if (!/<html[^>]+lang="fr"/i.test(html)) fail(`${label}: lang="fr" absent.`);
+  if (!/<html[^>]+lang="(?:fr|en)"/i.test(html)) fail(`${label}: lang="(?:fr|en)" absent.`);
   if (!/<title>[^<]{20,}<\/title>/i.test(html)) fail(`${label}: titre trop court ou absent.`);
   if (!/<meta[^>]+name="description"[^>]+content="[^"]{50,}"/i.test(html)) fail(`${label}: meta description absente ou trop courte.`);
   if (!/<link[^>]+rel="canonical"[^>]+href="https:\/\/kevingiscard\.github\.io\/cafe-benin-info\//i.test(html)) fail(`${label}: canonical GitHub Pages absente.`);
