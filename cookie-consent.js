@@ -9,7 +9,7 @@
   const en = (document.documentElement.lang || 'fr').startsWith('en');
   const announce = message => { if (status) status.textContent = message; };
   const msg = (fr, enText) => (en ? enText : fr);
-  const apply = choice => { save(choice); close(); if (choice.analytics && window.cbLoadStats) window.cbLoadStats(); announce(choice.analytics ? msg('Mesure d’audience acceptée.', 'Audience measurement accepted.') : msg('Seuls les services essentiels sont conservés.', 'Only essential services are kept.')); };
+  const apply = choice => { const wasAllowed = get()?.analytics === true; save(choice); close(); if (choice.analytics && window.cbLoadStats) window.cbLoadStats(); announce(choice.analytics ? msg('Mesure d’audience acceptée.', 'Audience measurement accepted.') : msg('Seuls les services essentiels sont conservés.', 'Only essential services are kept.')); if (wasAllowed && !choice.analytics) location.reload(); };
   if (!banner) return;
   const existing = get();
   if (existing) close(); else { banner.hidden = false; banner.setAttribute('aria-hidden', 'false'); }
@@ -19,7 +19,15 @@
     const panel = document.querySelector('#cookie-settings-panel');
     if (panel) { panel.hidden = !panel.hidden; panel.querySelector('input')?.focus(); }
   });
-  document.querySelector('#cookie-reset')?.addEventListener('click', () => { try { localStorage.removeItem(KEY); } catch {} location.reload(); });
+  document.querySelector('#cookie-reset')?.addEventListener('click', () => {
+    const choice = get();
+    const panel = document.querySelector('#cookie-settings-panel');
+    const field = document.querySelector('#analytics-choice');
+    banner.hidden = false;
+    banner.setAttribute('aria-hidden', 'false');
+    if (panel) panel.hidden = false;
+    if (field) { field.checked = choice?.analytics === true; field.focus(); }
+  });
   // La case « Mesure d'audience » du panneau Choisir est un vrai réglage :
   // elle reflète le choix enregistré et l'applique dès qu'on la modifie.
   const analyticsChoice = document.querySelector('#analytics-choice');
