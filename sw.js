@@ -1,7 +1,7 @@
 'use strict';
 
-const SHELL_CACHE = 'cafe-benin-shell-v48';
-const RUNTIME_CACHE = 'cafe-benin-runtime-v48';
+const SHELL_CACHE = 'cafe-benin-shell-v50';
+const RUNTIME_CACHE = 'cafe-benin-runtime-v50';
 const MAX_RUNTIME_ENTRIES = 140;
 const scopeUrl = new URL(self.registration.scope);
 const shellFiles = [
@@ -95,9 +95,9 @@ async function networkFirst(request) {
     if (isCacheable(response)) await saveResponse(RUNTIME_CACHE, request, response);
     return response;
   } catch {
-    const cached = await caches.match(request, { ignoreSearch: true });
+    const cached = await matchCurrentCaches(request, { ignoreSearch: true });
     if (cached) return cached;
-    const home = await caches.match(scopeUrl.href) || await caches.match(new URL('index.html', scopeUrl).href);
+    const home = await matchCurrentCaches(scopeUrl.href) || await matchCurrentCaches(new URL('index.html', scopeUrl).href);
     if (home) return home;
     return new Response(
       '<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Hors ligne · Café Bénin</title><main><h1>Connexion indisponible</h1><p>Cette page n’a pas encore été mise en cache. Revenez à l’accueil lorsque la connexion sera rétablie.</p></main></html>',
@@ -106,8 +106,24 @@ async function networkFirst(request) {
   }
 }
 
+async function matchCurrentCaches(request, options) {
+  // Ne chercher que dans les caches de CETTE version du service worker :
+  // caches.match() global pourrait resservir une entree d'un ancien cache
+  // qui aurait survecu au nettoyage d'activation.
+  const shell = await caches.open(SHELL_CACHE);
+  const runtime = await caches.open(RUNTIME_CACHE);
+  return (await shell.match(request, options)) || (await runtime.match(request, options));
+}
+
+async function matchStatic(request) {
+  // Une URL avec paramètre de version (?v=…) exige une correspondance exacte :
+  // sinon une ancienne version du fichier serait servie après une mise à jour.
+  if (new URL(request.url).search) return matchCurrentCaches(request);
+  return (await matchCurrentCaches(request)) || (await matchCurrentCaches(request, { ignoreSearch: true }));
+}
+
 async function staleWhileRevalidate(request) {
-  const cached = await caches.match(request, { ignoreSearch: true });
+  const cached = await matchStatic(request);
   const update = fetch(request).then(async response => {
     if (isCacheable(response)) await saveResponse(RUNTIME_CACHE, request, response);
     return response;

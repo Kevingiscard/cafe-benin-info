@@ -145,8 +145,34 @@
       link.addEventListener('click', close);
       return link;
     };
-    const draw = () => {
-      const query = normalize(input.value.trim());
+    // Index construit une seule fois (invalidé à l'arrivée du dictionnaire) :
+    // auparavant, pages, sections, records et vocabulaire étaient reconstruits à chaque frappe.
+    const stemToken = token => token.length > 4 ? token.replace(/(es|s|e|er|ant|ent|tion)$/, '') : token;
+    const escapeRe = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const STOPWORDS = new Set(['le', 'la', 'les', 'de', 'des', 'du', 'un', 'une', 'et', 'ou', 'en', 'au', 'aux', 'ce', 'cette', 'pour', 'sur', 'avec', 'sans', 'est', 'sont', 'comment', 'pourquoi', 'quelle', 'quel', 'quoi', 'combien']);
+    const distance1 = (a, b) => {
+      if (a === b) return true;
+      const la = a.length, lb = b.length;
+      if (Math.abs(la - lb) > 1) return false;
+      if (la === lb) {
+        let diff = 0;
+        for (let i = 0; i < la; i++) if (a[i] !== b[i]) diff++;
+        if (diff === 1) return true;
+        for (let i = 0; i < la - 1; i++) {
+          if (a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(0, i) === b.slice(0, i) && a.slice(i + 2) === b.slice(i + 2)) return true;
+        }
+        return false;
+      }
+      const [short, long] = la < lb ? [a, b] : [b, a];
+      let i = 0, j = 0, skips = 0;
+      while (i < short.length && j < long.length) {
+        if (short[i] === long[j]) { i++; j++; }
+        else { skips++; j++; if (skips > 1) return false; }
+      }
+      return true;
+    };
+    let searchIndex = null;
+    const buildSearchIndex = () => {
       const pages = [
         { id: 'chapitre-histoire', href: 'chapitre-histoire.html', type: 'Chapitre', title: "Histoire du café", description: 'Chapitre de l’encyclopédie avec sources.' },
         { id: 'chapitre-botanique', href: 'chapitre-botanique.html', type: 'Chapitre', title: "Botanique et diversité", description: 'Chapitre de l’encyclopédie avec sources.' },
@@ -170,35 +196,17 @@
       ];
       pages.push({id:'debuter',href:'debuter.html',type:'Parcours',title:'Débuter dans le café',description:'Première tasse : sept étapes, sans achat imposé.'},{id:'questions',href:'questions.html',type:'Questions',title:'Questions fréquentes',description:'Dix-huit réponses courtes sur le café, les outils et les sources.'},{id:'varietes',href:'varietes.html',type:'Botanique',title:'Variétés et clones',description:'Bourbon, Typica et KR 3 : premières fiches documentées.'},{id:'nouveautes',href:'nouveautes.html',type:'Projet',title:'Nouveautés et RSS',description:'Suivre les révisions sans inscription.'});
       const records = [...pages, ...sectionRecords(), ...glossary.map(item => ({ ...item, id: 'dictionnaire', href: 'dictionnaire.html?q=' + encodeURIComponent(item.term), type: item.category || 'Dictionnaire', title: item.term, description: item.definition }))];
-      const stemToken = token => token.length > 4 ? token.replace(/(es|s|e|er|ant|ent|tion)$/, '') : token;
-      const escapeRe = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const STOPWORDS = new Set(['le', 'la', 'les', 'de', 'des', 'du', 'un', 'une', 'et', 'ou', 'en', 'au', 'aux', 'ce', 'cette', 'pour', 'sur', 'avec', 'sans', 'est', 'sont', 'comment', 'pourquoi', 'quelle', 'quel', 'quoi', 'combien']);
+      const vocabulary = [...new Set(records.flatMap(item => normalize(`${item.title} ${item.type}`).split(/[^a-z0-9]+/).filter(word => word.length >= 5)))];
+      return { records, vocabulary };
+    };
+    const draw = () => {
+      const query = normalize(input.value.trim());
+      if (!searchIndex) searchIndex = buildSearchIndex();
+      const { records, vocabulary } = searchIndex;
       const queryTokens = query.split(/[^a-z0-9]+/).filter(token => token.length >= 2 && !STOPWORDS.has(token));
       // Tolérance de frappe bornée : distance 1 (substitution, ajout, retrait, inversion),
       // uniquement pour un mot d'au moins 5 lettres sans aucune correspondance,
       // et seulement si un seul candidat du vocabulaire de l'index convient.
-      const vocabulary = [...new Set(records.flatMap(item => normalize(`${item.title} ${item.type}`).split(/[^a-z0-9]+/).filter(word => word.length >= 5)))];
-      const distance1 = (a, b) => {
-        if (a === b) return true;
-        const la = a.length, lb = b.length;
-        if (Math.abs(la - lb) > 1) return false;
-        if (la === lb) {
-          let diff = 0;
-          for (let i = 0; i < la; i++) if (a[i] !== b[i]) diff++;
-          if (diff === 1) return true;
-          for (let i = 0; i < la - 1; i++) {
-            if (a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(0, i) === b.slice(0, i) && a.slice(i + 2) === b.slice(i + 2)) return true;
-          }
-          return false;
-        }
-        const [short, long] = la < lb ? [a, b] : [b, a];
-        let i = 0, j = 0, skips = 0;
-        while (i < short.length && j < long.length) {
-          if (short[i] === long[j]) { i++; j++; }
-          else { skips++; j++; if (skips > 1) return false; }
-        }
-        return true;
-      };
       const corrections = [];
       const correctToken = token => {
         if (token.length < 5) return null;
@@ -312,7 +320,7 @@
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
-    document.addEventListener('cafeb:dictionary-ready', event => { glossary = Array.isArray(event.detail) ? event.detail : []; draw(); });
+    document.addEventListener('cafeb:dictionary-ready', event => { glossary = Array.isArray(event.detail) ? event.detail : []; searchIndex = null; draw(); });
     draw();
   }
 
@@ -590,6 +598,17 @@
     }, { once: true }));
   }
 
+  function setupCafeBotHash() {
+    // Le menu mobile pointe vers index.html#cafebot : ouvrir l'accordéon CaféBot correspondant.
+    const openFromHash = () => {
+      if (location.hash !== '#cafebot') return;
+      const details = $('#cafebot details');
+      if (details && !details.open) details.open = true;
+    };
+    window.addEventListener('hashchange', openFromHash);
+    openFromHash();
+  }
+
   function setYear() { const year = $('#year'); if (year) year.textContent = new Date().getFullYear(); }
 
   const init = () => {
@@ -606,6 +625,7 @@
     setupBrewCalculator();
     setupContribution();
     setupChapterAids();
+    setupCafeBotHash();
     setupImageFallbacks();
     setYear();
   };

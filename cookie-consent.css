@@ -2,3 +2,6 @@
 
 /* Keep the preferences control in document flow, never over reading or tool controls. */
 .cookie-preferences{position:static;right:auto;bottom:auto;display:block;width:max-content;max-width:calc(100% - 32px);min-height:44px;margin:16px auto;box-shadow:none;white-space:normal}
+
+/* Les liens du bandeau se distinguent par le souligné, pas seulement par la couleur. */
+.cookie-banner a{text-decoration:underline;text-underline-offset:.15em}
