@@ -10,11 +10,11 @@ Le dépôt GitHub et sa branche `main` sont la source de vérité du code. Le si
 
 ## Ce que le site permet de faire
 
-- Naviguer entre sept espaces : Explorer, Dossier Bénin, Observatoire, Outils pratiques, Dictionnaire, Sources & contribution, et À propos de Kevin. L’encyclopédie complète reste disponible sur l’accueil.
+- Entrer par six parcours éditoriaux : encyclopédie, dossier Bénin, observatoire, laboratoire d’outils, dictionnaire et espace professionnel. Les pages Sources, À propos et les ressources transversales complètent le portail.
 - Rechercher dans les chapitres et le dictionnaire avec Ctrl+K ou Cmd+K.
-- Filtrer 254 termes dans 19 catégories, ouvrir des fiches et enregistrer jusqu’à 100 favoris dans ce navigateur.
+- Rechercher parmi 310 termes annoncés sur l’accueil, ouvrir les fiches et enregistrer des favoris localement dans ce navigateur. Le nombre de termes doit rester synchronisé avec le dictionnaire réellement publié.
 - Interroger CaféBot, un assistant documentaire local guidé par règles et thèmes intégrés, sans compte, clé d’IA ni appel à une API. Il ne s’agit pas d’un grand modèle génératif.
-- Utiliser cinq outils hors ligne : ratio café/eau, guide d’infusion, diagnostic de tasse, roue aromatique et carnet de dégustation exportable en CSV.
+- Accéder à 13 outils pratiques annoncés : ratios, espresso, extraction, mouture, eau, cold brew, caféine, coût, fraîcheur, roue aromatique et carnets. Vérifier chaque outil individuellement avant de le qualifier de disponible hors ligne.
 - Choisir un thème clair ou sombre; la préférence est enregistrée localement.
 - Installer la PWA sur les navigateurs compatibles; le service worker met en cache les pages du sitemap et les ressources locales essentielles, puis les ressources consultées à la demande.
 - Préparer une contribution dans l’application e-mail choisie par le visiteur. Le site ne transmet ni ne conserve ce message.
@@ -31,7 +31,7 @@ Le dépôt GitHub et sa branche `main` sont la source de vérité du code. Le si
 - scripts/ et tests/ : validation, accessibilité, SEO, sécurité, liens et tests du projet.
 - docs/ : authentification réelle, procédures d’exploitation et limites connues.
 
-Le site de main est statique. Il ne crée pas de compte visiteur, n’utilise pas de base de données ou d’API métier, et ne demande aucune variable d’environnement. Le service worker `sw.js` fournit un cache hors ligne sous le chemin GitHub Pages du projet. La première installation et le premier remplissage du cache nécessitent une connexion; les ressources non consultées et les polices externes peuvent ne pas être disponibles hors ligne.
+Le site de `main` est statique. Il ne crée pas de compte visiteur, n’utilise pas de base de données ou d’API métier, et ne demande aucune variable d’environnement. Le service worker `sw.js` construit sa portée à partir de l’enregistrement du navigateur ; sur le domaine EdgeOne actuel, vérifier que son scope est bien la racine du site. La première installation et le premier remplissage du cache nécessitent une connexion ; les ressources non consultées et les polices externes peuvent ne pas être disponibles hors ligne.
 
 LiteRT n’est pas encore activé dans le navigateur : l’intégration Android native via Google Play Services et l’inférence web sont deux voies techniques distinctes. Aucun modèle lourd n’est téléchargé sans action du visiteur.
 
