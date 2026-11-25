@@ -74,3 +74,12 @@ h2{font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1.1}
 :root[data-theme="dark"] .footer{background:#090604}
 :root[data-theme="light"] .hero::after{background:linear-gradient(100deg,rgb(30 18 10 / 74%) 0%,rgb(30 18 10 / 44%) 46%,rgb(30 18 10 / 4%) 100%)}
 :root[data-theme="dark"] .acc-controls .btn,:root[data-theme="dark"] .btn:not(.primary){background:#1f1711;color:#f6eee2;border-color:#3a2d23}
+/* Mobile : le bouton Installer ne doit jamais dépasser du menu */
+@media (max-width:640px){
+  .nav-inner{gap:.4rem;flex-wrap:nowrap}
+  .nav-actions{gap:.3rem;min-width:0;flex:0 1 auto}
+  .nav-actions .search-trigger,.nav-actions .theme-toggle,.nav-actions .menu-toggle{padding:.35rem .6rem;min-width:40px}
+  .brand{font-size:1.15rem;min-width:0;white-space:nowrap}
+  .nav-actions .pwa-install{padding:.3rem .55rem;font-size:.72rem;min-height:36px;white-space:nowrap}
+}
+@media (max-width:360px){.nav-actions .pwa-install{display:none}}
