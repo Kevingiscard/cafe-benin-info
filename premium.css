@@ -83,3 +83,5 @@ h2{font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1.1}
   .nav-actions .pwa-install{padding:.3rem .55rem;font-size:.72rem;min-height:36px;white-space:nowrap}
 }
 @media (max-width:360px){.nav-actions .pwa-install{display:none}}
+
+:root:not([data-theme="dark"]) .tile small{color:#7a5524}
