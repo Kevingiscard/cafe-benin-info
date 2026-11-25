@@ -213,3 +213,4 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
   .arch-fig.fit-mobile img{width:100%;max-width:none}
 }
 @media (min-width:1280px){.pwa-install{display:none!important}}
+.contact-row{padding-top:12px;padding-bottom:4px}.contact-row p{margin:0}.contact-title{font-weight:700;margin-bottom:6px!important}.contact-links{display:flex;flex-wrap:wrap;gap:6px 18px}.contact-links a{min-height:44px;display:inline-flex;align-items:center}.contact-list{line-height:2}
