@@ -50,8 +50,8 @@ jobs:
           exit $RC
       - name: Push redirect branch then main
         run: |
-          git config user.name "Kevingiscard"
-          git config user.email "97285117+Kevingiscard@users.noreply.github.com"
+          git config --global user.name "Kevingiscard"
+          git config --global user.email "97285117+Kevingiscard@users.noreply.github.com"
           REMOTE="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           cd /tmp/redirect
           git init -q -b redirect
