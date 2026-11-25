@@ -84,4 +84,4 @@ h2{font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1.1}
 }
 @media (max-width:360px){.nav-actions .pwa-install{display:none}}
 
-:root:not([data-theme="dark"]) .tile small{color:#7a5524}
+:root:not([data-theme="dark"]) .tile small,:root:not([data-theme="dark"]) .pm-pillars .pm-kicker{color:#7a5524}
