@@ -36,14 +36,18 @@ jobs:
         run: |
           OLD='https://kevingiscard.github.io/cafe-benin-info'
           NEW='https://cafe-benin-info.edgeone.dev'
-          grep -rIl "$OLD" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.github --exclude=CNAME | xargs -r sed -i "s#$OLD#$NEW#g"
+          grep -rIlE 'kevingiscard(\\)?\.github(\\)?\.io' . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.github --exclude=CNAME | xargs -r sed -i -e "s#$OLD#$NEW#g" -e 's#kevingiscard\\.github\\.io\\/cafe-benin-info#cafe-benin-info\\.edgeone\\.dev#g'
           echo "references restantes a l'ancien hote :"
           grep -rIn "kevingiscard.github.io" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.github | cut -c1-180 || true
           git status --short | wc -l
       - name: Verify site tests
         run: |
           npm ci --ignore-scripts
-          npm run verify
+          RC=0
+          for s in validate test check:assets check:size check:a11y check:seo check:security check:site check:pwa check:links; do
+            npm run $s > /tmp/out_$s.txt 2>&1 || { echo "ECHEC $s"; grep -E "✖|not ok|Error" /tmp/out_$s.txt | head -8; RC=1; }
+          done
+          exit $RC
       - name: Push redirect branch then main
         run: |
           git config user.name "Kevingiscard"
