@@ -632,3 +632,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 })();
+
+;(function(){var s=document.createElement("script");s.src="dessins.js?v=1";s.defer=true;document.head.appendChild(s)})();
