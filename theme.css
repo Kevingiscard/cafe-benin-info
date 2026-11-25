@@ -291,3 +291,4 @@ img,svg,video{max-width:100%;height:auto}.sr-only{position:absolute!important;wi
 .footer .support-row .support-link { display: inline-flex; width: auto; max-width: 100%; }
 .footer .support-row { display: block; }
 .contact-row{padding-top:12px;padding-bottom:4px}.contact-row p{margin:0}.contact-title{font-weight:700;margin-bottom:6px!important}.contact-links{display:flex;flex-wrap:wrap;gap:6px 18px}.contact-links a{min-height:44px;display:inline-flex;align-items:center}.contact-list{line-height:2}
+.src-badge{margin:4px 0 0;font-size:.82rem;font-weight:700;color:var(--accent)}.dict-sources{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}.dict-sources p{margin:6px 0}.dict-sources ul{margin:6px 0 0;padding-left:20px}
