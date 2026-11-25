@@ -1,4 +1,4 @@
-name: Deploy Café Bénin to GitHub Pages
+name: Validate Café Bénin
 
 on:
   pull_request:
@@ -14,9 +14,9 @@ concurrency:
   group: pages-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# La publication est faite par le workflow intégré « pages build and deployment »
-# (Settings → Pages → Deploy from a branch, main, racine). Ce workflow ne fait que valider :
-# un second déploiement en parallèle entrait en conflit avec la publication réelle.
+# Ce workflow exécute uniquement les contrôles qualité du dépôt.
+# Il ne publie ni sur GitHub Pages ni sur Tencent EdgeOne.
+# La publication publique EdgeOne est configurée séparément dans la console Tencent.
 jobs:
   validate:
     runs-on: ubuntu-latest
