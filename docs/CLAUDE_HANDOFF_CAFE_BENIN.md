@@ -1,7 +1,7 @@
 BRIEF TECHNIQUE — CAFÉ BÉNIN INFO
 
 Dépôt : https://github.com/Kevingiscard/cafe-benin-info
-Site GitHub Pages : https://kevingiscard.github.io/cafe-benin-info/
+Site GitHub Pages : https://cafe-benin-info.edgeone.dev/
 Site miroir Vercel déclaré : https://cafe-benin-info.vercel.app/
 Branche principale : main
 Dernier commit de référence au moment du brief : 252ed236b5e6e881d06f2593ab4c57ac91ff74b7

@@ -4,7 +4,7 @@ Une encyclopédie documentaire francophone consacrée au café, de la plante à 
 
 ## Lien public unique
 
-**Site officiel :** https://kevingiscard.github.io/cafe-benin-info/
+**Site officiel :** https://cafe-benin-info.edgeone.dev/
 
 Le dépôt GitHub et sa branche main sont la source de vérité. Chaque modification fusionnée sur main passe par la validation puis le déploiement GitHub Pages. L’ancienne adresse Vercel est conservée comme alias et redirige vers ce lien lorsque le projet Vercel est reconnecté à main.
 

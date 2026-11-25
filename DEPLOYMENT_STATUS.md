@@ -1,7 +1,7 @@
 # État des déploiements
 
 ## Site officiel (gratuit)
-**URL :** https://kevingiscard.github.io/cafe-benin-info/
+**URL :** https://cafe-benin-info.edgeone.dev/
 
 ## Dernier état
 - Branche `main` à jour

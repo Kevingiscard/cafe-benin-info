@@ -2,7 +2,7 @@
 
 ## Source de vérité
 
-La branche main du dépôt GitHub est l’unique source du site officiel : https://kevingiscard.github.io/cafe-benin-info/. Les interactions courantes sont exécutées dans le navigateur; aucun serveur applicatif n’est requis. Les cinq routes statiques sont construites à partir du même dépôt et déployées ensemble.
+La branche main du dépôt GitHub est l’unique source du site officiel : https://cafe-benin-info.edgeone.dev/. Les interactions courantes sont exécutées dans le navigateur; aucun serveur applicatif n’est requis. Les cinq routes statiques sont construites à partir du même dépôt et déployées ensemble.
 
 ## Automatisations réellement présentes
 

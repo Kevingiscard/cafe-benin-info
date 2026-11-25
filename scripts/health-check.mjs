@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const base = new URL(process.env.SITE_URL || 'https://kevingiscard.github.io/cafe-benin-info/');
+const base = new URL(process.env.SITE_URL || 'https://cafe-benin-info.edgeone.dev/');
 const reportPath = process.env.REPORT_PATH;
 const attempts = Number(process.env.HEALTH_ATTEMPTS || 3);
 const delay = Number(process.env.HEALTH_RETRY_DELAY_MS || 2_500);

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const root = process.cwd();
-const PROD_ORIGIN = 'https://kevingiscard.github.io/cafe-benin-info/';
+const PROD_ORIGIN = 'https://cafe-benin-info.edgeone.dev/';
 let failed = false;
 const fail = message => { console.error(`✖ ${message}`); failed = true; };
 const ok = message => console.log(`✓ ${message}`);
@@ -25,7 +25,7 @@ const dictionary = read('dictionary-v4.js');
 const pkg = JSON.parse(read('package.json'));
 
 if (!html.includes(`<link rel="canonical" href="${PROD_ORIGIN}">`)) fail('Canonical GitHub Pages absente ou incorrecte.');
-if (!/Sitemap:\s*https:\/\/kevingiscard\.github\.io\/cafe-benin-info\/sitemap\.xml/i.test(read('robots.txt'))) fail('Robots.txt ne référence pas le sitemap GitHub Pages.');
+if (!/Sitemap:\s*https:\/\/cafe-benin-info\.edgeone\.dev\/sitemap\.xml/i.test(read('robots.txt'))) fail('Robots.txt ne référence pas le sitemap GitHub Pages.');
 if (!read('sitemap.xml').includes(`<loc>${PROD_ORIGIN}</loc>`)) fail('Sitemap GitHub Pages absente ou incorrecte.');
 if (!/<html[^>]+lang="fr"/i.test(html)) fail('Attribut lang="fr" absent.');
 if (!/<meta[^>]+name="description"/i.test(html)) fail('Meta description absente.');

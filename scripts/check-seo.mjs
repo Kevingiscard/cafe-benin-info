@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const origin = 'https://kevingiscard.github.io/cafe-benin-info/';
+const origin = 'https://cafe-benin-info.edgeone.dev/';
 const pages = fs.readdirSync(root).filter(file => file.endsWith('.html') && file !== '404.html');
 const robots = fs.readFileSync(path.join(root, 'robots.txt'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');

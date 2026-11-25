@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Sitemap: https://kevingiscard.github.io/cafe-benin-info/sitemap.xml
+Sitemap: https://cafe-benin-info.edgeone.dev/sitemap.xml

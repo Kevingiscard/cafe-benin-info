@@ -3,12 +3,12 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "https://kevingiscard.github.io/cafe-benin-info/",
+      "destination": "https://cafe-benin-info.edgeone.dev/",
       "permanent": true
     },
     {
       "source": "/:path*",
-      "destination": "https://kevingiscard.github.io/cafe-benin-info/:path*",
+      "destination": "https://cafe-benin-info.edgeone.dev/:path*",
       "permanent": true
     }
   ]

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const origin = 'https://kevingiscard.github.io/cafe-benin-info/';
+const origin = 'https://cafe-benin-info.edgeone.dev/';
 const pages = fs.readdirSync(root).filter(file => file.endsWith('.html') && file !== '404.html');
 const failures = [];
 const warnings = [];
@@ -18,7 +18,7 @@ for (const file of pages.sort()) {
   if (!/<html[^>]+lang="(?:fr|en)"/i.test(html)) fail(`${label}: lang="(?:fr|en)" absent.`);
   if (!/<title>[^<]{20,}<\/title>/i.test(html)) fail(`${label}: titre trop court ou absent.`);
   if (!/<meta[^>]+name="description"[^>]+content="[^"]{50,}"/i.test(html)) fail(`${label}: meta description absente ou trop courte.`);
-  if (!/<link[^>]+rel="canonical"[^>]+href="https:\/\/kevingiscard\.github\.io\/cafe-benin-info\//i.test(html)) fail(`${label}: canonical GitHub Pages absente.`);
+  if (!/<link[^>]+rel="canonical"[^>]+href="https:\/\/cafe-benin-info\.edgeone\.dev\//i.test(html)) fail(`${label}: canonical GitHub Pages absente.`);
   if (!/<main\b/i.test(html)) fail(`${label}: landmark main absent.`);
   if ((html.match(/<h1\b/gi) || []).length !== 1) fail(`${label}: la page doit avoir exactement un H1.`);
   if (!/<meta[^>]+property="og:image:alt"/i.test(html)) warnings.push(`${label}: og:image:alt absent.`);

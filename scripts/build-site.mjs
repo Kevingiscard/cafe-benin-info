@@ -8,7 +8,7 @@ if (!process.argv.includes('--allow-legacy-overwrite')) {
 }
 
 import { chapters, REFS, ACCESSED } from './chapters-data.mjs';
-const ORIGIN = 'https://kevingiscard.github.io/cafe-benin-info/';
+const ORIGIN = 'https://cafe-benin-info.edgeone.dev/';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 // Compteurs calculés depuis les sources du site — ne pas coder en dur (dérive constatée le 21 nov. 2026 : l'accueil affichait 254+/5 alors que le dictionnaire en comptait 310 et les outils 13)
 const DICT_TERMS = fs.readFileSync('dictionary-v4.js', 'utf8').split('\n').filter(l => l.startsWith("['")).length;
