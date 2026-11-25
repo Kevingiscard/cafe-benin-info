@@ -5,3 +5,9 @@
 
 /* Les liens du bandeau se distinguent par le souligné, pas seulement par la couleur. */
 .cookie-banner a{text-decoration:underline;text-underline-offset:.15em}
+
+:root[data-theme="dark"] .cookie-banner{background:#1f1711;border-color:#3a2d23;color:#f6eee2}
+:root[data-theme="dark"] .cookie-banner h2{color:#f6eee2}
+:root[data-theme="dark"] .cookie-banner p{color:#d9ccbc}
+:root[data-theme="dark"] .cookie-banner a{color:#e0a06a}
+:root[data-theme="dark"] .cookie-actions button#cookies-essential{color:#1b130e}
