@@ -1,0 +1,60 @@
+name: Unifier Cafe Benin sur EdgeOne
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  unify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build redirect branch content
+        run: |
+          NEW='https://cafe-benin-info.edgeone.dev'
+          mkdir -p /tmp/redirect
+          stub() {
+            T="$1"
+            printf '<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Café Bénin a une adresse unique</title><link rel="canonical" href="%s"><meta http-equiv="refresh" content="0; url=%s"><script>location.replace("%s"+location.search+location.hash)</script></head><body><p>Café Bénin a une adresse unique : <a href="%s">%s</a></p></body></html>\n' "$T" "$T" "$T" "$T" "$T"
+          }
+          for f in *.html; do
+            [ "$f" = "404.html" ] && continue
+            if [ "$f" = "index.html" ]; then stub "$NEW/" > /tmp/redirect/index.html; else stub "$NEW/$f" > /tmp/redirect/$f; fi
+          done
+          cat > /tmp/redirect/404.html <<'EOF'
+          <!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Café Bénin a une adresse unique</title><script>var p=location.pathname.replace(/^\/cafe-benin-info\/?/,"");location.replace("https://cafe-benin-info.edgeone.dev/"+p+location.search+location.hash)</script></head><body><p>Café Bénin : <a href="https://cafe-benin-info.edgeone.dev/">https://cafe-benin-info.edgeone.dev/</a></p></body></html>
+          EOF
+          cat > /tmp/redirect/sw.js <<'EOF'
+          self.addEventListener('install',function(){self.skipWaiting()});
+          self.addEventListener('activate',function(e){e.waitUntil((async function(){for(const k of await caches.keys()){await caches.delete(k)}await self.registration.unregister();const cs=await self.clients.matchAll({type:'window'});cs.forEach(function(c){c.navigate(c.url)})})())});
+          EOF
+          printf 'User-agent: *\nAllow: /\n' > /tmp/redirect/robots.txt
+          touch /tmp/redirect/.nojekyll
+          ls /tmp/redirect | wc -l
+      - name: Replace URLs on main
+        run: |
+          OLD='https://kevingiscard.github.io/cafe-benin-info'
+          NEW='https://cafe-benin-info.edgeone.dev'
+          grep -rIl "$OLD" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.github --exclude=CNAME | xargs -r sed -i "s#$OLD#$NEW#g"
+          echo "references restantes a l'ancien hote :"
+          grep -rIn "kevingiscard.github.io" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.github | cut -c1-180 || true
+          git status --short | wc -l
+      - name: Verify site tests
+        run: |
+          npm ci --ignore-scripts
+          npm run verify
+      - name: Push redirect branch then main
+        run: |
+          git config user.name "Kevingiscard"
+          git config user.email "97285117+Kevingiscard@users.noreply.github.com"
+          REMOTE="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          cd /tmp/redirect
+          git init -q -b redirect
+          git add -A
+          git commit -q -m "Redirection vers l'adresse unique EdgeOne"
+          git push -q --force "$REMOTE" redirect:refs/heads/redirect
+          cd "$GITHUB_WORKSPACE"
+          git add -A
+          git commit -q -m "Adresse unique: https://cafe-benin-info.edgeone.dev (canonical, sitemap, robots, donnees structurees)"
+          git push -q "$REMOTE" HEAD:refs/heads/main
