@@ -2,3 +2,5 @@
 @media(prefers-reduced-motion:reduce){.pro-card{transition:none}.pro-card:hover{transform:none}}
 
 :root:not([data-theme="dark"]) .pro-link{color:#7a5524;text-decoration:underline}
+
+:root:not([data-theme="dark"]) .pro-action .btn.ghost{color:#3b2a1a;border-color:#8a6a4a}
