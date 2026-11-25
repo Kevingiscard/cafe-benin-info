@@ -290,3 +290,4 @@ img,svg,video{max-width:100%;height:auto}.sr-only{position:absolute!important;wi
 .support-link:focus-visible { outline: 3px solid #f0b66e; outline-offset: 2px; }
 .footer .support-row .support-link { display: inline-flex; width: auto; max-width: 100%; }
 .footer .support-row { display: block; }
+.contact-row{padding-top:12px;padding-bottom:4px}.contact-row p{margin:0}.contact-title{font-weight:700;margin-bottom:6px!important}.contact-links{display:flex;flex-wrap:wrap;gap:6px 18px}.contact-links a{min-height:44px;display:inline-flex;align-items:center}.contact-list{line-height:2}
