@@ -215,3 +215,5 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 @media (min-width:1280px){.pwa-install{display:none!important}}
 .contact-row{padding-top:12px;padding-bottom:4px}.contact-row p{margin:0}.contact-title{font-weight:700;margin-bottom:6px!important}.contact-links{display:flex;flex-wrap:wrap;gap:6px 18px}.contact-links a{min-height:44px;display:inline-flex;align-items:center}.contact-list{line-height:2}
 .src-badge{margin:4px 0 0;font-size:.82rem;font-weight:700;color:var(--accent)}.dict-sources{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}.dict-sources p{margin:6px 0}.dict-sources ul{margin:6px 0 0;padding-left:20px}
+
+.page-section p a:not(.btn){text-decoration:underline;text-underline-offset:.15em}
