@@ -6,7 +6,7 @@ Une encyclopédie documentaire francophone consacrée au café, de la plante à 
 
 **Site officiel :** https://cafe-benin-info.edgeone.dev/
 
-Le dépôt GitHub et sa branche main sont la source de vérité. Chaque modification fusionnée sur main passe par la validation puis le déploiement GitHub Pages. L’ancienne adresse Vercel est conservée comme alias et redirige vers ce lien lorsque le projet Vercel est reconnecté à main.
+Le dépôt GitHub et sa branche `main` sont la source de vérité du code. Le site public est servi sur Tencent Cloud EdgeOne à l’adresse ci-dessus. Le workflow GitHub Actions décrit plus bas exécute les contrôles qualité ; il ne publie pas lui-même le site. Le mécanisme exact de synchronisation entre `main` et EdgeOne doit être vérifié dans la configuration Tencent EdgeOne avant de le présenter comme automatique. L’ancienne adresse Vercel n’est qu’un alias éventuel et doit être testée séparément.
 
 ## Ce que le site permet de faire
 
@@ -49,7 +49,7 @@ Pour vérifier les sources externes séparément : npm run check:links:external.
 
 ## Publication et synchronisation
 
-Le workflow .github/workflows/pages-deploy.yml valide le site après chaque push sur main. La publication est faite par le workflow intégré « pages build and deployment » : dans Settings → Pages, la source est « Deploy from a branch » (main, racine). Ne pas ajouter de second déploiement par artefact tant que cette source n’est pas changée.
+Le workflow `.github/workflows/pages-deploy.yml` valide le site après chaque push sur `main` avec `npm run verify`. Malgré son ancien nom, ce workflow ne publie pas le site : il ne contient aucune étape de déploiement. La production publique est l’instance Tencent Cloud EdgeOne. Vérifier dans la console EdgeOne la source d’origine, la règle de mise à jour, le dernier déploiement et le résultat du build avant de considérer la synchronisation automatique comme opérationnelle.
 
 Pour garder l’ancienne adresse cafe-benin-info.vercel.app comme alias du site officiel, reconnecte une seule fois le projet Vercel au dépôt Kevingiscard/cafe-benin-info, choisis main comme branche de production et la racine du dépôt comme répertoire. Le fichier vercel.json redirige alors l’ensemble de l’ancienne adresse vers le lien officiel. Les réglages du projet Vercel n’étaient pas accessibles depuis la connexion utilisée pendant cette mise à jour; il faudra confirmer cette association dans le tableau de bord Vercel.
 
