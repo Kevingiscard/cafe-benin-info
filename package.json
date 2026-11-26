@@ -22,5 +22,8 @@
     "verify": "npm run build && npm run check:links",
     "check:pwa": "node scripts/check-pwa.mjs",
     "index": "node scripts/build-content-index.mjs"
+  },
+  "dependencies": {
+    "@edgeone/pages-blob": "^0.0.19"
   }
 }
