@@ -21,3 +21,5 @@
   window.cbLoadStats = load;
   load();
 })();
+// Compteur de vues, avis et favoris (sans cookie, sans donnée personnelle) : voir blob-features.js.
+(() => { const s = document.createElement('script'); s.defer = true; s.src = 'blob-features.js?v=1'; document.head.appendChild(s); })();
