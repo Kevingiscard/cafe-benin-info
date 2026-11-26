@@ -1,4 +1,5 @@
 import { getStore } from '@edgeone/pages-blob';
+import { createHash, timingSafeEqual } from 'node:crypto';
 
 // Compteurs, votes, signalements et avis modérés pour Café Bénin.
 // Aucune donnée personnelle conservée : ni IP, ni e-mail, ni identifiant de visiteur.
@@ -48,6 +49,42 @@ async function bumpDay(store, kind, cap) {
   return true;
 }
 
+// Modération : réservée à l'éditeur, protégée par le secret d'environnement MOD_TOKEN.
+const digest = value => createHash('sha256').update(String(value || '')).digest();
+async function moderate(request, store, body) {
+  const secret = (typeof process !== 'undefined' && process.env && process.env.MOD_TOKEN) || '';
+  if (secret.length < 24) return json({ error: 'disabled' }, 403);
+  if (limited(request, 'mod', 12, 3600000)) return json({ error: 'limit' }, 429);
+  if (!timingSafeEqual(digest(body.token), digest(secret))) return json({ error: 'auth' }, 401);
+  if (body.action === 'mod_list') {
+    const { blobs } = await store.list({ prefix: 'pending/' });
+    const items = [];
+    for (const b of (blobs || []).slice(0, 100)) {
+      const item = await readJson(store, b.key, null);
+      if (item) items.push(item);
+    }
+    items.sort((a, b) => String(a.at).localeCompare(String(b.at)));
+    return json({ items });
+  }
+  const id = String(body.id || '');
+  if (!/^[0-9]+-[a-z0-9]{1,8}$/.test(id)) return json({ error: 'id' }, 400);
+  for (const kind of ['review', 'report']) {
+    const key = 'pending/' + kind + '-' + id + '.json';
+    const item = await readJson(store, key, null);
+    if (!item) continue;
+    if (body.decision === 'approve' && kind === 'review') {
+      const list = await readJson(store, 'approved/' + item.page + '.json', []);
+      list.push({ name: item.name, text: item.text, at: item.at });
+      await store.setJSON('approved/' + item.page + '.json', list.slice(-50));
+    } else if (body.decision !== 'reject' && body.decision !== 'approve') {
+      return json({ error: 'decision' }, 400);
+    }
+    await store.delete(key);
+    return json({ ok: true });
+  }
+  return json({ error: 'absent' }, 404);
+}
+
 export async function onRequest({ request }) {
   const url = new URL(request.url);
   const store = getStore('cafe-benin-stats');
@@ -72,6 +109,7 @@ export async function onRequest({ request }) {
 
     let body;
     try { body = await request.json(); } catch { return json({ error: 'json' }, 400); }
+    if (body.action === 'mod_list' || body.action === 'mod_decide') return await moderate(request, store, body);
     const page = slugOf(body.page);
     if (!page) return json({ error: 'page' }, 400);
     if (body.website) return json({ ok: true }); // piège anti-robot : champ caché rempli
