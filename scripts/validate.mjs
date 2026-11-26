@@ -38,7 +38,8 @@ if (!/id="cafebot"/.test(html) || !/id="dictionnaire"/.test(html) || !/id="benin
 if (!/local-assistant\.js/.test(html) || !/app\.js/.test(html) || !/dictionary-v4\.js/.test(html) || !/atlas\.css/.test(html)) fail('Scripts ou styles frontend autonomes absents.');
 if ((read('styles.css').match(/@import\s+url\([^)]*fonts\.googleapis/gi) || []).length) fail('Les polices ne doivent pas être importées deux fois.');
 if (/backend-client\.js|\/api\/|vercel\.app/i.test(`${html}\n${app}`)) fail('Référence serveur externe détectée dans le frontend.');
-if (pkg.dependencies && Object.keys(pkg.dependencies).length) fail('Le site statique ne doit pas exiger de dépendance runtime.');
+const allowedDeps = new Set(['@edgeone/pages-blob']);
+if (pkg.dependencies && Object.keys(pkg.dependencies).some(name => !allowedDeps.has(name))) fail('Le site statique ne doit pas exiger de dépendance runtime autre que le stockage Blob EdgeOne.');
 if (!pkg.scripts?.test?.includes('tests/*.test.mjs')) fail('La commande de test doit couvrir toutes les suites Node.');
 ok('Architecture statique, SEO minimal et parcours critiques cohérents.');
 
