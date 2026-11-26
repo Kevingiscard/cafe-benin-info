@@ -53,9 +53,17 @@ async function bumpDay(store, kind, cap) {
 const digest = value => createHash('sha256').update(String(value || '')).digest();
 async function moderate(request, store, body) {
   const secret = (typeof process !== 'undefined' && process.env && process.env.MOD_TOKEN) || '';
-  if (secret.length < 24) return json({ error: 'disabled' }, 403);
+  if (secret.length < 10) return json({ error: 'disabled' }, 403);
   if (limited(request, 'mod', 12, 3600000)) return json({ error: 'limit' }, 429);
-  if (!timingSafeEqual(digest(body.token), digest(secret))) return json({ error: 'auth' }, 401);
+  // Verrou global (toutes instances) : au plus 15 échecs par heure.
+  const failKey = 'quota/modfail-' + new Date().toISOString().slice(0, 13) + '.json';
+  const fails = await readJson(store, failKey, { n: 0 });
+  if (fails.n >= 15) return json({ error: 'locked' }, 429);
+  if (!timingSafeEqual(digest(body.token), digest(secret))) {
+    fails.n += 1;
+    await store.setJSON(failKey, fails);
+    return json({ error: 'auth' }, 401);
+  }
   if (body.action === 'mod_list') {
     const { blobs } = await store.list({ prefix: 'pending/' });
     const items = [];
