@@ -12,7 +12,7 @@
       const k = document.createElement('div'); k.className = 'k'; k.textContent = (it.kind === 'review' ? 'AVIS' : 'SIGNALEMENT') + ' · ' + it.page + ' · ' + it.at + (it.name ? ' · ' + it.name : '');
       const p = document.createElement('p'); p.textContent = it.text;
       d.append(k, p);
-      const act = (label, decision) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.addEventListener('click', async () => { b.disabled = true; const x = await call({ action: 'mod_decide', token: t.value, id: it.id, decision }).catch(() => null); if (x && x.ok) d.remove(); else { b.disabled = false; m.textContent = 'Action impossible.'; } }); d.appendChild(b); };
+      const act = (label, decision) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.addEventListener('click', async () => { b.disabled = true; const x = await call({ action: 'mod_decide', token: t.value, id: it.id, decision }).catch(() => null); if (x && x.ok) { d.remove(); const n = l.children.length; m.textContent = n ? n + ' élément(s) en attente.' : 'Rien en attente.'; } else { b.disabled = false; m.textContent = 'Action impossible.'; } }); d.appendChild(b); };
       if (it.kind === 'review') act('Approuver et publier', 'approve');
       act(it.kind === 'review' ? 'Refuser' : 'Marquer comme traité', 'reject');
       l.appendChild(d);
