@@ -20,3 +20,4 @@
   }
   document.getElementById('go').addEventListener('click', load);
 })();
+// Code de modération choisi par l’éditeur (2026-11-26).
