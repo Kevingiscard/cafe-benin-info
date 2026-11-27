@@ -222,3 +222,6 @@ h2{font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);line-heigh
 
 /* mobile 320px: bouton Installer masque pour eviter le debordement horizontal sur les pages internes */
 @media (max-width:400px){.nav-actions .pwa-install{display:none!important}.nav-actions{min-width:0;flex:0 1 auto}}
+
+/* 1280-1440px: libelle Theme et raccourci Ctrl K masques pour que la barre de menu ne depasse pas */
+@media (min-width:1280px) and (max-width:1440px){.nav-actions .theme-toggle-label,.nav-actions .search-trigger span{display:none}}
