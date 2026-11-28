@@ -22,7 +22,7 @@ Les anciennes versions contiennent des fonctions serverless pour les commentaire
 
 CORS ne protège pas une API. Le fichier SQL V3 autorise toute insertion de commentaire, tandis que la clé anon Supabase n’est pas une identité d’utilisateur. Les handlers attendent des variables côté serveur comme GEMINI_API_KEY, SUPABASE_URL, SUPABASE_KEY, GMAIL_USER et GMAIL_PASSWORD; ne placez jamais ces secrets dans le navigateur ou dans le dépôt. L’URL Ollama par défaut localhost n’est pas joignable depuis une fonction cloud.
 
-La version Vercel servie au moment de l’audit diffère de main et son code serveur/configuration ne sont pas accessibles par la connexion Vercel de cette tâche. La redirection définie dans vercel.json retire cette version divergente après le prochain déploiement Vercel depuis main.
+Mise à jour du 28 novembre 2026 : le projet Vercel cafe-benin-info a été supprimé, ainsi que la copie GitHub Pages. L'ancienne API publique (routes /api) n'est donc plus en ligne. Le seul site officiel est EdgeOne, sans backend.
 
 Avant tout retour à un backend, il faudra ajouter une authentification adaptée aux visiteurs et aux actions d’administration, des règles de lecture/écriture strictes, une validation de taille et de contenu, une protection contre le spam et les abus, une politique de conservation/suppression des e-mails, une gestion des erreurs sans divulgation de détails internes, ainsi qu’une revue des coûts d’IA.
 
