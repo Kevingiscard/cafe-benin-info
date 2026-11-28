@@ -51,7 +51,7 @@ Pour vérifier les sources externes séparément : npm run check:links:external.
 
 Le workflow `.github/workflows/pages-deploy.yml` valide le site après chaque push sur `main` avec `npm run verify`. Malgré son ancien nom, ce workflow ne publie pas le site : il ne contient aucune étape de déploiement. La production publique est l’instance Tencent Cloud EdgeOne. Vérifier dans la console EdgeOne la source d’origine, la règle de mise à jour, le dernier déploiement et le résultat du build avant de considérer la synchronisation automatique comme opérationnelle.
 
-Pour garder l’ancienne adresse cafe-benin-info.vercel.app comme alias du site officiel, reconnecte une seule fois le projet Vercel au dépôt Kevingiscard/cafe-benin-info, choisis main comme branche de production et la racine du dépôt comme répertoire. Le fichier vercel.json redirige alors l’ensemble de l’ancienne adresse vers le lien officiel. Les réglages du projet Vercel n’étaient pas accessibles depuis la connexion utilisée pendant cette mise à jour; il faudra confirmer cette association dans le tableau de bord Vercel.
+Le 28 novembre 2026, les copies Vercel (cafe-benin-info.vercel.app) et GitHub Pages (kevingiscard.github.io/cafe-benin-info) ont été supprimées à la demande du propriétaire. Ces deux anciennes adresses renvoient maintenant 404. Le seul lien officiel est https://cafe-benin-info.edgeone.dev/.
 
 ## Documentation
 
